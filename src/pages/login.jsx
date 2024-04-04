@@ -102,7 +102,7 @@ export const LoginPage = () => {
 
   function exitLogin(){
     Protect.logIn()
-    navigateTo('/dashboard')
+    navigateTo('/home')
     window.location.reload()
   };
 
