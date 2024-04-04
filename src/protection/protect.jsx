@@ -19,7 +19,11 @@ export class Protect {
 
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve( isLogged === 'true' && !isNaN(isNum) );
+        if (isLogged === 'true' && !isNaN(isNum)) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
       }, 500);
     });
   }
