@@ -14,7 +14,7 @@ export const FetchUsers = () => {
                 .catch( error=> console.log(error) )
     };
     fetchData();
-    }, []); 
+    }, []);  
 
   return (
     <>
