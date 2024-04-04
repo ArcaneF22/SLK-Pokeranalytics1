@@ -166,7 +166,8 @@ export const LoginPage = () => {
                   <div className="ui header large left aligned">
                   Are you new to us? <a href="/registration"> Register!</a>
                   </div>
-                  <a href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
+
+                  <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
                 </div>
               </div>
             }
