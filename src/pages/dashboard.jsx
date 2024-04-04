@@ -16,10 +16,10 @@ export const DashboardPage = () => {
 
       <div className="ui placeholder segment">
         <div className="ui icon header">
-          Welcome! {getAuth.nickname}
+          Welcome! {getAuth["nickname"]}
         </div>
         <div className="inline">
-          <div className="ui text teal">{getAuth.rolename}</div>
+          <div className="ui text teal">{getAuth["rolename"]}</div>
         </div>
       </div>
 
