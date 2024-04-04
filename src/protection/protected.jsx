@@ -16,8 +16,7 @@ export const Protected = ({ children }) => {
   }
 
 
-
-  switch (proceed) {
+  switch (accessible) {
     case true:
       return children;
     case false:
