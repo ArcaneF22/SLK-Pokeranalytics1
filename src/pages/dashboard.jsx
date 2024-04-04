@@ -20,7 +20,7 @@ export const DashboardPage = () => {
               <h3>Welcome back {getUser["rolename"]}: {getUser["nickname"]}!</h3>
               <p>You have some work to do!</p>
             </div>
-            <div className="eight wide column">
+            <div className="eight wide left floated column">
 
               <h3 className="ui top attached header">
                 Tasks
