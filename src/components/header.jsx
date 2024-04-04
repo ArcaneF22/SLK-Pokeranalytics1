@@ -37,9 +37,6 @@ export const Header = () => {
         Users Page
       </Link>
 
-      <div className="item">
-        <span>{Logged}</span>
-      </div>
       
       <div className="right item">
         <button className='ui button red' onClick={ submitLogout }>Logout</button>
