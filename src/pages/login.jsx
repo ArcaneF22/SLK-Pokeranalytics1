@@ -123,7 +123,6 @@ export const LoginPage = () => {
 
           <h2 className="ui image header purple">
             <div className="content title-header">
-              <p className='text-mini'>Login</p>
                 Poker Analytics
             </div>
             
