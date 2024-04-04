@@ -17,11 +17,7 @@ export const Header = () => {
   return (
     <>
     <div className="ui top fixed menu inverted purple">
-      
-      <Link to="/dashboard" className={getRoute('/dashboard')}>
-        Dashboard Page
-      </Link>
-      
+
       <Link to="/home" className={getRoute('/home')}>
         Home Page
       </Link>
