@@ -8,9 +8,10 @@ import { HomePage } from './pages/home';
 import { LoginPage } from './pages/login';
 import { RegistrationPage } from './pages/registration';
 import { ApplicationsPage } from './pages/applications';
+import { ClubsPage } from './pages/clubs';
 import { UsersPage } from './pages/users';
 import { AccountsPage } from './pages/accounts';
-import { ClubsPage } from './pages/clubs';
+import { HistoryPage } from './pages/history';
 import { NotFoundPage } from './pages/notfound';
 
 
@@ -63,6 +64,13 @@ function App() {
               element={
                 <Protected>
                   <AccountsPage />
+                </Protected>
+              }
+            />
+            <Route path="/history"
+              element={
+                <Protected>
+                  <HistoryPage />
                 </Protected>
               }
             />

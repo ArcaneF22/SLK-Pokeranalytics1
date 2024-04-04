@@ -37,7 +37,11 @@ export const Header = () => {
       <Link to="/accounts" className={getRoute('/accounts')}>
         Accounts Page
       </Link>
-      
+
+      <Link to="/history" className={getRoute('/history')}>
+        History Page
+      </Link>
+
       <div className="right item">
         <button className='ui button red' onClick={ submitLogout }>Logout</button>
       </div>
