@@ -1,0 +1,1 @@
+export const Auth = JSON.parse( localStorage.getItem('Token') );

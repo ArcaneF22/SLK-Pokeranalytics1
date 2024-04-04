@@ -6,6 +6,7 @@ import useInterval from 'use-interval'
 import {picture} from '../utilities/settings'
 import '../assets/css/login.css'
 import image from '../assets/images/icons/poker.png'
+import Auth from '../utilities/constants';
 
 export const LoginPage = () => {
 
@@ -123,7 +124,7 @@ export const LoginPage = () => {
 
           <h2 className="ui image header purple">
             <div className="content title-header">
-                Poker Analytics
+                Poker Analytics {Auth['token']}
             </div>
             
           </h2>
