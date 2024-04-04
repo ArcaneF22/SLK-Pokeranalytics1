@@ -11,7 +11,6 @@ export const DashboardPage = () => {
   return (
     <div className="expand-centered">
       <h1>DashboardPage</h1>
-      {isToken}
 
       <div className="ui vertical stripe quote segment">
         <div className="ui middle aligned stackable grid container">
