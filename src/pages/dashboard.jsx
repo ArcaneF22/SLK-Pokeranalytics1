@@ -4,7 +4,7 @@ import { isNumeric } from '../utilities/tools'
 export const DashboardPage = () => {
 
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
-  const getAuth = JSON.parse(localStorage.getItem('User'))
+  const getUser = JSON.parse(localStorage.getItem('User'))
   const isNum = isNumeric(isToken)
   console.log(isNum)
   
@@ -15,10 +15,12 @@ export const DashboardPage = () => {
 
       <div className="ui placeholder segment">
         <div className="ui icon header">
-          Welcome! {getAuth["nickname"]}
+          Welcome! {getUser["nickname"]}
         </div>
         <div className="inline">
-          <div className="ui text teal">{getAuth["rolename"]}</div>
+          <div className="ui text button teal">
+            {getUser["rolename"]}
+          </div>
         </div>
       </div>
 
