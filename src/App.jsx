@@ -1,28 +1,74 @@
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { Protected } from './protection/protected';
+import { Header } from './components/header';
+
+import { HomePage } from './pages/home';
+import { LoginPage } from './pages/login';
+import { RegistrationPage } from './pages/registration';
+import { ApplicationsPage } from './pages/applications';
+import { UsersPage } from './pages/users';
+import { ClubsPage } from './pages/clubs';
+import { DashboardPage } from './pages/dashboard';
+import { NotFoundPage } from './pages/notfound';
+
 
 function App() {
+
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    const Auth = localStorage.getItem('Auth');
+    const AuthBoolean = Auth === 'true';
+    setShowContent(AuthBoolean);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <BrowserRouter>
+
+      {showContent  ? <Header /> : null}
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
+            <Route path="/home"
+              element={
+                <Protected>
+                  <HomePage />
+                </Protected>
+              }
+            />
+            <Route path="/dashboard"
+              element={
+                <Protected>
+                  <DashboardPage />
+                </Protected>
+              }
+            />
+            <Route path="/applications"
+              element={
+                <Protected>
+                  <ApplicationsPage />
+                </Protected>
+              }
+            />
+            <Route path="/clubs"
+              element={
+                <Protected>
+                  <ClubsPage />
+                </Protected>
+              }
+            />
+            <Route path="/users"
+              element={
+                <Protected>
+                  <UsersPage />
+                </Protected>
+              }
+            />
+          <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+    </BrowserRouter>
   );
 }
 
