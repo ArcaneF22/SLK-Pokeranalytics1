@@ -13,14 +13,14 @@ export const DashboardPage = () => {
       <h1>DashboardPage</h1>
       {isToken}
 
-      <div className="ui vertical center aligned stripe quote segment">
-        <div className="ui equal width stackable internally celled grid">
-          <div className="center aligned row">
-            <div className="column">
+      <div className="ui vertical stripe quote segment">
+        <div className="ui middle aligned stackable grid container">
+          <div className="row">
+            <div className="six wide right floated column">
               <h3>Welcome back {getUser["rolename"]}: {getUser["nickname"]}!</h3>
               <p>You have some work to do!</p>
             </div>
-            <div className="column">
+            <div className="eight wide column">
 
               <h3 className="ui top attached header">
                 Tasks
