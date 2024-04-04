@@ -16,7 +16,7 @@ export const Header = () => {
 
   return (
     <>
-    <div className="ui top fixed menu inverted">
+    <div className="ui top fixed menu inverted purple">
       
       <Link to="/dashboard" className={getRoute('/dashboard')}>
         Dashboard Page
