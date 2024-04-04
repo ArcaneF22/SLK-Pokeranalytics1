@@ -18,7 +18,7 @@ export const DashboardPage = () => {
           Welcome! {getAuth["nickname"]}
         </div>
         <div className="inline">
-          <div className="ui text teal"></div>
+          <div className="ui text teal">{getAuth["rolename"]}</div>
         </div>
       </div>
 
