@@ -5,16 +5,6 @@ import { Protect } from './protect';
 export const Protected = ({ children }) => {
   const [accessible, setAccessible] = useState(null);
 
-  const [proceed, setProceed] = useState(null);
-  const isLogged = localStorage.getItem('Auth')
-  const isNum = isNumeric(JSON.parse(localStorage.getItem('Token'))["id"])
-
-  if (isLogged === 'true' && !isNaN(isNum)) {
-    setProceed(true);
-  } else {
-    setProceed(false);
-  }
-
   useEffect(() => {
     Protect.isLoggedIn()
       .then((isLoggedIn) => {
