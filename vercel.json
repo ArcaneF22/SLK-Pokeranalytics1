@@ -1,0 +1,11 @@
+{
+    "rewrites":  [
+      {"source": "/(.*)", "destination": "/"},
+      {"source": "/", "destination": "/login"},
+      {"source": "/home", "destination": "/home"},
+      {"source": "/dashboard", "destination": "/dashboard"},
+      {"source": "/registration", "destination": "/registration"},
+      {"source": "/applications", "destination": "/applications"},
+      {"source": "/users", "destination": "/users"}
+    ]
+  }
