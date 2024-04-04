@@ -169,9 +169,8 @@ export const LoginPage = () => {
                   </div>
                 </div>
               </div>
-              <div className='ui message mini'>
-                <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
-              </div>
+                  <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
+
               </>
 
             }
