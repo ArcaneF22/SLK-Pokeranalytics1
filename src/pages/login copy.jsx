@@ -14,7 +14,7 @@ export const LoginPage = () => {
 
   const submitLogin = () => {
     Protect.logIn()
-    navigateTo('/dashboard')
+    navigateTo('/home')
     window.location.reload()
   };
 

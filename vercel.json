@@ -3,7 +3,6 @@
       {"source": "/(.*)", "destination": "/"},
       {"source": "/", "destination": "/login"},
       {"source": "/home", "destination": "/home"},
-      {"source": "/dashboard", "destination": "/dashboard"},
       {"source": "/registration", "destination": "/registration"},
       {"source": "/applications", "destination": "/applications"},
       {"source": "/clubs", "destination": "/clubs"},

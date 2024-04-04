@@ -145,9 +145,7 @@ export const LoginPage = () => {
             <div className='field'>
               <div className="ui fluid large purple button" onClick={validate}>Login</div>
             </div>
-
             
-
         </div>
         {
               messagebox ? 
