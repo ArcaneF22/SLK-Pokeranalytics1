@@ -4,6 +4,7 @@ import axios from 'axios';
 export const FetchUsers = () => {
 
     const [usersTable, setusersTable] = useState([]);
+    const [content, setContent] = useState(false);
 
     //FETCH USER DATA
     useLayoutEffect(() => {
@@ -36,15 +37,15 @@ export const FetchUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {usersTable.map((row) => (
-                            <tr key={row.id}>
-                                <td>{row.role}</td>
-                                <td>{row.nickname}</td>
-                                <td>{row.email}</td>
-                                <td>{row.username}</td>
-                                <td>{row.password}</td>
-                                <td>{row.avatar}</td>
-                                <td>{row.status}</td>
+                        {usersTable.map((i) => (
+                            <tr key={i.id}>
+                                <td>{i.role}</td>
+                                <td>{i.nickname}</td>
+                                <td>{i.email}</td>
+                                <td>{i.username}</td>
+                                <td>{i.password}</td>
+                                <td>{i.avatar}</td>
+                                <td>{i.status}</td>
                             </tr>
                         ))}
                     </tbody>
