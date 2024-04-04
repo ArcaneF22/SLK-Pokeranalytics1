@@ -160,16 +160,20 @@ export const LoginPage = () => {
                 </div>
               </div>
               :
+              <>
               <div className="ui icon message mini">
                 <i className="sign in alternate grey icon mini"></i>
                 <div className="content">
                   <div className="ui header large left aligned">
                   Are you new to us? <a href="/registration"> Register!</a>
                   </div>
-
-                  <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
                 </div>
               </div>
+              <div className='ui message mini'>
+                <a className='ui button red' href="https://13.211.65.106/pokerapp/relocate.php">Verify</a>
+              </div>
+              </>
+
             }
 
 
