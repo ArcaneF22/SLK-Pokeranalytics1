@@ -13,7 +13,7 @@ export const DashboardPage = () => {
       <h1>DashboardPage</h1>
       {isToken}
 
-      <div className="ui vertical stripe quote segment">
+      <div className="ui vertical center aligned stripe quote segment">
         <div className="ui equal width stackable internally celled grid">
           <div className="center aligned row">
             <div className="column">
@@ -51,7 +51,7 @@ export const DashboardPage = () => {
                   </div>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </div>
