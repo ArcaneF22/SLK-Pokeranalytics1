@@ -11,7 +11,6 @@ import { ApplicationsPage } from './pages/applications';
 import { UsersPage } from './pages/users';
 import { AccountsPage } from './pages/accounts';
 import { ClubsPage } from './pages/clubs';
-import { DashboardPage } from './pages/dashboard';
 import { NotFoundPage } from './pages/notfound';
 
 
@@ -36,13 +35,6 @@ function App() {
               element={
                 <Protected>
                   <HomePage />
-                </Protected>
-              }
-            />
-            <Route path="/dashboard"
-              element={
-                <Protected>
-                  <DashboardPage />
                 </Protected>
               }
             />
