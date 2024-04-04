@@ -15,11 +15,11 @@ export const DashboardPage = () => {
 
       <div className="ui placeholder segment">
         <div className="ui icon header">
-          Welcome! {getUser["nickname"]}
+          Welcome! {getUser["rolename"]}: {getUser["nickname"]}
         </div>
         <div className="inline">
           <div className="ui text button teal">
-            {getUser["rolename"]}
+            
           </div>
         </div>
       </div>
