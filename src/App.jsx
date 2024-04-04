@@ -61,7 +61,7 @@ function App() {
               }
             />
             <Route path="/accounts"
-              element={
+              element={ 
                 <Protected>
                   <AccountsPage />
                 </Protected>
