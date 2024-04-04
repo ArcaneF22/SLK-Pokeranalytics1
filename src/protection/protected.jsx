@@ -10,18 +10,12 @@ export const Protected = ({ children }) => {
   const isNum = isNumeric(JSON.parse(localStorage.getItem('Token'))["id"])
 
   if (isLogged === 'true' && !isNaN(isNum)) {
-    setProceed(true);
+    setAccessible(true);
   } else {
-    setProceed(false);
+    setAccessible(false);
   }
 
-  useEffect(() => {
-    Protect.isLoggedIn()
-      .then((isLoggedIn) => {
-        setAccessible(isLoggedIn);
-      })
-      .catch(() => setAccessible(false));
-  }, []);
+
 
   switch (proceed) {
     case true:
