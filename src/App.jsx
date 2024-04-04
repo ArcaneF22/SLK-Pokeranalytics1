@@ -9,6 +9,7 @@ import { LoginPage } from './pages/login';
 import { RegistrationPage } from './pages/registration';
 import { ApplicationsPage } from './pages/applications';
 import { UsersPage } from './pages/users';
+import { AccountsPage } from './pages/accounts';
 import { ClubsPage } from './pages/clubs';
 import { DashboardPage } from './pages/dashboard';
 import { NotFoundPage } from './pages/notfound';
@@ -63,6 +64,13 @@ function App() {
               element={
                 <Protected>
                   <UsersPage />
+                </Protected>
+              }
+            />
+            <Route path="/accounts"
+              element={
+                <Protected>
+                  <AccountsPage />
                 </Protected>
               }
             />

@@ -6,6 +6,8 @@
       {"source": "/dashboard", "destination": "/dashboard"},
       {"source": "/registration", "destination": "/registration"},
       {"source": "/applications", "destination": "/applications"},
+      {"source": "/clubs", "destination": "/clubs"},
+      {"source": "/accounts", "destination": "/accounts"},
       {"source": "/users", "destination": "/users"}
     ]
   }
