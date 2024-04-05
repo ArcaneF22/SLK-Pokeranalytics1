@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function FetchUsers() {
+export const FetchUsers = () => {
+
   const [data, setData] = useState([]);
 
 
@@ -45,5 +46,3 @@ function FetchUsers() {
     </div>
   );
 }
-
-export default FetchUsers;
