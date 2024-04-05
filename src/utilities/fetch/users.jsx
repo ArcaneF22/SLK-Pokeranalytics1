@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const FetchUsers = () => {
@@ -8,7 +8,7 @@ export const FetchUsers = () => {
     const [loading, setLoading] = useState(false);
 
     //FETCH USER DATA
-    useLayoutEffect(() => {
+    useEffect(() => {
     
         const fetchData = async () => {
             try{
