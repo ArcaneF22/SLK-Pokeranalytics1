@@ -10,36 +10,37 @@ export const FetchUsers = () => {
     //FETCH USER DATA
     useLayoutEffect(() => {
     
-    setContent("Loading data...")
-    const fetchData = async () => {
-        try{
-            const response = await fetch(import.meta.env.VITE_GET_USERS,{
-                                        method: "POST",
-                                        headers: { "Accept": "application/json", "Content-type": "application/json" },
-                                        body: JSON.stringify({
-                                            A:"16",
-                                            B:"f71028df3bb844734323f9f2b6e2811b",
-                                            C:"Mobile: Android"
+        const fetchData = async () => {
+            try{
+                setMessage("Loading...");
+                setMessageicon("notched circle loading icon purple")
+                const response = await fetch(import.meta.env.VITE_GO_LOGIN,{
+                                            method: "POST",
+                                            headers: { "Accept": "application/json", "Content-type": "application/json" },
+                                            body: JSON.stringify({
+                                                A:"16",
+                                                B:"f71028df3bb844734323f9f2b6e2811b",
+                                                C:"Mobile: Android"
+                                                })
+                                            }).then((response) => {
+                                                return response.json()
+                                            }).then((response) => {
+                                                console.log(response[0])
+                                                alert(response[0])
+                                            }).catch((error) => {
+                                                console.log(error)
                                             })
-                                        }).then((response) => {
-                                            console.log(response)
-                                            if(response.data == "Err"){
-                                                setusersTable("Not found...")
-                                            } else {
-                                                setusersTable(response.data)
-                                            }
-                                        }).catch((error) => {
-                                            console.log(error)
-                                        })
-    
-        } catch (err){
-            console.log(err)
-        }
-    };
+        
+            } catch (err){
+                console.log(err)
+            }
+        };
     fetchData();
     }, []);  
 
 
+    
+    
 
     
 
