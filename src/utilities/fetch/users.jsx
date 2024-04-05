@@ -21,13 +21,11 @@ export const FetchUsers = () => {
                                                 C:"Mobile: Android"
                                                 })
                                             }).then((response) => {
-                                                return response.json()
-                                            }).then((response) => {
-                                                console.log(response)
-                                                if(response[0]=="Err"){
+                                                console.log(response.data)
+                                                if(response.data=="Err"){
                                                     alert("Err")
                                                 } else {
-                                                    setusersTable(response)
+                                                    setusersTable(response.data)
                                                 }
                                             }).catch((error) => {
                                                 console.log(error)
