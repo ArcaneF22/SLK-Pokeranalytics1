@@ -31,8 +31,6 @@ export const FetchUsers = () => {
                                                     const feed = feedback.split("|");
                                                     console.log(feed)
                                                 }
-
-                                                alert(response[0])
                                             }).catch((error) => {
                                                 console.log(error)
                                             })
