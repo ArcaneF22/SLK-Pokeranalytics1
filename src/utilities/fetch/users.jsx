@@ -24,14 +24,6 @@ export const FetchUsers = () => {
                                                 return response.json()
                                             }).then((response) => {
                                                 console.log(response[0])
-                                                if(response[0]=="Err"){
-                                                    alert("Err")
-                                                } else {
-                                                    const feedback = response[0].toString();
-                                                    const feed = feedback.split("|");
-                                                    console.log(feed)
-                                                }
-
                                                 alert(response[0])
                                             }).catch((error) => {
                                                 console.log(error)
