@@ -9,9 +9,7 @@ export const FetchUsers = () => {
 
     //FETCH USER DATA
 
-    useEffect(() => {
-        fetchUsers();
-      }, []);
+
 
     async function fetchUsers() {
         try {
@@ -27,7 +25,7 @@ export const FetchUsers = () => {
           console.error('Error:', error.message);
         }
       }
-
+      fetchUsers();
 
   return (
     <>
