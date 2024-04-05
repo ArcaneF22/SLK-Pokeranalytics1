@@ -21,9 +21,9 @@ export const FetchUsers = () => {
                                                 C:"Mobile: Android"
                                                 })
                                             }) 
-                console.log("---"+response)                                              
-                if (!response.ok) { throw new Error('Failed to fetch data'); }       
+                if (!response.ok) { throw new Error('Failed to fetch data'); }                          
                 const jsonData = await response.json();
+                console.log("---"+response)
                 setusersTable(jsonData)
                 console.log(jsonData)                    
             } catch (err){
@@ -40,34 +40,39 @@ export const FetchUsers = () => {
         <h3>Users List</h3>
         <i className='icon table'></i>
         <i className='icon list'></i>
-        <table className='ui table celled loading'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>role</th>
-                            <th>nickname</th>
-                            <th>email</th>
-                            <th>username</th>
-                            <th>password</th>
-                            <th>avatar</th>
-                            <th>status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {usersTable.map(i => (
-                            <tr key={i.id}>
-                                <td>{i.id}</td>
-                                <td>{i.role}</td>
-                                <td>{i.nickname}</td>
-                                <td>{i.email}</td>
-                                <td>{i.username}</td>
-                                <td>{i.password}</td>
-                                <td>{i.avatar}</td>
-                                <td>{i.status}</td>
+        {usersTable.length > 0 ? (
+            <table className='ui table celled loading'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>role</th>
+                                <th>nickname</th>
+                                <th>email</th>
+                                <th>username</th>
+                                <th>password</th>
+                                <th>avatar</th>
+                                <th>status</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>  
+                        </thead>
+                        <tbody>
+
+                            {usersTable.map(i => (
+                                <tr key={i.id}>
+                                    <td>{i.id}</td>
+                                    <td>{i.role}</td>
+                                    <td>{i.nickname}</td>
+                                    <td>{i.email}</td>
+                                    <td>{i.username}</td>
+                                    <td>{i.password}</td>
+                                    <td>{i.avatar}</td>
+                                    <td>{i.status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>  
+                ) : (
+                    <p>No data available</p>
+                )}
         </div>
  
     </>
