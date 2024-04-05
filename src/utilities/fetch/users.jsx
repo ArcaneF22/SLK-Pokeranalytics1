@@ -15,9 +15,7 @@ export const FetchUsers = () => {
             axios.get(import.meta.env.VITE_GET_USERS)
                 .then( res => {
                     console.log(res.data)
-                    alert('er')
                     if(res.data == "Err"){
-                        alert("Error")
                         setusersTable(res.data)
                     } else {
                         setusersTable(res.data)
