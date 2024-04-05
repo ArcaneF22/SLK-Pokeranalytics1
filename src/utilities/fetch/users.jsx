@@ -4,19 +4,28 @@ import axios from 'axios';
 export const FetchUsers = () => {
 
     const [usersTable, setusersTable] = useState([]);
-    const [content, setContent] = useState(false);
+    const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(false);
 
     //FETCH USER DATA
     useLayoutEffect(() => {
+    
+    setContent("Loading data...")
     const fetchData = async () => {
             axios.get(import.meta.env.VITE_GET_USERS)
                 .then( res => {
-                    setusersTable(res.data)
+                    console.log(res.data)
+                    if(res.data == "Err"){
+                        alert("Error")
+                    } else {
+                        setusersTable(res.data)
+                    }
                 })
                 .catch( error=> console.log(error) )
     };
     fetchData();
     }, []);  
+
 
   return (
     <>
