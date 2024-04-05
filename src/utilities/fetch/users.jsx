@@ -54,7 +54,7 @@ export const FetchUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {usersTable.map((i) => (
+                        {usersTable.map(i => (
                             <tr key={i.id}>
                                 <td>{i.id}</td>
                                 <td>{i.role}</td>
