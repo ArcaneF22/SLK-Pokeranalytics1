@@ -16,7 +16,7 @@ export const FetchUsers = () => {
                 .then( res => {
                     console.log(res.data)
                     if(res.data == "Err"){
-                        setusersTable(res.data)
+                        setusersTable("Not found...")
                     } else {
                         setusersTable(res.data)
                     }
