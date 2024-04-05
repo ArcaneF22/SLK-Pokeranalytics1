@@ -12,7 +12,7 @@ export const FetchUsers = () => {
     
     setContent("Loading data...")
     const fetchData = async () => {
-            axios.get(import.meta.env.VITE_GET_USERS, {
+            axios(import.meta.env.VITE_GET_USERS, {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-type": "application/json" },
                 body: JSON.stringify({
