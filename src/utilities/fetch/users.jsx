@@ -42,13 +42,6 @@ export const FetchUsers = () => {
     fetchData();
     }, []);  
 
-
-    
-    
-
-    
-
-
   return (
     <>
     <p>{usersTable}</p>
@@ -70,7 +63,18 @@ export const FetchUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-
+                        {usersTable.map((i) => (
+                            <tr key={i.id}>
+                                <td>{i.id}</td>
+                                <td>{i.role}</td>
+                                <td>{i.nickname}</td>
+                                <td>{i.email}</td>
+                                <td>{i.username}</td>
+                                <td>{i.password}</td>
+                                <td>{i.avatar}</td>
+                                <td>{i.status}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>  
         </div>
