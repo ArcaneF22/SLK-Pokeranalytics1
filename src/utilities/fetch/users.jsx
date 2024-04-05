@@ -33,6 +33,21 @@ export const FetchUsers = () => {
         }
     };
     
+    async function fetchDatas() {
+        try {
+          const response = await axios.post(import.meta.env.VITE_GET_USERS, {
+            A:"16",
+            B:"f71028df3bb844734323f9f2b6e2811b",
+            C:"Mobile: Android"
+          });
+      
+          console.log('Data:', response.data);
+        } catch (error) {
+          console.error('Error:', error.message);
+        }
+      }
+      fetchDatas()
+
   return (
     <>
     <p>{usersTable}</p>
