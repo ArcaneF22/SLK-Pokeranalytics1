@@ -9,30 +9,38 @@ export const FetchUsers = () => {
 
     //FETCH USER DATA
     useLayoutEffect(() => {
-    
-    setContent("Loading data...")
-    const fetchData = async () => {
-            axios(import.meta.env.VITE_GET_USERS, {
-                method: "POST",
-                headers: { "Accept": "application/json", "Content-type": "application/json" },
-                body: JSON.stringify({
-                    A:"1",
-                    B:"e367e4875e95abcbe315a865a2c09f1d",
-                    C:"Computer: Windows"
-                    })
-            })
-                .then( res => {
-                    console.log(res.data)
-                    if(res.data == "Err"){
-                        setusersTable("Not found...")
-                    } else {
-                        setusersTable(res.data)
-                    }
-                })
-                .catch( error=> console.log(error) )
-    };
-    fetchData();
+        fetchUsers()
     }, []);  
+
+
+    const fetchUsers = async () => {
+        try{
+            const response = await fetch(import.meta.env.VITE_GET_USERS,{
+                                        method: "POST",
+                                        headers: { "Accept": "application/json", "Content-type": "application/json" },
+                                        body: JSON.stringify({
+                                            A:"1",
+                                            B:"e367e4875e95abcbe315a865a2c09f1d",
+                                            C:"Computer: Windows"
+                                            })
+                                        }).then((response) => {
+                                            return response.json()
+                                        }).then((response) => {
+                                            console.log(res.data)
+                                            if(response.data == "Err"){
+                                                setusersTable("Not found...")
+                                            } else {
+                                                setusersTable(response.data)
+                                            }
+                                        }).catch((error) => {
+                                            console.log(error)
+                                        })
+    
+        } catch (err){
+            console.log(err)
+        }
+    };
+    
 
 
   return (
