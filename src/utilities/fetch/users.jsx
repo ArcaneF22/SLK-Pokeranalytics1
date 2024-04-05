@@ -9,30 +9,30 @@ export const FetchUsers = () => {
 
     //FETCH USER DATA
     useEffect(() => {
-    
-        const fetchData = async () => {
-            try{
-                const response = await fetch(import.meta.env.VITE_GET_USERS,{
-                                            method: "POST",
-                                            headers: { "Accept": "application/json", "Content-type": "application/json" },
-                                            body: JSON.stringify({
-                                                A:"16",
-                                                B:"f71028df3bb844734323f9f2b6e2811b",
-                                                C:"Mobile: Android"
-                                                })
-                                            }) 
-                if (!response.ok) { throw new Error('Failed to fetch data'); }                          
-                const jsonData = await response.json();
-                console.log("---"+response)
-                setusersTable(jsonData)
-                console.log(jsonData)                    
-            } catch (err){
-                console.log(err)
-            }
-        };
-    fetchData();
+        fetchData();
     }, []);  
 
+    const fetchData = async () => {
+        try{
+            const response = await fetch(import.meta.env.VITE_GET_USERS,{
+                                        method: "POST",
+                                        headers: { "Accept": "application/json", "Content-type": "application/json" },
+                                        body: JSON.stringify({
+                                            A:"16",
+                                            B:"f71028df3bb844734323f9f2b6e2811b",
+                                            C:"Mobile: Android"
+                                            })
+                                        }) 
+            if (!response.ok) { throw new Error('Failed to fetch data'); }                          
+            const jsonData = await response.json();
+            console.log("---"+response)
+            setusersTable(jsonData)
+            console.log(jsonData)                    
+        } catch (err){
+            console.log(err)
+        }
+    };
+    
   return (
     <>
     <p>{usersTable}</p>
