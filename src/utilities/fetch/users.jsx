@@ -12,7 +12,15 @@ export const FetchUsers = () => {
     
     setContent("Loading data...")
     const fetchData = async () => {
-            axios.get(import.meta.env.VITE_GET_USERS)
+            axios.get(import.meta.env.VITE_GET_USERS, {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-type": "application/json" },
+                body: JSON.stringify({
+                    A:"1",
+                    B:"e367e4875e95abcbe315a865a2c09f1d",
+                    C:"Computer: Windows"
+                    })
+            })
                 .then( res => {
                     console.log(res.data)
                     if(res.data == "Err"){
