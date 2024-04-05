@@ -36,7 +36,7 @@ export const FetchUsers = () => {
         <h3>Users List</h3>
         <i className='icon table'></i>
         <i className='icon list'></i>
-        {usersTable.length > 0 ? (
+
             <table className='ui table celled loading'>
                         <thead>
                             <tr>
@@ -65,9 +65,7 @@ export const FetchUsers = () => {
                             ))}
                         </tbody>
                     </table>  
-                ) : (
-                    <p>No data available</p>
-                )}
+
         </div>
  
     </>
