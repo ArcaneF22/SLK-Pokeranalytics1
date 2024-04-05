@@ -26,7 +26,7 @@ export const FetchUsers = () => {
                                         }).then((response) => {
                                             return response.json()
                                         }).then((response) => {
-                                            console.log(res.data)
+                                            console.log(response.data)
                                             if(response.data == "Err"){
                                                 setusersTable("Not found...")
                                             } else {
