@@ -12,9 +12,7 @@ export const FetchUsers = () => {
     
         const fetchData = async () => {
             try{
-                setMessage("Loading...");
-                setMessageicon("notched circle loading icon purple")
-                const response = await fetch(import.meta.env.VITE_GO_USERS,{
+                const response = await fetch(import.meta.env.VITE_GET_USERS,{
                                             method: "POST",
                                             headers: { "Accept": "application/json", "Content-type": "application/json" },
                                             body: JSON.stringify({
