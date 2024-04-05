@@ -22,7 +22,7 @@ export const FetchUsers = () => {
                                             C:"Mobile: Android"
                                             })
                                         }).then((response) => {
-                                            console.log(response.data)
+                                            console.log(response)
                                             if(response.data == "Err"){
                                                 setusersTable("Not found...")
                                             } else {
