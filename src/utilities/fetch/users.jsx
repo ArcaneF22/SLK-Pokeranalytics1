@@ -10,7 +10,9 @@ export const FetchUsers = () => {
     useLayoutEffect(() => {
     const fetchData = async () => {
             axios.get(import.meta.env.VITE_GET_USERS)
-                .then( res => setusersTable(res.data)  )
+                .then( res => {
+                    setusersTable(res.data)
+                })
                 .catch( error=> console.log(error) )
     };
     fetchData();
