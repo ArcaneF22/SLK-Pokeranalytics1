@@ -23,7 +23,7 @@ export const FetchUsers = () => {
                                             }).then((response) => {
                                                 return response.json()
                                             }).then((response) => {
-                                                console.log(response[0])
+                                                console.log(response)
                                                 if(response[0]=="Err"){
                                                     alert("Err")
                                                 } else {
