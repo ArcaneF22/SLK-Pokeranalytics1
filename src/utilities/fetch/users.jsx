@@ -8,9 +8,10 @@ export const FetchUsers = () => {
     const [loading, setLoading] = useState(false);
 
     //FETCH USER DATA
+
     useEffect(() => {
         fetchUsers();
-    }, []);  
+      }, []);
 
     async function fetchUsers() {
         try {
@@ -21,6 +22,7 @@ export const FetchUsers = () => {
           });
       
           console.log('Data:', response.data);
+          setusersTable(response.data);
         } catch (error) {
           console.error('Error:', error.message);
         }
