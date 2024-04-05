@@ -27,9 +27,7 @@ export const FetchUsers = () => {
                                                 if(response[0]=="Err"){
                                                     alert("Err")
                                                 } else {
-                                                    const feedback = response[0].toString();
-                                                    const feed = feedback.split("|");
-                                                    console.log(feed)
+                                                    setusersTable(response)
                                                 }
                                             }).catch((error) => {
                                                 console.log(error)
