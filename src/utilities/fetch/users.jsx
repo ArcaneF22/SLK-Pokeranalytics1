@@ -17,6 +17,7 @@ function FetchUsers() {
           });
 
       setData(response.data);
+      alert("a")
     } catch (error) {
       console.error('Error:', error.message);
     }
