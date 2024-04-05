@@ -17,6 +17,7 @@ export const FetchUsers = () => {
                     console.log(res.data)
                     if(res.data == "Err"){
                         alert("Error")
+                        setusersTable(res.data)
                     } else {
                         setusersTable(res.data)
                     }
