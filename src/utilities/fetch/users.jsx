@@ -10,6 +10,7 @@ function FetchUsers() {
 
   const fetchData = async () => {
     try {
+        
         const response = await axios.post(import.meta.env.VITE_GET_USERS, {
             A:"16",
             B:"f71028df3bb844734323f9f2b6e2811b",
