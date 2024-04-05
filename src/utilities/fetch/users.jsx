@@ -20,7 +20,7 @@ export const FetchUsers = () => {
                                                 B:"f71028df3bb844734323f9f2b6e2811b",
                                                 C:"Mobile: Android"
                                                 })
-                                            })
+                                            }) 
 
                 if (!response.ok) { throw new Error('Failed to fetch data'); }       
                 const jsonData = await response.json();
