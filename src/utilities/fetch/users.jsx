@@ -1,48 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
+import * as Set from '../constants';
 
 export const FetchUsers = () => {
 
-  const [data, setData] = useState([]);
+  const [tableUsers, settableUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-
-  const fetchData = async () => {
+  async function getUsers() {
+    setLoading(true)
     try {
-
-        const response = await axios.post(import.meta.env.VITE_GET_USERS, {
-            A:"16",
-            B:"f71028df3bb844734323f9f2b6e2811b",
-            C:"Mobile: Android"
-          });
-
-      setData(response.data);
-      alert("a")
+      
+      const response = await axios.post(Set.Fetch['users'], Set.Auth);
+      settableUsers(response.data);
+      console.log(response.data)
+      setLoading(false)
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error fetching data: ", error);
     }
-  };
-  fetchData();
+  }
+
+  useLayoutEffect(() => {
+    getUsers();
+  }, []);
+
   return (
-    <div>
-      <h1>Data Table</h1>
-      <table>
+<>
+
+{loading ? (
+        <p>Loading table</p>
+      ) : (
+        <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Column 2</th>
+            {/* More columns as needed */}
           </tr>
         </thead>
         <tbody>
-          {data.map(item => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.nickname}</td>
-              <td>{item.email}</td>
+          {tableUsers.map((row, index) => (
+            <tr key={index}>
+              <td>{row.id}</td>
+              <td>{row.nickname}</td>
+              {/* More cells as needed */}
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+      )}
+
+</>
+
   );
 }
