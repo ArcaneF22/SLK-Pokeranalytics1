@@ -20,18 +20,11 @@ export const FetchUsers = () => {
                                                 B:"f71028df3bb844734323f9f2b6e2811b",
                                                 C:"Mobile: Android"
                                                 })
-                                            }).then((response) => {
-                                                return response.json()
-                                            }).then((response) => {
-                                                console.log(response)
-                                                if(response=="Err"){
-                                                    alert("Err")
-                                                } else {
-                                                    setusersTable(response)
-                                                }
-                                            }).catch((error) => {
-                                                console.log(error)
                                             })
+
+                if (!response.ok) { throw new Error('Failed to fetch data'); }       
+                const jsonData = await response.json();
+                setusersTable(jsonData)
         
             } catch (err){
                 console.log(err)
