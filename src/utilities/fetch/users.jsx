@@ -21,11 +21,11 @@ export const FetchUsers = () => {
                                                 C:"Mobile: Android"
                                                 })
                                             }) 
-
+                console.log("---"+response)                                              
                 if (!response.ok) { throw new Error('Failed to fetch data'); }       
                 const jsonData = await response.json();
                 setusersTable(jsonData)
-        
+                console.log(jsonData)                    
             } catch (err){
                 console.log(err)
             }
