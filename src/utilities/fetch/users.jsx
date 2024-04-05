@@ -5,7 +5,6 @@ function FetchUsers() {
   const [data, setData] = useState([]);
 
 
-
   const fetchData = async () => {
     try {
 
