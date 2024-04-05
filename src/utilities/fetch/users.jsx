@@ -21,10 +21,8 @@ export const FetchUsers = () => {
                                                 C:"Mobile: Android"
                                                 })
                                             }).then((response) => {
-                                                return response.json()
-                                            }).then((response) => {
-                                                console.log(response[0])
-                                                alert(response[0])
+                                                console.log(response.data)
+                                                alert(response.data)
                                             }).catch((error) => {
                                                 console.log(error)
                                             })
