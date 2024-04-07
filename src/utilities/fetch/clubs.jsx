@@ -40,11 +40,13 @@ export const FetchClubs = () => {
 
 {loading ? (
         <div className="ui segment">
-          <div className="ui active inverted dimmer">
-            <div className="ui text loader">Loading</div>
-          </div>
-          <p></p>
+        <div className="ui active inverted dimmer">
+          <br /><br />
+        <div class="ui indeterminate text loader">Loading content</div>
+        <br /><br />
         </div>
+        <p></p>
+      </div>
       ) : (
         <table className='ui celled striped table'>
         <thead>
