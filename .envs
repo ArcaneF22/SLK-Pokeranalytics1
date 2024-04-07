@@ -1,5 +1,11 @@
 GENERATE_SOURCEMAP  = false
 
-VITE_GO_LOGIN          = https://13.211.65.106/pokerapp/verify/login.php
-VITE_GET_USERS         = https://13.211.65.106/pokerapp/fetch/fetch_users.php
-VITE_GET_AUTH           = https://13.211.65.106/pokerapp/verify/authenticate.php
+VITE_GO_LOGIN          		= https://13.211.65.106/pokerapp/verify/login.php
+VITE_GET_USERS          	= https://13.211.65.106/pokerapp/fetch/fetch_users.php
+VITE_GET_ACCOUNTS			= https://13.211.65.106/pokerapp/fetch/fetch_accounts.php
+VITE_GET_APPS          		= https://13.211.65.106/pokerapp/fetch/fetch_applications.php
+VITE_GET_CLUBS          	= https://13.211.65.106/pokerapp/fetch/fetch_clubs.php
+VITE_GET_HISTORY			= https://13.211.65.106/pokerapp/fetch/fetch_history.php
+VITE_GET_NOTIFICATION 		= https://13.211.65.106/pokerapp/fetch/fetch_notification.php
+
+VITE_GET_AUTH           	= https://13.211.65.106/pokerapp/verify/authenticate.php
