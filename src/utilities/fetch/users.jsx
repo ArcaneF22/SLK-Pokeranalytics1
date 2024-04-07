@@ -34,7 +34,7 @@ export const FetchUsers = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Column 2</th>
+            <th>Nickname</th>
             {/* More columns as needed */}
           </tr>
         </thead>
