@@ -36,11 +36,10 @@ export const FetchUsers = () => {
 
 {loading ? (
         <div className="ui segment basic">
-          <div className="ui active inverted dimmer">
+        <div className="ui active inverted dimmer">
           <div class="ui indeterminate text loader">Loading content</div>
-          </div>
-          <p></p>
         </div>
+      </div>
       ) : (
         <table className='ui celled striped table'>
         <thead>
