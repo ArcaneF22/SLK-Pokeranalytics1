@@ -3,14 +3,16 @@ import axios from 'axios';
 import * as Set from '../constants';
 
 export const FetchAccounts = () => {
+
+  const [tableAccounts, settableAccounts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
                           B: Token['token'],
                           C: Token['gadget']
                       };
-  const [tableAccounts, settableAccounts] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   async function getAccounts() {
     setLoading(true)

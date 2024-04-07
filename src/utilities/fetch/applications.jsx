@@ -6,12 +6,14 @@ export const FetchApplications = () => {
 
   const [tableApplications, settableApplications] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
                           B: Token['token'],
                           C: Token['gadget']
                       };
+                      
   async function getApplications() {
     setLoading(true)
     try {

@@ -9,12 +9,14 @@ export const FetchClubs = () => {
 
   const [tableClubs, settableClubs] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
                           B: Token['token'],
                           C: Token['gadget']
                       };
+                      
   async function getClubs() {
     setLoading(true)
     try {
