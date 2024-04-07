@@ -12,7 +12,7 @@ export const Fetch = {
                         clubs:          import.meta.env.VITE_GET_CLUBS,
                         history:        import.meta.env.VITE_GET_HISTORY,
                         notification:        import.meta.env.VITE_GET_NOTIFICATION,
-                        authenticate:        import.meta.env.VITE_GET_AUTHENTICATE,
+                        authenticate:        import.meta.env.VITE_GET_AUTHENTICATE
                     };
 
 export const Path = {
