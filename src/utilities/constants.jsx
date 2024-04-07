@@ -1,10 +1,4 @@
-const Token = JSON.parse( localStorage.getItem('Token') );
 
-export const Auth = {
-                        A: Token['id'],
-                        B: Token['token'],
-                        C: Token['gadget']
-                    };
 export const Fetch = {
                         users:          import.meta.env.VITE_GET_USERS,
                         accounts:       import.meta.env.VITE_GET_ACCOUNTS,
