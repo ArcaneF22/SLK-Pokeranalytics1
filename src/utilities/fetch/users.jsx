@@ -1,17 +1,22 @@
 import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
-import * as Set from '../auth';
+import * as Set from '../constants';
 
 export const FetchUsers = () => {
 
   const [tableUsers, settableUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
+  const Auth = {
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
+                      };
   async function getUsers() {
     setLoading(true)
     try {
       
-      const response = await axios.post(Set.Fetch['users'], Set.Auth);
+      const response = await axios.post(Set.Fetch['users'], Auth);
       settableUsers(response.data);
       console.log("Got it...")
       setLoading(false)

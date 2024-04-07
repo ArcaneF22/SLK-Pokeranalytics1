@@ -3,7 +3,12 @@ import axios from 'axios';
 import * as Set from '../constants';
 
 export const FetchApplications = () => {
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
+  const Auth = {
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
+                      };
   const [tableApplications, settableApplications] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -11,7 +16,7 @@ export const FetchApplications = () => {
     setLoading(true)
     try {
       
-      const response = await axios.post(Set.Fetch['applications'], Set.Auth);
+      const response = await axios.post(Set.Fetch['applications'], Auth);
       settableApplications(response.data);
       console.log("Got it...")
       setLoading(false)

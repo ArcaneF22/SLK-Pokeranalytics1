@@ -6,12 +6,17 @@ export const FetchHistory = () => {
 
   const [tableHistory, settableHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
+  const Auth = {
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
+                      };
   async function getHistory() {
     setLoading(true)
     try {
       
-      const response = await axios.post(Set.Fetch['history'], Set.Auth);
+      const response = await axios.post(Set.Fetch['history'], Auth);
       settableHistory(response.data);
       console.log("Got it...")
       setLoading(false)

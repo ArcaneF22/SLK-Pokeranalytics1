@@ -6,12 +6,17 @@ export const FetchNotification = () => {
 
   const [tableNotification, settableNotification] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
+  const Auth = {
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
+                      };
   async function getNotification() {
     setLoading(true)
     try {
       
-      const response = await axios.post(Set.Fetch['notification'], Set.Auth);
+      const response = await axios.post(Set.Fetch['notification'], Auth);
       settableNotification(response.data);
       console.log("Got it...")
       setLoading(false)

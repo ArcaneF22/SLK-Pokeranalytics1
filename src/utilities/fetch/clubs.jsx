@@ -9,12 +9,17 @@ export const FetchClubs = () => {
 
   const [tableClubs, settableClubs] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
+  const Auth = {
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
+                      };
   async function getClubs() {
     setLoading(true)
     try {
       
-      const response = await axios.post(Set.Fetch['clubs'], Set.Auth);
+      const response = await axios.post(Set.Fetch['clubs'], Auth);
       settableClubs(response.data);
       console.log("Got it...")
       setLoading(false)
