@@ -1,4 +1,4 @@
-
+import { FetchAccounts } from '../utilities/fetch/accounts'
 
 export const AccountsPage = () => {
 
