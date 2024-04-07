@@ -7,6 +7,7 @@ export const Auth = {
                     };
 export const Fetch = {
                         users: import.meta.env.VITE_GET_USERS,
+                        accounts: import.meta.env.VITE_GET_ACCOUNTS,
                         apps: import.meta.env.VITE_GET_APPS,
                         clubs: import.meta.env.VITE_GET_CLUBS
                     };
