@@ -13,7 +13,7 @@ export const FetchApplications = () => {
                           B: Token['token'],
                           C: Token['gadget']
                       };
-                      
+
   async function getApplications() {
     setLoading(true)
     try {
@@ -35,7 +35,12 @@ export const FetchApplications = () => {
 <>
 
 {loading ? (
-        <p>Loading table</p>
+        <div className="ui segment">
+          <div className="ui active inverted dimmer">
+            <div className="ui text loader">Loading</div>
+          </div>
+          <p></p>
+        </div>
       ) : (
         <table className='ui celled striped table'>
         <thead>

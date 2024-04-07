@@ -16,7 +16,7 @@ export const FetchClubs = () => {
                           B: Token['token'],
                           C: Token['gadget']
                       };
-                      
+
   async function getClubs() {
     setLoading(true)
     try {
@@ -39,7 +39,12 @@ export const FetchClubs = () => {
 <>
 
 {loading ? (
-        <p>Loading table</p>
+        <div className="ui segment">
+          <div className="ui active inverted dimmer">
+            <div className="ui text loader">Loading</div>
+          </div>
+          <p></p>
+        </div>
       ) : (
         <table className='ui celled striped table'>
         <thead>

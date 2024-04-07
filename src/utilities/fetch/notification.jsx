@@ -6,7 +6,7 @@ export const FetchNotification = () => {
 
   const [tableNotification, settableNotification] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
@@ -35,7 +35,12 @@ export const FetchNotification = () => {
 <>
 
 {loading ? (
-        <p>Loading table</p>
+        <div className="ui segment">
+          <div className="ui active inverted dimmer">
+            <div className="ui text loader">Loading</div>
+          </div>
+          <p></p>
+        </div>
       ) : (
         <table className='ui celled striped table'>
         <thead>
