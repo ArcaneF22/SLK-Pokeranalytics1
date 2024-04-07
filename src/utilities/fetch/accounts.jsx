@@ -10,6 +10,7 @@ export const FetchAccounts = () => {
   async function getAccounts() {
     setLoading(true)
     try {
+      
       const response = await axios.post(Set.Fetch['accounts'], Set.Auth);
       settableAccounts(response.data);
       console.log(response.data)
@@ -34,23 +35,15 @@ export const FetchAccounts = () => {
           <tr>
             <th>Account ID</th>
             <th>Account Nickname</th>
-            <th>Account Role</th>
-            <th>Account Clubs Count</th>
-            <th>User</th>
-            <th>Application</th>
-            <th>Status</th>
+            {/* More columns as needed */}
           </tr>
         </thead>
         <tbody>
-          {tableAccounts.map((i, index) => (
+          {tableAccounts.map((row, index) => (
             <tr key={index}>
-              <td>{i.accountID}</td>
-              <td>{i.accountNickname}</td>
-              <td>{i.accountRole}</td>
-              <td>{i.accountClubsCount}</td>
-              <td>ID#{i.userID}: {i.userNickname}</td>
-              <td>ID#{i.appID}: {i.appName}</td> 
-              <td>{i.status}</td> 
+              <td>{row.accountID}</td>
+              <td>{row.accountNickname}</td>
+              {/* More cells as needed */}
             </tr>
           ))}
         </tbody>
