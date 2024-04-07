@@ -36,11 +36,12 @@ export const FetchUsers = () => {
 
 {loading ? (
         <div className="ui segment">
+                      <br /><br />
           <div className="ui active inverted dimmer">
-            <br /><br />
+
           <div class="ui indeterminate text loader">Loading content</div>
-          <br /><br />
-          </div>
+
+          </div>          <br /><br />
           <p></p>
         </div>
       ) : (
