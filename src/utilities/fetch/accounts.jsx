@@ -13,7 +13,7 @@ export const FetchAccounts = () => {
       
       const response = await axios.post(Set.Fetch['accounts'], Set.Auth);
       settableAccounts(response.data);
-      console.log(response.data)
+      console.log("Got it...")
       setLoading(false)
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -30,20 +30,30 @@ export const FetchAccounts = () => {
 {loading ? (
         <p>Loading table</p>
       ) : (
-        <table>
+        <table className='ui celled striped table'>
         <thead>
           <tr>
             <th>Account ID</th>
             <th>Account Nickname</th>
-            {/* More columns as needed */}
+            <th>Account Role</th>
+            <th>Account Clubs</th>
+            <th>User</th>
+            <th>User Avatar</th>
+            <th>Application</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {tableAccounts.map((row, index) => (
+          {tableAccounts.map((i, index) => (
             <tr key={index}>
-              <td>{row.accountID}</td>
-              <td>{row.accountNickname}</td>
-              {/* More cells as needed */}
+              <td>{i.accountID}</td>
+              <td>{i.accountNickname}</td>
+              <td>{i.accountRole}</td>
+              <td>{i.accountClubsCount}</td>
+              <td>ID#{i.userID}: {i.userNickname}</td>
+              <td>{i.userAvatar}</td>
+              <td>ID#{i.appID}: {i.appName}</td>
+              <td>{i.status}</td>
             </tr>
           ))}
         </tbody>

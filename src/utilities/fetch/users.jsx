@@ -13,7 +13,7 @@ export const FetchUsers = () => {
       
       const response = await axios.post(Set.Fetch['users'], Set.Auth);
       settableUsers(response.data);
-      console.log(response.data)
+      console.log("Got it...")
       setLoading(false)
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -30,20 +30,30 @@ export const FetchUsers = () => {
 {loading ? (
         <p>Loading table</p>
       ) : (
-        <table>
+        <table className='ui celled striped table'>
         <thead>
           <tr>
             <th>ID</th>
             <th>Nickname</th>
-            {/* More columns as needed */}
+            <th>Role</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Avatar</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {tableUsers.map((row, index) => (
+          {tableUsers.map((i, index) => (
             <tr key={index}>
-              <td>{row.id}</td>
-              <td>{row.nickname}</td>
-              {/* More cells as needed */}
+              <td>{i.id}</td>
+              <td>{i.nickname}</td>
+              <td>{i.role}</td>
+              <td>{i.email}</td>
+              <td>{i.username}</td>
+              <td>{i.password}</td>
+              <td>{i.avatar}</td>
+              <td>{i.status}</td>
             </tr>
           ))}
         </tbody>

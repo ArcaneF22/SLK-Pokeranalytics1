@@ -38,6 +38,10 @@ export const Header = () => {
         Accounts Page
       </Link>
 
+      <Link to="/notification" className={getRoute('/notification')}>
+        Notification Page
+      </Link>
+
       <Link to="/history" className={getRoute('/history')}>
         History Page
       </Link>

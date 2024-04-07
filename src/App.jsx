@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Protected } from './protection/protected';
@@ -11,6 +12,7 @@ import { ApplicationsPage } from './pages/applications';
 import { ClubsPage } from './pages/clubs';
 import { UsersPage } from './pages/users';
 import { AccountsPage } from './pages/accounts';
+import { NotificationPage } from './pages/notification';
 import { HistoryPage } from './pages/history';
 import { NotFoundPage } from './pages/notfound';
 
@@ -64,6 +66,13 @@ function App() {
               element={ 
                 <Protected>
                   <AccountsPage />
+                </Protected>
+              }
+            />
+            <Route path="/notification"
+              element={
+                <Protected>
+                  <NotificationPage />
                 </Protected>
               }
             />
