@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
-import * as Set from '../constants';
+import * as Set from '../auth';
 
 export const FetchUsers = () => {
 
