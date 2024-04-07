@@ -3,15 +3,15 @@ import axios from 'axios';
 import * as Set from '../constants';
 
 export const FetchApplications = () => {
+
+  const [tableApplications, settableApplications] = useState([]);
+  const [loading, setLoading] = useState(false);
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
                           B: Token['token'],
                           C: Token['gadget']
                       };
-  const [tableApplications, settableApplications] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   async function getApplications() {
     setLoading(true)
     try {

@@ -3,11 +3,11 @@ import axios from 'axios';
 import * as Set from '../constants';
 
 export const FetchAccounts = () => {
-
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
-                          A: Set.Token['id'],
-                          B: Set.Token['token'],
-                          C: Set.Token['gadget']
+                          A: Token['id'],
+                          B: Token['token'],
+                          C: Token['gadget']
                       };
   const [tableAccounts, settableAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
