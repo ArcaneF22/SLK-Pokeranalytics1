@@ -6,6 +6,9 @@ export const FetchAccounts = () => {
 
   const [tableAccounts, settableAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [data, setData]= useState([]);
+  const [search, SetSearch]= useState('');
+  const [filter, setFilter]= useState([]);
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
@@ -20,6 +23,9 @@ export const FetchAccounts = () => {
       
       const response = await axios.post(Set.Fetch['accounts'], Auth);
       settableAccounts(response.data);
+      setData(response.data);
+      setFilter(response.data);
+
       console.log("Got it...")
       setLoading(false)
     } catch (error) {
@@ -31,6 +37,28 @@ export const FetchAccounts = () => {
     getAccounts();
   }, []);
 
+  useLayoutEffect(()=>{
+    const result= data.filter((item)=>{
+     return item.title.toLowerCase().match(search.toLocaleLowerCase());
+    });
+    setFilter(result);
+},[search]);
+
+const handleDelete=(val)=>{
+  const newdata= data.filter((item)=>item.id!==val);
+  setFilter(newdata);
+ }
+ 
+ const tableHeaderstyle={
+  headCells:{
+      style:{
+          fontWeight:"bold",
+          fontSize:"14px",
+          backgroundColor:"#ccc"
+
+      },
+  },
+ }
   return (
 <>
 
@@ -41,6 +69,7 @@ export const FetchAccounts = () => {
         </div>
       </div>
       ) : (
+        <>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -69,6 +98,35 @@ export const FetchAccounts = () => {
           ))}
         </tbody>
       </table>
+      <h1>Product List</h1>
+            <DataTable 
+            customStyles={ tableHeaderstyle}
+            columns={columns}
+            data={filter}
+            pagination
+            selectableRows
+            fixedHeader
+            selectableRowsHighlight
+            highlightOnHover
+            actions={
+                <button className="btn btn-success">Export Pdf</button>
+            }
+            subHeader
+             subHeaderComponent={
+                <input type="text"
+                className="w-25 form-control"
+                placeholder="Search..."
+                value={ search}
+                onChange={(e)=>SetSearch(e.target.value)}
+                
+                />
+             }
+             subHeaderAlign="right"
+            
+            />
+
+        </>
+
       )}
 
 </>
