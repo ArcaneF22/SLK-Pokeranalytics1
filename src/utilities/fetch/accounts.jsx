@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
-
+import DataTable from "react-data-table-component";
 export const FetchAccounts = () => {
 
   const [tableAccounts, settableAccounts] = useState([]);
