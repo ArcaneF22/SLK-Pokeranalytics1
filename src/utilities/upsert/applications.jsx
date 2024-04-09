@@ -128,7 +128,7 @@ export const UpsertApplications = () => {
               <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
             </div>
           </div>
-          { appStatus ? 
+          { appStatus === 0 ? 
             <div className="ui button green" onClick={changeStatus}>
               <i className="times circle outline icon"></i>
               Active
@@ -146,7 +146,7 @@ export const UpsertApplications = () => {
 
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
-            { cancels === 0 ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
+            { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
             <p>{message}</p>
           </div>
 
