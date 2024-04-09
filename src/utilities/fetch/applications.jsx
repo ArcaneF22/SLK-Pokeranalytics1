@@ -34,11 +34,20 @@ export const FetchApplications = () => {
 
   function setStatus(i) {
     if (i.status == "Active") {
-      return <button className='ui button green'>Active</button>;
+      return  <button className='ui button green'>
+                  <i className="check circle outline icon"></i>
+                  Active
+              </button>;
     } else if (i.status == "Pending") {
-      return <button className='ui button yellow'>Pending</button>;
+      return  <button className='ui button yellow'>
+                  <i class="spinner icon"></i>
+                  Pending
+              </button>;
     } else {
-      return <button className='ui button red'>Inactive</button>;
+      return  <button className='ui button red'>
+                  <i className="times circle outline icon"></i>
+                  Inactive
+              </button>;
     }
   }
 
