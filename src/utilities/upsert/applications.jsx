@@ -13,7 +13,7 @@ export const UpsertApplications = () => {
   const [appCompany, setappCompany] =   useState("");
   const [appDetails, setappDetails] =   useState("");
   const [appImage, setappImage] =       useState("");
-  const [appStatus, setappStatus] =     useState("");
+  const [appStatus, setappStatus] =     useState("0");
   const Upsert = {
                   A: Token['id'],
                   B: Token['token'],
