@@ -95,7 +95,7 @@ export const FetchApplications = () => {
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
-                <button className='ui button red'>
+                <button className='ui button red' onClick={()=> alert(i.id)}>
                     <i className="ban icon"></i>
                     Disable
                 </button>
