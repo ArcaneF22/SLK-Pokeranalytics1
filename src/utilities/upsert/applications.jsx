@@ -129,9 +129,15 @@ export const UpsertApplications = () => {
             </div>
           </div>
           { checkStatus ? 
-            <div className="ui button green" onClick={changeStatus}>Active</div>
+            <div className="ui button green" onClick={changeStatus}>
+              <i className="times circle outline icon"></i>
+              Active
+            </div>
           :  
-            <div className="ui button red" onClick={changeStatus}>Inactive</div>
+            <div className="ui button red" onClick={changeStatus}>
+              <i class="check circle outline icon"></i>
+              Inactive
+            </div>
           } 
           <div className="field">
             <label>Status</label>
@@ -140,7 +146,7 @@ export const UpsertApplications = () => {
 
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
-            { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
+            { cancels == 0 ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
             <p>{message}</p>
           </div>
 
