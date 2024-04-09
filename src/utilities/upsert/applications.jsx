@@ -93,7 +93,7 @@ export const UpsertApplications = () => {
 
     return (
       <div className="ui segment">
-        <h1>Insert / Update Applications</h1>
+        <h1>Insert / Update Application</h1>
 
         <div className="ui form">
 
