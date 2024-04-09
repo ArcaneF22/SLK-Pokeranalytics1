@@ -4,7 +4,7 @@ export const RegistrationPage = () => {
 
     return (
       <div className="expand-centered">
-        <h1>RegistrationPage</h1>
+        <h1>Registration Page</h1>
       </div>
     );
   };

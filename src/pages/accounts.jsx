@@ -4,7 +4,7 @@ export const AccountsPage = () => {
 
     return (
       <div className="expand-centered">
-        <h1>AccountsPages</h1>
+        <h1>Accounts Pages</h1>
         <FetchAccounts />
       </div>
     );

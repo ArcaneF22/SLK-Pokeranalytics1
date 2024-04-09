@@ -5,7 +5,7 @@ export const ApplicationsPage = () => {
 
     return (
       <div className="expand-centered">
-        <h1>ApplicationsPage</h1>
+        <h1>Applications Page</h1>
         <UpsertApplications />
         <FetchApplications />
       </div>
