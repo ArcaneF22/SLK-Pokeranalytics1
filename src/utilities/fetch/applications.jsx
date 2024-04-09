@@ -61,7 +61,7 @@ export const FetchApplications = () => {
   };
 
   const editApplication = (id,name,image,company,details,status) => {
-    console.log("Clickedu on button in row with id:", id, name, image, company, details, status);
+    console.log("Clicked on button in row with id:", id, name, image, company, details, status);
     const array = {
                     "id": id, 
                     "name": name, 
@@ -70,7 +70,7 @@ export const FetchApplications = () => {
                     "details": details, 
                     "status": status
                   }
-    sessionStorage.setItem('editApps', JSON.stringify(array));
+    sessionStorage.setItem('editApp', JSON.stringify(array));
   };
 
   return (
