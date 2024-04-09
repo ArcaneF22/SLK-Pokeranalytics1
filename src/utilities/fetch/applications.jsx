@@ -61,7 +61,7 @@ export const FetchApplications = () => {
   };
 
   const editApplication = (id,name,image,company,details,status) => {
-    console.log("Clickedz on button in row with id:", id, name, image, company, details, status);
+    console.log("Clickedx on button in row with id:", id, name, image, company, details, status);
     
     sessionStorage.setItem('editApp', [{"id": id, "name": name, "image": image, "company": company, "details": details, "status": status}]);
   };
