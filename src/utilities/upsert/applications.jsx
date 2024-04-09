@@ -1,34 +1,58 @@
-import { useState } from "react";
+import React, { useState, useLayoutEffect } from 'react';
+import axios from 'axios';
+import * as Set from '../constants';
 
 export const UpsertApplications = () => {
 
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
 
-  const [appID, setappID] =             useState("");
+  const [appID, setappID] =             useState("0");
   const [appName, setappName] =         useState("");
   const [appCompany, setappCompany] =   useState("");
   const [appDetails, setappDetails] =   useState("");
   const [appImage, setappImage] =       useState("");
   const [appStatus, setappStatus] =     useState("");
+  const Upsert = {
+                  A: Token['id'],
+                  B: Token['token'],
+                  C: Token['gadget'],
+                  appID,
+                  appName,
+                  appCompany,
+                  appDetails,
+                  appImage,
+                  appStatus
+              };
 
   const validate = (e) => {
     e.preventDefault()
     setLoading(true)
 
       if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
-            setMessage("Details incomplete!")
+        setMessage("Details incomplete!")
       } else {
-        proceedUpsert()
+        submitApplications()
       }
-      
   }
 
-  const proceedUpsert = async () => {
-    setMessage("Details submitting")
+  async function submitApplications() {
+    setLoading(true)
+    try {
+      const response = await axios.post(Set.Upsert['applications'], Upsert);
+      setMessage(response.data);
+      console.log(response.data)
+      setLoading(false)
+    } catch (error) {
+      setMessage(error);
+      console.error("Error fetching data: ", error);
+    }
   }
 
-
+  useLayoutEffect(() => {
+    //sendApplications();
+  }, []);
 
     return (
       <div className="ui segment">
