@@ -62,7 +62,14 @@ export const FetchApplications = () => {
 
   const editApplication = (id,name,image,company,details,status) => {
     console.log("Clickedu on button in row with id:", id, name, image, company, details, status);
-    const array = {"id": id, "name": name, "image": image, "company": company, "details": details, "status": status}
+    const array = {
+                    "id": id, 
+                    "name": name, 
+                    "image": image, 
+                    "company": company, 
+                    "details": details, 
+                    "status": status
+                  }
     sessionStorage.setItem('editApp', JSON.stringify(array));
   };
 
