@@ -44,10 +44,9 @@ export const UpsertApplications = () => {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
       console.log(response.data)
       if(response.data.includes("Duplicate")){
-        const data = parseFloat(response.data.match(/[\d.]+/));
-
+        setappID( parseFloat(response.data.match(/[\d.]+/)) )
         setButton("Proceed to update")
-        setMessage("Halla Duplicate"+data );
+        setMessage("Duplicate found! Would you like to update existing data?");
       } else {
         setMessage(response.data);
         console.log(response.data)
