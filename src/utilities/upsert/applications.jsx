@@ -53,7 +53,7 @@ export const UpsertApplications = () => {
           const number = parseFloat( response.data.match(/[\d.]+/) );
           setappID( number )
           setButton("Proceed to Update")
-          setMessage("Duplicate found! Would you like to update existing data? ID#"+ number);
+          setMessage("Duplicate found! Would you like to update existing data? App ID#"+ number);
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
       } else if(response.data.includes("Updated")){
