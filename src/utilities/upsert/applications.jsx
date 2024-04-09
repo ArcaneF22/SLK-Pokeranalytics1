@@ -105,7 +105,7 @@ export const UpsertApplications = () => {
 
         <div className="ui form">
 
-          <div className='two fields'>
+          <div className='five fields'>
             <div className="field">
               <label>Name</label>
               <input type="text" value={appName} onChange={(e) => setappName(e.currentTarget.value)}/>
@@ -115,9 +115,7 @@ export const UpsertApplications = () => {
               <label>Image</label>
               <input type="text" value={appImage} onChange={(e) => setappImage(e.currentTarget.value)}/>
             </div>
-          </div>
 
-          <div className='two fields'>
             <div className="field">
               <label>Company</label>
               <input type="text" value={appCompany} onChange={(e) => setappCompany(e.currentTarget.value)}/>
@@ -127,18 +125,25 @@ export const UpsertApplications = () => {
               <label>Details</label>
               <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
             </div>
+
+            <div className="field">
+            <label>Status</label>
+              { appStatus === "0" ? 
+                <div className="ui button green" onClick={changeStatus}>
+                  <i className="check circle outline icon"></i>
+                  Active
+                </div>
+              :  
+                <div className="ui button red" onClick={changeStatus}>
+                  <i class="times circle outline icon"></i>
+                  Inactive
+                </div>
+              } 
+            </div>
+
           </div>
-          { appStatus === "0" ? 
-            <div className="ui button green" onClick={changeStatus}>
-              <i className="check circle outline icon"></i>
-              Active
-            </div>
-          :  
-            <div className="ui button red" onClick={changeStatus}>
-              <i class="times circle outline icon"></i>
-              Inactive
-            </div>
-          } 
+
+
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
             { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
