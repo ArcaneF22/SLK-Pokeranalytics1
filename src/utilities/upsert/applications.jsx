@@ -16,7 +16,6 @@ export const UpsertApplications = () => {
     e.preventDefault()
     setLoading(true)
 
-
       if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
             setMessage("Details incomplete!")
       } else {
@@ -27,7 +26,7 @@ export const UpsertApplications = () => {
   }
 
   const proceedUpsert = async () => {
-    alert("aaa")
+    setMessage("Details submitting")
   }
 
 
