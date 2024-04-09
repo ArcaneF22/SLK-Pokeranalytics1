@@ -69,7 +69,7 @@ export const UpsertApplications = () => {
           </div>
 
           <div className="field">
-            <div className="ui button purple">Submit Application</div>
+            <div className="ui button purple">Submit</div>
             <p>{message}</p>
           </div>
 
