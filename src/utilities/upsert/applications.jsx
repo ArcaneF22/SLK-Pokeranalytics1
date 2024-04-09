@@ -43,14 +43,22 @@ export const UpsertApplications = () => {
     try {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
       console.log(response.data)
+
       if(response.data.includes("Duplicate")){
-        setappID( parseFloat(response.data.match(/[\d.]+/)) )
-        setButton("Proceed to Update")
-        setMessage("Duplicate found! Would you like to update existing data?");
+          const number = parseFloat( response.data.match(/[\d.]+/));
+          setappID( number )
+          setButton("Proceed to Update")
+          setMessage("Duplicate found! Would you like to update existing data? "+ number);
+      } else if(response.data.includes("Added")){
+          setMessage("New poker application successfully added!");
+      } else if(response.data.includes("Updated")){
+          setMessage("Poker application successfully updated!");
+      } else if(response.data.includes("Err Add") || response.data.includes("Err Update")){
+          setMessage("Something went wrong! Please retry");
       } else {
-        setMessage(response.data);
-        console.log(response.data)
-        setLoading(false)
+          setMessage(response.data);
+          console.log(response.data)
+          setLoading(false)
       }
       
 
