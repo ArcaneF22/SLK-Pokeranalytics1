@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const UpsertApplication = () => {
+export const UpsertApplications = () => {
 
   const appID =       useState("")
   const appName =     useState("")
