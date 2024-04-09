@@ -5,6 +5,7 @@ import * as Set from '../constants';
 export const UpsertApplications = () => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
+  
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Application");
@@ -27,6 +28,17 @@ export const UpsertApplications = () => {
                   appImage,
                   appStatus
               };
+
+const editApp = JSON.parse( sessionStorage.getItem('editApp') );
+if(editApp){
+  setappID(editApp['id'])
+  setappName(editApp['name'])
+  setappCompany(editApp['company'])
+  setappDetails(editApp['details'])
+  setappImage(editApp['image'])
+  setappStatus(editApp['status'])
+}
+
 
   const validate = (e) => {
     e.preventDefault()
