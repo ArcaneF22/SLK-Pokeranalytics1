@@ -91,13 +91,13 @@ export const FetchApplications = () => {
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
               <td className='ui grid'>
-                <div className='column'>
+                <div className='eight wide column'>
                   <button className='ui button blue fluid'>
                     <i className="edit outline icon"></i>
                     Edit
                   </button>
                 </div>
-                <div className='column'>
+                <div className='eight wide column'>
                   <button className='ui button red fluid'>
                     <i className="ban icon"></i>
                     Disable
