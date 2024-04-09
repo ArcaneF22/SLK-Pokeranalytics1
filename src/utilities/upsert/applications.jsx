@@ -45,7 +45,7 @@ export const UpsertApplications = () => {
       console.log(response.data)
 
       if(response.data.includes("Duplicate")){
-          const number = parseFloat( response.data.match(/[\d.]+/));
+          const number = parseFloat( response.data.match(/[\d.]+/) );
           setappID( number )
           setButton("Proceed to Update")
           setMessage("Duplicate found! Would you like to update existing data? "+ number);
