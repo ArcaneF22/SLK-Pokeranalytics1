@@ -88,26 +88,30 @@ export const UpsertApplications = () => {
             <input type="text" value={appID} onChange={(e) => setappID(e.currentTarget.value)}/>
           </div>
 
-          <div className="field">
-            <label>Name</label>
-            <input type="text" value={appName} onChange={(e) => setappName(e.currentTarget.value)}/>
+          <div className='two fields'>
+            <div className="field">
+              <label>Name</label>
+              <input type="text" value={appName} onChange={(e) => setappName(e.currentTarget.value)}/>
+            </div>
+
+            <div className="field">
+              <label>Image</label>
+              <input type="text" value={appImage} onChange={(e) => setappImage(e.currentTarget.value)}/>
+            </div>
           </div>
 
-          <div className="field">
-            <label>Company</label>
-            <input type="text" value={appCompany} onChange={(e) => setappCompany(e.currentTarget.value)}/>
-          </div>
+          <div className='two fields'>
+            <div className="field">
+              <label>Company</label>
+              <input type="text" value={appCompany} onChange={(e) => setappCompany(e.currentTarget.value)}/>
+            </div>
 
-          <div className="field">
-            <label>Details</label>
-            <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
+            <div className="field">
+              <label>Details</label>
+              <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
+            </div>
           </div>
-
-          <div className="field">
-            <label>Image</label>
-            <input type="text" value={appImage} onChange={(e) => setappImage(e.currentTarget.value)}/>
-          </div>
-
+          
           <div className="field">
             <label>Status</label>
             <input type="text" value={appStatus} onChange={(e) => setappStatus(e.currentTarget.value)}/>
