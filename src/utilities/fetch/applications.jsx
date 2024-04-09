@@ -90,15 +90,19 @@ export const FetchApplications = () => {
               <td>{i.details}</td>
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
-              <td>
-                <button className='ui button teal'>
-                  <i className="edit outline icon"></i>
-                  Edit
-                </button>
-                <button className='ui button red'>
-                  <i className="ban icon"></i>
-                  Disable
-                </button>
+              <td className='ui grid'>
+                <div className='column'>
+                  <button className='ui button blue fluid'>
+                    <i className="edit outline icon"></i>
+                    Edit
+                  </button>
+                </div>
+                <div className='column'>
+                  <button className='ui button red fluid'>
+                    <i className="ban icon"></i>
+                    Disable
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
