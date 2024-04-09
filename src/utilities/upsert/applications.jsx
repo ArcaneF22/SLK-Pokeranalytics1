@@ -130,12 +130,12 @@ export const UpsertApplications = () => {
           </div>
           { appStatus === "0" ? 
             <div className="ui button green" onClick={changeStatus}>
-              <i className="times circle outline icon"></i>
+              <i className="check circle outline icon"></i>
               Active
             </div>
           :  
             <div className="ui button red" onClick={changeStatus}>
-              <i class="check circle outline icon"></i>
+              <i class="times circle outline icon"></i>
               Inactive
             </div>
           } 
