@@ -91,7 +91,7 @@ export const UpsertApplications = () => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={validate}>Submit App</div>
+            <div className="ui button purple" onClick={validate}>Submit</div>
             <p>{message}</p>
           </div>
 
