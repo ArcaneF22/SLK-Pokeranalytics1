@@ -29,17 +29,6 @@ export const UpsertApplications = () => {
                   appStatus
               };
 
-const editApp = JSON.parse( sessionStorage.getItem('editApp') );
-if(editApp != null){
-  setappID(editApp['id'])
-  setappName(editApp['name'])
-  setappCompany(editApp['company'])
-  setappDetails(editApp['details'])
-  setappImage(editApp['image'])
-  setappStatus(editApp['status'])
-}
-
-
   const validate = (e) => {
     e.preventDefault()
     setLoading(true)
