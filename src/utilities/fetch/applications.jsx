@@ -55,8 +55,8 @@ export const FetchApplications = () => {
     }
   }
 
-  const disableApplication = (id) => {
-    console.log("Clicked on button in row with id:", id);
+  const disableApplication = (id,name,image) => {
+    console.log("Clicked on button in row with id:", id, name, image);
   };
 
   return (
