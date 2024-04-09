@@ -97,11 +97,6 @@ export const UpsertApplications = () => {
 
         <div className="ui form">
 
-          <div className="field">
-            <label>ID</label>
-            <input type="text" value={appID} onChange={(e) => setappID(e.currentTarget.value)}/>
-          </div>
-
           <div className='two fields'>
             <div className="field">
               <label>Name</label>
