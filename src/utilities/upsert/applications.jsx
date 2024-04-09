@@ -45,7 +45,6 @@ export const UpsertApplications = () => {
 
   const clearInput = () => {
     setappID("0")
-    setMessage("")
     setappName("")
     setappCompany("")
     setappDetails("")
