@@ -21,8 +21,7 @@ export const UpsertApplications = () => {
       } else {
         proceedUpsert()
       }
-
-
+      
   }
 
   const proceedUpsert = async () => {
