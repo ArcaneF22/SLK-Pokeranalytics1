@@ -70,7 +70,7 @@ export const FetchApplications = () => {
                     "details": details, 
                     "status": status
                   }
-    sessionStorage.setItem('editApp', JSON.stringify(array));
+    sessionStorage.setItem('editApps', JSON.stringify(array));
   };
 
   return (
