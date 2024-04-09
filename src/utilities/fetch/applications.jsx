@@ -55,8 +55,12 @@ export const FetchApplications = () => {
     }
   }
 
-  const disableApplication = (id,name,image) => {
-    console.log("Clicked on button in row with id:", id, name, image);
+  const disableApplication = (id) => {
+    console.log("Clicked on button in row with id:", id);
+  };
+
+  const editApplication = (id,name,image,company,details,status) => {
+    console.log("Clicked on button in row with id:", id, name, image, company, details, status);
   };
 
   return (
@@ -93,7 +97,7 @@ export const FetchApplications = () => {
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue'>
+                <button className='ui button blue' onClick={()=> editApplication(i.id,i.name,i.image,i.company,i.details,i.accountCount,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
