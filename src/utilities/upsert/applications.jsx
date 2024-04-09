@@ -30,7 +30,7 @@ export const UpsertApplications = () => {
               };
 
 const editApp = JSON.parse( sessionStorage.getItem('editApp') );
-if(editApp){
+if(editApp != null){
   setappID(editApp['id'])
   setappName(editApp['name'])
   setappCompany(editApp['company'])
