@@ -43,6 +43,11 @@ export const FetchApplications = () => {
                   <i class="spinner icon"></i>
                   Pending
               </button>;
+    } else if (i.status == "Pending") {
+      return  <button className='ui button yellow basic'>
+                  <i class="spinner icon"></i>
+                  Pending
+              </button>;
     } else {
       return  <button className='ui button red basic'>
                   <i className="times circle outline icon"></i>
