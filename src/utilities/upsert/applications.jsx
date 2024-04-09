@@ -128,7 +128,7 @@ export const UpsertApplications = () => {
               <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
             </div>
           </div>
-          { checkStatus ? 
+          { appStatus ? 
             <div className="ui button green" onClick={changeStatus}>
               <i className="times circle outline icon"></i>
               Active
