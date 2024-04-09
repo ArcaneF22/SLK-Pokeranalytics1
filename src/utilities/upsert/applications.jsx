@@ -58,7 +58,7 @@ export const UpsertApplications = () => {
     setCancels(false)
   }
 
-  const checkStatus = () => {
+  const changeStatus = () => {
     if(appStatus=="0"){
       setappStatus("1")
     } else {
@@ -129,9 +129,9 @@ export const UpsertApplications = () => {
             </div>
           </div>
           { checkStatus ? 
-            <div className="ui button green" onClick={checkStatus}>Active</div>
+            <div className="ui button green" onClick={changeStatus}>Active</div>
           :  
-            <div className="ui button red" onClick={checkStatus}>Inactive</div>
+            <div className="ui button red" onClick={changeStatus}>Inactive</div>
           } 
           <div className="field">
             <label>Status</label>
