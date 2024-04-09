@@ -34,22 +34,22 @@ export const FetchApplications = () => {
 
   function setStatus(i) {
     if (i.status == "Active") {
-      return  <button className='ui button green basic fluid'>
+      return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
     } else if (i.status == "Pending") {
-      return  <button className='ui button yellow basic fluid'>
+      return  <button className='ui button yellow basic'>
                   <i class="spinner icon"></i>
                   Pending
               </button>;
     } else if (i.status == "Pending") {
-      return  <button className='ui button yellow basic fluid'>
+      return  <button className='ui button yellow basic'>
                   <i class="spinner icon"></i>
                   Pending
               </button>;
     } else {
-      return  <button className='ui button red basic fluid'>
+      return  <button className='ui button red basic'>
                   <i className="times circle outline icon"></i>
                   Inactive
               </button>;
@@ -90,21 +90,15 @@ export const FetchApplications = () => {
               <td>{i.details}</td>
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
-              <td className='ui equal width center aligned grid'>
-                <div className='row'>
-                  <div className='column'>
-                    <button className='ui button blue fluid'>
-                      <i className="edit outline icon"></i>
-                      Edit
-                    </button>
-                  </div>
-                  <div className='column'>
-                    <button className='ui button red fluid'>
-                      <i className="ban icon"></i>
-                      Disable
-                    </button>
-                  </div>
-                </div>
+              <td>
+                <button className='ui button blue'>
+                  <i className="edit outline icon"></i>
+                  Edit
+                </button>
+                <button className='ui button red'>
+                  <i className="ban icon"></i>
+                  Disable
+                </button>
               </td>
             </tr>
           ))}
