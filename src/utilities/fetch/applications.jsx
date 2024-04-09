@@ -86,11 +86,11 @@ export const FetchApplications = () => {
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button teal'>
+                <button className='ui button teal basic'>
                   <i className="edit outline icon"></i>
                   Edit
                 </button>
-                <button className='ui button red'>
+                <button className='ui button red basic'>
                   <i className="trash alternate icon"></i>
                   Delete
                 </button>
