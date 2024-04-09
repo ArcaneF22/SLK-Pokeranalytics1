@@ -52,6 +52,7 @@ export const FetchApplications = () => {
             <th>Details</th>
             <th>Users</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,7 @@ export const FetchApplications = () => {
               <td>{i.details}</td>
               <td>{i.accountCount}</td>
               <td>{i.status}</td>
+              <td>Modify</td>
             </tr>
           ))}
         </tbody>
