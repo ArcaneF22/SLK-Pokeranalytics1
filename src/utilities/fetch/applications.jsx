@@ -86,7 +86,10 @@ export const FetchApplications = () => {
               <td>{i.accountCount}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button purple'>Alter</button>
+                <button className='ui button purple'>
+                <i className="hand pointer icon"></i>
+                  Select
+                </button>
               </td>
             </tr>
           ))}
