@@ -95,9 +95,7 @@ export const UpsertApplications = () => {
     }
   }
 
-  const deleteApp = () => {
 
-  }
 
   useLayoutEffect(() => {
     //sendApplications();
@@ -149,7 +147,7 @@ export const UpsertApplications = () => {
 
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
-            <div className="ui button red" onClick={deleteApp}>Delete</div>
+
             { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
             <p>{message}</p>
           </div>
