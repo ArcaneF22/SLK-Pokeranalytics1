@@ -41,9 +41,16 @@ export const UpsertApplications = () => {
     setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
-      setMessage(response.data);
-      console.log(response.data)
-      setLoading(false)
+      
+      if(response.data == 'Duplicate'){
+        setMessage("Halla Duplicate");
+      } else {
+        setMessage(response.data);
+        console.log(response.data)
+        setLoading(false)
+      }
+      
+
     } catch (error) {
       setMessage(error);
       console.error("Error fetching data: ", error);
