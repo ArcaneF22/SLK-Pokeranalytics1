@@ -56,8 +56,6 @@ export const UpsertApplications = () => {
     setCancels(false)
   }
 
-
-
   async function submitApplications() {
     setLoading(true)
     try {
@@ -81,7 +79,6 @@ export const UpsertApplications = () => {
         clearInput()
       }
       
-
     } catch (error) {
       setMessage(error);
       console.error("Error fetching data: ", error);
