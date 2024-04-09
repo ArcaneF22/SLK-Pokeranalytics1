@@ -7,7 +7,7 @@ export const UpsertApplications = () => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Application");
+  const [button, setButton] =           useState("Adds New Application");
 
   const [appID, setappID] =             useState("0");
   const [appName, setappName] =         useState("");
@@ -43,6 +43,18 @@ export const UpsertApplications = () => {
     setMessage("")
   }
 
+  const clearInput = () => {
+    setappID("0")
+    setMessage("")
+    setappName("")
+    setappCompany("")
+    setappDetails("")
+    setappImage("")
+    setappStatus("0")
+    setButton("Adds New Application")
+    setLoading(false)
+  }
+
   async function submitApplications() {
     setLoading(true)
     try {
@@ -56,8 +68,10 @@ export const UpsertApplications = () => {
           setMessage("Duplicate found! Would you like to update existing data? App ID#"+ number);
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
+          clearInput()
       } else if(response.data.includes("Updated")){
           setMessage("Poker application successfully updated!");
+          clearInput()
       } else if(response.data.includes("Err Add") || response.data.includes("Err Update")){
           setMessage("Something went wrong! Please retry");
       } else {
