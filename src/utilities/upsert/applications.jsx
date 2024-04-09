@@ -5,7 +5,6 @@ import * as Set from '../constants';
 export const UpsertApplications = () => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
-  
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Application");
