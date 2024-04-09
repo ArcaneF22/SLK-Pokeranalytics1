@@ -95,6 +95,8 @@ export const UpsertApplications = () => {
     }
   }
 
+
+  const [deletes, setDeletes] = useState(false);
   const deleteApp = () => {
 
   }
