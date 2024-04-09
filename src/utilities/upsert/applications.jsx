@@ -131,15 +131,7 @@ export const UpsertApplications = () => {
 
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
-            {
-              cancels ? 
-                <>
-                <div className="ui button grey" onClick={cancel}>Cancel</div>
-                </>
-              : 
-                null
-            }
-            
+            { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
             <p>{message}</p>
           </div>
 
