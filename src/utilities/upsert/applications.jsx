@@ -7,6 +7,7 @@ export const UpsertApplications = () => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
+  const [button, setButton] =           useState("Add Application");
 
   const [appID, setappID] =             useState("0");
   const [appName, setappName] =         useState("");
@@ -43,6 +44,7 @@ export const UpsertApplications = () => {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
       
       if(response.data == 'Duplicate'){
+        setButton("Proceed to update")
         setMessage("Halla Duplicate");
       } else {
         setMessage(response.data);
@@ -98,7 +100,7 @@ export const UpsertApplications = () => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={validate}>Submit</div>
+            <div className="ui button purple" onClick={validate}>{button}</div>
             <p>{message}</p>
           </div>
 
