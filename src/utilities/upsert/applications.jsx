@@ -42,6 +42,8 @@ export const UpsertApplications = () => {
   const cancel = () => {
     setappID("0")
     setMessage("")
+    setButton("Add New Application")
+    setCancels(false)
   }
 
   const clearInput = () => {
