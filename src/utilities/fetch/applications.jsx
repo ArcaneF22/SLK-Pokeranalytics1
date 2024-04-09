@@ -20,7 +20,6 @@ export const FetchApplications = () => {
       
       const response = await axios.post(Set.Fetch['applications'], Auth);
       settableApplications(response.data);
-      console.log(response.data)
       console.log("Got it...")
       setLoading(false)
     } catch (error) {
