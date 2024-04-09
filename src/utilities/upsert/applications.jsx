@@ -7,7 +7,7 @@ export const UpsertApplications = () => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Application");
+  const [button, setButton] =           useState("Add Application");
 
   const [appID, setappID] =             useState("0");
   const [appName, setappName] =         useState("");
