@@ -58,7 +58,6 @@ export const FetchApplications = () => {
 
   const disableApplication = (id) => {
     console.log("Clicked on button in row with id:", id);
-    // Perform actions based on the id
   };
 
   return (
@@ -99,7 +98,7 @@ export const FetchApplications = () => {
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
-                <button className='ui button red' onClick={()=> disableApplication(i.id)}>
+                <button className='ui button red' onClick={()=> disableApplication(i.id,i.name,i.image)}>
                     <i className="ban icon"></i>
                     Disable
                 </button>
