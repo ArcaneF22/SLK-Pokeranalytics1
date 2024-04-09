@@ -42,10 +42,10 @@ export const UpsertApplications = () => {
     setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
-      
+      console.log(response.data)
       if(response.data.includes("Duplicate")){
         setButton("Proceed to update")
-        setMessage("Halla Duplicate"+Number(response.data));
+        setMessage("Halla Duplicate"+parseFloat(Number(response.data)));
       } else {
         setMessage(response.data);
         console.log(response.data)
