@@ -1,4 +1,5 @@
-const Token = JSON.parse( localStorage.getItem('Token') );
+import React, { createContext, useContext } from 'react';
+
 export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
                         accounts:           import.meta.env.VITE_GET_ACCOUNTS,

@@ -56,11 +56,13 @@ export const FetchApplications = () => {
   }
 
   const disableApplication = (id) => {
+    sessionStorage.setItem('disableAppID', id);
     console.log("Clicked on button in row with id:", id);
   };
 
   const editApplication = (id,name,image,company,details,status) => {
     console.log("Clicked on button in row with id:", id, name, image, company, details, status);
+    sessionStorage.setItem('editApp', {id, name, image, company, details, status});
   };
 
   return (
