@@ -10,7 +10,7 @@ export const NotificationPage = () => {
   };
     return (
       <div className="expand-centered">
-        <h1>NotificationPage</h1>
+        <h1>Notification Pages</h1>
         <FetchNotification />
         <ChildComponent1 constantValue={constantValue} updateConstantValue={updateConstantValue} />
         <ChildComponent2 constantValue={constantValue} updateConstantValue={updateConstantValue} />
