@@ -8,6 +8,7 @@ export const UpsertApplications = () => {
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Application");
+  const [cancels, setCancels] =           useState(false);
 
   const [appID, setappID] =             useState("0");
   const [appName, setappName] =         useState("");
@@ -52,7 +53,10 @@ export const UpsertApplications = () => {
     setappStatus("0")
     setButton("Add New Application")
     setLoading(false)
+    setCancels(false)
   }
+
+
 
   async function submitApplications() {
     setLoading(true)
@@ -65,18 +69,16 @@ export const UpsertApplications = () => {
           setappID( number )
           setButton("Proceed to Update")
           setMessage("Duplicate found! Would you like to update existing data? App ID#"+ number);
+          setCancels(true)
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
           clearInput()
       } else if(response.data.includes("Updated")){
           setMessage("Poker application successfully updated!");
           clearInput()
-      } else if(response.data.includes("Err Add") || response.data.includes("Err Update")){
-          setMessage("Something went wrong! Please retry");
       } else {
-          setMessage(response.data);
-          console.log(response.data)
-          setLoading(false)
+        setMessage("Something went wrong! Please retry");
+        clearInput()
       }
       
 
