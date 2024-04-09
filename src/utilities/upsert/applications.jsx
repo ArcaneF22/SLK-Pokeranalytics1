@@ -58,6 +58,14 @@ export const UpsertApplications = () => {
     setCancels(false)
   }
 
+  const checkStatus = () => {
+    if(appStatus=="0"){
+      setappStatus("1")
+    } else {
+      setappStatus("0")
+    }
+  }
+
   async function submitApplications() {
     setLoading(true)
     try {
@@ -120,7 +128,11 @@ export const UpsertApplications = () => {
               <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
             </div>
           </div>
-          
+          { checkStatus ? 
+            <div className="ui button green" onClick={checkStatus}>Active</div>
+          :  
+            <div className="ui button red" onClick={checkStatus}>Inactive</div>
+          } 
           <div className="field">
             <label>Status</label>
             <input type="text" value={appStatus} onChange={(e) => setappStatus(e.currentTarget.value)}/>
