@@ -1,6 +1,13 @@
+import { useState } from "react";
 
 export const UpsertApplication = () => {
 
+  const appID =       useState("")
+  const appName =     useState("")
+  const appCompany =  useState("")
+  const appDetails =  useState("")
+  const appImage =    useState("")
+  const appStatus =   useState("")
 
 
     return (
