@@ -91,8 +91,8 @@ export const FetchApplications = () => {
                   Edit
                 </button>
                 <button className='ui button red'>
-                  <i className="trash alternate icon"></i>
-                  Delete
+                <i className="ban icon"></i>
+                  Disable
                 </button>
               </td>
             </tr>
