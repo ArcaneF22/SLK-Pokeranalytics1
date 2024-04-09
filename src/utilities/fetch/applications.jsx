@@ -32,6 +32,17 @@ export const FetchApplications = () => {
     getApplications();
   }, []);
 
+  function setStatus(i) {
+    if (i.status == "Active") {
+      return <button className='ui button green'>Active</button>;
+    } else if (i.status == "Pending") {
+      return <button className='ui button yellow'>Pending</button>;
+    } else {
+      return <button className='ui button red'>Inactive</button>;
+    }
+  }
+
+
   return (
 <>
 
@@ -64,8 +75,10 @@ export const FetchApplications = () => {
               <td>{i.company}</td>
               <td>{i.details}</td>
               <td>{i.accountCount}</td>
-              <td>{i.status}</td>
-              <td>Modify</td>
+              <td>{setStatus(i)}</td>
+              <td>
+                <button className='ui button purple'>Alter</button>
+              </td>
             </tr>
           ))}
         </tbody>
