@@ -19,11 +19,10 @@ export const Protected = ({ children }) => {
     case false:
       return <Navigate to="/" />;
     case null:
-      return  <div class="ui segment full-screen">
-                <div class="ui active dimmer">
-                  <div class="ui indeterminate text loader">Loading...</div>
+      return <div className="ui segment basic">
+                <div className="ui active inverted dimmer">
+                  <div class="ui indeterminate text loader">Loading contents...</div>
                 </div>
-                <p></p>
               </div>;
   }
 };

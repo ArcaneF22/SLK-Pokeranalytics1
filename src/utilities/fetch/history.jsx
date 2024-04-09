@@ -37,7 +37,7 @@ export const FetchHistory = () => {
 {loading ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
-          <div class="ui indeterminate text loader">Loading content</div>
+          <div class="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
       ) : (
