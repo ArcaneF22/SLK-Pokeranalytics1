@@ -38,6 +38,10 @@ export const UpsertApplications = () => {
       }
   }
 
+  const cancel = () => {
+    setappID("0")
+  }
+
   async function submitApplications() {
     setLoading(true)
     try {
@@ -110,6 +114,7 @@ export const UpsertApplications = () => {
 
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
+            <div className="ui button purple" onClick={cancel}>{cancel}</div>
             <p>{message}</p>
           </div>
 
