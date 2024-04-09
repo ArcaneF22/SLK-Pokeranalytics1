@@ -45,7 +45,7 @@ export const UpsertApplications = () => {
       
       if(response.data.includes("Duplicate")){
         setButton("Proceed to update")
-        setMessage("Halla Duplicate");
+        setMessage("Halla Duplicate"+Number(response.data));
       } else {
         setMessage(response.data);
         console.log(response.data)
