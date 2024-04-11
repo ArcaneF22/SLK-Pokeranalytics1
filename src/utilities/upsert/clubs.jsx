@@ -153,12 +153,12 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
               <label>Image</label>
-              <input type="text" value={clubImage} onChange={(e) => setclubImage(e.currentTarget.value)}/>
+              <input type="number" value={clubImage} onChange={(e) => setclubImage(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Application</label>
-              <input type="text" value={clubApp} onChange={(e) => setclubApp(e.currentTarget.value)}/>
+              <input type="number" value={clubApp} onChange={(e) => setclubApp(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
@@ -173,7 +173,7 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
               <label>Union</label>
-              <input type="text" value={clubUnion} onChange={(e) => setclubUnion(e.currentTarget.value)}/>
+              <input type="number" value={clubUnion} onChange={(e) => setclubUnion(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
