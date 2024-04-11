@@ -1,8 +1,8 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
 
-export const UpsertApplications = () => {
+export const UpsertApplications = ({selectedApplication}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
@@ -31,7 +31,6 @@ export const UpsertApplications = () => {
   const validate = (e) => {
     e.preventDefault()
     setLoading(true)
-
       if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
         setMessage("Details incomplete!")
       } else {
@@ -56,10 +55,35 @@ export const UpsertApplications = () => {
     setButton("Add New Application")
     setLoading(false)
     setCancels(false)
+
   }
 
+  useEffect(() => {
+    setappID(selectedApplication.id)
+    setappName(selectedApplication.name)
+    setappCompany("1")
+    setappDetails(selectedApplication.details)
+    setappImage("2")
+    if(selectedApplication.status=="Active"){
+      setappStatus("0")
+    } else if(selectedApplication.status=="Pending"){
+      setappStatus("1")
+    } else {
+      setappStatus("2")
+    }
+
+    if(selectedApplication.id == 0) {
+      setButton("Add New Application")
+      setCancels(false)
+    } else {
+      setButton("Proceed to Update")
+      setCancels(true)
+    }
+    
+  }, [selectedApplication.clicked]);
+
   const changeStatus = () => {
-    if(appStatus=="0"){
+    if(appStatus=="0" || appStatus=="Active"){
       setappStatus("1")
     } else {
       setappStatus("0")
@@ -67,6 +91,7 @@ export const UpsertApplications = () => {
   }
 
   async function submitApplications() {
+    console.log("Submit:"+appID+"/"+appName+"/"+appCompany+"/"+appDetails+"/"+appImage+"/"+appStatus)
     setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
@@ -76,7 +101,7 @@ export const UpsertApplications = () => {
           const number = parseFloat( response.data.match(/[\d.]+/) );
           setappID( number )
           setButton("Proceed to Update")
-          setMessage("Duplicate found! Would you like to update existing data? App ID#"+ number);
+          setMessage("Duplicate found! Would you like to update existing data? Application ID#"+ number);
           setCancels(true)
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
@@ -95,11 +120,6 @@ export const UpsertApplications = () => {
     }
   }
 
-
-
-  useLayoutEffect(() => {
-    //sendApplications();
-  }, []);
 
     return (
       <div className="ui segment">
@@ -137,7 +157,7 @@ export const UpsertApplications = () => {
                 </div>
               :  
                 <div className="ui button red fluid center aligned" onClick={changeStatus}>
-                  <i class="times circle outline icon"></i>
+                  <i className="times circle outline icon"></i>
                   Inactive
                 </div>
               } 
@@ -148,7 +168,10 @@ export const UpsertApplications = () => {
           <div className="field">
             <div className="ui button purple" onClick={validate}>{button}</div>
 
-            { cancels ?  <div className="ui button grey" onClick={cancel}>Cancel</div> :  null }
+            { cancels ?  <>
+              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
+              <div className="ui button grey basic" onClick={clearInput}>Clear</div>
+            </> :  null }
             <p>{message}</p>
           </div>
 

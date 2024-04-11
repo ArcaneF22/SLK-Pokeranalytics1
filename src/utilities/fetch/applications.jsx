@@ -2,11 +2,13 @@ import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
 
-export const FetchApplications = () => {
+
+
+export const FetchApplications = ({ selectApplication }) => {
 
   const [tableApplications, settableApplications] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [clicked, setClicked] = useState(0)
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
@@ -14,10 +16,9 @@ export const FetchApplications = () => {
                           C: Token['gadget']
                       };
 
-  async function getApplications() {
+  async function itemApplications() {
     setLoading(true)
     try {
-      
       const response = await axios.post(Set.Fetch['applications'], Auth);
       settableApplications(response.data);
       console.log("Got it...")
@@ -28,7 +29,7 @@ export const FetchApplications = () => {
   }
 
   useLayoutEffect(() => {
-    getApplications();
+    itemApplications();
   }, []);
 
   function setStatus(i) {
@@ -39,12 +40,7 @@ export const FetchApplications = () => {
               </button>;
     } else if (i.status == "Pending") {
       return  <button className='ui button yellow basic'>
-                  <i class="spinner icon"></i>
-                  Pending
-              </button>;
-    } else if (i.status == "Pending") {
-      return  <button className='ui button yellow basic'>
-                  <i class="spinner icon"></i>
+                  <i className="spinner icon"></i>
                   Pending
               </button>;
     } else {
@@ -60,18 +56,21 @@ export const FetchApplications = () => {
     console.log("Clicked on button in row with id:", id);
   };
 
-  const editApplication = (id,name,image,company,details,status) => {
-    console.log("Clicked on button in row with id:", id, name, image, company, details, status);
+  const editApplication = (id,name,image,company,details,count,status) => {
+    setClicked(clicked+1)
     const array = {
+                    "clicked":clicked,
                     "id": id, 
                     "name": name, 
                     "image": image, 
                     "company": company, 
                     "details": details, 
+                    "count": count,
                     "status": status
                   }
-    sessionStorage.setItem('editApp', JSON.stringify(array));
+    selectApplication(array);
   };
+
 
   return (
 <>
@@ -79,7 +78,7 @@ export const FetchApplications = () => {
 {loading ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
-          <div class="ui indeterminate text loader">Loading table...</div>
+          <div className="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
       ) : (
@@ -104,16 +103,12 @@ export const FetchApplications = () => {
               <td>{i.image}</td>
               <td>{i.company}</td>
               <td>{i.details}</td>
-              <td>{i.accountCount}</td>
+              <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
                 <button className='ui button blue' onClick={()=> editApplication(i.id,i.name,i.image,i.company,i.details,i.accountCount,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
-                </button>
-                <button className='ui button red' onClick={()=> disableApplication(i.id,i.name,i.image)}>
-                    <i className="ban icon"></i>
-                    Disable
                 </button>
               </td>
             </tr>

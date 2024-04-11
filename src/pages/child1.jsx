@@ -1,17 +1,24 @@
 import React from 'react';
 
-function ChildComponent1({ constantValue, updateConstantValue }) {
+
+
+export const ChildComponent1 = ({ updateValue }) => {
+
+
   const handleClick = () => {
-    updateConstantValue('New Value from Child 1');
+    const array = [{
+                    "id": 'value1', 
+                    "name": 'value2', 
+                    "image": 'value3'
+                  }]
+    updateValue(array);
   };
 
   return (
     <div>
       <h3>Child Component 1</h3>
-      <p>Constant Value: {constantValue}</p>
-      <button onClick={handleClick}>Update Constant Value</button>
+      <button onClick={handleClick}>Go value</button>
     </div>
   );
 }
 
-export default ChildComponent1;

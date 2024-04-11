@@ -21,7 +21,7 @@ export const Protected = ({ children }) => {
     case null:
       return <div className="ui segment basic">
                 <div className="ui active inverted dimmer">
-                  <div class="ui indeterminate text loader">Loading contents...</div>
+                  <div className="ui indeterminate text loader">Loading contents...</div>
                 </div>
               </div>;
   }

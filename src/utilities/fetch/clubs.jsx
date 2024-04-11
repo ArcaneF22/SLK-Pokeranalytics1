@@ -5,11 +5,11 @@ import * as Set from '../constants';
 import { Authenticate } from '../authenticate/authenticate';
 
 
-export const FetchClubs = () => {
+export const FetchClubs = ({ selectClub }) => {
 
   const [tableClubs, settableClubs] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [clicked, setClicked] = useState(0)
   const Token = JSON.parse( localStorage.getItem('Token') );
   const Auth = {
                           A: Token['id'],
@@ -35,13 +35,30 @@ export const FetchClubs = () => {
     Authenticate()
   }, []);
 
+  const editClub = (id,idd,name,image,app,details,type,union,status) => {
+    setClicked(clicked+1)
+    const array = {
+                    "clicked":clicked,
+                    "id": id, 
+                    "idd": idd, 
+                    "name": name, 
+                    "image": image, 
+                    "app": app, 
+                    "details": details, 
+                    "type": type,
+                    "union": union,
+                    "status": status,
+                  }
+      selectClub(array);
+  };
+
   return (
 <>
 
 {loading ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
-          <div class="ui indeterminate text loader">Loading table...</div>
+          <div className="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
       ) : ( 
@@ -49,28 +66,37 @@ export const FetchClubs = () => {
         <thead>
           <tr>
             <th>ID</th>
+            <th>IDD</th>
             <th>Club</th>
             <th>Image</th>
+            <th>Application</th>
             <th>Details</th>
             <th>Type</th>
             <th>Union</th>
             <th>Users</th>
-            <th>Application</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {tableClubs.map((i, index) => (
             <tr key={index}>
               <td>{i.clubID}</td>
+              <td>{i.clubIDD}</td>
               <td>{i.clubName}</td>
               <td>{i.clubImage}</td>
+              <td>{i.appName}</td>
               <td>{i.clubDetails}</td>
               <td>{i.clubType}</td>
               <td>{i.clubUnion}</td>
               <td>{i.clubUsers}</td>
-              <td>{i.appName}</td>
               <td>{i.clubStatus}</td>
+              <td>
+                <button className='ui button blue' onClick={()=> editClub(i.clubID,i.clubIDD,i.clubName,i.clubImage,i.appName,i.clubDetails,i.clubType,i.clubUnion,i.clubStatus)}>
+                    <i className="edit outline icon"></i>
+                    Edit
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
