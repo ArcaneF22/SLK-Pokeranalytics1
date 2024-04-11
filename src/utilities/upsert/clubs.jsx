@@ -116,10 +116,10 @@ export const UpsertClubs = ({selectedClub}) => {
         setMessage("Duplicate found! Would you like to update existing data? Application ID#"+ number);
         setCancels(true)
     } else if(response.data.includes("Added")){
-        setMessage("New poker application successfully added!");
+        setMessage("New poker club successfully added!");
         clearInput()
     } else if(response.data.includes("Updated")){
-        setMessage("Poker application successfully updated!");
+        setMessage("Poker club successfully updated!");
         clearInput()
     } else {
       setMessage("Something went wrong! Please retry");
