@@ -52,6 +52,25 @@ export const FetchClubs = ({ selectClub }) => {
       selectClub(array);
   };
 
+  function setStatus(i) {
+    if (i.status == "Active") {
+      return  <button className='ui button green basic'>
+                  <i className="check circle outline icon"></i>
+                  Active
+              </button>;
+    } else if (i.status == "Pending") {
+      return  <button className='ui button yellow basic'>
+                  <i className="spinner icon"></i>
+                  Pending
+              </button>;
+    } else {
+      return  <button className='ui button red basic'>
+                  <i className="times circle outline icon"></i>
+                  Inactive
+              </button>;
+    }
+  }
+
   return (
 <>
 
@@ -90,7 +109,7 @@ export const FetchClubs = ({ selectClub }) => {
               <td>{i.clubType}</td>
               <td>{i.clubUnion}</td>
               <td>{i.clubUsers}</td>
-              <td>{i.clubStatus}</td>
+              <td>{setStatus(i)}</td>
               <td>
                 <button className='ui button blue' onClick={()=> editClub(i.clubID,i.clubIDD,i.clubName,i.clubImage,i.appName,i.clubDetails,i.clubType,i.clubUnion,i.clubStatus)}>
                     <i className="edit outline icon"></i>
