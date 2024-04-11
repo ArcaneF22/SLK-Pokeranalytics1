@@ -113,7 +113,7 @@ export const UpsertClubs = ({selectedClub}) => {
         const number = parseFloat( response.data.match(/[\d.]+/) );
         setclubID( number )
         setButton("Proceed to Update")
-        setMessage("Duplicate found! Would you like to update existing data? Application ID#"+ number);
+        setMessage("Duplicate found! Would you like to update existing data? Club ID#"+ number);
         setCancels(true)
     } else if(response.data.includes("Added")){
         setMessage("New poker club successfully added!");
