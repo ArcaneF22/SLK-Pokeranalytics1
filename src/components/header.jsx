@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import { Protect } from '../protection/protect';
 import { Modal_Logout, Modal_SessionExpire } from "../utilities/modals/alerts";
 
@@ -22,7 +22,7 @@ export const Header = () => {
     <div className="ui top fixed menu large inverted dark1 ">
 
     <div class="item">
-      <img src="../../public/images/logo/poker.png" />
+      <img src="/images/logo/poker.png" />
     </div>
 
 
