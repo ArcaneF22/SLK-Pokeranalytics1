@@ -22,7 +22,7 @@ export const Header = () => {
     <div className="ui top fixed menu large inverted dark1 ">
 
     <div class="item">
-      <img src="../../../public/images/logo/poker.png" />
+      <img src="../../public/images/logo/poker.png" />
     </div>
 
 
