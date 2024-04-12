@@ -41,6 +41,8 @@ export const FetchNotification = () => {
           </div>
         </div>
       ) : (
+      <div className="ui segment ">
+        <h3>Notifications List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -75,6 +77,7 @@ export const FetchNotification = () => {
           ))}
         </tbody>
       </table>
+    </div>
       )}
 
 </>

@@ -81,6 +81,8 @@ export const FetchClubs = ({ selectClub }) => {
         </div>
       </div>
       ) : ( 
+        <div className="ui segment ">
+        <h3>Clubs List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -120,6 +122,7 @@ export const FetchClubs = ({ selectClub }) => {
           ))}
         </tbody>
       </table>
+    </div>
       )}
 
 </>

@@ -37,7 +37,7 @@ export const UpsertClubs = ({selectedClub}) => {
   const validate = (e) => {
     e.preventDefault()
     setLoading(true)
-      if(clubName == "" || clubImage == "" || clubApp == "" || clubType == ""){
+      if(clubIDD == "" || clubName == "" || clubImage == "" || clubApp == "" || clubType == "" || clubStatus == ""){
         setMessage("Details incomplete!")
       } else {
         console.log(JSON.stringify(Upsert))
@@ -77,7 +77,7 @@ export const UpsertClubs = ({selectedClub}) => {
     setclubDetails(selectedClub.details)
     setclubType(selectedClub.type)
     setclubUnion(selectedClub.union)
-    if(selectedClub.status=="Active"){
+    if(selectedClub.status=="0" || selectedClub.status=="Active"){
       setclubStatus("0")
     } else if(selectedClub.status=="Pending"){
       setclubStatus("1")
@@ -178,7 +178,7 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
             <label>Status</label>
-              { clubStatus === "0" ? 
+              { clubStatus === "0" || clubStatus === "Active" ? 
                 <div className="ui button green fluid center aligned" onClick={changeStatus}>
                   <i className="check circle outline icon"></i>
                   Active

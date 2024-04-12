@@ -24,8 +24,14 @@ export const ClubsPage = () => {
 
     return (
       <div className="expand-centered">
-        <h1>Clubs Page</h1>
-        <p>itemsJSON: {JSON.stringify(gotClub)}</p>
+
+        <h2 className="ui header">
+            <i className="layer group big icon text-purple"></i>
+            <div className="content text-purple">
+            Clubs Page
+                <div className="sub header text-purpled">Manage your preferences</div>
+            </div>
+        </h2>
 
         <UpsertClubs selectedClub={gotClub} />
         <FetchClubs selectClub={selectClub} />

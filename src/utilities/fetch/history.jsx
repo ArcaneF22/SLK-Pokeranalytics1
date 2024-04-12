@@ -41,6 +41,8 @@ export const FetchHistory = () => {
         </div>
       </div>
       ) : (
+      <div className="ui segment ">
+        <h3>History List</h3>
         <table className='ui unstackable celled long scrolling table'>
         <thead>
           <tr>
@@ -67,6 +69,7 @@ export const FetchHistory = () => {
           ))}
         </tbody>
       </table>
+    </div>
       )}
 
 </>

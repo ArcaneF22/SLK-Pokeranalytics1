@@ -41,6 +41,8 @@ export const FetchAccounts = () => {
         </div>
       </div>
       ) : (
+      <div className="ui segment ">
+        <h3>Accounts List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -69,6 +71,7 @@ export const FetchAccounts = () => {
           ))}
         </tbody>
       </table>
+    </div>
       )}
 
 </>

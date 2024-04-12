@@ -82,6 +82,8 @@ export const FetchApplications = ({ selectApplication }) => {
         </div>
       </div>
       ) : (
+      <div className="ui segment ">
+        <h3>Applications List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -115,6 +117,7 @@ export const FetchApplications = ({ selectApplication }) => {
           ))}
         </tbody>
       </table>
+    </div>
       )}
 
 </>

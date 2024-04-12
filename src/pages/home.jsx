@@ -10,7 +10,13 @@ export const HomePage = () => {
   
   return (
     <div className="expand-centered">
-      <h1>Home Pages</h1>
+        <h2 className="ui header">
+            <i className="home big icon text-purple"></i>
+            <div className="content text-purple">
+            Home Page
+                <div className="sub header text-purpled">Manage your preferences</div>
+            </div>
+        </h2>
 
       <div className="ui vertical stripe quote segment">
         <div className="ui middle aligned stackable grid container">
