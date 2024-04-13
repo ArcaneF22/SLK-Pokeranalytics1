@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
-import { FetchClubs } from '../utilities/fetch/clubs'
+import { FetchClubs } from '../utilities/fetch/tables/clubs'
 import { UpsertClubs } from '../utilities/upsert/clubs'
 
 export const ClubsPage = () => {

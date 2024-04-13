@@ -1,4 +1,4 @@
-import { FetchHistory } from '../utilities/fetch/history'
+import { FetchHistory } from '../utilities/fetch/tables/history'
 
 export const HistoryPage = () => {
 

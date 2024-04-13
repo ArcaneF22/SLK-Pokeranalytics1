@@ -1,6 +1,7 @@
-import { useLayoutEffect, useState } from 'react';
-import { FetchApplications } from '../utilities/fetch/applications'
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { FetchApplications } from '../utilities/fetch/tables/applications'
 import { UpsertApplications } from '../utilities/upsert/applications'
+
 
 export const ApplicationsPage = () => {
 
@@ -14,11 +15,21 @@ export const ApplicationsPage = () => {
                   }
 
   const [gotApplication, setgotApplication] = useState(arrayApp);
+  const [recall, setRecall] = useState(0);
 
   const selectApplication = (newValue) => {
     setgotApplication(newValue)
   };
 
+  const recallApplication = (re) => {
+    setRecall(re)
+  };
+
+  useLayoutEffect(() => {
+    if(recall==1){
+      setRecall(0)
+    }
+  }, [recall]);
 
     return (
       <div className="expand-centered">
@@ -29,9 +40,18 @@ export const ApplicationsPage = () => {
                 <div className="sub header text-purpled">Manage your preferences</div>
             </div>
         </h2>
+        <UpsertApplications selectedApplication={gotApplication} recallApplication={recallApplication} />
+        {recall === 1 ? (
+            <div className="ui segment basic">
+              <div className="ui active inverted dimmer">
+                <div className="ui indeterminate text loader">Loading table...</div>
+              </div>
+            </div>
+          ) : (
+            <FetchApplications selectApplication={selectApplication} />
+        )}
+
         
-        <UpsertApplications selectedApplication={gotApplication} />
-        <FetchApplications selectApplication={selectApplication} />
         
       </div>
     );

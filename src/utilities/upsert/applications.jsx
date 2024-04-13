@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
 
-export const UpsertApplications = ({selectedApplication}) => {
+export const UpsertApplications = ({selectedApplication,recallApplication}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
+
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Application");
@@ -55,7 +56,6 @@ export const UpsertApplications = ({selectedApplication}) => {
     setButton("Add New Application")
     setLoading(false)
     setCancels(false)
-
   }
 
   useEffect(() => {
@@ -64,14 +64,7 @@ export const UpsertApplications = ({selectedApplication}) => {
     setappCompany("1")
     setappDetails(selectedApplication.details)
     setappImage("2")
-    if(selectedApplication.status=="Active"){
-      setappStatus("0")
-    } else if(selectedApplication.status=="Pending"){
-      setappStatus("1")
-    } else {
-      setappStatus("2")
-    }
-
+    setappStatus("0")
     if(selectedApplication.id == 0) {
       setButton("Add New Application")
       setCancels(false)
@@ -79,7 +72,6 @@ export const UpsertApplications = ({selectedApplication}) => {
       setButton("Proceed to Update")
       setCancels(true)
     }
-    
   }, [selectedApplication.clicked]);
 
   const changeStatus = () => {
@@ -105,9 +97,11 @@ export const UpsertApplications = ({selectedApplication}) => {
           setCancels(true)
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
+          recallApplication(1)
           clearInput()
       } else if(response.data.includes("Updated")){
           setMessage("Poker application successfully updated!");
+          recallApplication(1)
           clearInput()
       } else {
         setMessage("Something went wrong! Please retry");
@@ -120,11 +114,10 @@ export const UpsertApplications = ({selectedApplication}) => {
     }
   }
 
-
     return (
       <div className="ui segment">
         <h1>Insert / Update Application</h1>
-
+        <p>{JSON.stringify(selectedApplication)}</p>
         <div className="ui form">
 
           <div className='five fields'>

@@ -2,10 +2,19 @@ import { useState, useEffect } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import { Protect } from '../protection/protect';
 import { Modal_Logout, Modal_SessionExpire } from "../utilities/modals/alerts";
+import * as Set from '../utilities/constants';
+import {
+  SidebarPusher,
+  SidebarPushable,
+  Checkbox,
+  Segment,
+  Sidebar,
+} from 'semantic-ui-react'
 
 export const Header = () => {
   const navigate = useNavigate();
   const Auth = localStorage.getItem('Auth')
+  const Profile = JSON.parse(localStorage.getItem('User'))
   const [Logout, setLogout] = useState(false);
 
   function navigateTo(path){
@@ -16,16 +25,45 @@ export const Header = () => {
     }
   }
 
+
+  const [visible, setVisible] = useState(false)
+
   return (
     <>
     <Modal_Logout key="Modal_Logout" open={Logout} onClose={() => { setLogout(false); }} />
-    <div className="ui top fixed menu large inverted dark1 ">
-
-    <div class="item">
-      <img src="/images/logo/poker.png" />
+    <div className="ui vertical menu sidebar inverted visible large purplelized ">
+      <a className="item ui segment center aligned"  onClick={() => navigateTo('/myprofile')}>
+        <h3 className="ui center icon header purpled">
+          <img className="icon medium-avatar" src={Set.Path['avatars'] + Profile["avatar"]} alt="Profile Avatar" />
+          
+          <div className="content header">
+            {Profile["nickname"]}
+            <div className="sub header">
+              {Profile["rolename"]}
+            </div>
+          </div>
+        </h3>
+      </a>
+      <a className="item" onClick={() => navigateTo('/myaccounts')}>
+        <div>
+          <i className="clock outline icon"></i>
+          My Accounts
+        </div>
+      </a>
+      <a className="item" onClick={() => navigateTo('/myhistory')}>
+        <div>
+          <i className="history icon"></i>
+          My History
+        </div>
+      </a>
     </div>
 
 
+    <div className="ui top fixed menu big lefted teal">
+
+    <div class="item">
+      <img src={Set.Path['logo'] + "poker.png"} />
+    </div>
         <a className="item" onClick={() => navigateTo('/home')}>
             <div>
               <i className="university icon"></i>
@@ -72,7 +110,6 @@ export const Header = () => {
 
       <div className="right menu">
 
-
           <a className="item" onClick={() => navigateTo('/notification')}>
           <i className="bell outline icon"></i>
               Notification
@@ -83,7 +120,6 @@ export const Header = () => {
           Log Out
         </a>
       </div>
-
     </div>
     <br/><br/><br/>
     </>

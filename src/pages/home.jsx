@@ -1,13 +1,13 @@
 
 import { isNumeric } from '../utilities/tools'
-
+import { useLayoutEffect, useState } from 'react';
 export const HomePage = () => {
 
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
   const getUser = JSON.parse(localStorage.getItem('User'))
   const isNum = isNumeric(isToken)
   console.log(isNum)
-  
+
   return (
     <div className="expand-centered">
         <h2 className="ui header">

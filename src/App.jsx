@@ -16,6 +16,17 @@ import { NotificationPage } from './pages/notification';
 import { HistoryPage } from './pages/history';
 import { NotFoundPage } from './pages/notfound';
 
+import { MyProfilePage } from './pages/myprofile';
+import { MyAccountsPage } from './pages/myaccounts';
+import { MyHistoryPage } from './pages/myhistory';
+
+import {
+  SidebarPusher,
+  SidebarPushable,
+  Checkbox,
+  Segment,
+  Sidebar,
+} from 'semantic-ui-react'
 
 function App() {
 
@@ -28,12 +39,17 @@ function App() {
   }, []);
 
   return (
+
+<>
+
     <BrowserRouter>
 
       {showContent  ? <Header /> : null}
-          <Routes>
+      <div  className="contents left-margined">
+      <Routes >
             <Route path="/" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />
+
             <Route path="/home"
               element={
                 <Protected>
@@ -41,6 +57,7 @@ function App() {
                 </Protected>
               }
             />
+            
             <Route path="/applications"
               element={
                 <Protected>
@@ -83,9 +100,37 @@ function App() {
                 </Protected>
               }
             />
+
+            <Route path="/myprofile"
+              element={
+                <Protected>
+                  <MyProfilePage />
+                </Protected>
+              }
+            />
+
+            <Route path="/myaccounts"
+              element={
+                <Protected>
+                  <MyAccountsPage />
+                </Protected>
+              }
+            />
+
+            <Route path="/myhistory"
+              element={
+                <Protected>
+                  <MyHistoryPage />
+                </Protected>
+              }
+            />
+
           <Route path="*" element={<NotFoundPage />} />
           </Routes>
+      </div>
+ 
     </BrowserRouter>
+</>
   );
 }
 

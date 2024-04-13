@@ -18,10 +18,10 @@ export const Upsert = {
                     };
 
 export const Path = {
-                        icons:              import.meta.env.VITE_GET_USERS,
-                        apps:               import.meta.env.VITE_GET_ACCOUNTS,
-                        clubs:              import.meta.env.VITE_GET_APPS,
-                        avatars:            import.meta.env.VITE_GET_CLUBS,
-                        logo:               import.meta.env.VITE_GET_HISTORY,
-                        pictures: ""
+                        icons:              "/images/icons/",
+                        apps:               "/images/apps/",
+                        clubs:              "/images/clubs/",
+                        avatars:            "/images/avatars/",
+                        logo:               "/images/logo/",
+                        pictures:           "/images/pictures/"
                     };

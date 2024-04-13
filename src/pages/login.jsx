@@ -50,7 +50,7 @@ export const LoginPage = () => {
   const proceedLogin = async () => {
     try{
         setMessage("Loading...");
-        setMessageicon("notched circle loading icon purple")
+        setMessageicon("notched circle loading icon")
         const response = await fetch(import.meta.env.VITE_GO_LOGIN,{
                                     method: "POST",
                                     headers: { "Accept": "application/json", "Content-type": "application/json" },
@@ -109,7 +109,7 @@ export const LoginPage = () => {
 
   return (
     <>
-<div className='bg-color-login'>
+<div className='bg-color-login login'>
     <br /> <br /> <br /> <br /> <br />
     <div className="ui two stackable middle aligned center aligned grid">
 
@@ -121,7 +121,7 @@ export const LoginPage = () => {
       <div className="six wide column on-top-reduce">
         <div className="ui large form segment">
 
-          <h2 className="ui image header purple">
+          <h2 className="ui image header">
             <div className="content title-header">
                 Poker Analytics
             </div>
