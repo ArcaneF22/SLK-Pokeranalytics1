@@ -18,7 +18,7 @@ body {
   opacity: 1;
   transition: opacity 0.2s ease;
 }
-.dark1{
+.purplelized{
   background: radial-gradient(circle at 52.1% -29.6%, rgb(144, 17, 105) 0%, rgb(51, 0, 131) 100.2%) !important;
 }
 .dark2{
@@ -72,9 +72,8 @@ body {
   background-color: #764AF1 !important;
 }
 .ui.visible.sidebar{
-
-    max-height: calc(100% - 40px) !important;
-    height: calc(100% - 40px) !important;
+    max-height: calc(100% - 0px) !important;
+    height: calc(100% - 0px) !important;
 }
 
 .mini-avatar{
@@ -94,18 +93,26 @@ body {
 .medium-avatar{
   height: 9rem !important;
 }
+
+.login{
+  position: fixed !important;
+  top: 0 !important;
+  bottom: 0 !important;     
+  left: 0 !important; /*If width: 100%, you don't need it*/
+  right: 0 !important; /*If width: 100%, you don't need it*/
+}
+
   /* if screen size is smaller than 765px */
   @media (max-width:765px) { 
     .contents {
         margin: 3em 1em 2em 1em;
       }
       .lefted{
-        margin-left: 4.2rem !important;
+        left: 0 !important;
     }
 
       .ui.visible.sidebar{
-        visibility: visible;
-        transform: translate3d(0, 0, 0);
+        opacity : 0; transition:opacity .5s,width .5s, height .5s;
         width: 5rem !important;
         height: 100% !important;
 
@@ -114,7 +121,7 @@ body {
         display: none !important;
       }
       .left-margined{
-        margin-left: 5.5rem;
+        margin-left: 0rem;
         margin-right: 0rem;
       }
       .rowLabel{
@@ -143,17 +150,19 @@ body {
         float: left !important;
       }
       .lefted{
-        margin-left: 12.5rem !important;
-        padding-right: 12.5rem !important;
-    }
+        margin-left: 14.5rem !important;
+        padding-right: 14.5rem !important;
+      }
+
       .ui.visible.sidebar{
-        visibility: visible;
+        opacity : 1; transition:opacity .5s,width .5s, height .5s;
+
         transform: translate3d(0, 0, 0);
-        width: 13rem !important;
+        width: 15rem !important;
         height: 100% !important;
       }
       .left-margined{
-        margin-left: 13.2rem;
+        margin-left: 16rem;
         margin-right: .8rem;
       }
       .profile-avatar{
