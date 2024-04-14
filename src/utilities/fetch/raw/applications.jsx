@@ -2,14 +2,15 @@ import { useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
-const Auth = {
-                        A: Token['id'],
-                        B: Token['token'],
-                        C: Token['gadget']
-                    };
-
 export const RawApplications = ({ loadingApplication, itemsApplication }) => {
+
+    const Token = JSON.parse( localStorage.getItem('Token') );
+
+    const Auth = {
+                A: Token['id'],
+                B: Token['token'],
+                C: Token['gadget']
+            }; 
 
     async function itemApplications() {
         loadingApplication(true)
@@ -26,5 +27,6 @@ export const RawApplications = ({ loadingApplication, itemsApplication }) => {
     useLayoutEffect(() => {
         itemApplications();
       }, []);
+
 
 }

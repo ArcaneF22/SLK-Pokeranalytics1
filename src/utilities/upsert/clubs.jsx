@@ -136,7 +136,7 @@ export const UpsertClubs = ({selectedClub}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Club</h1>
-        <p>Input{clubID+"|"+clubIDD+"|"+clubName+"|"+clubImage+"|"+clubApp+"|"+clubDetails+"|"+clubType+"|"+clubUnion+"|"+clubStatus}</p>
+
         <div className="ui form">
 
           <div className='five fields'>

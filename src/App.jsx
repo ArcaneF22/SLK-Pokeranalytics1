@@ -30,13 +30,15 @@ import {
 
 function App() {
 
-  const [showContent, setShowContent] = useState(false);
+  const [yesLoggedIn, setyesLoggedIn] = useState(false);
 
   useEffect(() => {
     const Auth = localStorage.getItem('Auth');
     const AuthBoolean = Auth === 'true';
-    setShowContent(AuthBoolean);
+    setyesLoggedIn(AuthBoolean);
   }, []);
+
+
 
   return (
 
@@ -44,12 +46,14 @@ function App() {
 
     <BrowserRouter>
 
-      {showContent  ? <Header /> : null}
+      {yesLoggedIn  ? <Header /> : null}
       <div  className="contents left-margined">
       <Routes >
             <Route path="/" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />
 
+            {yesLoggedIn  ? 
+            <>
             <Route path="/home"
               element={
                 <Protected>
@@ -124,7 +128,8 @@ function App() {
                 </Protected>
               }
             />
-
+            </>
+            : null}
           <Route path="*" element={<NotFoundPage />} />
           </Routes>
       </div>
