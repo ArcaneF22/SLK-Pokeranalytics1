@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { GlobalContext } from './utilities/context';
+
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Protected } from './protection/protected';
-import { Header } from './components/header';
 
 import { HomePage } from './pages/home';
 import { LoginPage } from './pages/login';
@@ -40,105 +39,33 @@ function App() {
   }, []);
 
 
-
   return (
 
 <>
-
     <BrowserRouter>
-      <GlobalContext>
-      {yesLoggedIn  ? <Header /> : null}
       <div  className="contents left-margined">
-      <Routes >
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/registration" element={<RegistrationPage />} />
+        <Routes >
+              <Route path="/"               element={<LoginPage />} />
+              <Route path="*"               element={<NotFoundPage />} />
+              <Route path="/registration"   element={<RegistrationPage />} />
+              {yesLoggedIn  ?
+              <>
+                <Route path="/home"           element={ <Protected> <HomePage /> </Protected> } />
+                <Route path="/applications"   element={ <Protected> <ApplicationsPage /> </Protected> } />
+                <Route path="/clubs"          element={ <Protected> <ClubsPage /> </Protected> } />
+                <Route path="/users"          element={ <Protected> <UsersPage /> </Protected> } />
+                <Route path="/accounts"       element={ <Protected> <AccountsPage /> </Protected> } />
+                <Route path="/notification"   element={ <Protected> <NotificationPage /> </Protected> } />
+                <Route path="/history"        element={ <Protected> <HistoryPage /> </Protected> } />
+                <Route path="/myprofile"      element={ <Protected> <MyProfilePage /> </Protected> } />
+                <Route path="/myaccounts"     element={ <Protected> <MyAccountsPage /> </Protected> } />
+                <Route path="/myhistory"      element={ <Protected> <MyHistoryPage /> </Protected> } />
+              </>
+              : null}
 
-            <Route path="*" element={<NotFoundPage />} />
-            {yesLoggedIn  ?
-            <>
-            <Route path="/home"
-              element={
-                <Protected>
-                  <HomePage />
-                </Protected>
-              }
-            />
-            
-            <Route path="/applications"
-              element={
-                <Protected>
-                  <ApplicationsPage />
-                </Protected>
-              }
-            />
-            <Route path="/clubs"
-              element={
-                <Protected>
-                  <ClubsPage />
-                </Protected>
-              }
-            />
-            <Route path="/users"
-              element={
-                <Protected>
-                  <UsersPage />
-                </Protected>
-              }
-            />
-            <Route path="/accounts"
-              element={ 
-                <Protected>
-                  <AccountsPage />
-                </Protected>
-              }
-            />
-            <Route path="/notification"
-              element={
-                <Protected>
-                  <NotificationPage />
-                </Protected>
-              }
-            />
-            <Route path="/history"
-              element={
-                <Protected>
-                  <HistoryPage />
-                </Protected>
-              }
-            />
-
-            <Route path="/myprofile"
-              element={
-                <Protected>
-                  <MyProfilePage />
-                </Protected>
-              }
-            />
-
-            <Route path="/myaccounts"
-              element={
-                <Protected>
-                  <MyAccountsPage />
-                </Protected>
-              }
-            />
-
-            <Route path="/myhistory"
-              element={
-                <Protected>
-                  <MyHistoryPage />
-                </Protected>
-              }
-            />
-            </>
-            : null}
-
-          </Routes>
+        </Routes>
       </div>
-      </GlobalContext>
     </BrowserRouter>
-
-
 </>
   );
 }

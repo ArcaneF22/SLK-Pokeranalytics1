@@ -1,11 +1,10 @@
 
 import { isNumeric } from '../utilities/tools'
 import { FetchNotificationPending } from '../utilities/fetch/items/notifications'
-import { useGlobalOutside  } from '../utilities/context/global';
+
 
 export const HomePage = () => {
 
-  const { myConstant, Yehey } = useGlobalOutside();
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
   const getUser = JSON.parse(localStorage.getItem('User'))
   const isNum = isNumeric(isToken)
@@ -27,7 +26,7 @@ export const HomePage = () => {
           <div className="row">
             <div className="six wide right floated column">
               <h3>Welcome back {getUser["rolename"]}: {getUser["nickname"]}!</h3>
-              <p>You have some work to do! {Yehey}  </p>
+              <p>You have some work to do!  </p>
             </div>
             <div className="eight wide left floated column">
               <FetchNotificationPending />

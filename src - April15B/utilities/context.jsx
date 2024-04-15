@@ -1,21 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const OutsideContext = createContext();
-export const useGlobalOutside = () => useContext(OutsideContext);
+const OnContext = createContext();
+export const useGlobal = () => useContext(OnContext);
 
-export const GlobalOutside = ({ children }) => {
-    
-    const myConstant = "sample only"
+export const GlobalContext = ({ children }) => {
+    const [myConstant, setMyConstant] = useState("Global Value");
     const Yehey = "Yehey talaga!"
-
-    const Token = JSON.parse( localStorage.getItem('Token') );
-
-    const Auth = {
-                A: Token['id'],
-                B: Token['token'],
-                C: Token['gadget']
-            }; 
-
 
     const userInteraction = () => {
         console.log("Moving....")
@@ -24,11 +14,11 @@ export const GlobalOutside = ({ children }) => {
     const events = ['click', 'load', 'keydown', 'resize', 'scroll', 'popstate', 'touchstart', 'mousemove'];
     events.forEach(event => window.addEventListener(event, userInteraction));
     return (
-        <OutsideContext.Provider value={{ 
+        <OnContext.Provider value={{ 
                                             myConstant,
                                             Yehey,
                                          }}>
             {children}
-        </OutsideContext.Provider>
+        </OnContext.Provider>
     );
 };
