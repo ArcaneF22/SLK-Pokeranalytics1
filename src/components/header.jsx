@@ -32,11 +32,11 @@ export const Header = () => {
     <>
     <Modal_Logout key="Modal_Logout" open={Logout} onClose={() => { setLogout(false); }} />
     <div className="ui vertical menu sidebar inverted visible large purplelized ">
+
       <a className="item ui segment center aligned"  onClick={() => navigateTo('/myprofile')}>
-        <h3 className="ui center icon header purpled">
-          <img className="icon medium-avatar" src={Set.Path['avatars'] + Profile["avatar"]} alt="Profile Avatar" />
-          
-          <div className="content header">
+        <h3 className="ui center icon header inverted">
+          <img className="icon medium-avatar unClickable" src={Set.Path['avatars'] + Profile["avatar"]} alt="Profile Avatar" />
+          <div className="content header white">
             {Profile["nickname"]}
             <div className="sub header">
               {Profile["rolename"]}
@@ -44,25 +44,28 @@ export const Header = () => {
           </div>
         </h3>
       </a>
+
       <a className="item" onClick={() => navigateTo('/myaccounts')}>
         <div>
           <i className="clock outline icon"></i>
           My Accounts
         </div>
       </a>
+
       <a className="item" onClick={() => navigateTo('/myhistory')}>
         <div>
           <i className="history icon"></i>
           My History
         </div>
       </a>
+      
     </div>
 
 
     <div className="ui top fixed menu big lefted teal">
 
-    <div class="item">
-      <img src={Set.Path['logo'] + "poker.png"} />
+    <div className="item">
+      <img className='unClickable' src={Set.Path['logo'] + "poker.png"} />
     </div>
         <a className="item" onClick={() => navigateTo('/home')}>
             <div>

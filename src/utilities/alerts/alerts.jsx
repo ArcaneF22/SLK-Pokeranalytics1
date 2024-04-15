@@ -130,7 +130,7 @@ export const Success = (props) => {
           <Transition animation='pulse' duration={500} >
             <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
               <h2 className="ui icon header">
-                <i class="check circle outline icon green"></i>
+                <i className="check circle outline icon green"></i>
                 <div className="content">
                   Success!
                 <div className="sub header">Changes has been saved.</div>
@@ -156,7 +156,7 @@ export const SuccessRefresh = (props) => {
           <Transition animation='pulse'  duration={500} >
             <Modal size="mini" open={props.open}>
               <h2 className="ui icon header">
-                <i class="check circle outline icon green"></i>
+                <i className="check circle outline icon green"></i>
                 <div className="content">
                   Success!
                 <div className="sub header">Changes has been saved.</div>

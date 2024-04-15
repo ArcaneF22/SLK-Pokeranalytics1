@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-export const RawApplications = ({ loadingApplication, itemsApplication }) => {
+export const RawApplications = ({ loadingApplication, itemApplication }) => {
 
     const Token = JSON.parse( localStorage.getItem('Token') );
 
@@ -12,11 +12,11 @@ export const RawApplications = ({ loadingApplication, itemsApplication }) => {
                 C: Token['gadget']
             }; 
 
-    async function itemApplications() {
+    async function fetchApplications() {
         loadingApplication(true)
       try {
         const response = await axios.post(Set.Fetch['applications'], Auth);
-        itemsApplication(response.data);
+        itemApplication(response.data);
         loadingApplication(false)
         console.log("Application items loaded...")
       } catch (error) {
@@ -25,7 +25,7 @@ export const RawApplications = ({ loadingApplication, itemsApplication }) => {
     }
 
     useLayoutEffect(() => {
-        itemApplications();
+        fetchApplications();
       }, []);
 
 

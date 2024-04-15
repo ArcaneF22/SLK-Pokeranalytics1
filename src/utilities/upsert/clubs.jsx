@@ -194,7 +194,10 @@ export const UpsertClubs = ({selectedClub}) => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={validate}>{button}</div>
+            <div className="ui button purple" onClick={validate}>
+              <i class="plus icon"></i>
+              {button}
+            </div>
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>

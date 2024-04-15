@@ -1,39 +1,59 @@
-import React, { useState, useLayoutEffect } from 'react';
-import axios from 'axios';
-import * as Set from '../../constants';
+import { useState } from 'react';
+import { RawUsers } from '../raw/users'
 
 export const FetchUsers = () => {
 
-  const [tableUsers, settableUsers] = useState([]);
+  const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState(0)
 
-  const Token = JSON.parse( localStorage.getItem('Token') );
-  const Auth = {
-                          A: Token['id'],
-                          B: Token['token'],
-                          C: Token['gadget']
-                      };
+  const loadingUsers = (value) => {
+      setLoading(value);
+  };
 
-  async function getUsers() {
-    setLoading(true)
-    try {
-      
-      const response = await axios.post(Set.Fetch['users'], Auth);
-      settableUsers(response.data);
-      console.log("Got it...")
-      setLoading(false)
-    } catch (error) {
-      console.error("Error fetching data: ", error);
+  const itemUsers = (value) => {
+    setTable(value)
+  };
+
+  function setStatus(i) {
+    if (i.status == "Active") {
+      return  <button className='ui button green basic'>
+                  <i className="check circle outline icon"></i>
+                  Active
+              </button>;
+    } else if (i.status == "Pending") {
+      return  <button className='ui button yellow basic'>
+                  <i className="spinner icon"></i>
+                  Pending
+              </button>;
+    } else {
+      return  <button className='ui button red basic'>
+                  <i className="times circle outline icon"></i>
+                  Inactive
+              </button>;
     }
   }
 
-  useLayoutEffect(() => {
-    getUsers();
-  }, []);
+  const editUsers = (id,nickname,role,email,username,password,avatar,status) => {
+    setClicked(clicked+1)
+    const array = {
+                    "clicked":clicked,
+                    "id": id, 
+                    "nickname": nickname, 
+                    "role": role, 
+                    "email": email, 
+                    "username": username, 
+                    "password": password, 
+                    "avatar": avatar, 
+                    "status": status
+                  }
+    //selectAccount(array);
+    console.log(array)
+  };
 
   return (
 <>
-
+<RawUsers loadingUsers={loadingUsers} itemUsers={itemUsers} />
 {loading ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
@@ -57,7 +77,7 @@ export const FetchUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {tableUsers.map((i, index) => (
+          {table.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
               <td>{i.nickname}</td>
@@ -66,7 +86,13 @@ export const FetchUsers = () => {
               <td>{i.username}</td>
               <td>{i.password}</td>
               <td>{i.avatar}</td>
-              <td>{i.status}</td>
+              <td>{setStatus(i)}</td>
+              <td>
+                <button className='ui button blue' onClick={()=> editUsers(i.id,i.nickname,i.role,i.email,i.username,i.password,i.avatar,i.status)}>
+                    <i className="edit outline icon"></i>
+                    Edit
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

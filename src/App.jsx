@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalContext } from './utilities/context';
 import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -45,14 +46,15 @@ function App() {
 <>
 
     <BrowserRouter>
-
+      <GlobalContext>
       {yesLoggedIn  ? <Header /> : null}
       <div  className="contents left-margined">
       <Routes >
             <Route path="/" element={<LoginPage />} />
             <Route path="/registration" element={<RegistrationPage />} />
 
-            {yesLoggedIn  ? 
+            <Route path="*" element={<NotFoundPage />} />
+            {yesLoggedIn  ?
             <>
             <Route path="/home"
               element={
@@ -130,11 +132,13 @@ function App() {
             />
             </>
             : null}
-          <Route path="*" element={<NotFoundPage />} />
+
           </Routes>
       </div>
- 
+      </GlobalContext>
     </BrowserRouter>
+
+
 </>
   );
 }

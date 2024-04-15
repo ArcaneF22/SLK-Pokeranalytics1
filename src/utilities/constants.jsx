@@ -7,6 +7,7 @@ export const Fetch = {
                         clubs:              import.meta.env.VITE_GET_CLUBS,
                         history:            import.meta.env.VITE_GET_HISTORY,
                         notification:       import.meta.env.VITE_GET_NOTIFICATION,
+                        notification_count: import.meta.env.VITE_GET_NOTIFICATION_COUNT,
                         authenticate:       import.meta.env.VITE_GET_AUTHENTICATE
                     };
 
@@ -25,3 +26,5 @@ export const Path = {
                         logo:               "/images/logo/",
                         pictures:           "/images/pictures/"
                     };
+
+

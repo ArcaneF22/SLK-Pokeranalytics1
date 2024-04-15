@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Protect } from '../protection/protect';
 import useInterval from 'use-interval'
 import {picture} from '../utilities/settings'
-import '../assets/css/login.css'
-import image from '../assets/images/icons/poker.png'
+import '../../public/css/login.css'
+import image from '../../public/images/icons/poker.png'
 
 export const LoginPage = () => {
 
@@ -115,7 +115,7 @@ export const LoginPage = () => {
 
       <div className="ten wide column n-bot-reduce">
       <br /> <br /> <br /> <br /> <br />
-        <img className="ui fluid centered medium image" src={image} />
+        <img className="ui fluid centered medium image unClickable" src={image} />
       </div>
 
       <div className="six wide column on-top-reduce">

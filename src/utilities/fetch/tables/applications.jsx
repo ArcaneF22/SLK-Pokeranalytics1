@@ -1,12 +1,9 @@
-import React, { useState, useLayoutEffect } from 'react';
-import axios from 'axios';
-import * as Set from '../../constants';
+import { useState } from 'react';
 import { RawApplications } from '../raw/applications'
-
 
 export const FetchApplications = ({ selectApplication, onloadApplication }) => {
 
-  const [tableApplications, settableApplications] = useState([]);
+  const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(0)
 
@@ -14,8 +11,8 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
       setLoading(value);
   };
 
-  const itemsApplication = (value) => {
-      settableApplications(value)
+  const itemApplication = (value) => {
+      setTable(value)
   };
 
   function setStatus(i) {
@@ -55,7 +52,7 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
   return (
 <>
 
-<RawApplications loadingApplication={loadingApplication} itemsApplication={itemsApplication} />
+<RawApplications loadingApplication={loadingApplication} itemApplication={itemApplication} />
 
 {loading ? (
       <div className="ui segment basic">
@@ -80,7 +77,7 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
           </tr>
         </thead>
         <tbody>
-          {tableApplications.map((i, index) => (
+          {table.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
               <td>{i.name}</td>

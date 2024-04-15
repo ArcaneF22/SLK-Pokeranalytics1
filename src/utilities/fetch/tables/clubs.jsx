@@ -1,39 +1,20 @@
-import React, { useState, useLayoutEffect } from 'react';
-import axios from 'axios';
-import * as Set from '../../constants';
-
-import { Authenticate } from '../../authenticate/authenticate';
-
+import { useState } from 'react';
+import { RawClubs } from '../raw/clubs'
 
 export const FetchClubs = ({ selectClub }) => {
 
-  const [tableClubs, settableClubs] = useState([]);
+  const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(0)
-  const Token = JSON.parse( localStorage.getItem('Token') );
-  const Auth = {
-                          A: Token['id'],
-                          B: Token['token'],
-                          C: Token['gadget']
-                      };
 
-  async function getClubs() {
-    setLoading(true)
-    try {
-      
-      const response = await axios.post(Set.Fetch['clubs'], Auth);
-      settableClubs(response.data);
-      console.log("Got it...")
-      setLoading(false)
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  }
+  const loadingClubs = (value) => {
+      setLoading(value);
+  };
 
-  useLayoutEffect(() => {
-    getClubs();
-    Authenticate()
-  }, []);
+  const itemClubs = (value) => {
+      setTable(value)
+  };
+
 
   const editClub = (id,idd,name,image,app,details,type,union,status) => {
     setClicked(clicked+1)
@@ -73,6 +54,7 @@ export const FetchClubs = ({ selectClub }) => {
 
   return (
 <>
+<RawClubs loadingClubs={loadingClubs} itemClubs={itemClubs} />
 
 {loading ? (
       <div className="ui segment basic">
@@ -100,7 +82,7 @@ export const FetchClubs = ({ selectClub }) => {
           </tr>
         </thead>
         <tbody>
-          {tableClubs.map((i, index) => (
+          {table.map((i, index) => (
             <tr key={index}>
               <td>{i.clubID}</td>
               <td>{i.clubIDD}</td>

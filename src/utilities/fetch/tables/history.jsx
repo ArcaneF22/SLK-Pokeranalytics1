@@ -1,39 +1,22 @@
-import React, { useState, useLayoutEffect } from 'react';
-import axios from 'axios';
-import * as Set from '../../constants';
+import { useState } from 'react';
+import { RawHistory } from '../raw/history'
 
 export const FetchHistory = () => {
 
-  const [tableHistory, settableHistory] = useState([]);
+  const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const Token = JSON.parse( localStorage.getItem('Token') );
-  const Auth = {
-                          A: Token['id'],
-                          B: Token['token'],
-                          C: Token['gadget']
-                      };
+  const loadingHistory = (value) => {
+      setLoading(value);
+  };
 
-  async function getHistory() {
-    setLoading(true)
-    try {
-      
-      const response = await axios.post(Set.Fetch['history'], Auth);
-      settableHistory(response.data);
-      console.log("Got it...")
-      setLoading(false)
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  }
-
-  useLayoutEffect(() => {
-    getHistory();
-  }, []);
+  const itemHistory = (value) => {
+    setTable(value)
+  };
 
   return (
 <>
-
+<RawHistory loadingHistory={loadingHistory} itemHistory={itemHistory} />
 {loading ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
@@ -56,7 +39,7 @@ export const FetchHistory = () => {
           </tr>
         </thead>
         <tbody>
-          {tableHistory.map((i, index) => (
+          {table.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
               <td>ID#{i.userID}: {i.userNickname}</td>
