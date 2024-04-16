@@ -5,7 +5,7 @@ import { useGlobalOutside  } from '../utilities/context/global';
 
 export const HomePage = () => {
 
-  const { countNotif } = useGlobalOutside();
+  const { myConstant, Yehey } = useGlobalOutside();
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
   const getUser = JSON.parse(localStorage.getItem('User'))
   const isNum = isNumeric(isToken)
@@ -17,7 +17,7 @@ export const HomePage = () => {
         <h2 className="ui header">
             <i className="home big icon text-purple"></i>
             <div className="content text-purple">
-            Home Page {countNotif}
+            Home Page
                 <div className="sub header text-purpled">Manage your preferences</div>
             </div>
         </h2>
@@ -27,7 +27,7 @@ export const HomePage = () => {
           <div className="row">
             <div className="six wide right floated column">
               <h3>Welcome back {getUser["rolename"]}: {getUser["nickname"]}!</h3>
-              <p>You have some work to do! </p>
+              <p>You have some work to do! {Yehey}  </p>
             </div>
             <div className="eight wide left floated column">
               <FetchNotificationPending />

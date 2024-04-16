@@ -3,7 +3,6 @@ import { useNavigate  } from 'react-router-dom';
 import { Protect } from '../protection/protect';
 import { Modal_Logout, Modal_SessionExpire } from "../utilities/modals/alerts";
 import * as Set from '../utilities/constants';
-import { useGlobalOutside  } from '../utilities/context/global';
 import {
   SidebarPusher,
   SidebarPushable,
@@ -13,7 +12,6 @@ import {
 } from 'semantic-ui-react'
 
 export const Header = () => {
-  const { countNotif } = useGlobalOutside();
   const navigate = useNavigate();
   const Auth = localStorage.getItem('Auth')
   const Profile = JSON.parse(localStorage.getItem('User'))
@@ -27,11 +25,6 @@ export const Header = () => {
     }
   }
 
-  function catchNotification(){
-    if(countNotif > 0){
-      return <div className="ui red circular label">{countNotif}</div>
-    }
-  }
 
   const [visible, setVisible] = useState(false)
 
@@ -123,7 +116,7 @@ export const Header = () => {
           <a className="item" onClick={() => navigateTo('/notification')}>
           <i className="bell outline icon"></i>
               Notification
-              {catchNotification()}
+              <div className="ui red circular label">2</div>
           </a>
         <a className="item " onClick={() => { setLogout(true); }}>
           <i className="sign out alternate icon"></i>

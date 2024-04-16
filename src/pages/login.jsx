@@ -122,7 +122,7 @@ export const LoginPage = () => {
         <div className="ui large form segment">
 
           <h2 className="ui image header">
-            <div className="content title-header">
+            <div className="content title-header fontRubik">
                 Poker Analytics
             </div>
             
