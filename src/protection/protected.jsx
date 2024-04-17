@@ -116,7 +116,7 @@ export const Protected = ({ children }) => {
             {isLargeScreen ? null :
             <>
 
-          <div class="ui header inverted center aligned">PRIVILEGES</div>
+          <div className="ui header inverted center aligned">PRIVILEGES</div>
 
           <a className="item" onClick={() => navigateTo('/applications')}>
             <div>
