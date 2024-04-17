@@ -1,11 +1,11 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { RawNotification, RawNotificationCount } from '../raw/notification'
+import { RawNotification } from '../raw/notification'
 
 export const FetchNotification = () => {
 
   const [table, setTable] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [counted, setCounted] = useState(0)
+  const [clicked, setClicked] = useState(0)
 
   const loadingNotification = (value) => {
       setLoading(value);
@@ -15,17 +15,8 @@ export const FetchNotification = () => {
       setTable(value)
   };
 
-  const countNotification = (value) => {
-    setCounted(value)
-    };
-
-  useLayoutEffect(() => {
-
-  }, [counted]);
-  
   return (
 <>
-<RawNotificationCount countNotification={countNotification}  />
 <RawNotification loadingNotification={loadingNotification} itemNotification={itemNotification} />
 {loading ? (
         <div className="ui segment basic">
@@ -35,7 +26,7 @@ export const FetchNotification = () => {
         </div>
       ) : (
       <div className="ui segment ">
-        <h3>Notifications List {counted}</h3>
+        <h3>Notifications List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>

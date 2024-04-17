@@ -32,7 +32,7 @@ export const ApplicationsPage = () => {
   }, [recall]);
 
     return (
-      <div className="expand-centered">
+      <>
         <h2 className="ui header">
             <i className="cogs big icon text-purple"></i>
             <div className="content text-purple">
@@ -50,10 +50,7 @@ export const ApplicationsPage = () => {
           ) : (
             <FetchApplications selectApplication={selectApplication} />
         )}
-
-        
-        
-      </div>
+      </>
     );
   };
   

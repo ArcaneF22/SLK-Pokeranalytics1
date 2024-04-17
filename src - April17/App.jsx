@@ -20,6 +20,14 @@ import { MyProfilePage } from './pages/myprofile';
 import { MyAccountsPage } from './pages/myaccounts';
 import { MyHistoryPage } from './pages/myhistory';
 
+import {
+  SidebarPusher,
+  SidebarPushable,
+  Checkbox,
+  Segment,
+  Sidebar,
+} from 'semantic-ui-react'
+
 function App() {
 
   const [yesLoggedIn, setyesLoggedIn] = useState(false);
@@ -35,6 +43,7 @@ function App() {
 
 <>
     <BrowserRouter>
+      <div  className="contents left-margined">
         <Routes >
               <Route path="/"               element={<LoginPage />} />
               <Route path="*"               element={<NotFoundPage />} />
@@ -55,6 +64,7 @@ function App() {
               : null}
 
         </Routes>
+      </div>
     </BrowserRouter>
 </>
   );

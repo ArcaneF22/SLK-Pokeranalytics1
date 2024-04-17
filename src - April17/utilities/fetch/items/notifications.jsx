@@ -21,8 +21,6 @@ export const FetchNotificationPending = () => {
     setCounted(value)
 };
 
-    useLayoutEffect(() => {
-    }, [counted]);
 function contentTable(){
     return <div className="ui attached segment fluid">
                         <div className="ui relaxed divided list">

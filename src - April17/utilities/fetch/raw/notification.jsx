@@ -1,14 +1,10 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 import axios from 'axios';
-import useInterval from 'use-interval'
 import * as Set from '../../constants';
 
 //NOTIFICATION
-var createNotification = 0;
+export const RawNotification = ({ loadingNotification, itemNotification }) => {
 
-export const RawNotification = ({ loadingNotification, itemNotification, countNotification }) => {
-
-    
     const Token =   JSON.parse( localStorage.getItem('Token') );
 
     const Auth = {
@@ -24,15 +20,14 @@ export const RawNotification = ({ loadingNotification, itemNotification, countNo
         const response = await axios.post(Set.Fetch['notification'], Auth);
         itemNotification(response.data);
         loadingNotification(false)
-        countNotification(createNotification)
+        console.log("Notification items loaded...")
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
-
     useLayoutEffect(() => {
         fetchNotification();
-      }, [createNotification]);
+      }, []);
 
 }
 
@@ -54,19 +49,20 @@ export const RawNotificationPending = ({ loadingNotification, itemNotification }
         const response = await axios.post(Set.Fetch['notification'], Auth);
         itemNotification(response.data);
         loadingNotification(false)
+        console.log("Notification items loaded...")
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
     useLayoutEffect(() => {
         fetchNotification();
-      }, [createNotification]);
+      }, []);
 
 }
 
 //NOTIFICATION COUNT
 export const RawNotificationCount = ({ countNotification }) => {
-    const [timer, setTimer] = useState(0);
+
     const Token =   JSON.parse( localStorage.getItem('Token') );
 
     const Auth = {
@@ -79,21 +75,13 @@ export const RawNotificationCount = ({ countNotification }) => {
       try {
         const response = await axios.post(Set.Fetch['notification_count'], Auth);
         countNotification(response.data);
-        if(createNotification != response.data){
-          createNotification = response.data
-          console.log(response.data+" Notification updated...")
-        }
+        console.log("Notification Count:"+response.data)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
-
-    useInterval(() => {
-      setTimer(seconds => seconds + 1);
-    }, 15000);
-
     useLayoutEffect(() => {
         fetchcountNotification();
-      }, [timer]);
+      }, []);
 
 }

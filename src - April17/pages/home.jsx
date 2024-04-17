@@ -2,8 +2,6 @@
 import { isNumeric } from '../utilities/tools'
 import { FetchNotificationPending } from '../utilities/fetch/items/notifications'
 import { useGlobalOutside  } from '../utilities/context/global';
-import React, { useState, useLayoutEffect } from 'react';
-import { RawProfile } from '../utilities/fetch/raw/profile'
 
 export const HomePage = () => {
 
@@ -11,20 +9,15 @@ export const HomePage = () => {
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
   const getUser = JSON.parse(localStorage.getItem('User'))
   const isNum = isNumeric(isToken)
-
+  console.log(isNum)
   const User =    JSON.parse( localStorage.getItem('User') );
-
   return (
     <>
-
-
-    <div className="">
-
-
+    <div className="expand-centered">
         <h2 className="ui header">
             <i className="home big icon text-purple"></i>
             <div className="content text-purple">
-                Home Page
+            Home Page {countNotif}
                 <div className="sub header text-purpled">Manage your preferences</div>
             </div>
         </h2>

@@ -1,5 +1,4 @@
 import React, { createContext, useContext } from 'react';
-import { RawProfile } from './fetch/raw/profile'
 
 export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
@@ -9,8 +8,7 @@ export const Fetch = {
                         history:            import.meta.env.VITE_GET_HISTORY,
                         notification:       import.meta.env.VITE_GET_NOTIFICATION,
                         notification_count: import.meta.env.VITE_GET_NOTIFICATION_COUNT,
-                        authenticate:       import.meta.env.VITE_GET_AUTHENTICATE,
-                        profile:            import.meta.env.VITE_GET_PROFILE
+                        authenticate:       import.meta.env.VITE_GET_AUTHENTICATE
                     };
 
 export const Upsert = {
