@@ -11,6 +11,14 @@ VITE_GET_HISTORY			= https://13.211.65.106/pokerapp/fetch/fetch_history.php
 VITE_GET_NOTIFICATION 		= https://13.211.65.106/pokerapp/fetch/fetch_notification.php
 VITE_GET_NOTIFICATION_COUNT = https://13.211.65.106/pokerapp/fetch/fetch_notification_count.php
 VITE_GET_PROFILE 		    = https://13.211.65.106/pokerapp/fetch/fetch_profile.php
+<<<<<<< HEAD
+
+VITE_UPSERT_USERS           = https://13.211.65.106/pokerapp/upsert/users.php
+VITE_UPSERT_ACCOUNTS        = https://13.211.65.106/pokerapp/upsert/accounts.php
+VITE_UPSERT_APPS            = https://13.211.65.106/pokerapp/upsert/applications.php
+VITE_UPSERT_CLUBS           = https://13.211.65.106/pokerapp/upsert/clubs.php
+=======
+>>>>>>> 51886da8378b05709c947f1c67d928bd0a49784a
 
 VITE_UPSERT_USERS           = https://13.211.65.106/pokerapp/upsert/users.php
 VITE_UPSERT_ACCOUNTS        = https://13.211.65.106/pokerapp/upsert/accounts.php
