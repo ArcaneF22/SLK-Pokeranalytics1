@@ -18,7 +18,7 @@ export const RawUsers = ({ loadingUsers, itemUsers }) => {
         const response = await axios.post(Set.Fetch['users'], Auth);
         itemUsers(response.data);
         loadingUsers(false)
-        console.log("User items loaded...")
+        console.log("Users items loaded...")
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

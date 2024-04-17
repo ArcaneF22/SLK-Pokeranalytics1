@@ -73,8 +73,7 @@ export const LoginPage = () => {
                                             const Token = {
                                               id:         feed[0],
                                               gadget:     feed[3],
-                                              token:      feed[4],
-status:     feed[8],
+                                              token:      feed[4]
                                             }
 
                                             const User = {
