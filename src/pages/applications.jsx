@@ -33,13 +33,16 @@ export const ApplicationsPage = () => {
 
     return (
       <>
-        <h2 className="ui header">
-            <i className="cogs big icon text-purple"></i>
-            <div className="content text-purple">
-               Applications Page
-                <div className="sub header text-purpled">Manage your preferences</div>
-            </div>
-        </h2>
+
+      <div className='ui segment message purple-box'>
+        <h2 className="ui header inverted">
+              <i className="cogs big icon"></i>
+              <div className="content">
+                  Applications Page
+                  <div className="sub header">Manage your preferences</div>
+              </div>
+          </h2>
+      </div>
         <UpsertApplications selectedApplication={gotApplication} recallApplication={recallApplication} />
         {recall === 1 ? (
             <div className="ui segment basic">

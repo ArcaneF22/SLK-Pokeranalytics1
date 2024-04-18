@@ -3,16 +3,21 @@ import { FetchAccounts } from '../utilities/fetch/tables/accounts'
 export const AccountsPage = () => {
 
     return (
-      <div className="expand-centered">
-        <h2 className="ui header">
-            <i className="user secret big icon text-purple"></i>
-            <div className="content text-purple">
-               Accounts Page
-                <div className="sub header text-purpled">Manage your preferences</div>
-            </div>
-        </h2>
-        <FetchAccounts />
+    <>
+      <div className='ui segment message purple-box'>
+        <h2 className="ui header inverted">
+              <i className="user secret big icon"></i>
+              <div className="content">
+              Accounts Page
+                  <div className="sub header">Manage your preferences</div>
+              </div>
+          </h2>
       </div>
+
+        <FetchAccounts />
+    </>
+      
+
     );
   };
   

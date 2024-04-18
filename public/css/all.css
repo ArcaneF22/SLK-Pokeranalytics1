@@ -228,6 +228,11 @@ body {
       .profile-avatar{
         height: 11rem !important;
       }
+      .page-margin {
+        width: 98% !important;
+        left: 0 !important;
+        right: 0 !important;
+      }
     }
     .input-center{
       text-align: center !important;
@@ -318,3 +323,4 @@ body {
 .scrollable{
   overflow: auto !important;
 }
+

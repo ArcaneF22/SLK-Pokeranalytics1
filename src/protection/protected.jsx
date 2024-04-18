@@ -8,7 +8,7 @@ import * as Set from '../utilities/constants';
 import {
   SidebarPusher,
   SidebarPushable,
-  Sticky,
+  Segment,
   Menu,
   Sidebar,
 } from 'semantic-ui-react'
@@ -159,10 +159,10 @@ export const Protected = ({ children }) => {
           {isLargeScreen ? <HeaderDesktop /> : <HeaderMobile showMenu={showMenu} />}
           <SidebarPushable>
           
-          <SidebarPusher dimmed={sidebarDimmed} >
-              <div className='ui segment basic lefted-content'>
+          <SidebarPusher className='lefted-content segment page-margin basic' dimmed={sidebarDimmed} >
+
                   {children}
-              </div>
+
           </SidebarPusher>
         </SidebarPushable>
           
