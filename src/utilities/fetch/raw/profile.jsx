@@ -38,7 +38,7 @@ export const RawProfile = ({ loadingProfile, itemProfile }) => {
 
     useInterval(() => {
         setTimer(seconds => seconds + 1);
-      }, 60000);
+      }, 5000);
 
     useLayoutEffect(() => {
         fetchProfile();

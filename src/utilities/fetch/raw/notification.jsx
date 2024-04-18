@@ -90,7 +90,7 @@ export const RawNotificationCount = ({ countNotification }) => {
 
     useInterval(() => {
       setTimer(seconds => seconds + 1);
-    }, 15000);
+    }, 5000);
 
     useLayoutEffect(() => {
         fetchcountNotification();

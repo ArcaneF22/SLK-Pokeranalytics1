@@ -4,6 +4,7 @@ import { Protect } from '../protection/protect';
 import { Modal_Logout, Modal_SessionExpire } from "../utilities/modals/alerts";
 import * as Set from '../utilities/constants';
 import { useGlobalOutside  } from '../utilities/context/global';
+import '../../public/css/login.css'
 
 export const HeaderDesktop = () => {
   const { countNotif } = useGlobalOutside();
@@ -15,6 +16,7 @@ export const HeaderDesktop = () => {
   function navigateTo(path){
     if(Auth == 'true'){
       navigate(path)
+      scrollToTop()
     } else {
       Protect.logOut()
     }
@@ -26,56 +28,60 @@ export const HeaderDesktop = () => {
     }
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const [visible, setVisible] = useState(false)
 
   return (
     <>
     <Modal_Logout key="Modal_Logout" open={Logout} onClose={() => { setLogout(false); }} />
- 
-    <div className="ui top fixed menu big teal sticky lefted-menu">
 
+    <div className="ui top fixed menu lefted-menu">
+    <div className='ui horizontal divider teal'></div>
     <div className="item">
       <img className='unClickable' src={Set.Path['logo'] + "poker.png"} />
     </div>
         <a className="item" onClick={() => navigateTo('/home')}>
             <div>
               <i className="university icon"></i>
-              Home
+              HOME
             </div>
           </a>
 
         <a className="item" onClick={() => navigateTo('/applications')}>
             <div>
               <i className="university icon"></i>
-              Applications
+              APPLICATIONS
             </div>
           </a>
 
           <a className="item" onClick={() => navigateTo('/clubs')}>
             <div>
             <i className="layer group icon"></i>
-              Clubs
+              CLUBS
             </div>
           </a>
 
           <a className="item" onClick={() => navigateTo('/users')}>
             <div>
             <i className="users icon"></i>
-              Users
+              USERS
             </div>
           </a>
 
           <a className="item" onClick={() => navigateTo('/accounts')}>
             <div>
               <i className="user secret icon"></i>
-              Accounts
+              ACCOUNTS
             </div>
           </a>
 
           <a className="item" onClick={() => navigateTo('/history')}>
             <div>
             <i className="history icon"></i>
-              History
+              HISTORY
             </div>
           </a>
 

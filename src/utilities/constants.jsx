@@ -1,6 +1,9 @@
 import React, { createContext, useContext } from 'react';
 import { RawProfile } from './fetch/raw/profile'
 
+
+
+
 export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
                         accounts:           import.meta.env.VITE_GET_ACCOUNTS,
@@ -10,7 +13,12 @@ export const Fetch = {
                         notification:       import.meta.env.VITE_GET_NOTIFICATION,
                         notification_count: import.meta.env.VITE_GET_NOTIFICATION_COUNT,
                         authenticate:       import.meta.env.VITE_GET_AUTHENTICATE,
-                        profile:            import.meta.env.VITE_GET_PROFILE
+                        profile:            import.meta.env.VITE_GET_PROFILE,
+                        DDapplications:     import.meta.env.VITE_DROP_APPS,
+                    };
+
+export const DD = {
+                        applications:     import.meta.env.VITE_DROP_APPS,
                     };
 
 export const Upsert = {
@@ -28,5 +36,7 @@ export const Path = {
                         logo:               "/images/logo/",
                         pictures:           "/images/pictures/"
                     };
+
+
 
 

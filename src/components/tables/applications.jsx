@@ -37,12 +37,13 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
     }
   }
 
-  const editApplication = (id,name,image,company,details,count,status) => {
+  const editApplication = (id,name,imageID,image,company,details,count,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
                     "id": id, 
                     "name": name, 
+                    "imageID": imageID,  
                     "image": image, 
                     "company": company, 
                     "details": details, 
@@ -84,13 +85,13 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
             <tr key={index}>
               <td>{i.id}</td>
               <td>{i.name}</td>
-              <td>{i.image}</td>
+              <td>{i.imageID}:{i.image}</td>
               <td>{i.company}</td>
               <td>{i.details}</td>
               <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editApplication(i.id,i.name,i.image,i.company,i.details,i.accountCount,i.status)}>
+                <button className='ui button blue' onClick={()=> editApplication(i.id,i.name,i.imageID,i.image,i.company,i.details,i.accountCount,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

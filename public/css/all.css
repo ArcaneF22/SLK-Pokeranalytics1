@@ -68,6 +68,13 @@ body {
   color: white !important;
 }
 
+.purple-text{
+  color: #8A39E1 !important;
+}
+.purple-text:hover{
+  color: #B667F1 !important;
+}
+
 .purpled{
   color: #8A39E1 !important; /* Green */
 }
@@ -121,11 +128,17 @@ body {
 .unClickable{
   pointer-events: none !important;
 }
+
+.title-header {
+  height: 25px !important;
+  margin-top: 5px !important;
+}
   /* if screen size is smaller than 765px */
   @media (max-width:850px) { 
     .contents {
         margin: 3em 1em 2em 1em;
       }
+      
     .lefted-content{
         transition: left .5s,padding-right .5s;
         margin-top: 20px !important;
@@ -141,10 +154,10 @@ body {
       margin-top: 0 !important;
       margin-bottom: 0 !important;
     }
-      .ui.visible.sidebar.onhide{
+      .ui.visible.sidebar{
         opacity : 1; 
         transition:opacity .5s,width .5s, height .5s;
-        width: 0rem !important;
+        width: 15rem !important;
         height: 100% !important;
       }
       .menu-label{
@@ -163,6 +176,9 @@ body {
       }
       .profile-avatar{
         height: 15rem !important;
+      }
+      .minus-top {
+        margin-top: -180px !important;
       }
 
    }
@@ -198,11 +214,9 @@ body {
         min-height: 100vh !important;
         height: 100% !important;
       }
-
       .ui.visible.sidebar{
         opacity : 1; 
         transition:opacity .5s,width .5s, height .5s;
-
         transform: translate3d(0, 0, 0);
         width: 15rem !important;
         height: 100% !important;
@@ -258,10 +272,10 @@ body {
 }
 
 .fontRubik {
-  font-family: 'Rubik';
-  font-size: 35px; 
-  font-weight: 900;
-  letter-spacing: -4px;
+  font-family: 'Rubik' !important;
+  font-size: 35px !important;
+  font-weight: 900 !important;
+  letter-spacing: -4px !important;
 }
 
 

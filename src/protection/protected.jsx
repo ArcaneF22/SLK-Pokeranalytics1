@@ -160,7 +160,6 @@ export const Protected = ({ children }) => {
           <SidebarPushable>
           
           <SidebarPusher dimmed={sidebarDimmed} >
-          
               <div className='ui segment basic lefted-content'>
                   {children}
               </div>
@@ -172,9 +171,9 @@ export const Protected = ({ children }) => {
     case false:
       return <Navigate to="/" />;
     case null:
-      return <div className="ui segment basic fullBody">
+      return <div className="ui segment basic full-screen">
                 <div className="ui active inverted dimmer">
-                  <div className="ui indeterminate text loader">Loading pages...</div>
+                  <div className="ui indeterminate text active blue elastic loader">Loading pages...</div>
                 </div>
               </div>;
   }

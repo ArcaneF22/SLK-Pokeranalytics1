@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { RawNotificationCount } from '../fetch/raw/notification'
 import useInterval from 'use-interval'
 import { RawProfile } from '../fetch/raw/profile'
-
+import { RawApplications } from '../fetch/raw/applications'
 
 const OutsideContext = createContext();
 export const useGlobalOutside = () => useContext(OutsideContext);
@@ -23,6 +23,12 @@ export const GlobalOutside = ({ children }) => {
     const [countNotif, setcountNotif] = useState(false);
     const countNotification = (value) => { setcountNotif(value); };
     
+    const [ListOfApps, setListOfApps] = useState(0);
+    const [DropdownApps, setDropdownApps] = useState(0)
+    const [ListOfAppsLoading, setListOfAppsLoading] = useState(false);
+    const itemApplication = (value) => { setListOfApps(value)  };
+    const dropdownApplication = (value) => { setDropdownApps(value)  };
+    const loadingApplication = (value) => {   };
     const Auth = {
                 A: Token['id'],
                 B: Token['token'],
@@ -61,11 +67,14 @@ export const GlobalOutside = ({ children }) => {
                                             countNotif,
                                             loadprofile,
                                             Profile,
+                                            ListOfApps, 
+                                            dropdownApplication
                                          }}>
             {children}
         </OutsideContext.Provider>
         <RawNotificationCount countNotification={countNotification} />
         <RawProfile loadingProfile={loadingProfile} itemProfile={itemProfile} />
+        <RawApplications itemApplication={itemApplication} loadingApplication={loadingApplication} dropdownApplication={dropdownApplication} />
         </>
     );
 };

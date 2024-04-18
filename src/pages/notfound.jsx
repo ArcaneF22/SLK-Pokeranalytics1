@@ -15,7 +15,7 @@ export const NotFoundPage = () => {
       return (
         <>
         { notfoundTimer >= 3 ?
-            <div className="ui segment fullBody">
+            <div className="ui segment full-screen">
               <div className="ui active inverted dimmer">
               <h2 className="ui icon header">
                 <i className="times icon red"></i>
@@ -33,9 +33,9 @@ export const NotFoundPage = () => {
               <p></p>
             </div>
             :
-            <div className="ui segment fullBody">
+            <div className="ui segment full-screen">
               <div className="ui active inverted dimmer">
-                <div className="ui text large loader">Loading</div>
+                <div className="ui text active blue elastic loader">Loading</div>
               </div>
               <p></p>
             </div>

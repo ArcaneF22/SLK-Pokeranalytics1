@@ -119,7 +119,7 @@ export const LoginPage = () => {
       </div>
 
       <div className="six wide column on-top-reduce">
-        <div className="ui large form segment">
+        <div className="ui large form segment minus-top">
 
           <h2 className="ui image header">
             <div className="content title-header fontRubik">

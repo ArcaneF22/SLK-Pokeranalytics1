@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Dropdown } from 'semantic-ui-react'
+import { useGlobalOutside  } from '../context/global';
 import * as Set from '../constants';
 
 export const UpsertClubs = ({selectedClub}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
+  const { dropdownApplication } = useGlobalOutside();
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Club");
@@ -67,6 +70,10 @@ export const UpsertClubs = ({selectedClub}) => {
     setCancels(false)
 
   }
+
+  const dropdownApps = (event, { value }) => {
+    setappID(value);
+  };
 
   useEffect(() => {
     setclubID(selectedClub.id)
@@ -174,6 +181,18 @@ export const UpsertClubs = ({selectedClub}) => {
             <div className="field">
               <label>Union</label>
               <input type="number" value={clubUnion} onChange={(e) => setclubUnion(e.currentTarget.value)}/>
+            </div>
+
+            <div className="field">
+              <label>dropdown</label>
+              <Dropdown
+                    placeholder="Select poker app"
+                    fluid
+                    selection
+                    options={clubApp}
+                    onChange={dropdownApps}
+                    value={clubApp}
+                  />
             </div>
 
             <div className="field">
