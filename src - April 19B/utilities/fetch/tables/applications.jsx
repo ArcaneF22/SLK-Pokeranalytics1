@@ -1,30 +1,11 @@
 import { useState } from 'react';
-import { Clubs } from '../raw/clubs'
+import { Applications } from '../raw/applications'
 
-export const FetchClubs = ({ selectClub }) => {
+export const FetchApplications = () => {
 
   const [clicked, setClicked] = useState(0)
-  const data = Clubs().data
-  const load = Clubs().load
-
-
-
-  const editClub = (id,idd,name,image,app,details,type,union,status) => {
-    setClicked(clicked+1)
-    const array = {
-                    "clicked":clicked,
-                    "id": id, 
-                    "idd": idd, 
-                    "name": name, 
-                    "image": image, 
-                    "app": app, 
-                    "details": details, 
-                    "type": type,
-                    "union": union,
-                    "status": status,
-                  }
-      selectClub(array);
-  };
+  const data = Applications().data
+  const load = Applications().load
 
   function setStatus(i) {
     if (i.status == "Active") {
@@ -45,8 +26,25 @@ export const FetchClubs = ({ selectClub }) => {
     }
   }
 
+  const editApplication = (id,name,image,company,details,count,status) => {
+    setClicked(clicked+1)
+    const array = {
+                    "clicked":clicked,
+                    "id": id, 
+                    "name": name, 
+                    "image": image, 
+                    "company": company, 
+                    "details": details, 
+                    "count": count,
+                    "status": status
+                  }
+    selectApplication(array);
+  };
+  
   return (
 <>
+
+
 
 {load ? (
       <div className="ui segment basic">
@@ -54,17 +52,16 @@ export const FetchClubs = ({ selectClub }) => {
           <div className="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
-      ) : ( 
-        <div className="ui segment ">
-        <h3>Clubs List</h3>
+      ) : (
+      <div className="ui segment ">
+        <h2>Applications List</h2>
         <table className='ui celled striped table'>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Club</th>
             <th>Application</th>
+            <th>Company</th>
             <th>Details</th>
-            <th>Type</th>
             <th>Users</th>
             <th>Status</th>
             <th>Action</th>
@@ -79,28 +76,15 @@ export const FetchClubs = ({ selectClub }) => {
                     <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.name}
-                      <div className="sub header">
-                        ID: {i.idd}
-                      </div>
                   </div>
                 </h4>
               </td>
-              <td>{i.appName}</td>
+              <td>{i.company}</td>
               <td>{i.details}</td>
-              <td>
-                <div className="content">
-                  <div className="header">
-                    {i.type}
-                  </div>
-                  <div className="description">
-                    {i.unionName}
-                  </div>
-                </div>
-              </td>
-              <td>{i.users}</td>
+              <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editClub(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
+                <button className='ui button blue' onClick={()=> editApplication(i.id,i.name,i.image,i.company,i.details,i.accountCount,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

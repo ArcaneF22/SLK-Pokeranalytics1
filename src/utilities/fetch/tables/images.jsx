@@ -1,5 +1,14 @@
 import { useState } from 'react';
 import { Images } from '../raw/images'
+import {
+    CardMeta,
+    CardHeader,
+    CardDescription,
+    CardContent,
+    Card,
+    Icon,
+    Image,
+  } from 'semantic-ui-react'
 
 export const FetchImages = ({ selectImage }) => {
 
@@ -20,20 +29,6 @@ export const FetchImages = ({ selectImage }) => {
       selectImage(array);
   };
 
-  function setStatus(i) {
-    if (i.Imagestatus == "Active") {
-      return  <button className='ui button green basic'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </button>;
-    } else {
-      return  <button className='ui button red basic'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </button>;
-    }
-  }
-
   return (
 <>
 
@@ -46,35 +41,63 @@ export const FetchImages = ({ selectImage }) => {
       ) : ( 
         <div className="ui segment ">
         <h3>Images List</h3>
-        <table className='ui celled striped table'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Path</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
+
+   
+        {data.map((i, index) => (
+                <>
+                <Card key={index}>
+                    <Image src={i.pathFull} wrapped ui={true}/>
+                    <CardContent>
+                        <CardHeader>
+                            {i.name}
+                        </CardHeader>
+                        <CardMeta>
+                            {i.type} ID#{i.id}
+                        </CardMeta>
+                    </CardContent>
+                </Card>
+                </>
+
+        ))}
+   
+
+        <div className="ui grid">
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
+        </div>
           {data.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
-              <td>{i.name}</td>
-              <td>{i.type}</td>
-              <td>{i.path}</td>
-              <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editImage(i.id,i.name,i.type,i.path,i.status)}>
+                <h4 className="ui image header">
+                    <img src={i.pathFull} className="ui mini rounded image" />
+                    <div className="content">
+                        {i.name}
+                        <div className="sub header">
+                            {i.type}
+                        </div>
+                    </div>
+                </h4>
+              </td>
+              <td>
+                <button className='ui button blue' onClick={()=> editImage(i.id,i.name,i.type)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
               </td>
             </tr>
           ))}
-        </tbody>
-      </table>
+
     </div>
       )}
 

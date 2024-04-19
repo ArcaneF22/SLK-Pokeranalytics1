@@ -85,19 +85,7 @@ export const HeaderDesktop = () => {
             </div>
           </a>
 
-          <a className="item" onClick={() => navigateTo('/unions')}>
-            <div>
-            <i className="group layer icon"></i>
-              UNION
-            </div>
-          </a>
 
-          <a className="item" onClick={() => navigateTo('/images')}>
-            <div>
-            <i className="image icon"></i>
-              IMAGES
-            </div>
-          </a>
 
       <div className="right menu">
 

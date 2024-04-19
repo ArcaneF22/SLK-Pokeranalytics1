@@ -85,7 +85,7 @@ export const FetchClubs = ({ selectClub }) => {
                   </div>
                 </h4>
               </td>
-              <td>{i.appName}</td>
+              <td>{i.name}</td>
               <td>{i.details}</td>
               <td>
                 <div className="content">
@@ -100,7 +100,7 @@ export const FetchClubs = ({ selectClub }) => {
               <td>{i.users}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editClub(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
+                <button className='ui button blue' onClick={()=> editClub(i.id,i.idd,i.name,i.image,i.appName,i.clubDetails,i.clubType,i.clubUnion,i.clubStatus)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

@@ -27,7 +27,57 @@ export const HomePage = () => {
               </div>
           </h2>
       </div>
-    
+        <div className="ui grid">
+          
+            <div className="four wide column">
+              <div className='ui segment message center aligned purple-box'>
+                <div className="ui statistic inverted">
+                    <div className="value">
+                      5,550
+                    </div>
+                    <div className="label">
+                      Users
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div className="four wide column">
+              <div className='ui segment message center aligned purple-box'>
+                <div className="ui statistic inverted blue">
+                    <div className="value">
+                      5,550
+                    </div>
+                    <div className="label">
+                      Accounts
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div className="four wide column">
+              <div className='ui segment message center aligned purple-box'>
+                <div className="ui statistic inverted green">
+                    <div className="value">
+                      5,550
+                    </div>
+                    <div className="label">
+                      Clubs
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div className="four wide column">
+              <div className='ui segment message center aligned purple-box'>
+                <div className="ui statistic inverted orange">
+                    <div className="value">
+                      5,550
+                    </div>
+                    <div className="label">
+                      Applications
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
 
       <div className="ui vertical stripe quote segment">
         <div className="ui middle aligned stackable grid container">

@@ -2,15 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Dropdown } from 'semantic-ui-react'
 import { Applications } from '../fetch/raw/applications'
-import { ImagesClubs } from '../fetch/raw/images'
-import { Unions } from '../fetch/raw/unions'
 import * as Set from '../constants';
 
 export const UpsertClubs = ({selectedClub}) => {
   const appDD = Applications().data
-  const imgDD = ImagesClubs().data
-  const uniDD = Unions().data
-
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
@@ -144,7 +139,6 @@ export const UpsertClubs = ({selectedClub}) => {
   }
 
 
-
     return (
       <div className="ui segment">
         <h1>Insert / Update Club</h1>
@@ -165,31 +159,14 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
               <label>Image</label>
-              <Dropdown
-                    placeholder="Select image"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select image"
-                    onChange={(event, { value }) => { setclubImage(value); }}
-                    value={clubImage}
-                    options={imgDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.pathFull },
-                      };
-                    })}
-                  />
+              <input type="number" value={clubImage} onChange={(e) => setclubImage(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Application</label>
+
               <Dropdown
+                    id="adminOptions"
                     placeholder="Select"
                     scrolling
                     clearable
@@ -218,41 +195,12 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
               <label>Type</label>
-              <Dropdown
-                    placeholder="Select type"
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    header="Select type"
-                    onChange={(event, { value }) => { setclubType(value); }}
-                    value={clubType}
-                    options={Set.unionType}
-                  />
+              <input type="text" value={clubType} onChange={(e) => setclubType(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Union</label>
-              <Dropdown
-                    placeholder="Select union"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select union"
-                    onChange={(event, { value }) => { setclubUnion(value); }}
-                    value={clubUnion}
-                    options={uniDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
+              <input type="number" value={clubUnion} onChange={(e) => setclubUnion(e.currentTarget.value)}/>
             </div>
 
             <div className="field">

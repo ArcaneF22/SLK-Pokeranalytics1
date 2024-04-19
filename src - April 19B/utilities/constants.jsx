@@ -8,8 +8,12 @@ export const Fetch = {
                         notification_count: import.meta.env.VITE_GET_NOTIFICATION_COUNT,
                         authenticate:       import.meta.env.VITE_GET_AUTHENTICATE,
                         profile:            import.meta.env.VITE_GET_PROFILE,
-                        images:             import.meta.env.VITE_GET_IMAGES,
-                        unions:             import.meta.env.VITE_GET_UNIONS
+                        images:             import.meta.env.VITE_GET_IMAGES
+                    };
+
+export const DD = {
+                        applications:     import.meta.env.VITE_DROP_APPS,
+                        applications2:     import.meta.env.VITE_DROP_APPS2,
                     };
 
 export const Upsert = {
@@ -27,21 +31,3 @@ export const Path = {
                         logo:               "/images/logo/",
                         pictures:           "/images/pictures/"
                     };
-
-export const unionType = [
-                        {
-                          key: 'PRIVATE',
-                          text: 'PRIVATE',
-                          value: 'PRIVATE',
-                        },
-                        {
-                          key: 'PUBLIC',
-                          text: 'PUBLIC',
-                          value: 'PUBLIC',
-                        },
-                        {
-                          key: 'UNION',
-                          text: 'UNION',
-                          value: 'UNION',
-                        },
-                      ]

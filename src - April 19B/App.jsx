@@ -14,8 +14,6 @@ import { UsersPage } from './pages/users';
 import { AccountsPage } from './pages/accounts';
 import { NotificationPage } from './pages/notification';
 import { HistoryPage } from './pages/history';
-import { ImagesPage } from './pages/images';
-import { UnionsPage } from './pages/unions';
 import { NotFoundPage } from './pages/notfound';
 
 import { MyProfilePage } from './pages/myprofile';
@@ -50,8 +48,6 @@ function App() {
                 <Route path="/accounts"       element={ <Protected> <AccountsPage /> </Protected> } />
                 <Route path="/notification"   element={ <Protected> <NotificationPage /> </Protected> } />
                 <Route path="/history"        element={ <Protected> <HistoryPage /> </Protected> } />
-                <Route path="/images"         element={ <Protected> <ImagesPage /> </Protected> } />
-                <Route path="/unions"         element={ <Protected> <UnionsPage /> </Protected> } />
                 <Route path="/myprofile"      element={ <Protected> <MyProfilePage /> </Protected> } />
                 <Route path="/myaccounts"     element={ <Protected> <MyAccountsPage /> </Protected> } />
                 <Route path="/myhistory"      element={ <Protected> <MyHistoryPage /> </Protected> } />

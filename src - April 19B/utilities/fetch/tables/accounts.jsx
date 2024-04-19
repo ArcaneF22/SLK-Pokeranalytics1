@@ -1,30 +1,11 @@
 import { useState } from 'react';
-import { Clubs } from '../raw/clubs'
+import { Accounts } from '../raw/accounts'
 
-export const FetchClubs = ({ selectClub }) => {
+export const FetchAccounts = ({selectAccount}) => {
 
   const [clicked, setClicked] = useState(0)
-  const data = Clubs().data
-  const load = Clubs().load
-
-
-
-  const editClub = (id,idd,name,image,app,details,type,union,status) => {
-    setClicked(clicked+1)
-    const array = {
-                    "clicked":clicked,
-                    "id": id, 
-                    "idd": idd, 
-                    "name": name, 
-                    "image": image, 
-                    "app": app, 
-                    "details": details, 
-                    "type": type,
-                    "union": union,
-                    "status": status,
-                  }
-      selectClub(array);
-  };
+  const data = Accounts().data
+  const load = Accounts().load
 
   function setStatus(i) {
     if (i.status == "Active") {
@@ -45,6 +26,22 @@ export const FetchClubs = ({ selectClub }) => {
     }
   }
 
+  const editAccount = (accountID,accountNickname,accountRole,userID,appID,status) => {
+    setClicked(clicked+1)
+    const array = {
+                    "clicked":clicked,
+                    "accountID": accountID, 
+                    "accountNickname": accountNickname, 
+                    "accountRole": accountRole, 
+                    "userID": userID, 
+                    "appID": appID, 
+                    "status": status
+                  }
+    //selectAccount(array);
+    console.log(array)
+  };
+
+
   return (
 <>
 
@@ -54,18 +51,18 @@ export const FetchClubs = ({ selectClub }) => {
           <div className="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
-      ) : ( 
-        <div className="ui segment ">
-        <h3>Clubs List</h3>
+      ) : (
+      <div className="ui segment ">
+        <h3>Accounts List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Club</th>
+            <th>Account ID</th>
+            <th>Account Nickname</th>
+            <th>Account Role</th>
+            <th>Account Clubs</th>
+            <th>User</th>
             <th>Application</th>
-            <th>Details</th>
-            <th>Type</th>
-            <th>Users</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -73,34 +70,25 @@ export const FetchClubs = ({ selectClub }) => {
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.id}</td>
+              <td>{i.accountID}</td>
+              <td>{i.accountNickname}</td>
+              <td>{i.accountRole}</td>
+              <td>{i.accountClubsCount}</td>
               <td>
                 <h4 className="ui image header">
-                    <img src={i.imageFull} className="ui mini rounded image" />
+                    <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
-                      {i.name}
-                      <div className="sub header">
-                        ID: {i.idd}
+                      {i.userNickname}
+                      <div className='sub header'>
+                       ID# {i.userID}
                       </div>
-                  </div>
+                    </div>
                 </h4>
               </td>
               <td>{i.appName}</td>
-              <td>{i.details}</td>
-              <td>
-                <div className="content">
-                  <div className="header">
-                    {i.type}
-                  </div>
-                  <div className="description">
-                    {i.unionName}
-                  </div>
-                </div>
-              </td>
-              <td>{i.users}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editClub(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
+                <button className='ui button blue' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
