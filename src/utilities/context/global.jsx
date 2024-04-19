@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { RawNotificationCount } from '../fetch/raw/notification'
 import useInterval from 'use-interval'
-import { RawProfile } from '../fetch/raw/profile'
-import { RawApplications } from '../fetch/raw/applications'
 
 const OutsideContext = createContext();
 export const useGlobalOutside = () => useContext(OutsideContext);
@@ -14,11 +12,6 @@ export const GlobalOutside = ({ children }) => {
     const User      = JSON.parse( localStorage.getItem('User') );
 
     const [countDown, setcountDown] = useState(0);
-
-    const [loadprofile, setloadProfile] = useState("");
-    const [profile, setProfile] = useState("");
-    const loadingProfile  = (value) => { setloadProfile( value ); };
-    const itemProfile     = (value) => { setProfile( value ); }
 
     const [countNotif, setcountNotif] = useState(false);
     const countNotification = (value) => { setcountNotif(value); };
@@ -35,21 +28,6 @@ export const GlobalOutside = ({ children }) => {
                 C: Token['gadget'],
             }; 
 
-    const Profile = {
-                rolename:   profile['rolename'],
-                nickname:   profile['nickname'],
-                avatar:     profile['avatarpath'],
-            };
-            
-    
-
-    if(JSON.stringify(Profile) === JSON.stringify(User)){
-
-    } else {
-
-    }
-    
-
     //Update constants details every 10 seconds
     useInterval(() => {
         setcountDown(seconds => seconds + 1);
@@ -65,16 +43,12 @@ export const GlobalOutside = ({ children }) => {
         <>
         <OutsideContext.Provider value={{ 
                                             countNotif,
-                                            loadprofile,
-                                            Profile,
                                             ListOfApps, 
                                             dropdownApplication
                                          }}>
             {children}
         </OutsideContext.Provider>
         <RawNotificationCount countNotification={countNotification} />
-        <RawProfile loadingProfile={loadingProfile} itemProfile={itemProfile} />
-        <RawApplications itemApplication={itemApplication} loadingApplication={loadingApplication} dropdownApplication={dropdownApplication} />
         </>
     );
 };

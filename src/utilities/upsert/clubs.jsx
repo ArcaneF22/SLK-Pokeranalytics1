@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Dropdown } from 'semantic-ui-react'
-import { useGlobalOutside  } from '../context/global';
+import { Applications } from '../fetch/raw/applications'
 import * as Set from '../constants';
 
 export const UpsertClubs = ({selectedClub}) => {
-
+  const appDD = Applications().data
   const Token = JSON.parse( localStorage.getItem('Token') );
-  const { dropdownApplication } = useGlobalOutside();
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Club");
@@ -165,7 +164,28 @@ export const UpsertClubs = ({selectedClub}) => {
 
             <div className="field">
               <label>Application</label>
-              <input type="number" value={clubApp} onChange={(e) => setclubApp(e.currentTarget.value)}/>
+
+              <Dropdown
+                    id="adminOptions"
+                    placeholder="Select"
+                    scrolling
+                    clearable
+                    fluid
+                    selection
+                    search={false}
+                    multiple={false}
+                    header="Select application"
+                    onChange={(event, { value }) => { setclubApp(value); }}
+                    value={clubApp}
+                    options={appDD.map(i => {
+                      return {
+                        key: i.id,
+                        text: i.name,
+                        value: i.id,
+                        image: { avatar: true, src: i.imageFull },
+                      };
+                    })}
+                  />
             </div>
 
             <div className="field">
@@ -181,18 +201,6 @@ export const UpsertClubs = ({selectedClub}) => {
             <div className="field">
               <label>Union</label>
               <input type="number" value={clubUnion} onChange={(e) => setclubUnion(e.currentTarget.value)}/>
-            </div>
-
-            <div className="field">
-              <label>dropdown</label>
-              <Dropdown
-                    placeholder="Select poker app"
-                    fluid
-                    selection
-                    options={clubApp}
-                    onChange={dropdownApps}
-                    value={clubApp}
-                  />
             </div>
 
             <div className="field">

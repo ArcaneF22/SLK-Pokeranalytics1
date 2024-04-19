@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import { RawUsers } from '../raw/users'
+import { Users } from '../raw/users'
 
 export const FetchUsers = () => {
 
-  const [table, setTable] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(0)
-
-  const loadingUsers = (value) => {
-      setLoading(value);
-  };
-
-  const itemUsers = (value) => {
-    setTable(value)
-  };
+  const data = Users().data
+  const load = Users().load
 
   function setStatus(i) {
     if (i.status == "Active") {
@@ -53,8 +45,7 @@ export const FetchUsers = () => {
 
   return (
 <>
-<RawUsers loadingUsers={loadingUsers} itemUsers={itemUsers} />
-{loading ? (
+{load ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
           <div className="ui indeterminate text loader">Loading table...</div>
@@ -72,20 +63,25 @@ export const FetchUsers = () => {
             <th>Email</th>
             <th>Username</th>
             <th>Password</th>
-            <th>Avatar</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {table.map((i, index) => (
+          {data.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
-              <td>{i.nickname}</td>
+              <td>
+                <h4 className="ui image header">
+                    <img src={i.avatarFull} className="ui mini rounded image" />
+                    <div className="content">
+                      {i.nickname}
+                  </div>
+                </h4>
+              </td>
               <td>{i.role}</td>
               <td>{i.email}</td>
               <td>{i.username}</td>
               <td>{i.password}</td>
-              <td>{i.avatar}</td>
               <td>{setStatus(i)}</td>
               <td>
                 <button className='ui button blue' onClick={()=> editUsers(i.id,i.nickname,i.role,i.email,i.username,i.password,i.avatar,i.status)}>

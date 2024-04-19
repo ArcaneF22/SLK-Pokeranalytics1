@@ -1,32 +1,33 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-export const RawClubs = ({ loadingClubs, itemClubs }) => {
+const Token = JSON.parse( localStorage.getItem('Token') );
 
-    const Token = JSON.parse( localStorage.getItem('Token') );
+export const Clubs = () => {
+  const [load, setLoad] = useState(false)
+  const [data, setdata] = useState([])
+  const Auth = {
+              A: Token['id'],
+              B: Token['token'],
+              C: Token['gadget']
+          }; 
 
-    const Auth = {
-                A: Token['id'],
-                B: Token['token'],
-                C: Token['gadget']
-            }; 
-
-    async function fetchClubs() {
-        loadingClubs(true)
-      try {
-        const response = await axios.post(Set.Fetch['clubs'], Auth);
-        itemClubs(response.data);
-        loadingClubs(false)
-        console.log("Clubs items loaded...")
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
+  async function fetching() {
+      setLoad(true)
+    try {
+      const response = await axios.post(Set.Fetch['clubs'], Auth);
+      setdata(response.data);
+      setLoad(false)
+      console.log("Clubs items fetched...")
+    } catch (error) {
+      console.error("Error fetching data: ", error);
     }
+  }
 
-    useLayoutEffect(() => {
-        fetchClubs();
-      }, []);
+  useLayoutEffect(() => {
+      fetching();
+    }, []);
 
-
+  return ({load, data})
 }

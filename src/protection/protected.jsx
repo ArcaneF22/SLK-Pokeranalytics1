@@ -4,7 +4,9 @@ import { Protect } from './protect';
 import { HeaderDesktop } from '../components/headerDesktop';
 import { HeaderMobile } from '../components/headerMobile';
 import { GlobalOutside } from '../utilities/context/global'
+import {FetchCountDown, iProfile, iAuthenticate} from '../utilities/fetch/constants';
 import * as Set from '../utilities/constants';
+
 import {
   SidebarPusher,
   SidebarPushable,
@@ -16,7 +18,12 @@ import {
 export const Protected = ({ children }) => {
   const navigate = useNavigate();
   const Auth = localStorage.getItem('Auth')
-  const Profile = JSON.parse(localStorage.getItem('User'))
+  const userNickname =  iProfile().data["nickname"]
+  const userRole =      iProfile().data["rolename"]
+  const userAvatar =    iProfile().data["avatar"]
+  const authID =        iAuthenticate().data
+
+  FetchCountDown()
 
   function navigateTo(path){
     if(Auth == 'true'){
@@ -76,8 +83,7 @@ export const Protected = ({ children }) => {
       }
     }
 
-
-
+    
   switch (accessible) {
     case true:
       return <>
@@ -89,11 +95,11 @@ export const Protected = ({ children }) => {
 
             <a className="item ui segment center aligned"  onClick={() => navigateTo('/myprofile')}>
                 <h3 className="ui center icon header inverted">
-                  <img className="icon medium-avatar unClickable" src={Set.Path['avatars'] + Profile["avatar"]} alt="Profile Avatar" />
+                  <img className="icon medium-avatar unClickable" src={userAvatar} alt="Profile Avatar" />
                   <div className="content header white">
-                    {Profile["nickname"]}
+                    {userNickname} 
                     <div className="sub header">
-                      {Profile["rolename"]}
+                      {userRole}
                     </div>
                   </div>
                 </h3>
@@ -103,6 +109,7 @@ export const Protected = ({ children }) => {
                 <div>
                 <i className="clock outline icon"></i>
                 My Accounts
+
                 </div>
             </a>
 
@@ -121,7 +128,7 @@ export const Protected = ({ children }) => {
           <a className="item" onClick={() => navigateTo('/applications')}>
             <div>
               <i className="university icon"></i>
-              Applications
+              Applications 
             </div>
           </a>
 

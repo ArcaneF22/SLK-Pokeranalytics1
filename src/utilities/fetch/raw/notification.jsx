@@ -5,11 +5,9 @@ import * as Set from '../../constants';
 
 //NOTIFICATION
 var createNotification = 0;
+const Token =   JSON.parse( localStorage.getItem('Token') );
 
 export const RawNotification = ({ loadingNotification, itemNotification, countNotification }) => {
-
-    
-    const Token =   JSON.parse( localStorage.getItem('Token') );
 
     const Auth = {
                 A: Token['id'],
@@ -22,9 +20,9 @@ export const RawNotification = ({ loadingNotification, itemNotification, countNo
         loadingNotification(true)
       try {
         const response = await axios.post(Set.Fetch['notification'], Auth);
-        itemNotification(response.data);
-        loadingNotification(false)
-        countNotification(createNotification)
+          itemNotification(response.data);
+          loadingNotification(false)
+          countNotification(createNotification)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -39,7 +37,6 @@ export const RawNotification = ({ loadingNotification, itemNotification, countNo
 //NOTIFICATION PENDING
 export const RawNotificationPending = ({ loadingNotification, itemNotification }) => {
 
-    const Token =   JSON.parse( localStorage.getItem('Token') );
 
     const Auth = {
                 A: Token['id'],
@@ -67,7 +64,6 @@ export const RawNotificationPending = ({ loadingNotification, itemNotification }
 //NOTIFICATION COUNT
 export const RawNotificationCount = ({ countNotification }) => {
     const [timer, setTimer] = useState(0);
-    const Token =   JSON.parse( localStorage.getItem('Token') );
 
     const Auth = {
                 A: Token['id'],
@@ -82,6 +78,9 @@ export const RawNotificationCount = ({ countNotification }) => {
         if(createNotification != response.data){
           createNotification = response.data
           console.log(response.data+" Notification updated...")
+          if(response.data === "Err"){
+            window.location.href = "/";
+          }
         }
       } catch (error) {
         console.error("Error fetching data: ", error);

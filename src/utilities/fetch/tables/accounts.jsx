@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import { RawAccounts } from '../raw/accounts'
+import { Accounts } from '../raw/accounts'
 
 export const FetchAccounts = ({selectAccount}) => {
 
-  const [table, setTable] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(0)
-
-  const loadingAccounts = (value) => {
-      setLoading(value);
-  };
-
-  const itemAccounts = (value) => {
-      setTable(value)
-  };
+  const data = Accounts().data
+  const load = Accounts().load
 
   function setStatus(i) {
     if (i.status == "Active") {
@@ -52,8 +44,8 @@ export const FetchAccounts = ({selectAccount}) => {
 
   return (
 <>
-<RawAccounts loadingAccounts={loadingAccounts} itemAccounts={itemAccounts} />
-{loading ? (
+
+{load ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
           <div className="ui indeterminate text loader">Loading table...</div>
@@ -70,22 +62,30 @@ export const FetchAccounts = ({selectAccount}) => {
             <th>Account Role</th>
             <th>Account Clubs</th>
             <th>User</th>
-            <th>User Avatar</th>
             <th>Application</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {table.map((i, index) => (
+          {data.map((i, index) => (
             <tr key={index}>
               <td>{i.accountID}</td>
               <td>{i.accountNickname}</td>
               <td>{i.accountRole}</td>
               <td>{i.accountClubsCount}</td>
-              <td>ID#{i.userID}: {i.userNickname}</td>
-              <td>{i.userAvatar}</td>
-              <td>ID#{i.appID}: {i.appName}</td>
+              <td>
+                <h4 className="ui image header">
+                    <img src={i.userAvatar} className="ui mini rounded image" />
+                    <div className="content">
+                      {i.userNickname}
+                      <div className='sub header'>
+                       ID# {i.userID}
+                      </div>
+                    </div>
+                </h4>
+              </td>
+              <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
                 <button className='ui button blue' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>

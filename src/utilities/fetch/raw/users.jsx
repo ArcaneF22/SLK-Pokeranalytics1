@@ -1,32 +1,33 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-export const RawUsers = ({ loadingUsers, itemUsers }) => {
+const Token = JSON.parse( localStorage.getItem('Token') );
 
-    const Token = JSON.parse( localStorage.getItem('Token') );
+export const Users = () => {
+  const [load, setLoad] = useState(false)
+  const [data, setdata] = useState([])
+  const Auth = {
+              A: Token['id'],
+              B: Token['token'],
+              C: Token['gadget']
+          }; 
 
-    const Auth = {
-                A: Token['id'],
-                B: Token['token'],
-                C: Token['gadget']
-            }; 
-
-    async function fetchUsers() {
-        loadingUsers(true)
-      try {
-        const response = await axios.post(Set.Fetch['users'], Auth);
-        itemUsers(response.data);
-        loadingUsers(false)
-        console.log("Users items loaded...")
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
+  async function fetching() {
+      setLoad(true)
+    try {
+      const response = await axios.post(Set.Fetch['users'], Auth);
+      setdata(response.data);
+      setLoad(false)
+      console.log("Users items fetched...")
+    } catch (error) {
+      console.error("Error fetching data: ", error);
     }
+  }
 
-    useLayoutEffect(() => {
-        fetchUsers();
-      }, []);
+  useLayoutEffect(() => {
+      fetching();
+    }, []);
 
-
+  return ({load, data})
 }

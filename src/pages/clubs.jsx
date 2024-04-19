@@ -21,7 +21,9 @@ export const ClubsPage = () => {
   const selectClub = (newValue) => {
     setgotClub(newValue)
   };
-
+  const selectImage = (newValue) => {
+    setgotClub(newValue)
+  };
     return (
     <>
       <div className='ui segment message purple-box'>

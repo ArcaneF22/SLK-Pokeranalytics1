@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import { RawApplications } from '../raw/applications'
+import { Applications } from '../raw/applications'
 
-export const FetchApplications = ({ selectApplication, onloadApplication }) => {
+export const FetchApplications = () => {
 
-  const [table, setTable] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(0)
-
-  const loadingApplication = (value) => {
-      setLoading(value);
-  };
-
-  const itemApplication = (value) => {
-      setTable(value)
-  };
+  const data = Applications().data
+  const load = Applications().load
 
   function setStatus(i) {
     if (i.status == "Active") {
@@ -52,9 +44,9 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
   return (
 <>
 
-<RawApplications loadingApplication={loadingApplication} itemApplication={itemApplication} />
 
-{loading ? (
+
+{load ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
           <div className="ui indeterminate text loader">Loading table...</div>
@@ -68,7 +60,6 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
           <tr>
             <th>ID</th>
             <th>Application</th>
-            <th>Image</th>
             <th>Company</th>
             <th>Details</th>
             <th>Users</th>
@@ -77,11 +68,17 @@ export const FetchApplications = ({ selectApplication, onloadApplication }) => {
           </tr>
         </thead>
         <tbody>
-          {table.map((i, index) => (
+          {data.map((i, index) => (
             <tr key={index}>
               <td>{i.id}</td>
-              <td>{i.name}</td>
-              <td>{i.image}</td>
+              <td>
+                <h4 className="ui image header">
+                    <img src={i.imageFull} className="ui mini rounded image" />
+                    <div className="content">
+                      {i.name}
+                  </div>
+                </h4>
+              </td>
               <td>{i.company}</td>
               <td>{i.details}</td>
               <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
