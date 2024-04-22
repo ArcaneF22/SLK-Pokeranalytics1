@@ -9,7 +9,7 @@ export const FetchClubs = ({ selectData }) => {
 
 
 
-  const editClub = (id,idd,name,image,app,details,type,union,status) => {
+  const editData = (id,idd,name,image,app,details,type,union,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
@@ -100,7 +100,7 @@ export const FetchClubs = ({ selectData }) => {
               <td>{i.users}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editClub(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

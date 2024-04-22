@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
 
-export const UpsertApplications = ({selectedApplication,recallData}) => {
+export const UpsertApplications = ({selectedData,recallData}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
 
@@ -59,20 +59,20 @@ export const UpsertApplications = ({selectedApplication,recallData}) => {
   }
 
   useEffect(() => {
-    setappID(selectedApplication.id)
-    setappName(selectedApplication.name)
+    setappID(selectedData.id)
+    setappName(selectedData.name)
     setappCompany("1")
-    setappDetails(selectedApplication.details)
+    setappDetails(selectedData.details)
     setappImage("2")
     setappStatus("0")
-    if(selectedApplication.id == 0) {
+    if(selectedData.id == 0) {
       setButton("Add New Application")
       setCancels(false)
     } else {
       setButton("Proceed to Update")
       setCancels(true)
     }
-  }, [selectedApplication.clicked]);
+  }, [selectedData.clicked]);
 
   const changeStatus = () => {
     if(appStatus=="0" || appStatus=="Active"){
@@ -117,7 +117,7 @@ export const UpsertApplications = ({selectedApplication,recallData}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Application</h1>
-        <p>{JSON.stringify(selectedApplication)}</p>
+        <p>{JSON.stringify(selectedData)}</p>
         <div className="ui form">
 
           <div className='five fields'>
