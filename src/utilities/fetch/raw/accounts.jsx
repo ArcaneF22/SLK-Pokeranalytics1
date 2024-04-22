@@ -10,7 +10,8 @@ export const Accounts = () => {
   const Auth = {
               A: Token['id'],
               B: Token['token'],
-              C: Token['gadget']
+              C: Token['gadget'],
+              FOR: "ALL",
           }; 
 
   async function fetching() {
@@ -20,6 +21,35 @@ export const Accounts = () => {
       setdata(response.data);
       setLoad(false)
       console.log("Accounts items fetched...")
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }
+
+  useLayoutEffect(() => {
+      fetching();
+    }, []);
+
+  return ({load, data})
+}
+
+export const MyAccounts = () => {
+  const [load, setLoad] = useState(false)
+  const [data, setdata] = useState([])
+  const Auth = {
+              A: Token['id'],
+              B: Token['token'],
+              C: Token['gadget'],
+              FOR: "MY",
+          }; 
+
+  async function fetching() {
+      setLoad(true)
+    try {
+      const response = await axios.post(Set.Fetch['accounts'], Auth);
+      setdata(response.data);
+      setLoad(false)
+      console.log("My Accounts items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

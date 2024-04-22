@@ -6,7 +6,7 @@ import { ImagesClubs } from '../fetch/raw/images'
 import { Unions } from '../fetch/raw/unions'
 import * as Set from '../constants';
 
-export const UpsertClubs = ({selectedClub}) => {
+export const UpsertClubs = ({selectedData,recallData}) => {
   const appDD = Applications().data
   const imgDD = ImagesClubs().data
   const uniDD = Unions().data
@@ -20,11 +20,11 @@ export const UpsertClubs = ({selectedClub}) => {
   const [clubID, setclubID] =               useState("0");
   const [clubIDD, setclubIDD] =             useState("");
   const [clubName, setclubName] =           useState("");
-  const [clubImage, setclubImage] =         useState("");
+  const [clubImage, setclubImage] =         useState("0");
   const [clubApp, setclubApp] =             useState("");
-  const [clubDetails, setclubDetails] =     useState("");
-  const [clubType, setclubType] =           useState("");
-  const [clubUnion, setclubUnion] =         useState("");
+  const [clubDetails, setclubDetails] =     useState("0");
+  const [clubType, setclubType] =           useState("0");
+  const [clubUnion, setclubUnion] =         useState("0");
   const [clubStatus, setclubStatus] =       useState("0");
   const Upsert = {
                   A: Token['id'],
@@ -41,10 +41,13 @@ export const UpsertClubs = ({selectedClub}) => {
                   clubStatus,
               };
 
+  const AllGotValues = [clubIDD,clubName,clubImage,clubApp,clubDetails,clubType,clubUnion]
+  const YesWithvalues = AllGotValues.every(value => Boolean(value));
+
   const validate = (e) => {
     e.preventDefault()
     setLoading(true)
-      if(clubIDD == "" || clubName == "" || clubImage == "" || clubApp == "" || clubType == "" || clubStatus == ""){
+      if(!YesWithvalues){
         setMessage("Details incomplete!")
       } else {
         console.log(JSON.stringify(Upsert))
@@ -80,23 +83,23 @@ export const UpsertClubs = ({selectedClub}) => {
   };
 
   useEffect(() => {
-    setclubID(selectedClub.id)
-    setclubIDD(selectedClub.idd)
-    setclubName(selectedClub.name)
-    setclubImage(selectedClub.image)
-    setclubApp(selectedClub.app)
-    setclubDetails(selectedClub.details)
-    setclubType(selectedClub.type)
-    setclubUnion(selectedClub.union)
-    if(selectedClub.status=="0" || selectedClub.status=="Active"){
+    setclubID(selectedData.id)
+    setclubIDD(selectedData.idd)
+    setclubName(selectedData.name)
+    setclubImage(selectedData.image)
+    setclubApp(selectedData.app)
+    setclubDetails(selectedData.details)
+    setclubType(selectedData.type)
+    setclubUnion(selectedData.union)
+    if(selectedData.status=="0" || selectedData.status=="Active"){
       setclubStatus("0")
-    } else if(selectedClub.status=="Pending"){
+    } else if(selectedData.status=="Pending"){
       setclubStatus("1")
     } else {
       setclubStatus("2")
     }
 
-    if(selectedClub.id == 0) {
+    if(selectedData.id == 0) {
       setButton("Add New Club")
       setCancels(false)
     } else {
@@ -104,7 +107,7 @@ export const UpsertClubs = ({selectedClub}) => {
       setCancels(true)
     }
     
-  }, [selectedClub.clicked]);
+  }, [selectedData.clicked]);
 
   const changeStatus = () => {
     if(clubStatus=="0" || clubStatus=="Active"){
@@ -128,9 +131,11 @@ export const UpsertClubs = ({selectedClub}) => {
         setCancels(true)
     } else if(response.data.includes("Added")){
         setMessage("New poker club successfully added!");
+        recallData(1)
         clearInput()
     } else if(response.data.includes("Updated")){
         setMessage("Poker club successfully updated!");
+        recallData(1)
         clearInput()
     } else {
       setMessage("Something went wrong! Please retry");
@@ -139,7 +144,7 @@ export const UpsertClubs = ({selectedClub}) => {
       
     } catch (error) {
       setMessage(error);
-      console.error("Error fetching data: ", error);
+      console.error("Error submission: ", error);
     }
   }
 

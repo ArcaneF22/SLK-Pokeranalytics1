@@ -5,7 +5,7 @@ import { UpsertApplications } from '../utilities/upsert/applications'
 
 export const ApplicationsPage = () => {
 
-  const arrayApp = {
+  const arrayData = {
                     "id": 0, 
                     "name": "", 
                     "image": "", 
@@ -14,14 +14,14 @@ export const ApplicationsPage = () => {
                     "status": 0,
                   }
 
-  const [gotApplication, setgotApplication] = useState(arrayApp);
+  const [gotData, setgotData] = useState(arrayData);
   const [recall, setRecall] = useState(0);
 
-  const selectApplication = (newValue) => {
-    setgotApplication(newValue)
+  const selectData = (newValue) => {
+    setgotData(newValue)
   };
 
-  const recallApplication = (re) => {
+  const recallData = (re) => {
     setRecall(re)
   };
 
@@ -43,7 +43,7 @@ export const ApplicationsPage = () => {
               </div>
           </h2>
       </div>
-        <UpsertApplications selectedApplication={gotApplication} recallApplication={recallApplication} />
+        <UpsertApplications selectedData={gotData} recallData={recallData} />
         {recall === 1 ? (
             <div className="ui segment basic">
               <div className="ui active inverted dimmer">
@@ -51,7 +51,7 @@ export const ApplicationsPage = () => {
               </div>
             </div>
           ) : (
-            <FetchApplications selectApplication={selectApplication} />
+            <FetchApplications selectData={selectData} />
         )}
       </>
     );

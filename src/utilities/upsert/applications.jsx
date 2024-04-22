@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as Set from '../constants';
 
-export const UpsertApplications = ({selectedApplication,recallApplication}) => {
+export const UpsertApplications = ({selectedApplication,recallData}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
 
@@ -97,11 +97,11 @@ export const UpsertApplications = ({selectedApplication,recallApplication}) => {
           setCancels(true)
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
-          recallApplication(1)
+          recallData(1)
           clearInput()
       } else if(response.data.includes("Updated")){
           setMessage("Poker application successfully updated!");
-          recallApplication(1)
+          recallData(1)
           clearInput()
       } else {
         setMessage("Something went wrong! Please retry");

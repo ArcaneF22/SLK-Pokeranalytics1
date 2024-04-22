@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Users } from '../raw/users'
 
-export const FetchUsers = () => {
+export const FetchUsers = ({selectData}) => {
 
   const [clicked, setClicked] = useState(0)
   const data = Users().data
@@ -39,7 +39,7 @@ export const FetchUsers = () => {
                     "avatar": avatar, 
                     "status": status
                   }
-    //selectAccount(array);
+    selectData(array);
     console.log(array)
   };
 

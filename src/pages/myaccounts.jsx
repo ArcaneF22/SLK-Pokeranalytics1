@@ -1,4 +1,4 @@
-
+import { FetchMyAccounts } from '../utilities/fetch/tables/myaccounts'
 
 export const MyAccountsPage = () => {
 
@@ -14,6 +14,7 @@ export const MyAccountsPage = () => {
               </div>
           </h2>
       </div>
+      <FetchMyAccounts />
       </>
     );
   };

@@ -1,9 +1,12 @@
 export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
+                        myaccounts:         import.meta.env.VITE_GET_MYACCOUNTS,
                         accounts:           import.meta.env.VITE_GET_ACCOUNTS,
                         applications:       import.meta.env.VITE_GET_APPS,
+                        myclubs:            import.meta.env.VITE_GET_MYCLUBS,
                         clubs:              import.meta.env.VITE_GET_CLUBS,
                         history:            import.meta.env.VITE_GET_HISTORY,
+                        myhistory:          import.meta.env.VITE_GET_MYHISTORY,
                         notification:       import.meta.env.VITE_GET_NOTIFICATION,
                         notification_count: import.meta.env.VITE_GET_NOTIFICATION_COUNT,
                         authenticate:       import.meta.env.VITE_GET_AUTHENTICATE,

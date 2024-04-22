@@ -38,7 +38,7 @@ export const FetchApplications = () => {
                     "count": count,
                     "status": status
                   }
-    selectApplication(array);
+    selectData(array);
   };
   
   return (

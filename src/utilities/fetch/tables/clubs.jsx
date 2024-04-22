@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Clubs } from '../raw/clubs'
 
-export const FetchClubs = ({ selectClub }) => {
+export const FetchClubs = ({ selectData }) => {
 
   const [clicked, setClicked] = useState(0)
   const data = Clubs().data
@@ -23,7 +23,7 @@ export const FetchClubs = ({ selectClub }) => {
                     "union": union,
                     "status": status,
                   }
-      selectClub(array);
+      selectData(array);
   };
 
   function setStatus(i) {

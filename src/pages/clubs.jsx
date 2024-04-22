@@ -4,7 +4,7 @@ import { UpsertClubs } from '../utilities/upsert/clubs'
 
 export const ClubsPage = () => {
 
-  const arrayClub = {
+  const arrayData = {
     "id": 0, 
     "idd":"",
     "name": "",
@@ -16,14 +16,26 @@ export const ClubsPage = () => {
     "status": 0,
   }
 
-  const [gotClub, setgotClub] = useState(arrayClub);
+  const [gotData, setgotData] = useState(arrayData);
+  const [recall, setRecall] = useState(0);
 
-  const selectClub = (newValue) => {
-    setgotClub(newValue)
+  const selectData = (newValue) => {
+    setgotData(newValue)
   };
   const selectImage = (newValue) => {
-    setgotClub(newValue)
+    setgotData(newValue)
   };
+
+  const recallData = (re) => {
+    setRecall(re)
+  };
+  
+  useLayoutEffect(() => {
+    if(recall==1){
+      setRecall(0)
+    }
+  }, [recall]);
+
     return (
     <>
       <div className='ui segment message purple-box'>
@@ -35,8 +47,17 @@ export const ClubsPage = () => {
               </div>
           </h2>
       </div>
-        <UpsertClubs selectedClub={gotClub} />
-        <FetchClubs selectClub={selectClub} />
+        <UpsertClubs selectedData={gotData} recallData={recallData} />
+        {recall === 1 ? (
+            <div className="ui segment basic">
+              <div className="ui active inverted dimmer">
+                <div className="ui indeterminate text loader">Loading table...</div>
+              </div>
+            </div>
+          ) : (
+            <FetchClubs selectData={selectData} />
+        )}
+        
     </>
 
     );

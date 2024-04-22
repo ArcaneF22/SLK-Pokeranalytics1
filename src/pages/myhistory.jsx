@@ -1,4 +1,4 @@
-
+import { FetchMyHistory } from '../utilities/fetch/tables/myhistory'
 
 export const MyHistoryPage = () => {
 
@@ -13,6 +13,7 @@ export const MyHistoryPage = () => {
               </div>
           </h2>
       </div>
+      <FetchMyHistory />
       </>
 
     );

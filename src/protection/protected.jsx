@@ -13,6 +13,7 @@ import {
   Segment,
   Menu,
   Sidebar,
+  GridRow,
 } from 'semantic-ui-react'
 
 export const Protected = ({ children }) => {
@@ -167,6 +168,7 @@ export const Protected = ({ children }) => {
           <SidebarPushable>
           
           <SidebarPusher className='lefted-content segment page-margin basic' dimmed={sidebarDimmed} >
+  
 
                   {children}
 

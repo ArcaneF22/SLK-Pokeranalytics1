@@ -10,7 +10,7 @@ export const Clubs = () => {
   const Auth = {
               A: Token['id'],
               B: Token['token'],
-              C: Token['gadget']
+              C: Token['gadget'],
           }; 
 
   async function fetching() {
@@ -31,3 +31,4 @@ export const Clubs = () => {
 
   return ({load, data})
 }
+
