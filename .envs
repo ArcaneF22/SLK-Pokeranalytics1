@@ -3,6 +3,8 @@ GENERATE_SOURCEMAP  = false
 VITE_GO_LOGIN          		= https://13.211.65.106/pokerapp/verify/login.php
 VITE_GET_AUTHENTICATE		= https://13.211.65.106/pokerapp/verify/authenticate.php
 
+VITE_GET_VERIFY		        = https://13.211.65.106/pokerapp/verify/verify.php
+
 VITE_GET_USERS          	= https://13.211.65.106/pokerapp/fetch/fetch_users.php
 VITE_GET_ACCOUNTS			= https://13.211.65.106/pokerapp/fetch/fetch_accounts.php
 VITE_GET_APPS          		= https://13.211.65.106/pokerapp/fetch/fetch_applications.php
@@ -10,15 +12,11 @@ VITE_GET_CLUBS          	= https://13.211.65.106/pokerapp/fetch/fetch_clubs.php
 VITE_GET_HISTORY			= https://13.211.65.106/pokerapp/fetch/fetch_history.php
 VITE_GET_NOTIFICATION 		= https://13.211.65.106/pokerapp/fetch/fetch_notification.php
 VITE_GET_NOTIFICATION_COUNT = https://13.211.65.106/pokerapp/fetch/fetch_notification_count.php
-VITE_GET_PROFILE 		    = https://13.211.65.106/pokerapp/fetch/fetch_profile.php
-<<<<<<< HEAD
-
-VITE_UPSERT_USERS           = https://13.211.65.106/pokerapp/upsert/users.php
-VITE_UPSERT_ACCOUNTS        = https://13.211.65.106/pokerapp/upsert/accounts.php
-VITE_UPSERT_APPS            = https://13.211.65.106/pokerapp/upsert/applications.php
-VITE_UPSERT_CLUBS           = https://13.211.65.106/pokerapp/upsert/clubs.php
-=======
->>>>>>> 51886da8378b05709c947f1c67d928bd0a49784a
+VITE_GET_PROFILE            = https://13.211.65.106/pokerapp/fetch/fetch_profile.php
+VITE_GET_IMAGES             = https://13.211.65.106/pokerapp/fetch/fetch_images.php
+VITE_GET_UNIONS             = https://13.211.65.106/pokerapp/fetch/fetch_unions.php
+VITE_GET_COMPANY            = https://13.211.65.106/pokerapp/fetch/fetch_company.php
+VITE_GET_ROLES              = https://13.211.65.106/pokerapp/fetch/fetch_roles.php
 
 VITE_UPSERT_USERS           = https://13.211.65.106/pokerapp/upsert/users.php
 VITE_UPSERT_ACCOUNTS        = https://13.211.65.106/pokerapp/upsert/accounts.php
