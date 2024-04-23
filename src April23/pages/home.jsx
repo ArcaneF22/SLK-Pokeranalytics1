@@ -3,8 +3,6 @@ import { isNumeric } from '../utilities/tools'
 import { FetchNotificationPending } from '../utilities/fetch/items/notifications'
 import { useGlobalOutside  } from '../utilities/context/global';
 import React, { useState, useLayoutEffect, useEffect } from 'react';
-import { GridRow, GridColumn, Grid, Segment, Image } from 'semantic-ui-react'
-import * as icon from '@tabler/icons-react';
 export const HomePage = () => {
 
   const { countNotif } = useGlobalOutside();
