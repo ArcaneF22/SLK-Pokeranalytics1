@@ -4,13 +4,14 @@ import * as SUI from 'semantic-ui-react'
 
 import { Applications } from '../fetch/raw/applications'
 import { Roles } from '../fetch/raw/roles'
-
+import { Users } from '../fetch/raw/users'
 import * as Set from '../constants';
 
 export const UpsertAccounts = ({selectedData,recallData}) => {
   const appDD = Applications().data
   const roleDD = Roles().data
-
+  const usersDD = Users().data
+  
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
@@ -153,19 +154,32 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Accounts</h1>
-        <p>{JSON.stringify(selectedData)}</p>
         <div className="ui form">
 
           <div className='five fields'>
 
-            <div className="field">
-              <label>ID</label>
-              <input type="number" value={accountID} onChange={(e) => setaccountID(e.currentTarget.value)} />
-            </div>
 
             <div className="field">
               <label>User ID</label>
-              <input type="text" value={accountuserID} onChange={(e) => setaccountuserID(e.currentTarget.value)}/>
+              <SUI.Dropdown
+                    placeholder="Select role"
+                    scrolling
+                    clearable
+                    fluid
+                    selection
+                    search={true}
+                    multiple={false}
+                    header="Select role"
+                    onChange={(event, { value }) => { setaccountuserID(value); }}
+                    value={accountuserID}
+                    options={usersDD.map(i => {
+                      return {
+                        key: i.id,
+                        text: i.nickname + " (ID# "+i.id+")",
+                        value: i.id,
+                      };
+                    })}
+                  />
             </div>
 
             <div className="field">

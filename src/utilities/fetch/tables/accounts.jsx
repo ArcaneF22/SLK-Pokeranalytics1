@@ -26,13 +26,14 @@ export const FetchAccounts = ({selectData}) => {
     }
   }
 
-  const editData = (accountID,accountNickname,accountRole,userID,appID,status) => {
+  const editData = (id,idd,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
-                    "accountID": accountID, 
-                    "accountNickname": accountNickname, 
-                    "accountRole": accountRole, 
+                    "id": id,
+                    "idd": idd, 
+                    "nickname": accountNickname, 
+                    "role": accountRole, 
                     "userID": userID, 
                     "appID": appID, 
                     "status": status
@@ -87,7 +88,7 @@ export const FetchAccounts = ({selectData}) => {
               <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
