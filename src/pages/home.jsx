@@ -14,7 +14,6 @@ export const HomePage = () => {
 
 
     useLayoutEffect(() => {
-
     }, []);
 
   return (
