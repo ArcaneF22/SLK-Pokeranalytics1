@@ -12,9 +12,7 @@ export const Fetch = {
                         authenticate:       import.meta.env.VITE_GET_AUTHENTICATE,
                         profile:            import.meta.env.VITE_GET_PROFILE,
                         images:             import.meta.env.VITE_GET_IMAGES,
-                        unions:             import.meta.env.VITE_GET_UNIONS,
-                        company:            import.meta.env.VITE_GET_COMPANY,
-                        roles:              import.meta.env.VITE_GET_ROLES,
+                        unions:             import.meta.env.VITE_GET_UNIONS
                     };
 
 export const Upsert = {

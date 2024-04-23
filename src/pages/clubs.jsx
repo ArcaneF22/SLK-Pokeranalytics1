@@ -4,19 +4,7 @@ import { UpsertClubs } from '../utilities/upsert/clubs'
 
 export const ClubsPage = () => {
 
-  const arrayData = {
-    "id": 0, 
-    "idd":"",
-    "name": "",
-    "image":"", 
-    "app":"",
-    "details": "", 
-    "type": "", 
-    "union": "", 
-    "status": 0,
-  }
-
-  const [gotData, setgotData] = useState(arrayData);
+  const [gotData, setgotData] = useState([]);
   const [recall, setRecall] = useState(0);
 
   const selectData = (newValue) => {

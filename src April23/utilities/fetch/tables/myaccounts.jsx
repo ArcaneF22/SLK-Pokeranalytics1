@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { Applications } from '../raw/applications'
+import { MyAccounts } from '../raw/accounts'
 
-export const FetchApplications = ({selectData}) => {
+export const FetchMyAccounts = ({selectMyAccount}) => {
 
-  const [clicked, setClicked] = useState(1)
-  const data = Applications().data
-  const load = Applications().load
+  const [clicked, setClicked] = useState(0)
+  const data = MyAccounts().data
+  const load = MyAccounts().load
 
   function setStatus(i) {
-    if (i.statusLabel == "Active") {
+    if (i.status == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.statusLabel == "Pending") {
+    } else if (i.status == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending
@@ -26,26 +26,24 @@ export const FetchApplications = ({selectData}) => {
     }
   }
 
-  const editData = (id,name,image,company,details,count,status) => {
+  const editMyAccount = (accountID,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
-                    "id": id, 
-                    "name": name, 
-                    "image": image, 
-                    "company": company, 
-                    "details": details, 
-                    "count": count,
+                    "accountID": accountID, 
+                    "accountNickname": accountNickname, 
+                    "accountRole": accountRole, 
+                    "userID": userID, 
+                    "appID": appID, 
                     "status": status
                   }
-    selectData(array);
+    //selectAccount(array);
     console.log(array)
   };
-  
+
+
   return (
 <>
-
-
 
 {load ? (
       <div className="ui segment basic">
@@ -55,15 +53,16 @@ export const FetchApplications = ({selectData}) => {
       </div>
       ) : (
       <div className="ui segment ">
-        <h2>Applications List</h2>
+        <h3>Accounts List</h3>
         <table className='ui celled striped table'>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Account ID</th>
+            <th>Account Nickname</th>
+            <th>Account Role</th>
+            <th>Account Clubs</th>
+            <th>User</th>
             <th>Application</th>
-            <th>Company</th>
-            <th>Details</th>
-            <th>Users</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -71,21 +70,25 @@ export const FetchApplications = ({selectData}) => {
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.id}</td>
+              <td>{i.accountID}</td>
+              <td>{i.accountNickname}</td>
+              <td>{i.accountRole}</td>
+              <td>{i.accountClubsCount}</td>
               <td>
                 <h4 className="ui image header">
-                    <img src={i.imageFull} className="ui mini rounded image" />
+                    <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
-                      {i.name}
-                  </div>
+                      {i.userNickname}
+                      <div className='sub header'>
+                       ID# {i.userID}
+                      </div>
+                    </div>
                 </h4>
               </td>
-              <td>{i.company}</td>
-              <td>{i.details}</td>
-              <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
+              <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.name,i.imageID,i.companyID,i.details,i.accountCount,i.status)}>
+                <button className='ui button blue' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

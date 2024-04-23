@@ -3,11 +3,9 @@ import { Clubs } from '../raw/clubs'
 
 export const FetchClubs = ({ selectData }) => {
 
-  const [clicked, setClicked] = useState(0)
+  const [clicked, setClicked] = useState(1)
   const data = Clubs().data
   const load = Clubs().load
-
-
 
   const editData = (id,idd,name,image,app,details,type,union,status) => {
     setClicked(clicked+1)
@@ -27,12 +25,12 @@ export const FetchClubs = ({ selectData }) => {
   };
 
   function setStatus(i) {
-    if (i.status == "Active") {
+    if (i.statusLabel == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.status == "Pending") {
+    } else if (i.statusLabel == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending
@@ -97,10 +95,10 @@ export const FetchClubs = ({ selectData }) => {
                   </div>
                 </div>
               </td>
-              <td>{i.users}</td>
-              <td>{setStatus(i)}</td>
+              <td>{i.users} {i.status}</td>
+              <td>{setStatus(i)} </td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

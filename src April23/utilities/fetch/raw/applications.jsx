@@ -4,22 +4,22 @@ import * as Set from '../../constants';
 
 const Token = JSON.parse( localStorage.getItem('Token') );
 
-export const Roles = () => {
+export const Applications = () => {
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
               A: Token['id'],
               B: Token['token'],
-              C: Token['gadget'],
+              C: Token['gadget']
           }; 
 
   async function fetching() {
       setLoad(true)
     try {
-      const response = await axios.post(Set.Fetch['roles'], Auth);
+      const response = await axios.post(Set.Fetch['applications'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Roles items fetched...")
+      console.log("Application items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -31,4 +31,3 @@ export const Roles = () => {
 
   return ({load, data})
 }
-

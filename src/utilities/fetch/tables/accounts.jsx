@@ -3,17 +3,17 @@ import { Accounts } from '../raw/accounts'
 
 export const FetchAccounts = ({selectAccount}) => {
 
-  const [clicked, setClicked] = useState(0)
+  const [clicked, setClicked] = useState(1)
   const data = Accounts().data
   const load = Accounts().load
 
   function setStatus(i) {
-    if (i.status == "Active") {
+    if (i.statusLabel == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.status == "Pending") {
+    } else if (i.statusLabel == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending

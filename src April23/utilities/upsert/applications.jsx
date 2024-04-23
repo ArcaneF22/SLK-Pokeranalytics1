@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ImagesApps } from '../fetch/raw/images'
-import { Company } from '../fetch/raw/company'
-import * as SUI from 'semantic-ui-react'
 import * as Set from '../constants';
 
 export const UpsertApplications = ({selectedData,recallData}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
-  const imgDD = ImagesApps().data
-  const compDD = Company().data
 
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
@@ -22,7 +17,6 @@ export const UpsertApplications = ({selectedData,recallData}) => {
   const [appDetails, setappDetails] =   useState("");
   const [appImage, setappImage] =       useState("");
   const [appStatus, setappStatus] =     useState("0");
-
   const Upsert = {
                   A: Token['id'],
                   B: Token['token'],
@@ -41,7 +35,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
       if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
         setMessage("Details incomplete!")
       } else {
-        SubmitData()
+        submitApplications()
       }
   }
 
@@ -52,53 +46,44 @@ export const UpsertApplications = ({selectedData,recallData}) => {
     setCancels(false)
   }
 
-  const clearForm = () => {
+  const clearInput = () => {
     setappID("0")
     setappName("")
     setappCompany("")
     setappDetails("")
     setappImage("")
     setappStatus("0")
-
     setButton("Add New Application")
     setLoading(false)
     setCancels(false)
   }
 
-  const fromTable = () => {
-
+  useEffect(() => {
     setappID(selectedData.id)
-    setappName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
-    setappImage(selectedData.image === null || selectedData.image === undefined ? "" : selectedData.image)
-    setappCompany(selectedData.company === null || selectedData.company === undefined ? "" : selectedData.company)
-    setappDetails(selectedData.details === null || selectedData.details === undefined ? "" : selectedData.details)
-    setappStatus(selectedData.status === null || selectedData.status === undefined ? "" : selectedData.status)
-
-    if(selectedData.id == 0 || selectedData.id == null) {
+    setappName(selectedData.name)
+    setappCompany("1")
+    setappDetails(selectedData.details)
+    setappImage("2")
+    setappStatus("0")
+    if(selectedData.id == 0) {
       setButton("Add New Application")
-      setappStatus("0")
       setCancels(false)
     } else {
       setButton("Proceed to Update")
       setCancels(true)
     }
-
-  }
-
-  useEffect(() => {
-      fromTable()
   }, [selectedData.clicked]);
 
   const changeStatus = () => {
     if(appStatus=="0" || appStatus=="Active"){
-      setappStatus("2")
+      setappStatus("1")
     } else {
       setappStatus("0")
     }
   }
 
-  async function SubmitData() {
-    console.log(Upsert)
+  async function submitApplications() {
+    console.log("Submit:"+appID+"/"+appName+"/"+appCompany+"/"+appDetails+"/"+appImage+"/"+appStatus)
     setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['applications'], Upsert);
@@ -108,19 +93,19 @@ export const UpsertApplications = ({selectedData,recallData}) => {
           const number = parseFloat( response.data.match(/[\d.]+/) );
           setappID( number )
           setButton("Proceed to Update")
-          setMessage("Duplicate found! Would you like to update existing data? Check application ID#"+ number);
+          setMessage("Duplicate found! Would you like to update existing data? Application ID#"+ number);
           setCancels(true)
       } else if(response.data.includes("Added")){
           setMessage("New poker application successfully added!");
           recallData(1)
-          clearForm()
+          clearInput()
       } else if(response.data.includes("Updated")){
           setMessage("Poker application successfully updated!");
           recallData(1)
-          clearForm()
+          clearInput()
       } else {
         setMessage("Something went wrong! Please retry");
-        clearForm()
+        clearInput()
       }
       
     } catch (error) {
@@ -132,6 +117,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Application</h1>
+        <p>{JSON.stringify(selectedData)}</p>
         <div className="ui form">
 
           <div className='five fields'>
@@ -142,51 +128,12 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Image</label>
-              <SUI.Dropdown
-                    placeholder="Select image"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select image"
-                    onChange={(event, { value }) => { setappImage(value); }}
-                    value={appImage}
-                    options={imgDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.pathFull },
-                      };
-                    })}
-                  />
+              <input type="text" value={appImage} onChange={(e) => setappImage(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Company</label>
-              <SUI.Dropdown
-                    placeholder="Select company"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select company"
-                    onChange={(event, { value }) => { setappCompany(value); }}
-                    value={appCompany}
-                    options={compDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
-
+              <input type="text" value={appCompany} onChange={(e) => setappCompany(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
@@ -219,7 +166,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={clearForm}>Clear</div>
+              <div className="ui button grey basic" onClick={clearInput}>Clear</div>
             </> :  null }
             <p>{message}</p>
           </div>

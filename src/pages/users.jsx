@@ -5,29 +5,12 @@ import { UpsertUsers } from '../utilities/upsert/users'
 
 export const UsersPage = () => {
 
-  const arrayData = {
-    "id": 0, 
-    "nickname":"",
-    "role": "",
-    "avatar":"",
-    "username":"", 
-    "password":"",
-    "email": "", 
-    "telegram": "", 
-    "status": 0,
-  }
-
-  const [gotData, setgotData] = useState(arrayData);
+  const [gotData, setgotData] = useState([]);
   const [recall, setRecall] = useState(0);
 
-  const selectData = (newValue) => {
-    setgotData(newValue)
-  };
-
-  const recallData = (re) => {
-    setRecall(re)
-  };
-
+  const selectData = (val) => { setgotData(val) };
+  const recallData = (val) => { setRecall(val)  };
+  
   useLayoutEffect(() => {
     if(recall==1){
       setRecall(0)
@@ -45,7 +28,7 @@ export const UsersPage = () => {
               </div>
           </h2>
       </div>
-      <UpsertUsers selectedUser={gotData} recallData={recallData} />
+      <UpsertUsers selectedData={gotData} recallData={recallData} />
       {recall === 1 ? (
             <div className="ui segment basic">
               <div className="ui active inverted dimmer">

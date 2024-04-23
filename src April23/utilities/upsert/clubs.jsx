@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import * as SUI from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 import { Applications } from '../fetch/raw/applications'
 import { ImagesClubs } from '../fetch/raw/images'
 import { Unions } from '../fetch/raw/unions'
@@ -26,7 +26,6 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   const [clubType, setclubType] =           useState("0");
   const [clubUnion, setclubUnion] =         useState("0");
   const [clubStatus, setclubStatus] =       useState("0");
-
   const Upsert = {
                   A: Token['id'],
                   B: Token['token'],
@@ -63,7 +62,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setCancels(false)
   }
 
-  const clearForm = () => {
+  const clearInput = () => {
     setclubID("0")
     setclubIDD("")
     setclubName("")
@@ -73,23 +72,25 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setclubType("")
     setclubUnion("")
     setclubStatus("0")
-    
     setButton("Add New Club")
     setLoading(false)
     setCancels(false)
 
   }
 
-  const fromTable = () => {
+  const dropdownApps = (event, { value }) => {
+    setappID(value);
+  };
 
-    setclubID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
-    setclubIDD(selectedData.idd === null || selectedData.idd === undefined ? "" : selectedData.idd)
-    setclubName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
-    setclubImage(selectedData.image === null || selectedData.image === undefined ? "" : selectedData.image)
-    setclubApp(selectedData.app === null || selectedData.app === undefined ? "" : selectedData.app)
-    setclubDetails(selectedData.details === null || selectedData.details === undefined ? "" : selectedData.details)
-    setclubType(selectedData.type === null || selectedData.type === undefined ? "" : selectedData.type)
-    setclubUnion(selectedData.union === null || selectedData.union === undefined ? "" : selectedData.union)
+  useEffect(() => {
+    setclubID(selectedData.id)
+    setclubIDD(selectedData.idd)
+    setclubName(selectedData.name)
+    setclubImage(selectedData.image)
+    setclubApp(selectedData.app)
+    setclubDetails(selectedData.details)
+    setclubType(selectedData.type)
+    setclubUnion(selectedData.union)
     if(selectedData.status=="0" || selectedData.status=="Active"){
       setclubStatus("0")
     } else if(selectedData.status=="Pending"){
@@ -98,24 +99,19 @@ export const UpsertClubs = ({selectedData,recallData}) => {
       setclubStatus("2")
     }
 
-    if(selectedData.id == "0" || selectedData.id == null) {
+    if(selectedData.id == 0) {
       setButton("Add New Club")
-      setclubStatus("0")
       setCancels(false)
     } else {
       setButton("Proceed to Update")
       setCancels(true)
     }
-
-  }
-
-  useEffect(() => {
-    fromTable()
+    
   }, [selectedData.clicked]);
 
   const changeStatus = () => {
-    if(clubStatus=="0"){
-      setclubStatus("2")
+    if(clubStatus=="0" || clubStatus=="Active"){
+      setclubStatus("1")
     } else {
       setclubStatus("0")
     }
@@ -123,7 +119,6 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
   async function submitClub() {
     //setLoading(true)
-    console.log(Upsert)
     try {
       const response = await axios.post(Set.Upsert['clubs'], Upsert);
       console.log(response.data)
@@ -132,22 +127,23 @@ export const UpsertClubs = ({selectedData,recallData}) => {
         const number = parseFloat( response.data.match(/[\d.]+/) );
         setclubID( number )
         setButton("Proceed to Update")
-        setMessage("Duplicate found! Would you like to update existing data? Check club ID#"+ number);
+        setMessage("Duplicate found! Would you like to update existing data? Club ID#"+ number);
         setCancels(true)
     } else if(response.data.includes("Added")){
         setMessage("New poker club successfully added!");
         recallData(1)
-        clearForm()
+        clearInput()
     } else if(response.data.includes("Updated")){
         setMessage("Poker club successfully updated!");
         recallData(1)
-        clearForm()
+        clearInput()
     } else {
-      setMessage("Something went wrong! Please retry :" + response.data);
-      clearForm()
+      setMessage("Something went wrong! Please retry");
+      clearInput()
     }
       
     } catch (error) {
+      setMessage(error);
       console.error("Error submission: ", error);
     }
   }
@@ -164,7 +160,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
           <div className="field">
               <label>Club IDD</label>
-              <input type="number" value={clubIDD} onChange={(e) => setclubIDD(e.currentTarget.value)}/>
+              <input type="text" value={clubIDD} onChange={(e) => setclubIDD(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
@@ -174,7 +170,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Image</label>
-              <SUI.Dropdown
+              <Dropdown
                     placeholder="Select image"
                     scrolling
                     clearable
@@ -198,7 +194,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Application</label>
-              <SUI.Dropdown
+              <Dropdown
                     placeholder="Select"
                     scrolling
                     clearable
@@ -227,7 +223,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Type</label>
-              <SUI.Dropdown
+              <Dropdown
                     placeholder="Select type"
                     clearable
                     fluid
@@ -242,7 +238,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Union</label>
-              <SUI.Dropdown
+              <Dropdown
                     placeholder="Select union"
                     scrolling
                     clearable
@@ -265,7 +261,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
             </div>
 
             <div className="field">
-            <label>Status {clubStatus}</label>
+            <label>Status</label>
               { clubStatus === "0" || clubStatus === "Active" ? 
                 <div className="ui button green fluid center aligned" onClick={changeStatus}>
                   <i className="check circle outline icon"></i>
@@ -289,7 +285,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={clearForm}>Clear</div>
+              <div className="ui button grey basic" onClick={clearInput}>Clear</div>
             </> :  null }
             <p>{message}</p>
           </div>

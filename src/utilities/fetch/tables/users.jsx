@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Users } from '../raw/users'
 
-export const FetchUsers = ({selectData}) => {
+export const FetchUsers = ({ selectData }) => {
 
-  const [clicked, setClicked] = useState(0)
+  const [clicked, setClicked] = useState(1)
   const data = Users().data
   const load = Users().load
 
   function setStatus(i) {
-    if (i.status == "Active") {
+    if (i.statusLabel == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.status == "Pending") {
+    } else if (i.statusLabel == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending
@@ -25,10 +25,11 @@ export const FetchUsers = ({selectData}) => {
               </button>;
     }
   }
-
-  const editUsers = (id,nickname,role,email,username,password,avatar,status) => {
+  const [fetch, setfetch] = useState([])
+  const editData = (id,nickname,role,email,username,password,avatar,status) => {
     setClicked(clicked+1)
-    const array = {
+    
+    const arrayz = {
                     "clicked":clicked,
                     "id": id, 
                     "nickname": nickname, 
@@ -37,10 +38,12 @@ export const FetchUsers = ({selectData}) => {
                     "username": username, 
                     "password": password, 
                     "avatar": avatar, 
-                    "status": status
+                    "status": status,
                   }
-    selectData(array);
-    console.log(array)
+
+    selectData(arrayz);
+    setfetch(arrayz);
+    console.log(arrayz)
   };
 
   return (
@@ -54,6 +57,7 @@ export const FetchUsers = ({selectData}) => {
       ) : (
       <div className="ui segment ">
         <h3>Users List</h3>
+        <p>{JSON.stringify(fetch)}</p>
         <table className='ui celled striped table'>
         <thead>
           <tr>
@@ -84,7 +88,7 @@ export const FetchUsers = ({selectData}) => {
               <td>{i.password}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editUsers(i.id,i.nickname,i.role,i.email,i.username,i.password,i.avatar,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.username,i.password,i.avatar,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

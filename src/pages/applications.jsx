@@ -1,20 +1,11 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { FetchApplications } from '../utilities/fetch/tables/applications'
 import { UpsertApplications } from '../utilities/upsert/applications'
 
 
 export const ApplicationsPage = () => {
 
-  const arrayData = {
-                    "id": 0, 
-                    "name": "", 
-                    "image": "", 
-                    "company": "", 
-                    "details": "", 
-                    "status": 0,
-                  }
-
-  const [gotData, setgotData] = useState(arrayData);
+  const [gotData, setgotData] = useState([]);
   const [recall, setRecall] = useState(0);
 
   const selectData = (newValue) => {

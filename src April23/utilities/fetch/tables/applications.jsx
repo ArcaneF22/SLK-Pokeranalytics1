@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Applications } from '../raw/applications'
 
-export const FetchApplications = ({selectData}) => {
+export const FetchApplications = () => {
 
-  const [clicked, setClicked] = useState(1)
+  const [clicked, setClicked] = useState(0)
   const data = Applications().data
   const load = Applications().load
 
   function setStatus(i) {
-    if (i.statusLabel == "Active") {
+    if (i.status == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.statusLabel == "Pending") {
+    } else if (i.status == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending
@@ -39,7 +39,6 @@ export const FetchApplications = ({selectData}) => {
                     "status": status
                   }
     selectData(array);
-    console.log(array)
   };
   
   return (
@@ -85,7 +84,7 @@ export const FetchApplications = ({selectData}) => {
               <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.name,i.imageID,i.companyID,i.details,i.accountCount,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.name,i.image,i.company,i.details,i.accountCount,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

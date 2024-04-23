@@ -4,7 +4,7 @@ import * as Set from '../../constants';
 
 const Token = JSON.parse( localStorage.getItem('Token') );
 
-export const Roles = () => {
+export const Clubs = () => {
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -16,10 +16,10 @@ export const Roles = () => {
   async function fetching() {
       setLoad(true)
     try {
-      const response = await axios.post(Set.Fetch['roles'], Auth);
+      const response = await axios.post(Set.Fetch['clubs'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Roles items fetched...")
+      console.log("Clubs items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
