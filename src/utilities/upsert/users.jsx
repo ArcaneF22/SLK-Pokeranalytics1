@@ -126,8 +126,10 @@ export const UpsertUsers = ({selectedData,recallData}) => {
     }, [selectedData.clicked]);
 
   const changeStatus = () => {
-    if(newuserStatus=="0" || newuserStatus=="Active"){
+    if(newuserStatus=="0"){
         setnewuserStatus("1")
+    } else if(newuserStatus=="1"){
+        setnewuserStatus("2")
     } else {
         setnewuserStatus("0")
     }
@@ -163,7 +165,6 @@ export const UpsertUsers = ({selectedData,recallData}) => {
       console.error("Error fetching data: ", error);
     }
   }
-
 
 
     return (
@@ -258,17 +259,22 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
             <div className="field">
             <label>Status</label>
-              { newuserStatus === "0" || newuserStatus === "Active" ? 
-                <div className="ui button green fluid center aligned" onClick={changeStatus}>
-                  <i className="check circle outline icon"></i>
-                  Active
-                </div>
-              :  
-                <div className="ui button red fluid center aligned" onClick={changeStatus}>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-                </div>
-              } 
+              { newuserStatus === "0" ? (
+                        <button className='ui button green' onClick={ changeStatus }>
+                            <i className="check circle outline icon"></i>
+                            Active
+                        </button>
+              ) : newuserStatus === "1" ? (
+                        <button className='ui button orange' onClick={ changeStatus }>
+                            <i className="spinner icon"></i>
+                            Pending
+                        </button>
+              ) : (
+                      <button className='ui button red' onClick={ changeStatus }>
+                            <i className="times circle outline icon"></i>
+                            Inactive
+                        </button>
+              )} 
             </div>
 
           </div>

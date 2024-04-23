@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Accounts } from '../raw/accounts'
 
-export const FetchAccounts = ({selectAccount}) => {
+export const FetchAccounts = ({selectData}) => {
 
   const [clicked, setClicked] = useState(1)
   const data = Accounts().data
@@ -26,7 +26,7 @@ export const FetchAccounts = ({selectAccount}) => {
     }
   }
 
-  const editAccount = (accountID,accountNickname,accountRole,userID,appID,status) => {
+  const editData = (accountID,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
@@ -37,10 +37,9 @@ export const FetchAccounts = ({selectAccount}) => {
                     "appID": appID, 
                     "status": status
                   }
-    //selectAccount(array);
-    console.log(array)
+    selectData(array);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
 
   return (
 <>
@@ -88,7 +87,7 @@ export const FetchAccounts = ({selectAccount}) => {
               <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

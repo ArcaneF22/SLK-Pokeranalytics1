@@ -39,7 +39,7 @@ export const FetchApplications = ({selectData}) => {
                     "status": status
                   }
     selectData(array);
-    console.log(array)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   
   return (

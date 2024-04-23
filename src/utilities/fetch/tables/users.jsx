@@ -14,7 +14,7 @@ export const FetchUsers = ({ selectData }) => {
                   Active
               </button>;
     } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button yellow basic'>
+      return  <button className='ui button orange basic'>
                   <i className="spinner icon"></i>
                   Pending
               </button>;
@@ -25,11 +25,10 @@ export const FetchUsers = ({ selectData }) => {
               </button>;
     }
   }
-  const [fetch, setfetch] = useState([])
   const editData = (id,nickname,role,email,username,password,avatar,status) => {
     setClicked(clicked+1)
     
-    const arrayz = {
+    const array = {
                     "clicked":clicked,
                     "id": id, 
                     "nickname": nickname, 
@@ -41,9 +40,8 @@ export const FetchUsers = ({ selectData }) => {
                     "status": status,
                   }
 
-    selectData(arrayz);
-    setfetch(arrayz);
-    console.log(arrayz)
+    selectData(array);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

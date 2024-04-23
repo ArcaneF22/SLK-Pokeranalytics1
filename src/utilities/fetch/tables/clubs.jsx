@@ -22,6 +22,7 @@ export const FetchClubs = ({ selectData }) => {
                     "status": status,
                   }
       selectData(array);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   function setStatus(i) {

@@ -108,16 +108,19 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     fromTable()
 }, [selectedData.clicked]);
 
-  const changeStatus = () => {
-    if(accountStatus=="0" || accountStatus=="Active"){
-        setaccountStatus("1")
-    } else {
-        setaccountStatus("0")
+    const changeStatus = () => {
+        if(accountStatus=="0"){
+            setaccountStatus("1")
+        } else if(accountStatus=="1"){
+            setaccountStatus("2")
+        } else {
+            setaccountStatus("0")
+        }
     }
-  }
 
   async function SubmitData() {
-    //setLoading(true)
+    console.log(Upsert)
+    setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['accounts'], Upsert);
       console.log(response.data)
@@ -150,7 +153,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Accounts</h1>
-
+        <p>{JSON.stringify(selectedData)}</p>
         <div className="ui form">
 
           <div className='five fields'>
@@ -224,17 +227,22 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
             <div className="field">
             <label>Status</label>
-              { accountStatus === "0" || accountStatus === "Active" ? 
-                <div className="ui button green fluid center aligned" onClick={changeStatus}>
-                  <i className="check circle outline icon"></i>
-                  Active
-                </div>
-              :  
-                <div className="ui button red fluid center aligned" onClick={changeStatus}>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-                </div>
-              } 
+            { accountStatus === "0" ? (
+                        <button className='ui button green' onClick={ changeStatus }>
+                            <i className="check circle outline icon"></i>
+                            Active
+                        </button>
+              ) : accountStatus === "1" ? (
+                        <button className='ui button orange' onClick={ changeStatus }>
+                            <i className="spinner icon"></i>
+                            Pending
+                        </button>
+              ) : (
+                      <button className='ui button red' onClick={ changeStatus }>
+                            <i className="times circle outline icon"></i>
+                            Inactive
+                        </button>
+              )} 
             </div>
 
           </div>
