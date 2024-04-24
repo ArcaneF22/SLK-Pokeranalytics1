@@ -11,6 +11,7 @@ export const Unions = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               STAT: 'ALL',
           }; 
 
@@ -41,6 +42,7 @@ export const UnionsOn = () => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 STAT: 'ON',
             }; 
   

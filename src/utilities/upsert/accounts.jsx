@@ -15,7 +15,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New User");
+  const [button, setButton] =           useState("Add as New");
   const [cancels, setCancels] =         useState(false);
 
   const [accountID, setaccountID] =                         useState("0");
@@ -26,10 +26,11 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const [accountappID, setaccountappID] =                   useState("");
   const [accountStatus, setaccountStatus] =                 useState("");
 
-  const Upsert = {
+  let Upsert = {
                   A: Token['id'],
                   B: Token['token'],
                   C: Token['gadget'],
+                  D: Set.TimeZoned,
                   accountID,
                   accountIDD,
                   accountRole,
@@ -38,6 +39,10 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
                   accountappID,
                   accountStatus,
               };
+
+  Upsert = Object.fromEntries(
+      Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
+  );
 
   const AllGotValues = [accountIDD,accountRole,accountNickname,accountuserID,accountappID,accountStatus]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
@@ -58,7 +63,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const cancel = () => {
     setaccountID("0")
     setMessage("")
-    setButton("Add New User")
+    setButton("Add as New")
     setCancels(false)
   }
 
@@ -71,7 +76,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     setaccountappID("")
     setaccountStatus("0")
 
-    setButton("Add New User")
+    setButton("Add as New")
     setLoading(false)
     setCancels(false)
   }
@@ -96,7 +101,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
         }
 
         if(selectedData.id == 0 || selectedData.id == null) {
-            setButton("Add New User")
+            setButton("Add as New")
             setaccountStatus("0")
             setCancels(false)
         } else {
@@ -123,7 +128,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     console.log(Upsert)
     setLoading(true)
     try {
-      const response = await axios.post(Set.Upsert['accounts'], Upsert);
+      const response = await axios.post(Set.Upsert['accounts'], Set.removeTrailSpacesArray(Upsert) );
       console.log(response.data)
 
         if(response.data.includes("Duplicate")){
@@ -160,16 +165,16 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
 
             <div className="field">
-              <label>User ID</label>
+              <label>User</label>
               <SUI.Dropdown
-                    placeholder="Select role"
+                    placeholder="Select user"
                     scrolling
                     clearable
                     fluid
                     selection
                     search={true}
                     multiple={false}
-                    header="Select role"
+                    header="Select user"
                     onChange={(event, { value }) => { setaccountuserID(value); }}
                     value={accountuserID}
                     options={usersDD.map(i => {
@@ -183,7 +188,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
             </div>
 
             <div className="field">
-              <label>IDD</label>
+              <label>Account ID </label>
               <input type="number" value={accountIDD} onChange={(e) => setaccountIDD(e.currentTarget.value)} />
             </div>
 
@@ -242,17 +247,17 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
             <div className="field">
             <label>Status</label>
             { accountStatus === "0" ? (
-                        <button className='ui button green' onClick={ changeStatus }>
+                        <button className='ui button green fluid' onClick={ changeStatus }>
                             <i className="check circle outline icon"></i>
                             Active
                         </button>
               ) : accountStatus === "1" ? (
-                        <button className='ui button orange' onClick={ changeStatus }>
+                        <button className='ui button orange fluid' onClick={ changeStatus }>
                             <i className="spinner icon"></i>
                             Pending
                         </button>
               ) : (
-                      <button className='ui button red' onClick={ changeStatus }>
+                      <button className='ui button red fluid' onClick={ changeStatus }>
                             <i className="times circle outline icon"></i>
                             Inactive
                         </button>

@@ -21,8 +21,11 @@ export const FetchClubs = ({ selectData }) => {
                     "union": union,
                     "status": status,
                   }
+      setClicked(clicked+1)
       selectData(array);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      , 1000)
   };
 
   function setStatus(i) {

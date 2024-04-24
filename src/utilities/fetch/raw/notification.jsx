@@ -13,6 +13,7 @@ export const RawNotification = ({ loadingNotification, itemNotification, countNo
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 STAT: "ALL",
             }; 
 
@@ -42,6 +43,7 @@ export const RawNotificationPending = ({ loadingNotification, itemNotification }
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 STAT: "PENDING",
             }; 
 
@@ -69,6 +71,7 @@ export const RawNotificationCount = ({ countNotification }) => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
             }; 
 
     async function fetchcountNotification() {

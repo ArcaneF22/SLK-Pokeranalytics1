@@ -11,6 +11,7 @@ export const Images = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               TYPE: 'ALL',
           }; 
 
@@ -40,6 +41,7 @@ export const ImagesApps = () => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 TYPE: 'apps',
             }; 
   
@@ -70,6 +72,7 @@ export const ImagesClubs = () => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 TYPE: 'clubs',
             }; 
   
@@ -100,6 +103,7 @@ export const ImagesClubs = () => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 TYPE: 'avatar',
             }; 
   
@@ -130,6 +134,7 @@ export const ImagesLogo = () => {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
+                D: Set.TimeZoned,
                 TYPE: 'logo',
             }; 
   

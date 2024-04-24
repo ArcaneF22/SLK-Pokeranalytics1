@@ -27,7 +27,6 @@ export const FetchUsers = ({ selectData }) => {
   }
   const editData = (id,nickname,role,email,username,password,avatar,status) => {
     setClicked(clicked+1)
-    
     const array = {
                     "clicked":clicked,
                     "id": id, 
@@ -39,9 +38,11 @@ export const FetchUsers = ({ selectData }) => {
                     "avatar": avatar, 
                     "status": status,
                   }
-
-    selectData(array);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      setClicked(clicked+1)
+      selectData(array);
+      setTimeout(
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      , 1000)
   };
 
   return (

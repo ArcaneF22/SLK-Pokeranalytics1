@@ -1,3 +1,7 @@
+
+
+export const TimeZoned = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
                         myaccounts:         import.meta.env.VITE_GET_MYACCOUNTS,
@@ -15,6 +19,7 @@ export const Fetch = {
                         unions:             import.meta.env.VITE_GET_UNIONS,
                         company:            import.meta.env.VITE_GET_COMPANY,
                         roles:              import.meta.env.VITE_GET_ROLES,
+                        uplines:            import.meta.env.VITE_GET_UPLINES,
                     };
 
 export const Upsert = {

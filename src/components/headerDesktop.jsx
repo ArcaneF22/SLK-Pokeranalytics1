@@ -78,6 +78,13 @@ export const HeaderDesktop = () => {
             </div>
           </a>
 
+          <a className="item" onClick={() => navigateTo('/uplines')}>
+            <div>
+              <i className="user secret icon"></i>
+              UPLINES
+            </div>
+          </a>
+
           <a className="item" onClick={() => navigateTo('/history')}>
             <div>
             <i className="history icon"></i>

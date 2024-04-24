@@ -11,7 +11,8 @@ export const RawProfile = ({ loadingProfile, itemProfile }) => {
     const Auth = {
                 A: Token['id'],
                 B: Token['token'],
-                C: Token['gadget']
+                C: Token['gadget'],
+                D: Set.TimeZoned,
             }; 
 
     async function fetchProfile() {
@@ -56,7 +57,8 @@ export const Profile = () => {
   const Auth = {
               A: Token['id'],
               B: Token['token'],
-              C: Token['gadget']
+              C: Token['gadget'],
+              D: Set.TimeZoned,
           }; 
 
   async function fetching() {

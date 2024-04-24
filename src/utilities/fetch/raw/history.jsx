@@ -11,6 +11,7 @@ export const History = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               FOR: "ALL",
           }; 
 
@@ -41,6 +42,7 @@ export const MyHistory = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               FOR: "MY",
           }; 
 

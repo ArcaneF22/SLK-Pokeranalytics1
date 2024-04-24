@@ -10,7 +10,8 @@ export const Users = () => {
   const Auth = {
               A: Token['id'],
               B: Token['token'],
-              C: Token['gadget']
+              C: Token['gadget'],
+              D: Set.TimeZoned,
           }; 
 
   async function fetching() {

@@ -23,10 +23,11 @@ export const UpsertApplications = ({selectedData,recallData}) => {
   const [appImage, setappImage] =       useState("");
   const [appStatus, setappStatus] =     useState("0");
 
-  const Upsert = {
+  let Upsert = {
                   A: Token['id'],
                   B: Token['token'],
                   C: Token['gadget'],
+                  D: Set.TimeZoned,
                   appID,
                   appName,
                   appCompany,
@@ -34,6 +35,10 @@ export const UpsertApplications = ({selectedData,recallData}) => {
                   appImage,
                   appStatus
               };
+
+    Upsert = Object.fromEntries(
+        Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
+    );
 
   const validate = (e) => {
     e.preventDefault()
@@ -67,7 +72,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
   const fromTable = () => {
 
-    setappID(selectedData.id)
+    setappID(selectedData.id === null || selectedData.id === undefined ? "" : selectedData.id)
     setappName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
     setappImage(selectedData.image === null || selectedData.image === undefined ? "" : selectedData.image)
     setappCompany(selectedData.company === null || selectedData.company === undefined ? "" : selectedData.company)
@@ -85,6 +90,9 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
   }
 
+const removeTrailSpaces = (str) => {
+    return str.trim().replace(/^\s+|\s+$/g, "");
+};
   useEffect(() => {
       fromTable()
   }, [selectedData.clicked]);
@@ -137,7 +145,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
           <div className='five fields'>
             <div className="field">
               <label>Name</label>
-              <input type="text" value={appName} onChange={(e) => setappName(e.currentTarget.value)}/>
+              <input type="text" value={appName} onChange={(e) => setappName( e.currentTarget.value )}/>
             </div>
 
             <div className="field">

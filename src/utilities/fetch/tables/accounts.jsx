@@ -38,8 +38,11 @@ export const FetchAccounts = ({selectData}) => {
                     "appID": appID, 
                     "status": status
                   }
-    selectData(array);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      setClicked(clicked+1)
+      selectData(array);
+      setTimeout(
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      , 1000)
   };
 
   return (

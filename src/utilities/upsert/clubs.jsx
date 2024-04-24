@@ -27,10 +27,11 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   const [clubUnion, setclubUnion] =         useState("0");
   const [clubStatus, setclubStatus] =       useState("0");
 
-  const Upsert = {
+  let Upsert = {
                   A: Token['id'],
                   B: Token['token'],
                   C: Token['gadget'],
+                  D: Set.TimeZoned,
                   clubID,
                   clubIDD,
                   clubName,
@@ -41,6 +42,10 @@ export const UpsertClubs = ({selectedData,recallData}) => {
                   clubUnion,
                   clubStatus,
               };
+
+  Upsert = Object.fromEntries(
+      Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
+  );
 
   const AllGotValues = [clubIDD,clubName,clubImage,clubApp,clubDetails,clubType,clubUnion]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));

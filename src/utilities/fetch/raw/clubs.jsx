@@ -11,6 +11,7 @@ export const Clubs = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
           }; 
 
   async function fetching() {

@@ -73,7 +73,8 @@ export const LoginPage = () => {
                                             const Token = {
                                               id:         feed[0],
                                               gadget:     feed[3],
-                                              token:      feed[4]
+                                              token:      feed[4],
+                                              timezone: timezone,
                                             }
 
                                             const User = {

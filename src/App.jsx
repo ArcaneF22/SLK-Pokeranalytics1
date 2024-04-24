@@ -12,6 +12,7 @@ import { ApplicationsPage } from './pages/applications';
 import { ClubsPage } from './pages/clubs';
 import { UsersPage } from './pages/users';
 import { AccountsPage } from './pages/accounts';
+import { UplinesPage } from './pages/uplines';
 import { NotificationPage } from './pages/notification';
 import { HistoryPage } from './pages/history';
 import { ImagesPage } from './pages/images';
@@ -21,6 +22,8 @@ import { NotFoundPage } from './pages/notfound';
 import { MyProfilePage } from './pages/myprofile';
 import { MyAccountsPage } from './pages/myaccounts';
 import { MyHistoryPage } from './pages/myhistory';
+import { MyUplinesPage } from './pages/myuplines';
+import { MyClubsPage } from './pages/myclubs';
 
 function App() {
 
@@ -48,6 +51,7 @@ function App() {
                 <Route path="/clubs"          element={ <Protected> <ClubsPage /> </Protected> } />
                 <Route path="/users"          element={ <Protected> <UsersPage /> </Protected> } />
                 <Route path="/accounts"       element={ <Protected> <AccountsPage /> </Protected> } />
+                <Route path="/uplines"        element={ <Protected> <UplinesPage /> </Protected> } />
                 <Route path="/notification"   element={ <Protected> <NotificationPage /> </Protected> } />
                 <Route path="/history"        element={ <Protected> <HistoryPage /> </Protected> } />
                 <Route path="/images"         element={ <Protected> <ImagesPage /> </Protected> } />
@@ -55,6 +59,8 @@ function App() {
                 <Route path="/myprofile"      element={ <Protected> <MyProfilePage /> </Protected> } />
                 <Route path="/myaccounts"     element={ <Protected> <MyAccountsPage /> </Protected> } />
                 <Route path="/myhistory"      element={ <Protected> <MyHistoryPage /> </Protected> } />
+                <Route path="/myclubs"        element={ <Protected> <MyClubsPage /> </Protected> } />
+                <Route path="/myuplines"      element={ <Protected> <MyUplinesPage /> </Protected> } />
               </>
               : null}
 

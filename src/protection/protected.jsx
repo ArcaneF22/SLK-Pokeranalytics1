@@ -114,6 +114,21 @@ export const Protected = ({ children }) => {
                 </div>
             </a>
 
+            <a className="item" onClick={() => navigateTo('/myuplines')}>
+                <div>
+                <i className="history icon"></i>
+                My Uplines
+                </div>
+            </a>
+
+            <a className="item" onClick={() => navigateTo('/myclubs')}>
+                <div>
+                <i className="clock outline icon"></i>
+                My Clubs
+
+                </div>
+            </a>
+
             <a className="item" onClick={() => navigateTo('/myhistory')}>
                 <div>
                 <i className="history icon"></i>

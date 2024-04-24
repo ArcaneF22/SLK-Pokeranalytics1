@@ -29,9 +29,9 @@ export const HomePage = () => {
       </div>
 
 
-      <div class="ui grid padded">
-      <div class="row">
-        <div class="four wide computer eight wide mobile six wide tablet column">
+      <div className="ui grid padded">
+      <div className="row">
+        <div className="four wide computer eight wide mobile six wide tablet column">
           <div className='ui segment message center aligned purple-box'>
                 <div className="ui statistic inverted">
                     <div className="value">
@@ -43,7 +43,7 @@ export const HomePage = () => {
                 </div>
             </div>
         </div>
-        <div class="four wide computer eight wide mobile six wide tablet column">
+        <div className="four wide computer eight wide mobile six wide tablet column">
             <div className='ui segment message center aligned purple-box'>
                 <div className="ui statistic inverted blue">
                     <div className="value">
@@ -55,7 +55,7 @@ export const HomePage = () => {
                 </div>
             </div>
         </div>
-        <div class="four wide computer eight wide mobile six wide tablet column plus-top-bit">
+        <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit">
             <div className='ui segment message center aligned purple-box'>
                 <div className="ui statistic inverted green">
                     <div className="value">
@@ -67,7 +67,7 @@ export const HomePage = () => {
                 </div>
             </div>
         </div>
-        <div class="four wide computer eight wide mobile six wide tablet column plus-top-bit">
+        <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit">
             <div className='ui segment message center aligned purple-box'>
                 <div className="ui statistic inverted orange">
                     <div className="value">

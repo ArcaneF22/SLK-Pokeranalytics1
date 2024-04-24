@@ -29,10 +29,11 @@ export const UpsertUsers = ({selectedData,recallData}) => {
   const [newuserTelegram, setnewuserTelegram] =             useState("");
   const [newuserStatus, setnewuserStatus] =                 useState("0");
 
-  const Upsert = {
+  let Upsert = {
                   A: Token['id'],
                   B: Token['token'],
                   C: Token['gadget'],
+                  D: Set.TimeZoned,
                   newuserID,
                   newuserRole,
                   newuserNickname,
@@ -43,6 +44,10 @@ export const UpsertUsers = ({selectedData,recallData}) => {
                   newuserAvatar,
                   newuserStatus,
               };
+
+  Upsert = Object.fromEntries(
+      Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
+  );
 
   const AllGotValues = [newuserRole,newuserNickname,newuserAvatar,newuserUsername,newuserPassword,newuserStatus]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
@@ -103,9 +108,9 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         setnewuserEmail(selectedData.email === null || selectedData.email === undefined ? "" : selectedData.email)
         setnewuserTelegram(selectedData.telegram === null || selectedData.telegram === undefined ? "" : selectedData.telegram)
 
-        if(selectedData.status=="0" || selectedData.status=="Active"){
+        if(selectedData.status=="0"){
             setnewuserStatus("0")
-        } else if(selectedData.status=="Pending"){
+        } else if(selectedData.status=="1"){
             setnewuserStatus("1")
         } else {
             setnewuserStatus("2")
@@ -239,17 +244,17 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Password</label>
-              <input type="text" value={newuserPassword} onChange={(e) => setnewuserPassword(e.currentTarget.value)}/>
+              <input type="text" value={newuserPassword.replace(/\s/g, "")} onChange={(e) => setnewuserPassword(e.currentTarget.value) }/>
             </div>
 
             <div className="field">
               <label>Re-type Password</label>
-              <input type="text" value={newuserRePassword} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
+              <input type="text" value={newuserRePassword.replace(/\s/g, "")} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Email</label>
-              <input type="text" value={newuserEmail} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
+              <input type="text" value={newuserEmail.replace(/\s/g, "").indexOf("@")} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
             </div>
 
             <div className="field">

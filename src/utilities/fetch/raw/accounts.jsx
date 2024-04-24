@@ -11,6 +11,7 @@ export const Accounts = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               FOR: "ALL",
           }; 
 
@@ -40,6 +41,7 @@ export const MyAccounts = () => {
               A: Token['id'],
               B: Token['token'],
               C: Token['gadget'],
+              D: Set.TimeZoned,
               FOR: "MY",
           }; 
 

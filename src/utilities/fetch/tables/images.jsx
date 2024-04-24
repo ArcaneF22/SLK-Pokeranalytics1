@@ -26,7 +26,9 @@ export const FetchImages = ({ selectImage }) => {
                     "path": path, 
                     "status": status,
                   }
-      selectImage(array);
+      setTimeout(
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      , 300)
   };
 
   return (
