@@ -9,23 +9,23 @@ export const FetchUsers = ({ selectData }) => {
 
   function setStatus(i) {
     if (i.statusLabel == "Active") {
-      return  <div className='ui label green basic center aligned fluid'>
+      return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
-              </div>;
+              </button>;
     } else if (i.statusLabel == "Pending") {
-      return  <div className='ui label orange basic center aligned fluid'>
+      return  <button className='ui button orange basic'>
                   <i className="spinner icon"></i>
                   Pending
-              </div>;
+              </button>;
     } else {
-      return  <div className='ui label red basic center aligned fluid'>
+      return  <button className='ui button red basic'>
                   <i className="times circle outline icon"></i>
                   Inactive
-              </div>;
+              </button>;
     }
   }
-  const editData = (id,nickname,role,email,telegram,username,password,avatar,status) => {
+  const editData = (id,nickname,role,email,username,password,avatar,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
@@ -33,7 +33,6 @@ export const FetchUsers = ({ selectData }) => {
                     "nickname": nickname, 
                     "role": role, 
                     "email": email, 
-                    "telegram": telegram, 
                     "username": username, 
                     "password": password, 
                     "avatar": avatar, 
@@ -67,7 +66,6 @@ export const FetchUsers = ({ selectData }) => {
             <th>Email</th>
             <th>Username</th>
             <th>Password</th>
-            <th>Accounts</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -83,24 +81,13 @@ export const FetchUsers = ({ selectData }) => {
                   </div>
                 </h4>
               </td>
-              <td>{i.roleName}</td>
-              <td>
-                {i.email ? ("Email: " + i.email) : null}
-                <br />
-                {i.telegram ? ("Telegram: " + i.telegram) : null}
-              </td>
+              <td>{i.role}</td>
+              <td>{i.email}</td>
               <td>{i.username}</td>
               <td>{i.password}</td>
-              <td>
-                {i.activeAccounts == 0 ? null : i.activeAccounts == 1 ? (i.activeAccounts+" Active Account") : (i.activeAccounts+" Active Accounts")}
-                <br />
-                {i.pendingAccounts == 0 ? null : i.pendingAccounts == 1 ? ( i.pendingAccounts+" Pending Account") : (i.pendingAccounts+" Pending Accounts")}
-                <br />
-                {i.disabledAccounts == 0 ? null : i.disabledAccounts == 1 ? ( i.disabledAccounts+" Disabled Account") : (i.disabledAccounts+" Disabled Accounts")}
-                </td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.telegram,i.username,i.password,i.avatarID,i.status)}>
+                <button className='ui button blue' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.username,i.password,i.avatar,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>

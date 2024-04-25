@@ -13,7 +13,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
+  const [button, setButton] =           useState("Add New Application");
   const [cancels, setCancels] =           useState(false);
 
   const [appID, setappID] =             useState("0");
@@ -40,20 +40,20 @@ export const UpsertApplications = ({selectedData,recallData}) => {
         Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
     );
 
-  const ValidateForm = (e) => {
+  const validate = (e) => {
     e.preventDefault()
     setLoading(true)
       if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
         setMessage("Details incomplete!")
       } else {
-        SubmitForm()
+        SubmitData()
       }
   }
 
   const cancel = () => {
     setappID("0")
     setMessage("")
-    setButton("Add New Data")
+    setButton("Add New Application")
     setCancels(false)
   }
 
@@ -65,7 +65,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
     setappImage("")
     setappStatus("0")
 
-    setButton("Add New Data")
+    setButton("Add New Application")
     setLoading(false)
     setCancels(false)
   }
@@ -80,7 +80,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
     setappStatus(selectedData.status === null || selectedData.status === undefined ? "" : selectedData.status)
 
     if(selectedData.id == 0 || selectedData.id == null) {
-      setButton("Add New Data")
+      setButton("Add New Application")
       setappStatus("0")
       setCancels(false)
     } else {
@@ -105,7 +105,7 @@ const removeTrailSpaces = (str) => {
     }
   }
 
-  async function SubmitForm() {
+  async function SubmitData() {
     console.log(Upsert)
     setLoading(true)
     try {
@@ -220,7 +220,7 @@ const removeTrailSpaces = (str) => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
+            <div className="ui button purple" onClick={validate}>
               <i className="plus icon"></i>
               {button}
             </div>

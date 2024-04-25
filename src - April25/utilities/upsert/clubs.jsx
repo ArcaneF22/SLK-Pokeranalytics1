@@ -14,7 +14,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
+  const [button, setButton] =           useState("Add New Club");
   const [cancels, setCancels] =           useState(false);
 
   const [clubID, setclubID] =               useState("0");
@@ -50,21 +50,21 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   const AllGotValues = [clubIDD,clubName,clubImage,clubApp,clubDetails,clubType,clubUnion]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
-  const ValidateForm = (e) => {
+  const validate = (e) => {
     e.preventDefault()
     setLoading(true)
       if(!YesWithvalues){
         setMessage("Details incomplete!")
       } else {
         console.log(JSON.stringify(Upsert))
-        SubmitForm()
+        submitClub()
       }
   }
 
   const cancel = () => {
     setclubID("0")
     setMessage("")
-    setButton("Add New Data")
+    setButton("Add New Club")
     setCancels(false)
   }
 
@@ -79,7 +79,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setclubUnion("")
     setclubStatus("0")
     
-    setButton("Add New Data")
+    setButton("Add New Club")
     setLoading(false)
     setCancels(false)
 
@@ -104,7 +104,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     }
 
     if(selectedData.id == "0" || selectedData.id == null) {
-      setButton("Add New Data")
+      setButton("Add New Club")
       setclubStatus("0")
       setCancels(false)
     } else {
@@ -126,7 +126,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     }
   }
 
-  async function SubmitForm() {
+  async function submitClub() {
     //setLoading(true)
     console.log(Upsert)
     try {
@@ -287,7 +287,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
+            <div className="ui button purple" onClick={validate}>
               <i className="plus icon"></i>
               {button}
             </div>

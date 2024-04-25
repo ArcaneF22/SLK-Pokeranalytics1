@@ -18,7 +18,6 @@ import { HistoryPage } from './pages/history';
 import { ImagesPage } from './pages/images';
 import { UnionsPage } from './pages/unions';
 import { NotFoundPage } from './pages/notfound';
-import { HelloWorld } from './pages/helloworld';
 
 import { MyProfilePage } from './pages/myprofile';
 import { MyAccountsPage } from './pages/myaccounts';
@@ -45,7 +44,6 @@ function App() {
               <Route path="/"               element={<LoginPage />} />
               <Route path="*"               element={<NotFoundPage />} />
               <Route path="/registration"   element={<RegistrationPage />} />
-              <Route path="/helloworld"     element={<HelloWorld />} />
               {yesLoggedIn  ?
               <>
                 <Route path="/home"           element={ <Protected> <HomePage /> </Protected> } />

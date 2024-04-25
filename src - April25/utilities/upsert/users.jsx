@@ -15,7 +15,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
+  const [button, setButton] =           useState("Add New User");
   const [cancels, setCancels] =         useState(false);
 
   const [newuserID, setnewuserID] =                         useState("0");
@@ -52,7 +52,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
   const AllGotValues = [newuserRole,newuserNickname,newuserAvatar,newuserUsername,newuserPassword,newuserStatus]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
-  const ValidateForm = (e) => {
+  const validate = (e) => {
     e.preventDefault()
     setLoading(true)
       if( !YesWithvalues ){
@@ -68,14 +68,14 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         }
         setMessage("Submitting data...")
         console.log(JSON.stringify(Upsert))
-        SubmitForm()
+        SubmitData()
       }
   }
 
   const cancel = () => {
     setnewuserID("0")
     setMessage("")
-    setButton("Add New Data")
+    setButton("Add New User")
     setCancels(false)
   }
 
@@ -91,7 +91,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
     setnewuserTelegram("")
     setnewuserStatus("0")
 
-    setButton("Add New Data")
+    setButton("Add New User")
     setLoading(false)
     setCancels(false)
   }
@@ -117,7 +117,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         }
 
         if(selectedData.id == 0 || selectedData.id == null) {
-            setButton("Add New Data")
+            setButton("Add New User")
             setnewuserStatus("0")
             setCancels(false)
         } else {
@@ -140,7 +140,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
     }
   }
 
-  async function SubmitForm() {
+  async function SubmitData() {
     //setLoading(true)
     try {
       const response = await axios.post(Set.Upsert['users'], Upsert);
@@ -181,6 +181,11 @@ export const UpsertUsers = ({selectedData,recallData}) => {
           <div className='five fields'>
 
             <div className="field">
+              <label>ID</label>
+              <input type="number" value={newuserID} onChange={(e) => setnewuserID(e.currentTarget.value)} />
+            </div>
+
+            <div className="field">
               <label>Role</label>
               <SUI.Dropdown
                     placeholder="Select role"
@@ -205,7 +210,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Nickname</label>
-              <input type="text" value={newuserNickname.replace(/[^a-zA-Z0-9._-]|[_|-|.]{2,}/g, "")} onChange={(e) => setnewuserNickname(e.currentTarget.value)}/>
+              <input type="text" value={newuserNickname} onChange={(e) => setnewuserNickname(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
@@ -234,7 +239,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Username</label>
-              <input type="text" value={newuserUsername.replace(/\s/g, "")} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
+              <input type="text" value={newuserUsername} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
@@ -249,28 +254,28 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
             <div className="field">
               <label>Email</label>
-              <input type="text" value={newuserEmail.replace(/\s/g, "")} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
+              <input type="text" value={newuserEmail.replace(/\s/g, "").indexOf("@")} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Telegram</label>
-              <input type="text" value={newuserTelegram.replace(/\s/g, "")} onChange={(e) => setnewuserTelegram(e.currentTarget.value)}/>
+              <input type="text" value={newuserTelegram} onChange={(e) => setnewuserTelegram(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
             <label>Status</label>
               { newuserStatus === "0" ? (
-                        <button className='ui button green fluid center aligned' onClick={ changeStatus }>
+                        <button className='ui button green' onClick={ changeStatus }>
                             <i className="check circle outline icon"></i>
                             Active
                         </button>
               ) : newuserStatus === "1" ? (
-                        <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
+                        <button className='ui button orange' onClick={ changeStatus }>
                             <i className="spinner icon"></i>
                             Pending
                         </button>
               ) : (
-                      <button className='ui button red fluid center aligned' onClick={ changeStatus }>
+                      <button className='ui button red' onClick={ changeStatus }>
                             <i className="times circle outline icon"></i>
                             Inactive
                         </button>
@@ -280,7 +285,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
+            <div className="ui button purple" onClick={validate}>
               <i className="plus icon"></i>
               {button}
             </div>

@@ -4,8 +4,6 @@ import { FetchNotificationPending } from '../utilities/fetch/items/notifications
 import { useGlobalOutside  } from '../utilities/context/global';
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { GridRow, GridColumn, Grid, Segment, Image } from 'semantic-ui-react'
-
-
 export const HomePage = () => {
 
   const { countNotif } = useGlobalOutside();
@@ -29,6 +27,7 @@ export const HomePage = () => {
               </div>
           </h2>
       </div>
+
 
       <div className="ui grid padded">
       <div className="row">

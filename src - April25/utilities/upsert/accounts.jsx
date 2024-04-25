@@ -15,7 +15,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
+  const [button, setButton] =           useState("Add as New");
   const [cancels, setCancels] =         useState(false);
 
   const [accountID, setaccountID] =                         useState("0");
@@ -47,7 +47,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const AllGotValues = [accountIDD,accountRole,accountNickname,accountuserID,accountappID,accountStatus]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
-  const ValidateForm = (e) => {
+  const validate = (e) => {
     e.preventDefault()
     setLoading(true)
       if( !YesWithvalues ){
@@ -56,14 +56,14 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
       } else {
         setMessage("Submitting data...")
         console.log(JSON.stringify(Upsert))
-        SubmitForm()
+        SubmitData()
       }
   }
 
   const cancel = () => {
     setaccountID("0")
     setMessage("")
-    setButton("Add New Data")
+    setButton("Add as New")
     setCancels(false)
   }
 
@@ -76,7 +76,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     setaccountappID("")
     setaccountStatus("0")
 
-    setButton("Add New Data")
+    setButton("Add as New")
     setLoading(false)
     setCancels(false)
   }
@@ -101,7 +101,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
         }
 
         if(selectedData.id == 0 || selectedData.id == null) {
-            setButton("Add New Data")
+            setButton("Add as New")
             setaccountStatus("0")
             setCancels(false)
         } else {
@@ -124,11 +124,11 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
         }
     }
 
-  async function SubmitForm() {
+  async function SubmitData() {
     console.log(Upsert)
     setLoading(true)
     try {
-      const response = await axios.post(Set.Upsert['accounts'], Upsert );
+      const response = await axios.post(Set.Upsert['accounts'], Set.removeTrailSpacesArray(Upsert) );
       console.log(response.data)
 
         if(response.data.includes("Duplicate")){
@@ -247,17 +247,17 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
             <div className="field">
             <label>Status</label>
             { accountStatus === "0" ? (
-                        <button className='ui button green fluid center aligned' onClick={ changeStatus }>
+                        <button className='ui button green fluid' onClick={ changeStatus }>
                             <i className="check circle outline icon"></i>
                             Active
                         </button>
               ) : accountStatus === "1" ? (
-                        <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
+                        <button className='ui button orange fluid' onClick={ changeStatus }>
                             <i className="spinner icon"></i>
                             Pending
                         </button>
               ) : (
-                      <button className='ui button red fluid center aligned' onClick={ changeStatus }>
+                      <button className='ui button red fluid' onClick={ changeStatus }>
                             <i className="times circle outline icon"></i>
                             Inactive
                         </button>
@@ -267,7 +267,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
+            <div className="ui button purple" onClick={validate}>
               <i className="plus icon"></i>
               {button}
             </div>

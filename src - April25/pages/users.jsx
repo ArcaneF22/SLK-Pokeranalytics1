@@ -1,8 +1,9 @@
 import { useState, useLayoutEffect  } from 'react';
-import { FetchUplines } from '../utilities/fetch/tables/uplines'
-import { UpsertUplines } from '../utilities/upsert/uplines'
+import { FetchUsers } from '../utilities/fetch/tables/users'
+import { UpsertUsers } from '../utilities/upsert/users'
 
-export const UplinesPage = () => {
+
+export const UsersPage = () => {
 
   const [gotData, setgotData] = useState([]);
   const [recall, setRecall] = useState(0);
@@ -17,17 +18,17 @@ export const UplinesPage = () => {
   }, [recall]);
 
     return (
-    <>
+      <>
       <div className='ui segment message purple-box'>
         <h2 className="ui header inverted">
-              <i className="layer group big icon"></i>
+              <i className="users big icon"></i>
               <div className="content">
-                  Uplines Page
+                  Users Page
                   <div className="sub header">Manage your preferences</div>
               </div>
           </h2>
       </div>
-      <UpsertUplines selectedData={gotData} recallData={recallData} />
+      <UpsertUsers selectedData={gotData} recallData={recallData} />
       {recall === 1 ? (
             <div className="ui segment basic">
               <div className="ui active inverted dimmer">
@@ -35,9 +36,12 @@ export const UplinesPage = () => {
               </div>
             </div>
           ) : (
-            <FetchUplines selectData={selectData} />
+            <FetchUsers selectData={selectData} />
         )}
-    </>
+
+      
+
+      </>
 
     );
   };

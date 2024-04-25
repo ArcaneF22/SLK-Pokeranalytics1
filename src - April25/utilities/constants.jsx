@@ -26,9 +26,7 @@ export const Upsert = {
                         users:              import.meta.env.VITE_UPSERT_USERS,
                         accounts:           import.meta.env.VITE_UPSERT_ACCOUNTS,
                         applications:       import.meta.env.VITE_UPSERT_APPS,
-                        clubs:              import.meta.env.VITE_UPSERT_CLUBS,
-                        unions:             import.meta.env.VITE_UPSERT_UNIONS,
-                        uplines:            import.meta.env.VITE_UPSERT_UPLINES,
+                        clubs:              import.meta.env.VITE_UPSERT_CLUBS
                     };
 
 export const Path = {
