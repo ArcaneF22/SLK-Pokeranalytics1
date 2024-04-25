@@ -5,18 +5,21 @@ import * as SUI from 'semantic-ui-react'
 import { Applications } from '../fetch/raw/applications'
 import { Roles } from '../fetch/raw/roles'
 import { Users } from '../fetch/raw/users'
+import { Accounts } from '../fetch/raw/accounts'
 import * as Set from '../constants';
 
 export const UpsertAccounts = ({selectedData,recallData}) => {
   const appDD = Applications().data
   const roleDD = Roles().data
   const usersDD = Users().data
-  
+  const acctDD = Accounts().data
+
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
   const [cancels, setCancels] =         useState(false);
+  const [requestTo, setrequestTo] =     useState("0");
 
   const [accountID, setaccountID] =                         useState("0");
   const [accountIDD, setaccountIDD] =                       useState("");
@@ -31,6 +34,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
                   B: Token['token'],
                   C: Token['gadget'],
                   D: Set.TimeZoned,
+                  requestTo,
                   accountID,
                   accountIDD,
                   accountRole,
@@ -263,6 +267,35 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
                         </button>
               )} 
             </div>
+
+            { accountStatus ==="1" ? 
+              (
+                <div className="field">
+                  <label>Request to Upline</label>
+                  <SUI.Dropdown
+                        placeholder="Select upline"
+                        scrolling
+                        clearable
+                        fluid
+                        selection
+                        search={true}
+                        multiple={false}
+                        header="Select upline"
+                        onChange={(event, { value }) => { setrequestTo(value); }}
+                        value={requestTo}
+                        options={acctDD.map(i => {
+                          return {
+                            key: i.accountID,
+                            description: i.accountID,
+                            text: i.accountRole+": "+i.accountNickname,
+                            value: i.accountID,
+                            image: { avatar: true, src: i.userAvatar },
+                          };
+                        })}
+                      />
+                </div>
+              )
+            : null }
 
           </div>
 

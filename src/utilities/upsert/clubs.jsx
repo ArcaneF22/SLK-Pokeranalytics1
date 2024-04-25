@@ -47,7 +47,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
       Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
   );
 
-  const AllGotValues = [clubIDD,clubName,clubImage,clubApp,clubDetails,clubType,clubUnion]
+  const AllGotValues = [clubIDD,clubName,clubApp,clubType]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
   const ValidateForm = (e) => {
@@ -56,8 +56,13 @@ export const UpsertClubs = ({selectedData,recallData}) => {
       if(!YesWithvalues){
         setMessage("Details incomplete!")
       } else {
-        console.log(JSON.stringify(Upsert))
-        SubmitForm()
+        if(clubType == "UNION" && (clubUnion == "" || clubUnion == undefined || clubUnion == null)){
+          setMessage("Details incomplete! Select a union.")
+        } else {
+          console.log(JSON.stringify(Upsert))
+          reCheckValues()
+          SubmitForm()
+        }
       }
   }
 
@@ -84,6 +89,19 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setCancels(false)
 
   }
+
+  const reCheckValues = () => {
+      if(Upsert.clubImage === null || Upsert.clubImage === undefined || Upsert.clubImage === "" ){
+          Upsert["clubImage"] = "1";
+      }
+      if(Upsert.clubDetails === null || Upsert.clubDetails === undefined || Upsert.clubDetails === "" ){
+          Upsert["clubDetails"] = "";
+      }
+      if(Upsert.clubUnion === null || Upsert.clubUnion === undefined || Upsert.clubUnion === "" ){
+        Upsert["clubUnion"] = "0";
+      }
+  }
+
 
   const fromTable = () => {
 

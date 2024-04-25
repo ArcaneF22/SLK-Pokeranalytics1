@@ -85,9 +85,10 @@ export const FetchUsers = ({ selectData }) => {
               </td>
               <td>{i.roleName}</td>
               <td>
-                {i.email ? ("Email: " + i.email) : null}
+                {i.email ? ("Email: "+i.email) : null}
+
                 <br />
-                {i.telegram ? ("Telegram: " + i.telegram) : null}
+                {i.telegram ?  (<a href={i.telegram} target="_blank">{i.telegram}</a>) : null}
               </td>
               <td>{i.username}</td>
               <td>{i.password}</td>

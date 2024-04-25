@@ -40,102 +40,114 @@ export const UpsertApplications = ({selectedData,recallData}) => {
         Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
     );
 
-  const ValidateForm = (e) => {
-    e.preventDefault()
-    setLoading(true)
-      if(appName == "" || appCompany == "" || appDetails == "" || appImage == ""){
-        setMessage("Details incomplete!")
-      } else {
-        SubmitForm()
-      }
-  }
+    const AllGotValues = [appName,appCompany]
+    const YesWithvalues = AllGotValues.every(value => Boolean(value));
+  
+    const ValidateForm = (e) => {
+      e.preventDefault()
+      setLoading(true)
+        if(!YesWithvalues){
+          setMessage("Details incomplete!")
+        } else {
+          console.log(JSON.stringify(Upsert))
+          reCheckValues()
+          SubmitForm()
+        }
+    }
 
-  const cancel = () => {
-    setappID("0")
-    setMessage("")
-    setButton("Add New Data")
-    setCancels(false)
-  }
-
-  const clearForm = () => {
-    setappID("0")
-    setappName("")
-    setappCompany("")
-    setappDetails("")
-    setappImage("")
-    setappStatus("0")
-
-    setButton("Add New Data")
-    setLoading(false)
-    setCancels(false)
-  }
-
-  const fromTable = () => {
-
-    setappID(selectedData.id === null || selectedData.id === undefined ? "" : selectedData.id)
-    setappName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
-    setappImage(selectedData.image === null || selectedData.image === undefined ? "" : selectedData.image)
-    setappCompany(selectedData.company === null || selectedData.company === undefined ? "" : selectedData.company)
-    setappDetails(selectedData.details === null || selectedData.details === undefined ? "" : selectedData.details)
-    setappStatus(selectedData.status === null || selectedData.status === undefined ? "" : selectedData.status)
-
-    if(selectedData.id == 0 || selectedData.id == null) {
+    const cancel = () => {
+      setappID("0")
+      setMessage("")
       setButton("Add New Data")
-      setappStatus("0")
       setCancels(false)
-    } else {
-      setButton("Proceed to Update")
-      setCancels(true)
     }
 
-  }
-
-const removeTrailSpaces = (str) => {
-    return str.trim().replace(/^\s+|\s+$/g, "");
-};
-  useEffect(() => {
-      fromTable()
-  }, [selectedData.clicked]);
-
-  const changeStatus = () => {
-    if(appStatus=="0" || appStatus=="Active"){
-      setappStatus("2")
-    } else {
+    const clearForm = () => {
+      setappID("0")
+      setappName("")
+      setappCompany("")
+      setappDetails("")
+      setappImage("")
       setappStatus("0")
+
+      setButton("Add New Data")
+      setLoading(false)
+      setCancels(false)
     }
-  }
 
-  async function SubmitForm() {
-    console.log(Upsert)
-    setLoading(true)
-    try {
-      const response = await axios.post(Set.Upsert['applications'], Upsert);
-      console.log(response.data)
+    const reCheckValues = () => {
+        if(Upsert.appImage === null || Upsert.appImage === undefined || Upsert.appImage === "" ){
+            Upsert["appImage"] = "1";
+        }
+        if(Upsert.details === null || Upsert.details === undefined || Upsert.details === "" ){
+            Upsert["details"] = "";
+        }
+    }
 
-      if(response.data.includes("Duplicate")){
-          const number = parseFloat( response.data.match(/[\d.]+/) );
-          setappID( number )
-          setButton("Proceed to Update")
-          setMessage("Duplicate found! Would you like to update existing data? Check application ID#"+ number);
-          setCancels(true)
-      } else if(response.data.includes("Added")){
-          setMessage("New poker application successfully added!");
-          recallData(1)
-          clearForm()
-      } else if(response.data.includes("Updated")){
-          setMessage("Poker application successfully updated!");
-          recallData(1)
-          clearForm()
+    const fromTable = () => {
+
+      setappID(selectedData.id === null || selectedData.id === undefined ? "" : selectedData.id)
+      setappName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
+      setappImage(selectedData.image === null || selectedData.image === undefined ? "0" : selectedData.image)
+      setappCompany(selectedData.company === null || selectedData.company === undefined ? "" : selectedData.company)
+      setappDetails(selectedData.details === null || selectedData.details === undefined ? "" : selectedData.details)
+      setappStatus(selectedData.status === null || selectedData.status === undefined ? "" : selectedData.status)
+
+      if(selectedData.id == 0 || selectedData.id == null) {
+        setButton("Add New Data")
+        setappStatus("0")
+        setCancels(false)
       } else {
-        setMessage("Something went wrong! Please retry");
-        clearForm()
+        setButton("Proceed to Update")
+        setCancels(true)
       }
-      
-    } catch (error) {
-      setMessage(error);
-      console.error("Error fetching data: ", error);
+
     }
-  }
+
+
+    useEffect(() => {
+        fromTable()
+    }, [selectedData.clicked]);
+
+    const changeStatus = () => {
+      if(appStatus=="0" || appStatus=="Active"){
+        setappStatus("2")
+      } else {
+        setappStatus("0")
+      }
+    }
+
+    async function SubmitForm() {
+      setLoading(true)
+      try {
+        
+        const response = await axios.post(Set.Upsert['applications'], Upsert);
+        console.log(response.data)
+
+        if(response.data.includes("Duplicate")){
+            const number = parseFloat( response.data.match(/[\d.]+/) );
+            setappID( number )
+            setButton("Proceed to Update")
+            setMessage("Duplicate found! Would you like to update existing data? Check application ID#"+ number);
+            setCancels(true)
+        } else if(response.data.includes("Added")){
+            setMessage("New poker application successfully added!");
+            recallData(1)
+            clearForm()
+        } else if(response.data.includes("Updated")){
+            setMessage("Poker application successfully updated!");
+            recallData(1)
+            clearForm()
+        } else {
+          setMessage("Something went wrong! Please retry");
+          clearForm()
+        }
+        
+      } catch (error) {
+        setMessage(error);
+        console.error("Error fetching data: ", error);
+      }
+    }
 
     return (
       <div className="ui segment">

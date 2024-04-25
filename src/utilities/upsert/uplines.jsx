@@ -158,7 +158,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     return (
       <div className="ui segment">
         <h1>Insert / Update Upline</h1>
-        <p>{JSON.stringify(Upsert)}</p>
+
         <div className="ui form">
 
           <div className='five fields'>

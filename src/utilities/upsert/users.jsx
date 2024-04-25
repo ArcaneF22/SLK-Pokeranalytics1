@@ -4,6 +4,8 @@ import * as SUI from 'semantic-ui-react'
 
 import { ImagesAvatars } from '../fetch/raw/images'
 import { Roles } from '../fetch/raw/roles'
+import { Users } from '../fetch/raw/users'
+import { Accounts } from '../fetch/raw/accounts'
 
 import * as Set from '../constants';
 
@@ -11,12 +13,15 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
   const imgDD = ImagesAvatars().data
   const roleDD = Roles().data
+  const usersDD = Users().data
+  const acctDD = Accounts().data
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
   const [cancels, setCancels] =         useState(false);
+  const [requestTo, setrequestTo] =     useState("0");
 
   const [newuserID, setnewuserID] =                         useState("0");
   const [newuserRole, setnewuserRole] =                     useState("");
@@ -29,11 +34,13 @@ export const UpsertUsers = ({selectedData,recallData}) => {
   const [newuserTelegram, setnewuserTelegram] =             useState("");
   const [newuserStatus, setnewuserStatus] =                 useState("0");
 
+  
   let Upsert = {
                   A: Token['id'],
                   B: Token['token'],
                   C: Token['gadget'],
                   D: Set.TimeZoned,
+                  requestTo,
                   newuserID,
                   newuserRole,
                   newuserNickname,
@@ -66,6 +73,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         } else if(newuserTelegram=="" || newuserTelegram==null){
             setnewuserTelegram("Null")
         }
+        reCheckValues()
         setMessage("Submitting data...")
         console.log(JSON.stringify(Upsert))
         SubmitForm()
@@ -95,6 +103,12 @@ export const UpsertUsers = ({selectedData,recallData}) => {
     setLoading(false)
     setCancels(false)
   }
+
+  const reCheckValues = () => {
+    if(Upsert.requestTo === null || Upsert.requestTo === undefined || Upsert.requestTo === "" ){
+        Upsert["requestTo"] = "0";
+    }
+}
 
   const fromTable = () => {
 
@@ -276,6 +290,35 @@ export const UpsertUsers = ({selectedData,recallData}) => {
                         </button>
               )} 
             </div>
+            { newuserStatus ==="1" ? 
+              (
+                <div className="field">
+                  <label>Request to Upline</label>
+                  <SUI.Dropdown
+                        placeholder="Select upline"
+                        scrolling
+                        clearable
+                        fluid
+                        selection
+                        search={true}
+                        multiple={false}
+                        header="Select upline"
+                        onChange={(event, { value }) => { setrequestTo(value); }}
+                        value={requestTo}
+                        options={acctDD.map(i => {
+                          return {
+                            key: i.accountID,
+                            description: i.accountID,
+                            text: i.accountRole+": "+i.accountNickname,
+                            value: i.accountID,
+                            image: { avatar: true, src: i.userAvatar },
+                          };
+                        })}
+                      />
+                </div>
+              )
+            : null }
+
 
           </div>
 
