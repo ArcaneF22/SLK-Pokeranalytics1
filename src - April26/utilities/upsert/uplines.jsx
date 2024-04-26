@@ -168,7 +168,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
               <input type="number" value={id} onChange={(e) => setID(e.currentTarget.value)}/>
             </div>
 
-              <div className="field">
+            <div className="field">
               <label>Club</label>
               <SUI.Dropdown
                     placeholder="Select club"
@@ -252,7 +252,6 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                   <i className="check circle outline icon"></i>
                   Active
                 </div>
-                
               :  status === "1" || status === "Pending" ? 
                 <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
                     <i className="spinner icon"></i>

@@ -45,9 +45,37 @@ export const FetchImages = ({ selectImage }) => {
         <h3>Images List</h3>
 
    
+        {data.map((i, index) => (
+                <>
+                <Card key={index}>
+                    <Image src={i.pathFull} wrapped ui={true}/>
+                    <CardContent>
+                        <CardHeader>
+                            {i.name}
+                        </CardHeader>
+                        <CardMeta>
+                            {i.type} ID#{i.id}
+                        </CardMeta>
+                    </CardContent>
+                </Card>
+                </>
+
+        ))}
+   
 
         <div className="ui grid">
-
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
+            <div className="four wide column">
+a
+            </div>
         </div>
           {data.map((i, index) => (
             <tr key={index}>
@@ -55,8 +83,6 @@ export const FetchImages = ({ selectImage }) => {
               <td>
                 <h4 className="ui image header">
                     <img src={i.pathFull} className="ui mini rounded image" />
-                    <img src={`data:image/svg+xml;base64,${btoa(i.svg)}`}/>
-
                     <div className="content">
                         {i.name}
                         <div className="sub header">

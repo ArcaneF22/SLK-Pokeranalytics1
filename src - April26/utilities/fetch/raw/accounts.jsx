@@ -63,34 +63,3 @@ export const MyAccounts = () => {
 
   return ({load, data})
 }
-
-
-export const AccountsDownline = () => {
-  const [load, setLoad] = useState(false)
-  const [data, setdata] = useState([])
-  const Auth = {
-              A: Token['id'],
-              B: Token['token'],
-              C: Token['gadget'],
-              D: Set.TimeZoned,
-              FOR: "DOWNLINE",
-          }; 
-
-  async function fetching() {
-      setLoad(true)
-    try {
-      const response = await axios.post(Set.Fetch['accounts'], Auth);
-      setdata(response.data);
-      setLoad(false)
-      console.log("My Accounts items fetched...")
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  }
-
-  useLayoutEffect(() => {
-      fetching();
-    }, []);
-
-  return ({load, data})
-}

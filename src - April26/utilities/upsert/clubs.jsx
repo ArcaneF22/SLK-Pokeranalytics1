@@ -91,16 +91,16 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   }
 
   const reCheckValues = () => {
-    if(Upsert.clubImage === null || Upsert.clubImage === undefined || Upsert.clubImage === "" ){
-        Upsert["clubImage"] = "1";
-    }
-    if(Upsert.clubDetails === null || Upsert.clubDetails === undefined || Upsert.clubDetails === "" ){
-        Upsert["clubDetails"] = "";
-    }
-    if(Upsert.clubUnion === null || Upsert.clubUnion === undefined || Upsert.clubUnion === "" ){
-      Upsert["clubUnion"] = " ";
-    }
-}
+      if(Upsert.clubImage === null || Upsert.clubImage === undefined || Upsert.clubImage === "" ){
+          Upsert["clubImage"] = "1";
+      }
+      if(Upsert.clubDetails === null || Upsert.clubDetails === undefined || Upsert.clubDetails === "" ){
+          Upsert["clubDetails"] = "";
+      }
+      if(Upsert.clubUnion === null || Upsert.clubUnion === undefined || Upsert.clubUnion === "" ){
+        Upsert["clubUnion"] = "0";
+      }
+  }
 
 
   const fromTable = () => {

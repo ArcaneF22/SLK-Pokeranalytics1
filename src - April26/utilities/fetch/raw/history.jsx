@@ -4,7 +4,7 @@ import * as Set from '../../constants';
 
 const Token = JSON.parse( localStorage.getItem('Token') );
 
-export const Accounts = () => {
+export const History = () => {
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -18,10 +18,10 @@ export const Accounts = () => {
   async function fetching() {
       setLoad(true)
     try {
-      const response = await axios.post(Set.Fetch['accounts'], Auth);
+      const response = await axios.post(Set.Fetch['history'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Accounts items fetched...")
+      console.log("History items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -34,7 +34,8 @@ export const Accounts = () => {
   return ({load, data})
 }
 
-export const MyAccounts = () => {
+
+export const MyHistory = () => {
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -48,41 +49,10 @@ export const MyAccounts = () => {
   async function fetching() {
       setLoad(true)
     try {
-      const response = await axios.post(Set.Fetch['accounts'], Auth);
+      const response = await axios.post(Set.Fetch['history'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("My Accounts items fetched...")
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  }
-
-  useLayoutEffect(() => {
-      fetching();
-    }, []);
-
-  return ({load, data})
-}
-
-
-export const AccountsDownline = () => {
-  const [load, setLoad] = useState(false)
-  const [data, setdata] = useState([])
-  const Auth = {
-              A: Token['id'],
-              B: Token['token'],
-              C: Token['gadget'],
-              D: Set.TimeZoned,
-              FOR: "DOWNLINE",
-          }; 
-
-  async function fetching() {
-      setLoad(true)
-    try {
-      const response = await axios.post(Set.Fetch['accounts'], Auth);
-      setdata(response.data);
-      setLoad(false)
-      console.log("My Accounts items fetched...")
+      console.log("History items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

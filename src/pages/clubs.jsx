@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import { FetchClubs } from '../utilities/fetch/tables/clubs'
 import { UpsertClubs } from '../utilities/upsert/clubs'
+import { MultipleClubs } from '../utilities/upsert_multiple/clubs'
 
 export const ClubsPage = () => {
 
@@ -36,6 +37,7 @@ export const ClubsPage = () => {
           </h2>
       </div>
         <UpsertClubs selectedData={gotData} recallData={recallData} />
+        <MultipleClubs />
         {recall === 1 ? (
             <div className="ui segment basic">
               <div className="ui active inverted dimmer">
