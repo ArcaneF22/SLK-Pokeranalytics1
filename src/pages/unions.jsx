@@ -26,7 +26,7 @@ export const UnionsPage = () => {
             </td>
             <td class="left aligned collapsing top aligned" style={{minWidth:"300px", border:"none"}}>
               <div className=' ui segment' style={{marginTop:"68px"}}>
-                <h4 className='center aligned'>HISTORY</h4>
+                  <h3 className='header center aligned'>Recent Activity</h3>
                   <div class="ui relaxed divided list">
                     <div class="item">
                     <i class="history large middle aligned icon grey"></i>
