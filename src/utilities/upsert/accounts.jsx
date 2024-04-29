@@ -161,8 +161,8 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   }
 
     return (
-      <div className="ui segment">
-        <h1>Insert / Update Accounts</h1>
+      <div className="ui segment basic">
+        <h2>Insert / Update Accounts</h2>
         <div className="ui form">
 
           <div className='five fields'>

@@ -55,8 +55,8 @@ export const FetchUsers = ({ selectData }) => {
         </div>
       </div>
       ) : (
-      <div className="ui segment ">
-        <h3>Users List</h3>
+      <div className="ui segment basic">
+        <h2>Users List</h2>
         <p>{JSON.stringify(fetch)}</p>
         <table className='ui celled striped table'>
         <thead>

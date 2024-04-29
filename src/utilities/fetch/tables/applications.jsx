@@ -58,7 +58,7 @@ export const FetchApplications = ({selectData}) => {
         </div>
       </div>
       ) : (
-      <div className="ui segment ">
+      <div className="ui segment basic">
         <h2>Applications List</h2>
         <table className='ui celled striped table'>
         <thead>

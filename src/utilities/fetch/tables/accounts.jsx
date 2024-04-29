@@ -55,8 +55,8 @@ export const FetchAccounts = ({selectData}) => {
         </div>
       </div>
       ) : (
-      <div className="ui segment ">
-        <h3>Accounts List</h3>
+      <div className="ui segment basic">
+        <h2>Accounts List</h2>
         <table className='ui celled striped table'>
         <thead>
           <tr>

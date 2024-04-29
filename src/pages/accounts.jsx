@@ -1,20 +1,6 @@
-import { useLayoutEffect, useState } from 'react';
-import { FetchAccounts } from '../utilities/fetch/tables/accounts'
-import { UpsertAccounts } from '../utilities/upsert/accounts'
+import { TabAccounts } from '../utilities/tabs/accounts'
 
 export const AccountsPage = () => {
-
-  const [gotData, setgotData] = useState([]);
-  const [recall, setRecall] = useState(0);
-
-  const selectData = (val) => { setgotData(val) };
-  const recallData = (val) => { setRecall(val)  };
-  
-  useLayoutEffect(() => {
-    if(recall==1){
-      setRecall(0)
-    }
-  }, [recall]);
 
     return (
     <>
@@ -27,17 +13,35 @@ export const AccountsPage = () => {
               </div>
           </h2>
       </div>
-      <UpsertAccounts selectedData={gotData} recallData={recallData} />
-      {recall === 1 ? (
-            <div className="ui segment basic">
-              <div className="ui active inverted dimmer">
-                <div className="ui indeterminate text loader">Loading table...</div>
-              </div>
-            </div>
-          ) : (
-            <FetchAccounts selectData={selectData} />
-        )}
 
+      <table class="ui table basic">
+          <tr class="ui middle aligned divided list">
+            <td className='center aligned'>
+              <TabAccounts />
+            </td>
+            <td class="left aligned collapsing top aligned" style={{minWidth:"300px", border:"none"}}>
+              <div className=' ui segment' style={{marginTop:"68px"}}>
+                <h4 className='center aligned'>HISTORY</h4>
+                  <div class="ui relaxed divided list">
+                    <div class="item">
+                    <i class="history large middle aligned icon grey"></i>
+                      <div class="content">
+                        <span class="header">Data ABCD</span>
+                        <div class="description">Updated 10 mins ago</div>
+                      </div>
+                    </div>
+                    <div class="item">
+                    <i class="history large middle aligned icon grey"></i>
+                      <div class="content">
+                        <span class="header">Data ABCD</span>
+                        <div class="description">Added 15 mins ago</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </td>
+          </tr>
+        </table>
     </>
       
 

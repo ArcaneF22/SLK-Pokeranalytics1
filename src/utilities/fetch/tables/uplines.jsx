@@ -55,12 +55,12 @@ export const FetchUplines = ({ selectData }) => {
         </div>
       </div>
       ) : (
-      <div className="ui segment ">
-        <h3>Uplines List</h3>
-        <table className='ui unstackable celled long scrolling table'>
+      <div className="ui segment basic">
+        <h2>Uplines List</h2>
+        <table className='ui unstackable celled long scrolling table mini'>
         <thead>
           <tr>
-            <th>ID</th>
+
             <th>Club</th>
             <th>Downline</th>
             <th>Upline</th>
@@ -73,9 +73,9 @@ export const FetchUplines = ({ selectData }) => {
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.id}</td>
+
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header small">
                     <img src={i.appImage} className="ui mini rounded image" />
                     <div className="content">
                       {i.clubName} (ID#{i.clubIDD})
@@ -83,10 +83,10 @@ export const FetchUplines = ({ selectData }) => {
                         {i.appName}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header small">
                     <img src={i.downAvatar} className="ui mini rounded image" />
                     <div className="content">
                     ID#{i.downacctID} {i.downacctRole}: (ID#{i.downacctNickname})
@@ -97,10 +97,10 @@ export const FetchUplines = ({ selectData }) => {
                        Status: {i.downacctStatus}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header small">
                     <img src={i.upAvatar} className="ui mini rounded image" />
                     <div className="content">
                       ID#{i.upacctID} {i.upacctRole}: (ID#{i.upacctNickname})
@@ -111,7 +111,7 @@ export const FetchUplines = ({ selectData }) => {
                        Status: {i.upacctStatus}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.percentage}% </td>
               <td>{setStatus(i)}</td>

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
-import { Clubs } from '../fetch/raw/clubs'
+import { Uplines } from '../fetch/raw/uplines'
 import { Accounts } from '../fetch/raw/accounts'
 import { Roles } from '../fetch/raw/roles'
 import * as Set from '../constants';
 
 export const UpsertUplines = ({selectedData,recallData}) => {
-  const clubDD = Clubs().data
+  const UplineDD = Uplines().data
   const acctDD = Accounts().data
   const roleDD = Roles().data
 
@@ -18,7 +18,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const [cancels, setCancels] =           useState(false);
 
   const [id, setID] =                           useState("0");
-  const [clubID, setclubID] =                   useState("");
+  const [UplineID, setUplineID] =                   useState("");
   const [downlineID, setdownlineID] =           useState("");
   const [uplineID, setuplineID] =               useState("");
   const [percentage, setPercentage] =           useState("");
@@ -31,7 +31,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                   C: Token['gadget'],
                   D: Set.TimeZoned,
                   id,
-                  clubID,
+                  UplineID,
                   downlineID,
                   uplineID,
                   percentage,
@@ -43,7 +43,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
       Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
   );
 
-  const AllGotValues = [clubID,downlineID,uplineID,percentage,status]
+  const AllGotValues = [UplineID,downlineID,uplineID,percentage,status]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
   const ValidateForm = (e) => {
@@ -66,7 +66,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
   const clearForm = () => {
     setID("0")
-    setclubID("")
+    setUplineID("")
     setdownlineID("")
     setdownlineRole("")
     setuplineID("")
@@ -84,7 +84,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const fromTable = () => {
 
     setID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
-    setclubID(selectedData.clubIDD === null || selectedData.clubIDD === undefined ? "" : selectedData.clubIDD)
+    setUplineID(selectedData.UplineIDD === null || selectedData.UplineIDD === undefined ? "" : selectedData.UplineIDD)
     setdownlineID(selectedData.downlineID === null || selectedData.downlineID === undefined ? "" : selectedData.downlineID)
     setuplineID(selectedData.uplineID === null || selectedData.uplineID === undefined ? "" : selectedData.uplineID)
     setPercentage(selectedData.percentage === null || selectedData.percentage === undefined ? "" : selectedData.percentage)
@@ -169,19 +169,19 @@ export const UpsertUplines = ({selectedData,recallData}) => {
             </div>
 
               <div className="field">
-              <label>Club</label>
+              <label>Upline</label>
               <SUI.Dropdown
-                    placeholder="Select club"
+                    placeholder="Select Upline"
                     scrolling
                     clearable
                     fluid
                     selection
                     search={true}
                     multiple={false}
-                    header="Select club"
-                    onChange={(event, { value }) => { setclubID(value); }}
-                    value={clubID}
-                    options={clubDD.map(i => {
+                    header="Select Upline"
+                    onChange={(event, { value }) => { setUplineID(value); }}
+                    value={UplineID}
+                    options={UplineDD.map(i => {
                       return {
                         key: i.id,
                         text: i.name,

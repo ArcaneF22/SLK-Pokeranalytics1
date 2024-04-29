@@ -150,8 +150,8 @@ export const UpsertApplications = ({selectedData,recallData}) => {
     }
 
     return (
-      <div className="ui segment">
-        <h1>Insert / Update Application</h1>
+      <div className="ui segment basic">
+        <h2>Insert / Update Application</h2>
         <div className="ui form">
 
           <div className='five fields'>

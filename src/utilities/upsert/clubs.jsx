@@ -178,8 +178,8 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
 
     return (
-      <div className="ui segment">
-        <h1>Insert / Update Club</h1>
+      <div className="ui segment basic">
+        <h2>Insert / Update Club</h2>
 
         <div className="ui form">
 

@@ -135,7 +135,12 @@ export const Protected = ({ children }) => {
                 My History
                 </div>
             </a>
-
+            <a className="item" onClick={() => navigateTo('/exchangerates')}>
+            <div>
+            <i className="history icon"></i>
+              Exchange Rate
+            </div>
+          </a>
             {isLargeScreen ? null :
             <>
 
@@ -175,6 +180,14 @@ export const Protected = ({ children }) => {
               History
             </div>
           </a>
+
+          <a className="item" onClick={() => navigateTo('/exchangerates')}>
+            <div>
+            <i className="history icon"></i>
+              Exchange Rate
+            </div>
+          </a>
+
             </>
             }
             

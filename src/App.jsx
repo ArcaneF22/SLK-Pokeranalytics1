@@ -17,6 +17,7 @@ import { NotificationPage } from './pages/notification';
 import { HistoryPage } from './pages/history';
 import { ImagesPage } from './pages/images';
 import { UnionsPage } from './pages/unions';
+import { ExchangeRatesPage } from './pages/exchangeRates';
 import { NotFoundPage } from './pages/notfound';
 import { HelloWorld } from './pages/helloworld';
 
@@ -58,11 +59,13 @@ function App() {
                 <Route path="/history"        element={ <Protected> <HistoryPage /> </Protected> } />
                 <Route path="/images"         element={ <Protected> <ImagesPage /> </Protected> } />
                 <Route path="/unions"         element={ <Protected> <UnionsPage /> </Protected> } />
+                <Route path="/exchangerates"  element={ <Protected> <ExchangeRatesPage /> </Protected> } />
                 <Route path="/myprofile"      element={ <Protected> <MyProfilePage /> </Protected> } />
                 <Route path="/myaccounts"     element={ <Protected> <MyAccountsPage /> </Protected> } />
                 <Route path="/myhistory"      element={ <Protected> <MyHistoryPage /> </Protected> } />
                 <Route path="/myclubs"        element={ <Protected> <MyClubsPage /> </Protected> } />
                 <Route path="/myuplines"      element={ <Protected> <MyUplinesPage /> </Protected> } />
+
               </>
               : null}
 
