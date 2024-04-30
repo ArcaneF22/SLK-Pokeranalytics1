@@ -41,7 +41,7 @@ export const HeaderMobile = ({ showMenu }) => {
     <>
     <Modal_Logout key="Modal_Logout" open={Logout} onClose={() => { setLogout(false); }} />
 
-    <div className="ui top fixed menu big lefted-menu teal">
+    <div className="ui top fixed menu big lefted-menu teal ">
 
     <div className="item" onClick={() => navigateTo('/home')}>
       <img className='unClickable' src={Set.Path['logo'] + "poker.png"} />

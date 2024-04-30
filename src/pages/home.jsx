@@ -20,7 +20,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <div className='ui segment message purple-box'>
+      <div className='ui segment message purple-box div-animated'>
         <h2 className="ui header inverted">
               <i className="home big icon"></i>
               <div className="content">
@@ -33,8 +33,8 @@ export const HomePage = () => {
       <div className="ui grid padded">
       <div className="row">
         <div className="four wide computer eight wide mobile six wide tablet column">
-          <div className='ui segment message center aligned purple-box'>
-                <div className="ui statistic inverted">
+          <div className='ui segment message center aligned purple-box dotted button-animated'>
+                <div className="ui statistic inverted forward">
                     <div className="value">
                       5,550
                     </div>
@@ -45,10 +45,22 @@ export const HomePage = () => {
             </div>
         </div>
         <div className="four wide computer eight wide mobile six wide tablet column">
-            <div className='ui segment message center aligned purple-box'>
-                <div className="ui statistic inverted blue">
+            <div className='ui segment message center aligned purple-box dotted button-animated'>
+                <div className="ui statistic inverted blue forward">
                     <div className="value">
-                      5,550
+                      5,55099
+                    </div>
+                    <div className="label">
+                      Accounts
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit ">
+            <div className='ui segment message center aligned purple-box dotted button-animated'>
+                <div className="ui statistic inverted green forward ">
+                    <div className="value">
+                      5,5509
                     </div>
                     <div className="label">
                       Accounts
@@ -57,22 +69,10 @@ export const HomePage = () => {
             </div>
         </div>
         <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit">
-            <div className='ui segment message center aligned purple-box'>
-                <div className="ui statistic inverted green">
+            <div className='ui segment message center aligned purple-box dotted button-animated'>
+                <div className="ui statistic inverted orange forward">
                     <div className="value">
-                      5,550
-                    </div>
-                    <div className="label">
-                      Accounts
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit">
-            <div className='ui segment message center aligned purple-box'>
-                <div className="ui statistic inverted orange">
-                    <div className="value">
-                      5,550
+                      5,5509
                     </div>
                     <div className="label">
                       Accounts
@@ -326,7 +326,7 @@ export const HomePage = () => {
         </div>
 
 
-      <div className="ui vertical stripe quote segment">
+      <div className="ui vertical stripe quote segment heros">
         <div className="ui middle aligned stackable grid container">
           <div className="row">
               <div className="six wide right floated column">

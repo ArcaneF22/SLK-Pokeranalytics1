@@ -60,62 +60,64 @@ export const FetchUplines = ({ selectData }) => {
         <table className='ui unstackable celled long scrolling table mini'>
         <thead>
           <tr>
-
             <th>Club</th>
             <th>Downline</th>
             <th>Upline</th>
             <th>Percentage</th>
             <th>Status</th>
-            <th>Stated Date</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-
               <td>
-                <h5 className="ui image header small">
+                <h5 className="ui image header">
                     <img src={i.appImage} className="ui mini rounded image" />
                     <div className="content">
-                      {i.clubName} (ID#{i.clubIDD})
-                      <div className='sub header'>
-                        {i.appName}
+                      {i.clubName}
+                      <div className="sub header">
+                        ID: {i.clubIDD}
+                        <br />
+                        Stated: {i.stated}
                       </div>
                   </div>
                 </h5>
               </td>
               <td>
-                <h5 className="ui image header small">
+                <h5 className="ui image header">
                     <img src={i.downAvatar} className="ui mini rounded image" />
                     <div className="content">
-                    ID#{i.downacctID} {i.downacctRole}: (ID#{i.downacctNickname})
-                      <div className='sub header'>
-                        User: {i.downuserID}: {i.downuserRole} {i.downuserNickname}
-                      </div>
-                      <div className='sub header'>
-                       Status: {i.downacctStatus}
+                      ID: {i.downacctID}
+                      <div className="sub header">
+                        {i.downacctRole}: {i.downacctNickname}
+                        <br />
+                        <i>(User: {i.downuserNickname}) </i>
+                        <br />
+                        Status: {i.downacctStatus}
                       </div>
                   </div>
                 </h5>
               </td>
               <td>
-                <h5 className="ui image header small">
+              <h5 className="ui image header">
                     <img src={i.upAvatar} className="ui mini rounded image" />
                     <div className="content">
-                      ID#{i.upacctID} {i.upacctRole}: (ID#{i.upacctNickname})
-                      <div className='sub header'>
-                        User: {i.upuserID}: {i.upuserRole} {i.upuserNickname}
-                      </div>
-                      <div className='sub header'>
-                       Status: {i.upacctStatus}
+                      ID: {i.upacctID}
+                      <div className="sub header">
+                        {i.upacctRole}: {i.upacctNickname}
+                        <br />
+                        <i>(User: {i.upuserNickname}) </i>
+                        <br />
+                        Status: {i.upacctStatus}
                       </div>
                   </div>
                 </h5>
+
               </td>
               <td>{i.percentage}% </td>
               <td>{setStatus(i)}</td>
-              <td>{i.stated}</td>
+
               <td>
                 <button className='ui button blue' onClick={()=> editData(i.id,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>
                     <i className="edit outline icon"></i>

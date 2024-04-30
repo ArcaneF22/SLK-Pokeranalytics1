@@ -110,7 +110,7 @@ export const LoginPage = () => {
 
   return (
     <>
-<div className='bg-color-login login'>
+<div className='bg-color-login login '>
     <br /> <br /> <br /> <br /> <br />
     <div className="ui two stackable middle aligned center aligned grid">
 
@@ -144,7 +144,9 @@ export const LoginPage = () => {
             </div>
 
             <div className='field'>
-              <div className="ui fluid large purple button" onClick={validate}>Login</div>
+              <div className="ui fluid large button-animated button" onClick={validate}>
+                <span className='text-white'>Login</span>
+              </div>
             </div>
             
         </div>
