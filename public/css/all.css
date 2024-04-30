@@ -133,6 +133,8 @@ body {
   height: 25px !important;
   margin-top: 5px !important;
 }
+
+
   /* if screen size is smaller than 765px */
   @media (max-width:850px) { 
       .contents {
@@ -182,6 +184,9 @@ body {
       }
       .plus-top-bit{
         margin-top: 15px !important;
+      }
+      .label-small{
+        font-size:8vw !important;
       }
    }
 
@@ -450,3 +455,4 @@ border: 1px solid rgba(191, 0, 255, 0.42) !important;
 .text-white{
   color: #F2F2F2 !important;
 }
+

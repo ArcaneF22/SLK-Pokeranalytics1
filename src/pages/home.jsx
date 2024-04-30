@@ -24,8 +24,8 @@ export const HomePage = () => {
         <h2 className="ui header inverted">
               <i className="home big icon"></i>
               <div className="content">
-                  Welcome back!  
-                  <div className="sub header">{getUser["rolename"]}: {getUser["nickname"]}!</div>
+                  <div className="sub header">WELCOME {getUser["rolename"]}</div>
+                  {getUser["nickname"]}
               </div>
           </h2>
       </div>
@@ -36,7 +36,7 @@ export const HomePage = () => {
           <div className='ui segment message center aligned purple-box dotted button-animated'>
                 <div className="ui statistic inverted forward">
                     <div className="value">
-                      5,550
+                      <span className='label-small'>5,550</span>
                     </div>
                     <div className="label">
                       Users
@@ -47,8 +47,8 @@ export const HomePage = () => {
         <div className="four wide computer eight wide mobile six wide tablet column">
             <div className='ui segment message center aligned purple-box dotted button-animated'>
                 <div className="ui statistic inverted blue forward">
-                    <div className="value">
-                      5,55099
+                    <div className="value text-label-title">
+                    <span className='label-small'>5,5509989</span>
                     </div>
                     <div className="label">
                       Accounts
@@ -57,13 +57,13 @@ export const HomePage = () => {
             </div>
         </div>
         <div className="four wide computer eight wide mobile six wide tablet column plus-top-bit ">
-            <div className='ui segment message center aligned purple-box dotted button-animated'>
-                <div className="ui statistic inverted green forward ">
-                    <div className="value">
-                      5,5509
+            <div className='ui segment message center aligned purple-box dotted button-animated '>
+                <div className="ui statistic inverted green forward">
+                    <div className="value ">
+                    <span className='label-small'>5,5509989</span>
                     </div>
                     <div className="label">
-                      Accounts
+                       <span  style={{alignItems:"left !important"}}>Accounts</span>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@ export const HomePage = () => {
             <div className='ui segment message center aligned purple-box dotted button-animated'>
                 <div className="ui statistic inverted orange forward">
                     <div className="value">
-                      5,5509
+                    <span className='label-small'>5,5509989</span>
                     </div>
                     <div className="label">
                       Accounts
@@ -83,33 +83,33 @@ export const HomePage = () => {
       </div>
       </div>
 
-      <div class="ui four doubling stackable cards ">
+      <div className="ui four doubling stackable cards ">
 
-                        <div class="red card">
-                          <div class="content">
-                            <div class="header"><i class="sticky note icon"></i> Documenti</div>
-                            <div class="meta">Resoconto Documenti</div>
-                            <div class="description">
+                        <div className="red card">
+                          <div className="content">
+                            <div className="header"><i className="sticky note icon"></i> Documenti</div>
+                            <div className="meta">Resoconto Documenti</div>
+                            <div className="description">
                     
-                              <div class="ui list">
-                                <div class="item">
-                                    <div class="content">
-                                      <div class="right floated content">
-                                        <span class="header">
+                              <div className="ui list">
+                                <div className="item">
+                                    <div className="content">
+                                      <div className="right floated content">
+                                        <span className="header">
                                           5000
                                         </span>
                                       </div>
-                                      <div class="header">Attivi</div>
+                                      <div className="header">Attivi</div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                  <div class="content">
-                                    <div class="right floated content">
-                                      <span class="header">
+                                <div className="item">
+                                  <div className="content">
+                                    <div className="right floated content">
+                                      <span className="header">
                                         0
                                       </span>
                                     </div>
-                                    <div class="header">Da approvare</div>
+                                    <div className="header">Da approvare</div>
                                   </div>
                                 </div>
                               </div>
@@ -117,39 +117,39 @@ export const HomePage = () => {
                             </div>
                           </div>
                     
-                          <div class="extra content">
-                            <span class="right floated">
-                              <a href="#">Gestisci <i class="right arrow icon"></i></a>
+                          <div className="extra content">
+                            <span className="right floated">
+                              <a href="#">Gestisci <i className="right arrow icon"></i></a>
                             </span>
                           </div>
                     
                         </div>
 
-                        <div class="red card">
-                          <div class="content">
-                            <div class="header"><i class="th list icon"></i> Avvisi </div>
-                            <div class="meta">Totale Avvisi</div>
-                            <div class="description">
+                        <div className="red card">
+                          <div className="content">
+                            <div className="header"><i className="th list icon"></i> Avvisi </div>
+                            <div className="meta">Totale Avvisi</div>
+                            <div className="description">
                               
-                                <div class="ui list">
-                                  <div class="item">
-                                      <div class="content">
-                                        <div class="right floated content">
-                                          <span class="header">
+                                <div className="ui list">
+                                  <div className="item">
+                                      <div className="content">
+                                        <div className="right floated content">
+                                          <span className="header">
                                             30
                                           </span>
                                         </div>
-                                        <div class="header">Errori</div>
+                                        <div className="header">Errori</div>
                                       </div>
                                   </div>
-                                  <div class="item">
-                                    <div class="content">
-                                      <div class="right floated content">
-                                        <span class="header">
+                                  <div className="item">
+                                    <div className="content">
+                                      <div className="right floated content">
+                                        <span className="header">
                                           18
                                         </span>
                                       </div>
-                                      <div class="header">Warning</div>
+                                      <div className="header">Warning</div>
                                     </div>
                                   </div>
                                 </div>
@@ -157,39 +157,39 @@ export const HomePage = () => {
                             </div>
                           </div>
                     
-                          <div class="extra content">
-                            <span class="right floated">
-                              <a href="#">Gestisci <i class="right arrow icon"></i></a>
+                          <div className="extra content">
+                            <span className="right floated">
+                              <a href="#">Gestisci <i className="right arrow icon"></i></a>
                             </span>
                           </div>
                     
                         </div>
 
-                        <div class="red card">
-                          <div class="content">
-                            <div class="header"><i class="users icon"></i> Utenti</div>
-                            <div class="meta">Utenti iscritti al progetto</div>
-                            <div class="description">
+                        <div className="red card">
+                          <div className="content">
+                            <div className="header"><i className="users icon"></i> Utenti</div>
+                            <div className="meta">Utenti iscritti al progetto</div>
+                            <div className="description">
                     
-                                <div class="ui list">
-                                  <div class="item">
-                                      <div class="content">
-                                        <div class="right floated content">
-                                          <span class="header">
+                                <div className="ui list">
+                                  <div className="item">
+                                      <div className="content">
+                                        <div className="right floated content">
+                                          <span className="header">
                                             24
                                           </span>
                                         </div>
-                                        <div class="header">Approvati</div>
+                                        <div className="header">Approvati</div>
                                       </div>
                                   </div>
-                                  <div class="item">
-                                    <div class="content">
-                                      <div class="right floated content">
-                                        <span class="header">
+                                  <div className="item">
+                                    <div className="content">
+                                      <div className="right floated content">
+                                        <span className="header">
                                           3
                                         </span>
                                       </div>
-                                      <div class="header">Da Approvare</div>
+                                      <div className="header">Da Approvare</div>
                                     </div>
                                   </div>
                                 </div>
@@ -197,45 +197,45 @@ export const HomePage = () => {
                             </div>
                           </div>
                     
-                          <div class="extra content">
-                            <span class="right floated">
-                              <a href="#">Gestisci <i class="right arrow icon"></i></a>
+                          <div className="extra content">
+                            <span className="right floated">
+                              <a href="#">Gestisci <i className="right arrow icon"></i></a>
                             </span>
                           </div>
                     
                         </div>
 
-                        <div class="red card">
-                          <div class="content">
-                            <div class="header"><i class="server icon"></i> Server</div>
-                            <div class="meta">Informazioni server</div>
-                            <div class="description">
-                              <div class="ui indicating progress" data-value="100" data-total="200" id="freeSpaceOnDisk_bar">
-                                <div class="bar">
-                                  <div class="progress"></div>
+                        <div className="red card">
+                          <div className="content">
+                            <div className="header"><i className="server icon"></i> Server</div>
+                            <div className="meta">Informazioni server</div>
+                            <div className="description">
+                              <div className="ui indicating progress" data-value="100" data-total="200" id="freeSpaceOnDisk_bar">
+                                <div className="bar">
+                                  <div className="progress"></div>
                                 </div>
-                                <div class="label">Spazio utilizzato</div>
+                                <div className="label">Spazio utilizzato</div>
                               </div>
                               
-                              <div class="ui list">
-                                <div class="item">
-                                    <div class="content">
-                                      <div class="right floated content">
-                                        <span class="header">
+                              <div className="ui list">
+                                <div className="item">
+                                    <div className="content">
+                                      <div className="right floated content">
+                                        <span className="header">
                                           100 GB
                                         </span>
                                       </div>
-                                      <div class="header">Spazio disponibile</div>
+                                      <div className="header">Spazio disponibile</div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                  <div class="content">
-                                    <div class="right floated content">
-                                      <span class="header">
+                                <div className="item">
+                                  <div className="content">
+                                    <div className="right floated content">
+                                      <span className="header">
                                         200 GB
                                       </span>
                                     </div>
-                                    <div class="header">Spazio totale</div>
+                                    <div className="header">Spazio totale</div>
                                   </div>
                                 </div>
                               </div>
@@ -246,7 +246,7 @@ export const HomePage = () => {
               </div>
 
         <div className='ui equal width grid padded segment three doubling' >
-          <div class="center aligned row stretched">
+          <div className="center aligned row stretched">
 
               <GridColumn>
                   <Segment>Main</Segment>
@@ -258,10 +258,10 @@ export const HomePage = () => {
 
               <GridColumn>
                   <Segment>
-                  <div class="ui three item menu fluid">
-                      <a class="item">Item</a>
-                      <a class="item">Item</a>
-                      <a class="item">Item</a>
+                  <div className="ui three item menu fluid">
+                      <a className="item">Item</a>
+                      <a className="item">Item</a>
+                      <a className="item">Item</a>
                     </div>
                   </Segment>
                   <Segment>2</Segment>
@@ -275,9 +275,9 @@ export const HomePage = () => {
 
 
 
-        <div class="ui equal width stackable internally grid padded segment">
-          <div class="center aligned row">
-            <div class="column">
+        <div className="ui equal width stackable internally grid padded segment">
+          <div className="center aligned row">
+            <div className="column">
               <h3>RESPONSIVE & RETINA</h3>
               <div className='ui segment message center aligned purple-box'>
                 <div className="ui statistic inverted orange">
@@ -290,7 +290,7 @@ export const HomePage = () => {
                 </div>
             </div>
             </div>
-            <div class="column">
+            <div className="column">
               <h4>Smartly Coded & Maintained.</h4>
               <h3>POWERFUL PERFORMANCE</h3>
               <p>
@@ -298,7 +298,7 @@ export const HomePage = () => {
                 landscape advocate pathway to a better life rights international. Assessment.
               </p>
             </div>
-            <div class="column">
+            <div className="column">
               <h4>Flexible & Customizable.</h4>
               <h3>TRULY MULTI-PURPOSE</h3>
               <p>
@@ -306,7 +306,7 @@ export const HomePage = () => {
                 impact; transformative donation philanthropy, respect reproductive.
               </p>
             </div>
-            <div class="column">
+            <div className="column">
               <h4>Flexible & Customizable.</h4>
               <h3>TRULY MULTI-PURPOSE</h3>
               <p>
@@ -314,7 +314,7 @@ export const HomePage = () => {
                 impact; transformative donation philanthropy, respect reproductive.
               </p>
             </div>
-            <div class="column">
+            <div className="column">
               <h4>Flexible & Customizable.</h4>
               <h3>TRULY MULTI-PURPOSE</h3>
               <p>

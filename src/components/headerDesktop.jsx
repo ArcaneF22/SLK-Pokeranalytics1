@@ -38,7 +38,7 @@ export const HeaderDesktop = () => {
     <>
     <Modal_Logout key="Modal_Logout" open={Logout} onClose={() => { setLogout(false); }} />
 
-    <div className="ui top fixed menu lefted-menu">
+    <div className="ui top fixed menu center aligned lefted-menu">
     <div className='ui horizontal divider teal'></div>
     <div className="item">
       <img className='unClickable' src={Set.Path['logo'] + "poker.png"} />

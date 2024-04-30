@@ -30,6 +30,7 @@ export const FetchAccounts = ({selectData}) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
+                    "selected": 1,
                     "id": id,
                     "idd": idd, 
                     "nickname": accountNickname, 

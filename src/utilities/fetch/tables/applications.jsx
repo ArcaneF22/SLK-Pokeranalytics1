@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Applications } from '../raw/applications'
 
 export const FetchApplications = ({selectData}) => {
@@ -45,7 +45,9 @@ export const FetchApplications = ({selectData}) => {
       , 1000)
     
   };
-  
+
+
+
   return (
 <>
 

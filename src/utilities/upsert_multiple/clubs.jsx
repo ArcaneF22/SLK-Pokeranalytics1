@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
+import { useDropzone } from 'react-dropzone'; //INSTALL { npm i react-dropzone }
 import axios from 'axios';
 
 export const MultipleClubs = () => {
     const [JSONData, setJSONData] = useState('');
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("Upload a CSV file");
     const [csvLoaded, setcsvLoaded] = useState(false);
 
     const CSVFileUpload = (event) => {
@@ -128,9 +129,16 @@ export const MultipleClubs = () => {
 
     return (
         <div className="ui segment basic">
-            <h2>Upload Club CSV</h2>
           {
-            !csvLoaded ? <input type="file" onChange={CSVFileUpload} /> 
+            !csvLoaded ?
+            <>
+                <div className="ui message blue basic center aligned">
+                    <input type="file"  onChange={CSVFileUpload} />
+                    <p>Drag and drop a file here, or click to select a file</p> 
+                </div>
+                <a href='./csv/csv_clubs.csv'>Download CSV template</a>
+            </>
+
             : 
             <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }
@@ -140,7 +148,7 @@ export const MultipleClubs = () => {
           {JSONData && (
             <div>
                 
-                <form className='ui form' id='FormCSV'>
+                <form className='ui form  left aligned' id='FormCSV'>
                     <h1>Form Fields</h1>
                         {JSONData.map((i, index) => (
                             <div className='fields' key={index}>

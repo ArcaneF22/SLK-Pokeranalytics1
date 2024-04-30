@@ -1,16 +1,18 @@
 import React, { useLayoutEffect, useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
+import { useDropzone } from 'react-dropzone'; //INSTALL { npm i react-dropzone }
 import axios from 'axios';
 
 export const MultipleAccounts = () => {
     const [JSONData, setJSONData] = useState('');
     const [message, setMessage] = useState("");
     const [csvLoaded, setcsvLoaded] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const CSVFileUpload = (event) => {
         const fileCSV = event.target.files[0];
         const reader = new FileReader();
-    
+        
         if (fileCSV.type !== 'text/csv') {
             setMessage('Please select a CSV file.');
         } else {
@@ -55,6 +57,15 @@ export const MultipleAccounts = () => {
           
         }
     };
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'csv/*',
+        onDrop: (acceptedFiles) => {
+            setSelectedFile(acceptedFiles[0]);
+        },
+      });
+
+
 
     const deleteRow = (index) => {
         const updatedData = [...JSONData]; // Create a copy of the state array
@@ -109,10 +120,14 @@ export const MultipleAccounts = () => {
     }
 
     return (
-        <div className="ui segment basic">
+        <div className="ui segment basic" >
             <h2>Upload Accounts CSV</h2>
           {
-            !csvLoaded ? <input type="file" onChange={CSVFileUpload} /> 
+            !csvLoaded ? 
+            <div className="ui message blue basic" {...getRootProps()}>
+                <input type="file" {...getInputProps()} onChange={CSVFileUpload} />
+                <p>Drag and drop a file here, or click to select a file</p> 
+            </div>
             : 
             <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }

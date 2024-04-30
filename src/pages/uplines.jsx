@@ -14,27 +14,27 @@ export const UplinesPage = () => {
           </h2>
       </div>
 
-      <table class="ui table basic">
-          <tr class="ui middle aligned divided list">
+      <table className="ui table basic">
+          <tr className="ui middle aligned divided list">
             <td className='center aligned'>
               <TabUplines />
             </td>
-            <td class="left aligned collapsing top aligned" style={{minWidth:"300px", border:"none"}}>
-              <div className=' ui segment' style={{marginTop:"68px"}}>
-                  <h3 className='header center aligned'>Recent Activity</h3>
-                  <div class="ui relaxed divided list">
-                    <div class="item">
-                    <i class="history large middle aligned icon grey"></i>
-                      <div class="content">
-                        <span class="header">Data ABCD</span>
-                        <div class="description">Updated 10 mins ago</div>
+            <td className="left aligned collapsing top aligned" style={{minWidth:"300px", border:"none"}}>
+              <div className=' ui message info' style={{marginTop:"68px"}}>
+                  <h3 className='header'>Recent Activity</h3>
+                  <div className="ui relaxed divided list">
+                    <div className="item">
+                    <i className="history large middle aligned icon"></i>
+                      <div className="content">
+                        <span className="header">Data ABCD</span>
+                        <div className="description">Updated 10 mins ago</div>
                       </div>
                     </div>
-                    <div class="item">
-                    <i class="history large middle aligned icon grey"></i>
-                      <div class="content">
-                        <span class="header">Data ABCD</span>
-                        <div class="description">Added 15 mins ago</div>
+                    <div className="item">
+                    <i className="history large middle aligned icon"></i>
+                      <div className="content">
+                        <span className="header">Data ABCD</span>
+                        <div className="description">Added 15 mins ago</div>
                       </div>
                     </div>
                   </div>

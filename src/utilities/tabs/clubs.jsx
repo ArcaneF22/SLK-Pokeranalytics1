@@ -40,7 +40,6 @@ export const TabClubs = () => {
                                     Preparing Table
                                 </SUI.Loader>
                             </SUI.Dimmer>
-                            <SUI.Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
                         </SUI.Segment>
                     ) : (
                         <FetchClubs selectData={selectData} />

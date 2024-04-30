@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, setState } from 'react';
 import * as SUI from 'semantic-ui-react';
 
 import { FetchAccounts } from '../fetch/tables/accounts'
@@ -9,9 +9,11 @@ export const TabAccounts = () => {
 
     const [gotData, setgotData] = useState([]);
     const [recall, setRecall] = useState(0);
-  
+    const [selected, setSelected] = useState(0);
+
     const selectData = (newValue) => {
       setgotData(newValue)
+      setSelected(newValue.selected)
     };
     const selectImage = (newValue) => {
       setgotData(newValue)
@@ -27,10 +29,18 @@ export const TabAccounts = () => {
       }
     }, [recall]);
   
+    useLayoutEffect(() => {
+      if(selected===true){
+        setSelected(false)
+
+      }
+    }, [selected]);
+
+
 
     const panes = [
         {
-          menuItem: 'List',
+          menuItem: 'List'+selected,
           render: () => 
             <SUI.TabPane attached={false}>
                     {recall === 1 ? (
@@ -57,15 +67,17 @@ export const TabAccounts = () => {
         {
           menuItem: 'Upload',
           render: () => 
-            <SUI.TabPane attached={false}>
+            <SUI.TabPane attached={false} >
                 <MultipleAccounts />
             </SUI.TabPane>,
         },
       ]
 
+
+
     return (
         <div>
-            <SUI.Tab menu={{ text: true }} panes={panes} />
+            <SUI.Tab menu={{ text: true }} panes={panes} activeIndex={selected} />
         </div>
       );
 }
