@@ -202,11 +202,11 @@ const panels = [
                                 <div className="two fields">
                                     <div className="field">
                                         <label> New password  </label>
-                                        <input type="text" placeholder="New password" value={newpassword.replace(/\s/g, "")} onChange={(e) => (inputChange(), setnewPassword(e.currentTarget.value), (repassword !=="" && e.currentTarget.value != repassword ? setPWMatched(true) : setPWMatched(false)) )}/>
+                                        <input type="password" placeholder="New password" value={newpassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (inputChange(), setnewPassword(e.currentTarget.value), (repassword !=="" && e.currentTarget.value != repassword ? setPWMatched(true) : setPWMatched(false)) )}/>
                                     </div>
                                     <div className="field">
                                         <label> Re-type new password</label>
-                                        <input type="text" placeholder="Re-type new password" value={repassword.replace(/\s/g, "")} onChange={(e) => (setrePassword(e.currentTarget.value), (e.currentTarget.value != newpassword ? setPWMatched(true) : setPWMatched(false)) )}/>
+                                        <input type="password" placeholder="Re-type new password" value={repassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (setrePassword(e.currentTarget.value), (e.currentTarget.value != newpassword ? setPWMatched(true) : setPWMatched(false)) )}/>
                                     </div>
                                 </div>
                             </div>
@@ -232,10 +232,11 @@ const panels = [
       : null
       }
         <div class="ui two cards stackable padded">
+          
           <div class="ui card fluid">
               <div class="content">
                   <h2 class="ui header">
-                      Avatar
+                      AVATAR
                   </h2>
               </div>
               <div className="ui image medium centered ">
@@ -252,22 +253,23 @@ const panels = [
                   </div>
               </div>
           </div>
+
           <div class="ui card fluid">
               <div class="content">
                   <h2 class="ui header">
-                      Details
+                      DETAILS
                   </h2>
               </div>
               <div className='content'>
                   <form className='ui form'>
-                            <div className="field ui segment basic">
+                            <div className="field ui segment">
                                 <div className="field">
                                     <label>Nickname</label>
-                                    <input type="text" placeholder="Nickname" value={nickname.replace(/\s/g, "")} onChange={(e) => (inputChange(), setNickname(e.currentTarget.value))}/>
+                                    <input type="text" placeholder="Nickname" value={nickname.replace(/[^\w._-]/g, "")} maxLength={15} onChange={(e) => (inputChange(), setNickname(e.currentTarget.value))}/>
                                 </div>
                                 <div className="field">
                                       <label>Username</label>
-                                      <input type="text" placeholder="Username" value={username.replace(/\s/g, "")} onChange={(e) => (inputChange(),setUsername(e.currentTarget.value))}/>
+                                      <input type="text" placeholder="Username" value={username.replace(/[\s]/g, "")} maxLength={15} onChange={(e) => (inputChange(),setUsername(e.currentTarget.value))}/>
                                 </div>
                             </div>
                             <SUI.Accordion panels={panels}  exclusive={false} styled fluid />
@@ -278,7 +280,7 @@ const panels = [
                               </h4>
                               <div className="field ui segment">
                                   <label>Current password</label>
-                                  <input type="text" placeholder="Current password" value={password.replace(/\s/g, "")} onChange={(e) => setPassword(e.currentTarget.value)}/>
+                                  <input type="password" placeholder="Current password" value={password.replace(/\s/g, "")} maxLength={20} onChange={(e) => setPassword(e.currentTarget.value)}/>
                               </div>
 
                               <div className="field center aligned">
@@ -293,13 +295,10 @@ const panels = [
                                           No changes commited
                                       </div>
                                   }
-
                               </div>
-   
-
                   </form>
-
               </div>
+
           </div>
         </div>
       </>
