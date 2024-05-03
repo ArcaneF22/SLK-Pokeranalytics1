@@ -17,6 +17,7 @@ export const UpsertProfile = () => {
   const [loading, setLoading] =             useState(false);
   const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
+  const [button, setButton] =               useState("Update Profile");
   const [updateButton, setUpdateButton] =                 useState(false);
 
   const [avatarPath, setAvatarPath] =       useState(Prof['avatar']);
@@ -98,6 +99,7 @@ export const UpsertProfile = () => {
       setrePassword("")
       setAvatarPath(Prof['avatar'])
       
+      setButton("Update Profile")
       setLoading(false)
       setUpdateButton(false)
   }
@@ -231,36 +233,33 @@ const panels = [
                 onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
       : null
       }
-        <div class="ui two cards stackable padded">
-          <div class="ui card fluid">
-              <div class="content">
-                  <h2 class="ui header">
-                      Avatar
-                  </h2>
-              </div>
-              <div className="ui image medium centered ">
-                  <img className="ui medium circular image" src={avatarPath} />
-              </div>
-              <div className="content center aligned">
-                  <div className="ui tiny images centered center aligned">
-                      {imgDD.map((i,index) => {
-                          return (<img className="imageAvatar" 
-                                        key={index} 
-                                        src={i.pathFull} 
-                                        onClick={()=>( inputChange(), setAvatar(i.id), setAvatarPath(i.pathFull) ) } />);
-                      })}                        
-                  </div>
-              </div>
-          </div>
-          <div class="ui card fluid">
-              <div class="content">
-                  <h2 class="ui header">
-                      Details
-                  </h2>
-              </div>
-              <div className='content'>
-                  <form className='ui form'>
-                            <div className="field ui segment basic">
+
+        <table className="ui table basic centered">
+            <tbody>
+                <tr className="ui middle aligned divided list">
+                    <td className='ui segment top aligned basic'>
+                        <h3 className='header '>Avatar </h3>
+                        <div className="ui two item menu stackable">
+                            <div className="item">
+                                <img src={avatarPath} className="ui medium image center aligned basic" />
+                            </div>
+                            <div className="item">
+                                <div className="ui tiny images centered center aligned">
+                                            {imgDD.map((i,index) => {
+                                                return (<img className="ui image imageAvatar" key={index} src={i.pathFull} onClick={()=>( inputChange(), setAvatar(i.id), setAvatarPath(i.pathFull) ) } />);
+                                                })}
+                                                
+                                </div>
+                            </div>
+                        </div>       
+                                                
+                    </td>
+                    <td className="ui segment top aligned basic min850">
+
+                        <h3 className='header '>Profile Details {nickname}</h3>
+
+                        <div className="ui form">
+                            <div className="field ui segment">
                                 <div className="field">
                                     <label>Nickname</label>
                                     <input type="text" placeholder="Nickname" value={nickname.replace(/\s/g, "")} onChange={(e) => (inputChange(), setNickname(e.currentTarget.value))}/>
@@ -270,38 +269,35 @@ const panels = [
                                       <input type="text" placeholder="Username" value={username.replace(/\s/g, "")} onChange={(e) => (inputChange(),setUsername(e.currentTarget.value))}/>
                                 </div>
                             </div>
-                            <SUI.Accordion panels={panels}  exclusive={false} styled fluid />
-                          
-                            
-                              <h4 className="ui horizontal right aligned header divider">
-                                  Please confirm changes 
-                              </h4>
-                              <div className="field ui segment">
-                                  <label>Current password</label>
-                                  <input type="text" placeholder="Current password" value={password.replace(/\s/g, "")} onChange={(e) => setPassword(e.currentTarget.value)}/>
-                              </div>
+                            <SUI.Accordion panels={panels}  exclusive={false} styled />
+                          {updateButton ? 
+                          <>
+                            <h4 className="ui horizontal right aligned header divider">
+                                 Please confirm changes 
+                            </h4>
+                            <div className="field ui segment">
+                                <label>Current password</label>
+                                <input type="text" placeholder="Current password" value={password.replace(/\s/g, "")} onChange={(e) => setPassword(e.currentTarget.value)}/>
+                            </div>
 
-                              <div className="field center aligned">
-                                  { updateButton ? 
-                                      <div className="ui button purple right labeled icon" onClick={ValidateForm}>
-                                          <i className="arrow right icon"></i>
-                                          Proceed to update
-                                      </div>
-                                    :
-                                      <div className="ui button purple right labeled icon basic disabled">
-                                          <i className="times icon"></i>
-                                          No changes commited
-                                      </div>
-                                  }
+                            <div className="field center aligned">
+                                <div className="ui button purple " onClick={ValidateForm}>
+                                    <i className="plus icon"></i>
+                                    {button}
+                                </div>
+                            </div>
+                          </>
+                          :
+                            null
+                          }
 
-                              </div>
-   
 
-                  </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-              </div>
-          </div>
-        </div>
       </>
     );
   };

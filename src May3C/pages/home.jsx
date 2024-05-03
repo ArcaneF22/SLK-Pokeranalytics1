@@ -30,17 +30,7 @@ export const HomePage = () => {
               </div>
           </h2>
       </div>
-      <div class="ui three  padded grid">
-      <div className="row">
-      <div class="three wide computer eight wide mobile four wide tablet column"><p>Left</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Middle</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Right</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Left</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Middle</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Right</p></div>
-      </div>
 
-      </div>
       <div className="ui grid padded">
       <div className="row">
         <div className="four wide computer eight wide mobile six wide tablet column">
