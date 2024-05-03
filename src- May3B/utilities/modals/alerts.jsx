@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Modal, Transition } from "semantic-ui-react";
 import useInterval from 'use-interval'
 
-export const Logout = (props) => {
+const Modal_Logout = (props) => {
 
   return (
       <>
@@ -31,7 +31,7 @@ export const Logout = (props) => {
         );
 };
 
-export const SessionExpire = (props) => {
+const Modal_SessionExpire = (props) => {
   const navigate = useNavigate();
   function LogOut(){
     localStorage.clear();
@@ -63,7 +63,7 @@ export const SessionExpire = (props) => {
 };
 
 
-export const Duplicate = (props) => {
+const Modal_Duplicate = (props) => {
 
     return (
         <>
@@ -87,7 +87,20 @@ export const Duplicate = (props) => {
           );
 };
 
-export const Warning = (props) => {
+const Modal_Incomplete = (props) => {
+    const alertMessage = sessionStorage.getItem('alertMessage');
+    const [message, setMessage] = useState("");
+   
+    useEffect(() => {
+        if (!alertMessage) {
+            setMessage(alertMessage);
+          } else {
+            setMessage("Details are required.");
+          }
+    }, []);
+    useInterval(() => {
+        sessionStorage.removeItem('alertMessage');
+    }, 11100);
     return (
         <>
           <Transition animation='tada' duration={500} >
@@ -95,10 +108,9 @@ export const Warning = (props) => {
               <h2 className="ui icon header">
                 <i className="exclamation circle icon yellow"></i>
                 <div className="content">
-                    {props.AlertMessage['Title'] ? props.AlertMessage['Title'] : "Oops!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message'] ? props.AlertMessage['Message'] : "Please check details"}
-                  </div>
+                  Incomplete!
+                <div className="sub header">
+                    {message}</div>
                 </div>
               </h2>
                 <div className="actions">
@@ -112,7 +124,7 @@ export const Warning = (props) => {
           );
 };
 
-export const Success = (props) => {
+const Modal_Success = (props) => {
     return (
         <>
           <Transition animation='pulse' duration={500} >
@@ -120,10 +132,8 @@ export const Success = (props) => {
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
-                  {props.AlertMessage['Title'] ? props.AlertMessage['Title'] : "Success!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message'] ? props.AlertMessage['Message'] : "Changes has been saved."}
-                  </div>
+                  Success!
+                <div className="sub header">Changes has been saved.</div>
                 </div>
               </h2>
                 <div className="actions">
@@ -137,7 +147,7 @@ export const Success = (props) => {
           );
 };
 
-export const SuccessRefresh = (props) => {
+const Modal_SuccessRefresh = (props) => {
     function refresh(){
         window.location.reload();
     }
@@ -148,10 +158,8 @@ export const SuccessRefresh = (props) => {
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
-                  {props.AlertMessage['Title'] !== null ? props.AlertMessage['Title'] : "Success!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message']  !== null ? props.AlertMessage['Message'] : "Changes has been saved."}
-                  </div>
+                  Success!
+                <div className="sub header">Changes has been saved.</div>
                 </div>
               </h2>
                 <div className="actions">
@@ -165,7 +173,7 @@ export const SuccessRefresh = (props) => {
           );
 };
 
-export const Error = (props) => {
+const Modal_Error = (props) => {
     function refresh(){
         window.location.reload();
     }
@@ -191,7 +199,7 @@ export const Error = (props) => {
           );
 };
 
-export const ErrorRefresh = (props) => {
+const Modal_ErrorRefresh = (props) => {
     return (
         <>
           <Transition animation='pulse' duration={500} >
@@ -214,3 +222,5 @@ export const ErrorRefresh = (props) => {
           );
 };
 
+// Export all modal components
+export { Modal_Logout, Modal_SessionExpire, Modal_Duplicate, Modal_Incomplete, Modal_Success, Modal_SuccessRefresh, Modal_Error, Modal_ErrorRefresh };

@@ -5,20 +5,19 @@ import { Container, GridRow, GridColumn, Grid, Segment, Image } from 'semantic-u
 import { ImagesAvatars } from '../fetch/raw/images'
 import validator from 'validator';
 import * as Set from '../constants';
-import * as Alert from "../alerts/alerts"
 import "semantic-ui-css/semantic.min.css";
 
 export const UpsertProfile = () => {
   
+
   const Prof = JSON.parse( localStorage.getItem('User') );
   const Token = JSON.parse( localStorage.getItem('Token') );
   const imgDD       = ImagesAvatars().data
 
   const [loading, setLoading] =             useState(false);
-  const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
-
+  const [message, setMessage] =             useState("");
   const [button, setButton] =               useState("Update Profile");
-  const [updateButton, setUpdateButton] =                 useState(false);
+  const [saves, setSaves] =             useState(false);
 
   const [avatarPath, setAvatarPath] =       useState(Prof['avatar']);
 
@@ -55,7 +54,7 @@ export const UpsertProfile = () => {
       )
   );
 
-  const AllGotValues = [nickname,avatar,username,email]
+  const AllGotValues = [nickname,avatar,username,email,password]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
 
@@ -63,30 +62,12 @@ export const UpsertProfile = () => {
     e.preventDefault()
     setLoading(true)
       if(!YesWithvalues){
-          setAlertMessage({
-            Alert: "warning",
-            Title: "Incomplete!",
-            Message: "Please complete details",
-          });
+        setMessage("Details incomplete!")
       } else {
         if(newpassword != repassword){
-            setAlertMessage({
-              Alert: "warning",
-              Title: "Oops!",
-              Message: "New password doesn't match",
-            });
-        } else if(!password){
-            setAlertMessage({
-              Alert: "warning",
-              Title: "Oops!",
-              Message: "Please input your current password",
-            });
+          setMessage("Password doesn't match!")
         } else if(!validator.isEmail(email)){
-            setAlertMessage({
-              Alert: "warning",
-              Title: "Oops!",
-              Message: "Wrong email format",
-            });
+            setMessage("Wrong email format!")
         } else {
           SubmitForm()
         }
@@ -101,11 +82,15 @@ export const UpsertProfile = () => {
       
       setButton("Update Profile")
       setLoading(false)
-      setUpdateButton(false)
+      setSaves(false)
   }
 
   const inputChange = () => {
-      setUpdateButton(true)
+    if(Prof['nickname'] !== nickname || Prof['username'] !== username || Prof['avatarID'] !== avatar || Prof['email'] !== email || Prof['telegram'] !== telegram){
+      setSaves(true)
+    } else {
+      setSaves(false)
+    }
   }
 
   useEffect(() => {
@@ -119,45 +104,21 @@ export const UpsertProfile = () => {
         const response = await axios.post(Set.Upsert['profile'], Upsert);
         console.log(response.data)
 
-        if(response.data.includes("Duplicate Username")){
+        if(response.data.includes("Duplicate")){
                 const number = parseFloat( response.data.match(/[\d.]+/) );
-                setAlertMessage({
-                  Alert: "warning",
-                  Title: "Username is already taken!",
-                  Message: "The same with user ID#"+ number,
-                });
-                setUpdateButton(true)
-        } else if(response.data.includes("Duplicate Nickname")){
-                  const number = parseFloat( response.data.match(/[\d.]+/) );
-                  setAlertMessage({
-                    Alert: "warning",
-                    Title: "Nickname is already taken!",
-                    Message: "The same with user ID#"+ number,
-                  });
-                  setUpdateButton(true)
+                setMessage("Duplicate found! Check user ID#"+ number);
+                setSaves(true)
         } else if(response.data.includes("Wrong Password")){
-                setAlertMessage({
-                    Alert: "warning",
-                    Title: "Oops!",
-                    Message: "Incorrect password",
-                });
-                setUpdateButton(true)
+                setMessage("Wrong Password!");
+                setSaves(true)
         } else if(response.data.includes("Updated")){
-                setAlertMessage({
-                    Alert: "success",
-                    Title: "Success!",
-                    Message: "Profile has been updated",
-                });
+                setMessage("Profile successfully updated!");
                 resetForm()
-                setUpdateButton(false)
+                setSaves(false)
         } else {
-                setAlertMessage({
-                  Alert: "warning",
-                  Title: "Something went wrong!",
-                  Message: "Please retry",
-                });
+                setMessage("Something went wrong! Please retry :" + response.data);
                 resetForm()
-                setUpdateButton(true)
+                setSaves(true)
         }
       
     } catch (error) {
@@ -219,20 +180,6 @@ const panels = [
 
     return (
       <>
-      { AlertMessage['Alert'] == "success" ? 
-          <Alert.SuccessRefresh 
-                key="SuccessRefresh" 
-                AlertMessage={AlertMessage} 
-                open={AlertMessage['Alert'] == "success" ? true : false}  
-                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
-      :  AlertMessage['Alert'] == "warning" ? 
-          <Alert.Warning 
-                key="SuccessRefresh" 
-                AlertMessage={AlertMessage} 
-                open={AlertMessage['Alert'] == "warning" ? true : false} 
-                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
-      : null
-      }
 
         <table className="ui table basic centered">
             <tbody>
@@ -256,7 +203,7 @@ const panels = [
                     </td>
                     <td className="ui segment top aligned basic min850">
 
-                        <h3 className='header '>Profile Details {nickname}</h3>
+                        <h3 className='header '>Profile Details</h3>
 
                         <div className="ui form">
                             <div className="field ui segment">
@@ -270,7 +217,7 @@ const panels = [
                                 </div>
                             </div>
                             <SUI.Accordion panels={panels}  exclusive={false} styled />
-                          {updateButton ? 
+                          {saves ? 
                           <>
                             <h4 className="ui horizontal right aligned header divider">
                                  Please confirm changes 
@@ -281,6 +228,7 @@ const panels = [
                             </div>
 
                             <div className="field center aligned">
+                                <p>{message}</p>
                                 <div className="ui button purple " onClick={ValidateForm}>
                                     <i className="plus icon"></i>
                                     {button}

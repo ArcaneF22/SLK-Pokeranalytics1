@@ -87,7 +87,20 @@ export const Duplicate = (props) => {
           );
 };
 
-export const Warning = (props) => {
+export const Incomplete = (props) => {
+    const alertMessage = sessionStorage.getItem('alertMessage');
+    const [message, setMessage] = useState("");
+   
+    useEffect(() => {
+        if (!alertMessage) {
+            setMessage(alertMessage);
+          } else {
+            setMessage("Details are required.");
+          }
+    }, []);
+    useInterval(() => {
+        sessionStorage.removeItem('alertMessage');
+    }, 11100);
     return (
         <>
           <Transition animation='tada' duration={500} >
@@ -95,10 +108,9 @@ export const Warning = (props) => {
               <h2 className="ui icon header">
                 <i className="exclamation circle icon yellow"></i>
                 <div className="content">
-                    {props.AlertMessage['Title'] ? props.AlertMessage['Title'] : "Oops!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message'] ? props.AlertMessage['Message'] : "Please check details"}
-                  </div>
+                  Incomplete!
+                <div className="sub header">
+                    {message}</div>
                 </div>
               </h2>
                 <div className="actions">
@@ -120,10 +132,8 @@ export const Success = (props) => {
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
-                  {props.AlertMessage['Title'] ? props.AlertMessage['Title'] : "Success!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message'] ? props.AlertMessage['Message'] : "Changes has been saved."}
-                  </div>
+                  Success!
+                <div className="sub header">Changes has been saved.</div>
                 </div>
               </h2>
                 <div className="actions">
@@ -148,10 +158,8 @@ export const SuccessRefresh = (props) => {
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
-                  {props.AlertMessage['Title'] !== null ? props.AlertMessage['Title'] : "Success!"}
-                  <div className="sub header">
-                    {props.AlertMessage['Message']  !== null ? props.AlertMessage['Message'] : "Changes has been saved."}
-                  </div>
+                  Success!
+                <div className="sub header">Changes has been saved.</div>
                 </div>
               </h2>
                 <div className="actions">
