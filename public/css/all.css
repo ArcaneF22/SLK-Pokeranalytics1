@@ -240,7 +240,12 @@ body {
         left: 0 !important;
         right: 0 !important;
       }
-    }
+      .min850{
+        min-width: 690px !important;
+      }
+
+    } 
+
     .input-center{
       text-align: center !important;
     }
@@ -456,3 +461,27 @@ border: 1px solid rgba(191, 0, 255, 0.42) !important;
   color: #F2F2F2 !important;
 }
 
+.CSVFile[type="file"]{
+  width: 100% !important;
+}
+
+.imageAvatar{
+  transition: transform 0.3s ease-in-out;
+}
+.imageAvatar:hover {
+  transform: scale(1.1); /* Increase image size by 20% on hover */
+}
+
+.onHide {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.onHide.hidden {
+  opacity: 0;
+}
+
+.textRed{
+  color: red;
+  font-size: 11px;;
+}

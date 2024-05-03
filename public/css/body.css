@@ -33,9 +33,7 @@
   .ui.vertical.stripe p + h3 {
     margin-top: 3em;
   }
-  .ui.vertical.stripe .floated.image {
-    clear: both;
-  }
+
   .ui.vertical.stripe p {
     font-size: 1.33em;
   }

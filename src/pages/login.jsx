@@ -80,7 +80,9 @@ export const LoginPage = () => {
                                             const User = {
                                               rolename:   feed[2],
                                               nickname:   feed[7],
-                                              avatar:     feed[6]
+                                              avatar:     feed[6],
+                                              email:      feed[9],
+                                              telegram:   feed[10],
                                             }
 
                                             console.log("Account found! Logging in...")

@@ -123,11 +123,14 @@ export const MultipleAccounts = () => {
         <div className="ui segment basic" >
             <h2>Upload Accounts CSV</h2>
           {
-            !csvLoaded ? 
-            <div className="ui message blue basic" {...getRootProps()}>
-                <input type="file" {...getInputProps()} onChange={CSVFileUpload} />
-                <p>Drag and drop a file here, or click to select a file</p> 
-            </div>
+            !csvLoaded ?
+            <>
+                <div className="ui message violet basic center aligned">
+                    <input type="file"  onChange={CSVFileUpload} />
+                    <p>Drag and drop a file here, or click to select a file</p> 
+                </div>
+                <a className='ui button purple fluid' href='./csv/csv_clubs.csv'>Download CSV template</a>
+            </>
             : 
             <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }

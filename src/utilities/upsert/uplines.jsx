@@ -64,7 +64,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     setCancels(false)
   }
 
-  const clearForm = () => {
+  const resetForm = () => {
     setID("0")
     setUplineID("")
     setdownlineID("")
@@ -139,14 +139,14 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     } else if(response.data.includes("Added")){
         setMessage("New Upline successfully added!");
         recallData(1)
-        clearForm()
+        resetForm()
     } else if(response.data.includes("Updated")){
         setMessage("Upline successfully replaced!");
         recallData(1)
-        clearForm()
+        resetForm()
     } else {
       setMessage("Something went wrong! Please retry :" + response.data);
-      clearForm()
+      resetForm()
     }
       
     } catch (error) {
@@ -276,7 +276,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={clearForm}>Clear</div>
+              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
             </> :  null }
             <p>{message}</p>
           </div>

@@ -71,7 +71,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     setCancels(false)
   }
 
-  const clearForm = () => {
+  const resetForm = () => {
     setaccountID("0")
     setaccountIDD("")
     setaccountRole("")
@@ -144,14 +144,14 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
         } else if(response.data.includes("Added")){
             setMessage("New user successfully added!");
             recallData(1)
-            clearForm()
+            resetForm()
         } else if(response.data.includes("Updated")){
             setMessage("User successfully updated!");
             recallData(1)
-            clearForm()
+            resetForm()
         } else {
         setMessage("Something went wrong! Please retry");
-        clearForm()
+        resetForm()
         }
         
     } catch (error) {
@@ -307,7 +307,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={clearForm}>Clear</div>
+              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
             </> :  null }
             <p>{message}</p>
           </div>

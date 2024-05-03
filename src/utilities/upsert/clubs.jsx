@@ -73,7 +73,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setCancels(false)
   }
 
-  const clearForm = () => {
+  const resetForm = () => {
     setclubID("0")
     setclubIDD("")
     setclubName("")
@@ -160,14 +160,14 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     } else if(response.data.includes("Added")){
         setMessage("New poker club successfully added!");
         recallData(1)
-        clearForm()
+        resetForm()
     } else if(response.data.includes("Updated")){
         setMessage("Poker club successfully updated!");
         recallData(1)
-        clearForm()
+        resetForm()
     } else {
       setMessage("Something went wrong! Please retry :" + response.data);
-      clearForm()
+      resetForm()
     }
       
     } catch (error) {
@@ -312,7 +312,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
             { cancels ?  <>
               <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={clearForm}>Clear</div>
+              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
             </> :  null }
             <p>{message}</p>
           </div>

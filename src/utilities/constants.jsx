@@ -29,6 +29,7 @@ export const Upsert = {
                         clubs:              import.meta.env.VITE_UPSERT_CLUBS,
                         unions:             import.meta.env.VITE_UPSERT_UNIONS,
                         uplines:            import.meta.env.VITE_UPSERT_UPLINES,
+                        profile:            import.meta.env.VITE_UPSERT_PROFILE,
                     };
 
 export const Path = {
@@ -57,3 +58,16 @@ export const unionType = [
                           value: 'UNION',
                         },
                       ]
+
+const i = JSON.parse( localStorage.getItem('User') );
+
+export const Profile = {
+                        rolename:               i['rolename'],
+                        nickname:               i['nickname'],
+                        avatar:                 i['avatar'],
+                        avatarID:               i['avatarID'],
+                        email:                  i['email'],
+                        telegram:               i['telegram'],
+                        username:               i['username'],
+                    };
+                    

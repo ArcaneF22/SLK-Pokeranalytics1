@@ -20,6 +20,7 @@ export const HomePage = () => {
 
   return (
     <>
+
       <div className='ui segment message purple-box div-animated'>
         <h2 className="ui header inverted">
               <i className="home big icon"></i>
@@ -244,30 +245,110 @@ export const HomePage = () => {
                           </div>
                         </div>
               </div>
+        
 
-        <div className='ui equal width grid padded segment three doubling' >
-          <div className="center aligned row stretched">
+          <Grid padded>
 
-              <GridColumn>
+            <Grid.Column mobile={5} tablet={4} computer={2}>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+            </Grid.Column>
+
+            <Grid.Column mobile={6} tablet={4} computer={2}>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+            </Grid.Column>
+
+            <Grid.Column mobile={5} tablet={4} computer={2}>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+            </Grid.Column>
+
+            <Grid.Column mobile={8} tablet={4} computer={3}>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+            </Grid.Column>
+
+            <Grid.Column mobile={8} tablet={4} computer={3}>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+            </Grid.Column>
+
+            <Grid.Column mobile={16} tablet={4} computer={4} className='ui fluid'>
+              <p className='ui segment fluid'>.eight.wide.mobile</p>
+
+              <Grid padded>
+                <Grid.Column mobile={5} tablet={4} computer={8}>
+                <p className='ui segment fluid'>A</p>
+                </Grid.Column>
+                <Grid.Column mobile={5} tablet={4} computer={8}>
+                <p className='ui segment fluid'>B</p>
+                </Grid.Column>
+              </Grid>
+
+            </Grid.Column>
+
+          </Grid>
+
+        <div className='ui equal width grid padded centered fluid'>
+          <div className="center aligned row stretched stackable">
+
+              <GridColumn >
                   <Segment>Main</Segment>
               </GridColumn>
                 <GridColumn>
-                    <Segment>Sub 1</Segment>
+                    <div className="ui two item menu secondary  fluid ">
+
+                        <div className="ui item statistic  forward">
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                        <div className="ui item statistic  forward">
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                    </div>
+                      <div className="ui two item menu secondary fluid">
+
+                        <div className="ui item statistic dotted button-animated" style={{margin:"2px"}}>
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                        <div className="ui item statistic dotted button-animated forward" style={{margin:"2px"}}>
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+                        
+                    </div>
                     <Segment>Sub 2</Segment>
                 </GridColumn>
+              <div className='column stackable'>
 
-              <GridColumn>
-                  <Segment>
-                  <div className="ui three item menu fluid">
+                    <div className="ui three item menu fluid">
                       <a className="item">Item</a>
                       <a className="item">Item</a>
                       <a className="item">Item</a>
                     </div>
-                  </Segment>
+
                   <Segment>2</Segment>
                   <Segment>3</Segment>
                   <Segment>3</Segment>
-              </GridColumn>
+              </div>
+
           </div>
 
         </div>
@@ -275,58 +356,8 @@ export const HomePage = () => {
 
 
 
-        <div className="ui equal width stackable internally grid padded segment">
-          <div className="center aligned row">
-            <div className="column">
-              <h3>RESPONSIVE & RETINA</h3>
-              <div className='ui segment message center aligned purple-box'>
-                <div className="ui statistic inverted orange">
-                    <div className="value">
-                      5,550
-                    </div>
-                    <div className="label">
-                      Accounts
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div className="column">
-              <h4>Smartly Coded & Maintained.</h4>
-              <h3>POWERFUL PERFORMANCE</h3>
-              <p>
-                Medecins du Monde Jane Addams reduce child mortality challenges Ford Foundation. Diversification shifting
-                landscape advocate pathway to a better life rights international. Assessment.
-              </p>
-            </div>
-            <div className="column">
-              <h4>Flexible & Customizable.</h4>
-              <h3>TRULY MULTI-PURPOSE</h3>
-              <p>
-                Democracy inspire breakthroughs, Rosa Parks; inspiration raise awareness natural resources. Governance
-                impact; transformative donation philanthropy, respect reproductive.
-              </p>
-            </div>
-            <div className="column">
-              <h4>Flexible & Customizable.</h4>
-              <h3>TRULY MULTI-PURPOSE</h3>
-              <p>
-                Democracy inspire breakthroughs, Rosa Parks; inspiration raise awareness natural resources. Governance
-                impact; transformative donation philanthropy, respect reproductive.
-              </p>
-            </div>
-            <div className="column">
-              <h4>Flexible & Customizable.</h4>
-              <h3>TRULY MULTI-PURPOSE</h3>
-              <p>
-                Democracy inspire breakthroughs, Rosa Parks; inspiration raise awareness natural resources. Governance
-                impact; transformative donation philanthropy, respect reproductive.
-              </p>
-            </div>
-          </div>
-        </div>
 
-
-      <div className="ui vertical stripe quote segment heros">
+      <div className="ui vertical stripe quote segment ">
         <div className="ui middle aligned stackable grid container">
           <div className="row">
               <div className="six wide right floated column">

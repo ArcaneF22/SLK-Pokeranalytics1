@@ -33,7 +33,9 @@ export const iProfile = () => {
             const Got = {
                     rolename:   response.data["rolename"],
                     nickname:   response.data["nickname"],
-                    avatar:     response.data["avatarFull"]
+                    avatar:     response.data["avatarFull"],
+                    email:      response.data["email"],
+                    telegram:   response.data["telegram"],
             }
             setData(Got)
             localStorage.setItem('User', JSON.stringify(Got));
