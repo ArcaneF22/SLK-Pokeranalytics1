@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Users } from '../raw/users'
+import * as Set from '../../constants'
 
 export const FetchUsers = ({ selectData }) => {
 
@@ -49,49 +50,66 @@ export const FetchUsers = ({ selectData }) => {
   return (
 <>
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData/>
       ) : (
       <div className="ui segment basic">
-        <h2>Users List</h2>
+        <h3 class="ui horizontal divider header">
+          Users List
+        </h3>
+        <br />
         <p>{JSON.stringify(fetch)}</p>
-        <table className='ui celled striped table'>
+        <table className='ui celled striped table fluid small compact'>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nickname</th>
             <th>Role</th>
-            <th>Email</th>
-            <th>Username</th>
-            <th>Password</th>
+            <th>Contact Details</th>
+            <th>Credentials</th>
             <th>Accounts</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.id}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.avatarFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.nickname}
+                      <div className="sub header">
+                        ID: {i.idd}
+                      </div>
                   </div>
-                </h4>
+                </h5>
+
               </td>
               <td>{i.roleName}</td>
-              <td>
-                {i.email ? ("Email: "+i.email) : null}
+              <td className="ui list">
+                    {i.email ?  (
+                        <div className="item">
+                            <i className="envelope square icon orange"></i>
+                            <a className="content">
+                              Email
+                            </a>
+                        </div>
+                    ) : null}
+                    {i.telegram ?  (
+                        <div className="item">
+                            <i className="telegram icon teal"></i>
+                            <a className="content">
+                              Telegram
+                            </a>
+                        </div>
+                    ) : null}
 
-                <br />
-                {i.telegram ?  (<a href={i.telegram} target="_blank">{i.telegram}</a>) : null}
               </td>
-              <td>{i.username}</td>
-              <td>{i.password}</td>
+              <td>
+                UN: {i.username}
+                <br />
+                PW: {i.password}
+              </td>
               <td>
                 {i.activeAccounts == 0 ? null : i.activeAccounts == 1 ? (i.activeAccounts+" Active Account") : (i.activeAccounts+" Active Accounts")}
                 <br />
@@ -101,9 +119,8 @@ export const FetchUsers = ({ selectData }) => {
                 </td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.telegram,i.username,i.password,i.avatarID,i.status)}>
-                    <i className="edit outline icon"></i>
-                    Edit
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.telegram,i.username,i.password,i.avatarID,i.status)}>
+                    <i className="pencil icon"></i>
                 </button>
               </td>
             </tr>

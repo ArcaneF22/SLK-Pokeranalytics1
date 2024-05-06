@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
+import * as Alert from "../alerts/alerts"
 
 import { ImagesAvatars } from '../fetch/raw/images'
 import { Roles } from '../fetch/raw/roles'
@@ -15,6 +16,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
   const roleDD = Roles().data
   const usersDD = Users().data
   const acctDD = Accounts().data
+  const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
@@ -52,21 +54,34 @@ export const UpsertUsers = ({selectedData,recallData}) => {
                   newuserStatus,
               };
 
-  Upsert = Object.fromEntries(
-      Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
-  );
+  const Upserted = () => {
+    Upsert = Object.fromEntries(
+        Object.entries(Upsert).map( ([key, value]) => (
+              (value != undefined || value != null ? [key, value.toString().trim()] : [key,""])
+            )
+        )
+    );
+}
 
   const AllGotValues = [newuserRole,newuserNickname,newuserAvatar,newuserUsername,newuserPassword,newuserStatus]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
   const ValidateForm = (e) => {
     e.preventDefault()
+    Upserted()
     setLoading(true)
       if( !YesWithvalues ){
-        setMessage("Details incomplete!")
-        console.log(JSON.stringify(Upsert))
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please complete details",
+          });
       } else if (newuserPassword != newuserRePassword){
-        setMessage("Password doesn't match!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Password doesn't match!",
+          });
       } else {
         if(newuserEmail=="" || newuserEmail==null){
             setnewuserEmail("Null")
@@ -74,7 +89,6 @@ export const UpsertUsers = ({selectedData,recallData}) => {
             setnewuserTelegram("Null")
         }
         reCheckValues()
-        setMessage("Submitting data...")
         console.log(JSON.stringify(Upsert))
         SubmitForm()
       }
@@ -163,64 +177,105 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         if(response.data.includes("Duplicate")){
             const number = parseFloat( response.data.match(/[\d.]+/) );
             setnewuserID( number )
-            setButton("Proceed to Update")
-            setMessage("Duplicate found! Would you like to update existing data? Check user ID#"+ number);
+            setButton("Proceed to Update ID#"+ number)
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Duplicate!",
+                Message: "Check user ID#"+ number,
+            });
             setCancels(true)
         } else if(response.data.includes("Added")){
-            setMessage("New user successfully added!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "New user successfully added!",
+            });
             recallData(1)
             resetForm()
         } else if(response.data.includes("Updated")){
-            setMessage("User successfully updated!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "User successfully updated!",
+            });
             recallData(1)
             resetForm()
         } else {
-        setMessage("Something went wrong! Please retry");
-        resetForm()
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Something went wrong!",
+                Message: "Please retry",
+            });
+            resetForm()
         }
         
     } catch (error) {
-      setMessage(error);
+      setAlertMessage({
+        Alert: "warning",
+        Title: "Something went wrong!",
+        Message: "Please retry",
+    });
       console.error("Error fetching data: ", error);
     }
   }
 
 
     return (
-      <div className="ui segment basic">
-        <h2>Insert / Update User</h2>
+        <>
+
+      { AlertMessage['Alert'] == "success" ? 
+          <Alert.Success
+                key="Success" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "success" ? true : false}  
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      :  AlertMessage['Alert'] == "warning" ? 
+          <Alert.Warning 
+                key="Warning" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "warning" ? true : false} 
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      : null
+      }
+
+<div className="ui segment basic left aligned">
+        <h3 class="ui horizontal divider header">
+          Insert / Update Users
+        </h3>
+        <br />
 
         <div className="ui form">
 
-          <div className='five fields'>
+        <div className='three fields'>
+              <div className="field">
+                <label>Role</label>
+                <SUI.Dropdown
+                      placeholder="Select role"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={false}
+                      multiple={false}
+                      header="Select role"
+                      onChange={(event, { value }) => { setnewuserRole(value); }}
+                      value={newuserRole}
+                      options={roleDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.name,
+                          value: i.id,
+                        };
+                      })}
+                    />
+              </div>
 
-            <div className="field">
-              <label>Role</label>
-              <SUI.Dropdown
-                    placeholder="Select role"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select role"
-                    onChange={(event, { value }) => { setnewuserRole(value); }}
-                    value={newuserRole}
-                    options={roleDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                      };
-                    })}
-                  />
-            </div>
+              <div className="field">
+                <label>Nickname</label>
+                <input type="text" placeholder='Nickname' value={newuserNickname.replace(/[^a-zA-Z0-9._-]|[_|-|.]{2,}/g, "")} onChange={(e) => setnewuserNickname(e.currentTarget.value)}/>
+              </div>
 
-            <div className="field">
-              <label>Nickname</label>
-              <input type="text" value={newuserNickname.replace(/[^a-zA-Z0-9._-]|[_|-|.]{2,}/g, "")} onChange={(e) => setnewuserNickname(e.currentTarget.value)}/>
-            </div>
+          </div>
 
             <div className="field">
               <label>Avatar</label>
@@ -246,50 +301,37 @@ export const UpsertUsers = ({selectedData,recallData}) => {
                   />
             </div>
 
-            <div className="field">
-              <label>Username</label>
-              <input type="text" value={newuserUsername.replace(/\s/g, "")} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
-            </div>
+          <div className='three fields'>
+              <div className="field">
+                <label>Username</label>
+                <input type="text" Email value={newuserUsername.replace(/\s/g, "")} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
+              </div>
 
-            <div className="field">
-              <label>Password</label>
-              <input type="text" value={newuserPassword.replace(/\s/g, "")} onChange={(e) => setnewuserPassword(e.currentTarget.value) }/>
-            </div>
+              <div className="field">
+                <label>Password</label>
+                <input type="text" placeholder='Password' value={newuserPassword.replace(/\s/g, "")} onChange={(e) => setnewuserPassword(e.currentTarget.value) }/>
+              </div>
 
-            <div className="field">
-              <label>Re-type Password</label>
-              <input type="text" value={newuserRePassword.replace(/\s/g, "")} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
-            </div>
+              <div className="field">
+                <label>Re-type Password</label>
+                <input type="text" placeholder='Re-type Password' value={newuserRePassword.replace(/\s/g, "")} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
+              </div>
+          </div>
+
+
+
+          <div className='two fields'>
 
             <div className="field">
               <label>Email</label>
-              <input type="text" value={newuserEmail.replace(/\s/g, "")} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
+              <input type="text" placeholder='Email' value={newuserEmail.replace(/\s/g, "")} onChange={(e) => setnewuserEmail(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
               <label>Telegram</label>
-              <input type="text" value={newuserTelegram.replace(/\s/g, "")} onChange={(e) => setnewuserTelegram(e.currentTarget.value)}/>
+              <input type="text" placeholder='Telegram' value={newuserTelegram.replace(/\s/g, "")} onChange={(e) => setnewuserTelegram(e.currentTarget.value)}/>
             </div>
 
-            <div className="field">
-            <label>Status</label>
-              { newuserStatus === "0" ? (
-                        <button className='ui button green fluid center aligned' onClick={ changeStatus }>
-                            <i className="check circle outline icon"></i>
-                            Active
-                        </button>
-              ) : newuserStatus === "1" ? (
-                        <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
-                            <i className="spinner icon"></i>
-                            Pending
-                        </button>
-              ) : (
-                      <button className='ui button red fluid center aligned' onClick={ changeStatus }>
-                            <i className="times circle outline icon"></i>
-                            Inactive
-                        </button>
-              )} 
-            </div>
             { newuserStatus ==="1" ? 
               (
                 <div className="field">
@@ -321,22 +363,51 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
 
           </div>
+          <div className='two fields'>
+              <div className="field">
+                <label>Status</label>
+                  { newuserStatus === "0" ? (
+                            <button className='ui button green fluid center aligned' onClick={ changeStatus }>
+                                <i className="check circle outline icon"></i>
+                                Active
+                            </button>
+                  ) : newuserStatus === "1" ? (
+                            <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
+                                <i className="spinner icon"></i>
+                                Pending
+                            </button>
+                  ) : (
+                          <button className='ui button red fluid center aligned' onClick={ changeStatus }>
+                                <i className="times circle outline icon"></i>
+                                Inactive
+                            </button>
+                  )} 
+              </div>
+          </div>
 
-          <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
-              <i className="plus icon"></i>
-              {button}
-            </div>
 
-            { cancels ?  <>
-              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
-            </> :  null }
-            <p>{message}</p>
+            <div className="field center aligned">
+                  <div className="ui button purple" onClick={ValidateForm}>
+                    <i className="plus icon"></i>
+                    {button}
+                  </div>
+
+                { cancels ?  <>
+                    <div className="ui button grey basic" onClick={cancel}>
+                      <i className='icon times'></i>
+                      Cancel
+                    </div>
+                    <div className="ui button grey basic" onClick={resetForm}>
+                      <i className="eraser icon"></i>
+                      Clear
+                    </div>
+                </> :  null }
           </div>
 
         </div>
       </div>
+        </>
+      
     );
   };
   

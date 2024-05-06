@@ -157,7 +157,10 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
     return (
       <div className="ui segment">
-        <h1>Insert / Update Upline</h1>
+        <h3 class="ui horizontal divider header">
+          Insert / Update Uplines
+        </h3>
+        <br />
 
         <div className="ui form">
 

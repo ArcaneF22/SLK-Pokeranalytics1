@@ -126,20 +126,22 @@ export const MultipleUplines = () => {
 
     return (
         <div className="ui segment basic">
-            <h2>Upload Upline CSV</h2>
           {
             !csvLoaded ?
             <>
-                <div className="ui message violet basic center aligned">
-                    <input type="file"  onChange={CSVFileUpload} />
-                    <p>Drag and drop a file here, or click to select a file</p> 
-                </div>
-                <a className='ui button purple fluid' href='./csv/csv_clubs.csv'>Download CSV template</a>
+                    <h3 class="ui horizontal divider header">
+                        {message}
+                    </h3>
+                    <input type="file" id='csvFile'
+                            style={{width:"100% !important"}}
+                            className="ui message violet basic center aligned fluid CSVFile"
+                            onChange={CSVFileUpload} />
+
+                <a className='ui button purple' href='./csv/csv_uplines.csv'>Download CSV template</a>
             </>
             : 
             <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }
-          <h3>{message}</h3>
           
           {/* CSV to JSON Format */}
           {JSONData && (

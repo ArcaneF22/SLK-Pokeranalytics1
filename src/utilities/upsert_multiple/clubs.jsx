@@ -135,7 +135,9 @@ export const MultipleClubs = () => {
           {
             !csvLoaded ?
             <>
-                    <h3>{message}</h3>
+                    <h3 class="ui horizontal divider header">
+                        {message}
+                    </h3>
                     <input type="file" id='csvFile'
                         style={{width:"100% !important"}}
                         className="ui message violet basic center aligned fluid CSVFile"

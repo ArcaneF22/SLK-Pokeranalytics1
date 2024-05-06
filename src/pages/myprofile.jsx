@@ -16,6 +16,7 @@ export const MyProfilePage = () => {
       </div>
 
       < UpsertProfile />
+
       </>
 
     );

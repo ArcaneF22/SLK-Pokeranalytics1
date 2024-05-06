@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { History } from '../raw/history'
+import * as Set from '../../constants'
 
 export const FetchHistory = () => {
 
@@ -10,15 +11,14 @@ export const FetchHistory = () => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData />
       ) : (
       <div className="ui segment ">
-        <h3>History List</h3>
-        <table className='ui unstackable celled long scrolling table'>
+        <h3 class="ui horizontal divider header">
+          History List
+        </h3>
+        <br />
+        <table className='ui unstackable celled long scrolling table small compact'>
         <thead>
           <tr>
             <th>User</th>
@@ -35,7 +35,7 @@ export const FetchHistory = () => {
           {data.map((i, index) => (
             <tr key={index}>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.userImage} className="ui mini rounded image" />
                     <div className="content">
                       {i.userNickname}
@@ -43,7 +43,7 @@ export const FetchHistory = () => {
                         ID# {i.userID}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.userRole}</td>
               <td>{i.gadget}</td>

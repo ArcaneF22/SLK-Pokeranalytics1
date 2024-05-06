@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Accounts } from '../raw/accounts'
+import * as Set from '../../constants'
 
 export const FetchAccounts = ({selectData}) => {
 
@@ -50,21 +51,20 @@ export const FetchAccounts = ({selectData}) => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
-        <h2>Accounts List</h2>
-        <table className='ui celled striped table'>
+        <h3 class="ui horizontal divider header">
+          Accounts List
+        </h3>
+        <br />
+        <table className='ui celled striped table small compact'>
         <thead>
           <tr>
-            <th>Account ID</th>
-            <th>Account Nickname</th>
-            <th>Account Role</th>
-            <th>Account Clubs</th>
+            <th>ID</th>
+            <th>Nickname</th>
+            <th>Role</th>
+            <th>Clubs</th>
             <th>User</th>
             <th>Application</th>
             <th>Status</th>
@@ -79,7 +79,7 @@ export const FetchAccounts = ({selectData}) => {
               <td>{i.accountRole}</td>
               <td>{i.accountClubsCount}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
                       {i.userNickname}
@@ -87,14 +87,13 @@ export const FetchAccounts = ({selectData}) => {
                        ID# {i.userID}
                       </div>
                     </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
-                    <i className="edit outline icon"></i>
-                    Edit
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
+                    <i className="pencil icon"></i>
                 </button>
               </td>
             </tr>

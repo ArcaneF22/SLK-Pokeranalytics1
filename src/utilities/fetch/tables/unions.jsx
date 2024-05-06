@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Unions } from '../raw/unions'
+import * as Set from '../../constants'
 
 export const FetchUnions = () => {
 
@@ -10,15 +11,14 @@ export const FetchUnions = () => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData />
       ) : (
       <div className="ui segment ">
-        <h3>Unions List</h3>
-        <table className='ui unstackable celled long scrolling table'>
+        <h3 class="ui horizontal divider header">
+          Unions List
+        </h3>
+        <br />
+        <table className='ui unstackable celled long scrolling table small compact'>
         <thead>
           <tr>
             <th>ID</th>
@@ -32,7 +32,7 @@ export const FetchUnions = () => {
             <tr key={index}>
               <td>{i.id}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.name}
@@ -40,7 +40,7 @@ export const FetchUnions = () => {
                         ID# {i.type}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.status}</td>
               <td>{i.action}</td>

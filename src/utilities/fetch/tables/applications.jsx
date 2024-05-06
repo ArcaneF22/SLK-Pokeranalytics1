@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Applications } from '../raw/applications'
+import * as Set from '../../constants'
 
 export const FetchApplications = ({selectData}) => {
 
@@ -54,15 +55,14 @@ export const FetchApplications = ({selectData}) => {
 
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+        <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
-        <h2>Applications List</h2>
-        <table className='ui celled striped table'>
+        <h3 class="ui horizontal divider header">
+          Applications List
+        </h3>
+        <br />
+        <table className='ui celled striped small table compact'>
         <thead>
           <tr>
             <th>ID</th>
@@ -79,21 +79,20 @@ export const FetchApplications = ({selectData}) => {
             <tr key={index}>
               <td>{i.id}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.name}
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.company}</td>
               <td>{i.details}</td>
               <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.name,i.imageID,i.companyID,i.details,i.accountCount,i.status)}>
-                    <i className="edit outline icon"></i>
-                    Edit
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.name,i.imageID,i.companyID,i.details,i.accountCount,i.status)}>
+                    <i className="pencil icon"></i>
                 </button>
               </td>
             </tr>

@@ -36,7 +36,7 @@ export const FetchNotification = () => {
       ) : (
       <div className="ui segment ">
         <h3>Notifications List {counted}</h3>
-        <table className='ui celled striped table'>
+        <table className='ui celled striped table small compact'>
         <thead>
           <tr>
             <th>ID</th>

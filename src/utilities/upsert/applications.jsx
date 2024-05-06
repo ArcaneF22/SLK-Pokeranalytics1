@@ -4,15 +4,16 @@ import { ImagesApps } from '../fetch/raw/images'
 import { Company } from '../fetch/raw/company'
 import * as SUI from 'semantic-ui-react'
 import * as Set from '../constants';
+import * as Alert from "../alerts/alerts"
 
 export const UpsertApplications = ({selectedData,recallData}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const imgDD = ImagesApps().data
   const compDD = Company().data
+  const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
   const [loading, setLoading] =         useState(false);
-  const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
   const [cancels, setCancels] =           useState(false);
 
@@ -47,9 +48,13 @@ export const UpsertApplications = ({selectedData,recallData}) => {
       e.preventDefault()
       setLoading(true)
         if(!YesWithvalues){
-          setMessage("Details incomplete!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please fill out missing details",
+          });
         } else {
-          console.log(JSON.stringify(Upsert))
+          //console.log(JSON.stringify(Upsert))
           reCheckValues()
           SubmitForm()
         }
@@ -57,7 +62,6 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
     const cancel = () => {
       setappID("0")
-      setMessage("")
       setButton("Add New Data")
       setCancels(false)
     }
@@ -127,40 +131,106 @@ export const UpsertApplications = ({selectedData,recallData}) => {
         if(response.data.includes("Duplicate")){
             const number = parseFloat( response.data.match(/[\d.]+/) );
             setappID( number )
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Duplicate!",
+                Message: "Please check application ID#"+ number,
+            });
             setButton("Proceed to Update")
-            setMessage("Duplicate found! Would you like to update existing data? Check application ID#"+ number);
             setCancels(true)
         } else if(response.data.includes("Added")){
-            setMessage("New poker application successfully added!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "New poker application added",
+            });
             recallData(1)
             resetForm()
         } else if(response.data.includes("Updated")){
-            setMessage("Poker application successfully updated!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "Poker application updated",
+            });
             recallData(1)
             resetForm()
         } else {
-          setMessage("Something went wrong! Please retry");
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Oops!",
+                Message: "Something went wrong! Please retry",
+            });
           resetForm()
         }
         
       } catch (error) {
-        setMessage(error);
+        setAlertMessage({
+          Alert: "warning",
+          Title: "Oops!",
+          Message: "Something went wrong! Please retry",
+        });
         console.error("Error fetching data: ", error);
       }
     }
 
     return (
-      <div className="ui segment basic">
-        <h2>Insert / Update Application</h2>
+          <>
+      { AlertMessage['Alert'] == "success" ? 
+          <Alert.Success
+                key="Success" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "success" ? true : false}  
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      :  AlertMessage['Alert'] == "warning" ? 
+          <Alert.Warning 
+                key="Warning" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "warning" ? true : false} 
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      : null
+      }
+
+      <div className="ui segment basic left aligned">
+        <h3 class="ui horizontal divider header">
+          Insert / Update Applications
+        </h3>
+        <br />
         <div className="ui form">
 
-          <div className='five fields'>
-            <div className="field">
-              <label>Name</label>
-              <input type="text" value={appName} onChange={(e) => setappName( e.currentTarget.value )}/>
+          <div className='three fields'>
+
+              <div className="field">
+                <label>Name</label>
+                <input type="text" placeholder='Name' value={appName} onChange={(e) => setappName( e.currentTarget.value )}/>
+              </div>
+
+              <div className="field">
+              <label>Company</label>
+              <SUI.Dropdown
+                    placeholder="Select company"
+                    scrolling
+                    clearable
+                    fluid
+                    selection
+                    search={false}
+                    multiple={false}
+                    header="Select company"
+                    onChange={(event, { value }) => { setappCompany(value); }}
+                    value={appCompany}
+                    options={compDD.map(i => {
+                      return {
+                        key: i.id,
+                        text: i.name,
+                        value: i.id,
+                        image: { avatar: true, src: i.imageFull },
+                      };
+                    })}
+                  />
             </div>
 
-            <div className="field">
+          </div>
+
+          <div className="field">
               <label>Image</label>
               <SUI.Dropdown
                     placeholder="Select image"
@@ -185,34 +255,11 @@ export const UpsertApplications = ({selectedData,recallData}) => {
             </div>
 
             <div className="field">
-              <label>Company</label>
-              <SUI.Dropdown
-                    placeholder="Select company"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select company"
-                    onChange={(event, { value }) => { setappCompany(value); }}
-                    value={appCompany}
-                    options={compDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
-
-            </div>
-
-            <div className="field">
               <label>Details</label>
-              <input type="text" value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
-            </div>
+              <textarea type="text" rows="2" placeholder='Other details (100)' value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
+          </div>
+
+          <div className='two fields'>
 
             <div className="field">
             <label>Status</label>
@@ -231,21 +278,33 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
           </div>
 
-          <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
-              <i className="plus icon"></i>
-              {button}
+          <div class="ui horizontal inverted divider">
+            <div className="field center aligned">
+              <div className="ui button purple" onClick={ValidateForm}>
+                <i className="plus icon"></i>
+                {button}
+              </div>
+              { cancels ?  <>
+                <div className="ui button grey basic" onClick={cancel}>
+                  <i className='icon times'></i>
+                  Cancel
+                </div>
+                <div className="ui button grey basic" onClick={resetForm}>
+                  <i className="eraser icon"></i>
+                  Clear
+                </div>
+              </> :  null }
             </div>
-
-            { cancels ?  <>
-              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
-            </> :  null }
-            <p>{message}</p>
           </div>
+
+
+
+
 
         </div>
       </div>
+          </>
+      
     );
   };
   

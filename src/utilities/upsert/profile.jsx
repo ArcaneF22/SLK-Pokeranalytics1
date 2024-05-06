@@ -45,27 +45,27 @@ export const UpsertProfile = () => {
                   password,
                   newpassword,
               };
-
-  Upsert = Object.fromEntries(
-      Object.entries(Upsert).map( ([key, value]) => (
-        (value != undefined || value != null ? [key, value.toString().trim()] : [key,""])
-      )
-        
-      )
-  );
+const Upserted = () => {
+    Upsert = Object.fromEntries(
+        Object.entries(Upsert).map( ([key, value]) => (
+              (value != undefined || value != null ? [key, value.toString().trim()] : [key,""])
+            )
+        )
+    );
+}
 
   const AllGotValues = [nickname,avatar,username,email]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
-
   const ValidateForm = (e) => {
     e.preventDefault()
+    Upserted()
     setLoading(true)
       if(!YesWithvalues){
           setAlertMessage({
             Alert: "warning",
             Title: "Incomplete!",
-            Message: "Please complete details",
+            Message: "Please fill out missing details",
           });
       } else {
         if(newpassword != repassword){
@@ -86,6 +86,7 @@ export const UpsertProfile = () => {
               Title: "Oops!",
               Message: "Wrong email format",
             });
+            console.log(email)
         } else {
           SubmitForm()
         }
@@ -179,11 +180,11 @@ const panels = [
                                 <div className="two fields red">
                                     <div className="field">
                                         <label>Email address</label>
-                                        <input type="text" placeholder="Email" value={email.replace(/\s/g, "")} onChange={(e) => (inputChange(),setEmail(e.currentTarget.value))}/>
+                                        <input type="text" placeholder="Email" value={email.replace(/\s/g, "")} onChange={(e) => (inputChange(),setEmail(e.currentTarget.value.trim()))}/>
                                     </div>
                                     <div className="field">
                                         <label>Telegram account link</label>
-                                        <input type="text" placeholder="Telegram" value={telegram.replace(/\s/g, "")} onChange={(e) => (inputChange(),setTelegram(e.currentTarget.value))}/>
+                                        <input type="text" placeholder="Telegram" value={telegram.replace(/\s/g, "")} onChange={(e) => (inputChange(),setTelegram(e.currentTarget.value.trim()))}/>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +194,12 @@ const panels = [
     {
       key: '2',
       title: {
-        content: <span className='ui teal'>Change password {PWMatched === true ? <i className='textRed'> (Password doesn't match!)</i> : null}</span>,
+        content:  <span className='ui teal'>
+                    Change password {PWMatched === true  
+                                    ? 
+                                    <i className="ui label red basic"><i className="warning icon"></i> New password not matched!</i> 
+                                    : null}
+                  </span>,
         icon: 'key',
       },
       content: {
@@ -201,12 +207,12 @@ const panels = [
                             <div className="field">
                                 <div className="two fields">
                                     <div className="field">
-                                        <label> New password  </label>
-                                        <input type="password" placeholder="New password" value={newpassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (inputChange(), setnewPassword(e.currentTarget.value), (repassword !=="" && e.currentTarget.value != repassword ? setPWMatched(true) : setPWMatched(false)) )}/>
+                                        <label> New password</label>
+                                        <input type="password" placeholder="New password" value={newpassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (inputChange(), setnewPassword(e.currentTarget.value.trim()), (repassword !=="" && e.currentTarget.value != repassword ? setPWMatched(true) : setPWMatched(false)) )}/>
                                     </div>
                                     <div className="field">
                                         <label> Re-type new password</label>
-                                        <input type="password" placeholder="Re-type new password" value={repassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (setrePassword(e.currentTarget.value), (e.currentTarget.value != newpassword ? setPWMatched(true) : setPWMatched(false)) )}/>
+                                        <input type="password" placeholder="Re-type new password" value={repassword.replace(/\s/g, "")} maxLength={20} onChange={(e) => (setrePassword(e.currentTarget.value.trim()), (e.currentTarget.value != newpassword ? setPWMatched(true) : setPWMatched(false)) )}/>
                                     </div>
                                 </div>
                             </div>
@@ -225,17 +231,17 @@ const panels = [
                 onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
       :  AlertMessage['Alert'] == "warning" ? 
           <Alert.Warning 
-                key="SuccessRefresh" 
+                key="Warning" 
                 AlertMessage={AlertMessage} 
                 open={AlertMessage['Alert'] == "warning" ? true : false} 
                 onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
       : null
       }
-        <div class="ui two cards stackable padded">
+        <div className="ui two cards stackable padded slick">
           
-          <div class="ui card fluid">
-              <div class="content">
-                  <h2 class="ui header">
+          <div className="ui card fluid slickest">
+              <div className="content top fixed">
+                  <h2 className="ui header">
                       AVATAR
                   </h2>
               </div>
@@ -245,7 +251,7 @@ const panels = [
               <div className="content center aligned">
                   <div className="ui tiny images centered center aligned">
                       {imgDD.map((i,index) => {
-                          return (<img className="imageAvatar" 
+                          return (<img className="imageAvatar " 
                                         key={index} 
                                         src={i.pathFull} 
                                         onClick={()=>( inputChange(), setAvatar(i.id), setAvatarPath(i.pathFull) ) } />);
@@ -254,22 +260,22 @@ const panels = [
               </div>
           </div>
 
-          <div class="ui card fluid">
-              <div class="content">
-                  <h2 class="ui header">
+          <div className="ui card fluid slickest">
+              <div className="content">
+                  <h2 className="ui header">
                       DETAILS
                   </h2>
               </div>
               <div className='content'>
-                  <form className='ui form'>
-                            <div className="field ui segment">
-                                <div className="field">
+                  <form className='ui form compact'>
+                            <div className="field ui segment basic">
+                                <div className="field centeredText">
                                     <label>Nickname</label>
-                                    <input type="text" placeholder="Nickname" value={nickname.replace(/[^\w._-]/g, "")} maxLength={15} onChange={(e) => (inputChange(), setNickname(e.currentTarget.value))}/>
+                                    <input type="text" placeholder="Nickname" value={nickname.replace(/[^\w._-]/g, "")} maxLength={15} onChange={(e) => (inputChange(), setNickname(e.currentTarget.value.trim()))}/>
                                 </div>
-                                <div className="field">
+                                <div className="field centeredText">
                                       <label>Username</label>
-                                      <input type="text" placeholder="Username" value={username.replace(/[\s]/g, "")} maxLength={15} onChange={(e) => (inputChange(),setUsername(e.currentTarget.value))}/>
+                                      <input type="text" placeholder="Username" value={username.replace(/[\s]/g, "")} maxLength={15} onChange={(e) => (inputChange(),setUsername(e.currentTarget.value.trim()))}/>
                                 </div>
                             </div>
                             <SUI.Accordion panels={panels}  exclusive={false} styled fluid />
@@ -278,24 +284,28 @@ const panels = [
                               <h4 className="ui horizontal right aligned header divider">
                                   Please confirm changes 
                               </h4>
-                              <div className="field ui segment">
+                              <div className="field ui segment basic">
                                   <label>Current password</label>
-                                  <input type="password" placeholder="Current password" value={password.replace(/\s/g, "")} maxLength={20} onChange={(e) => setPassword(e.currentTarget.value)}/>
+                                  <input type="password" placeholder="Current password" value={password.replace(/\s/g, "")} maxLength={20} onChange={(e) => setPassword(e.currentTarget.value.trim())}/>
                               </div>
 
-                              <div className="field center aligned">
-                                  { updateButton ? 
-                                      <div className="ui button purple right labeled icon" onClick={ValidateForm}>
-                                          <i className="arrow right icon"></i>
-                                          Proceed to update
-                                      </div>
-                                    :
-                                      <div className="ui button purple right labeled icon basic disabled">
-                                          <i className="times icon"></i>
-                                          No changes commited
-                                      </div>
-                                  }
+                              <div class="ui horizontal  inverted divider">
+                                <div className="field center aligned">
+                                    { updateButton ? 
+                                        <div className="ui button purple right labeled icon" onClick={ValidateForm}>
+                                            <i className="arrow right icon"></i>
+                                            Proceed to update
+                                        </div>
+                                      :
+                                        <div className="ui button purple right labeled icon basic disabled">
+                                            <i className="times icon"></i>
+                                            No changes commited
+                                        </div>
+                                    }
+                                </div>
                               </div>
+
+
                   </form>
               </div>
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Uplines } from '../raw/uplines'
+import * as Set from '../../constants'
 
 export const FetchUplines = ({ selectData }) => {
 
@@ -49,15 +50,14 @@ export const FetchUplines = ({ selectData }) => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
-        <h2>Uplines List</h2>
-        <table className='ui unstackable celled long scrolling table mini'>
+        <h3 class="ui horizontal divider header">
+          Uplines List
+        </h3>
+        <br />
+        <table className='ui unstackable celled long scrolling table small compact'>
         <thead>
           <tr>
             <th>Club</th>
@@ -119,9 +119,8 @@ export const FetchUplines = ({ selectData }) => {
               <td>{setStatus(i)}</td>
 
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>
-                    <i className="edit outline icon"></i>
-                    Edit
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>
+                    <i className="pencil icon"></i>
                 </button>
               </td>
             </tr>

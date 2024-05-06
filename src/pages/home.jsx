@@ -30,17 +30,7 @@ export const HomePage = () => {
               </div>
           </h2>
       </div>
-      <div class="ui three  padded grid">
-      <div className="row">
-      <div class="three wide computer eight wide mobile four wide tablet column"><p>Left</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Middle</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Right</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Left</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Middle</p></div>
-        <div class="three wide computer eight wide mobile four wide tablet column"><p>Right</p></div>
-      </div>
 
-      </div>
       <div className="ui grid padded">
       <div className="row">
         <div className="four wide computer eight wide mobile six wide tablet column">
@@ -93,6 +83,78 @@ export const HomePage = () => {
         </div>
       </div>
       </div>
+
+
+      <div className='ui equal width grid padded centered fluid'>
+          <div className="center aligned row stretched stackable">
+
+              <GridColumn >
+
+                    <FetchNotificationPending />
+
+              </GridColumn>
+                <GridColumn>
+                    <div className="ui two item menu secondary  fluid ">
+
+                        <div className="ui item statistic  forward">
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                        <div className="ui item statistic  forward">
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                    </div>
+                      <div className="ui two item menu secondary fluid">
+
+                        <div className="ui item statistic dotted button-animated" style={{margin:"2px"}}>
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+
+                        <div className="ui item statistic dotted button-animated forward" style={{margin:"2px"}}>
+                            <div className="value">
+                              <span className='label-small'>5,550</span>
+                            </div>
+                            <div className="label">
+                              Users
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <Segment>Sub 2</Segment>
+                </GridColumn>
+              <div className='column stackable'>
+
+                    <div className="ui three item menu fluid">
+                      <a className="item">Item</a>
+                      <a className="item">Item</a>
+                      <a className="item">Item</a>
+                    </div>
+
+                  <Segment>2</Segment>
+                  <Segment>3</Segment>
+                  <Segment>3</Segment>
+              </div>
+
+          </div>
+
+        </div>
+
 
       <div className="ui four doubling stackable cards ">
 
@@ -295,74 +357,6 @@ export const HomePage = () => {
 
           </Grid>
 
-        <div className='ui equal width grid padded centered fluid'>
-          <div className="center aligned row stretched stackable">
-
-              <GridColumn >
-                  <Segment>Main</Segment>
-              </GridColumn>
-                <GridColumn>
-                    <div className="ui two item menu secondary  fluid ">
-
-                        <div className="ui item statistic  forward">
-                            <div className="value">
-                              <span className='label-small'>5,550</span>
-                            </div>
-                            <div className="label">
-                              Users
-                            </div>
-                        </div>
-
-                        <div className="ui item statistic  forward">
-                            <div className="value">
-                              <span className='label-small'>5,550</span>
-                            </div>
-                            <div className="label">
-                              Users
-                            </div>
-                        </div>
-
-                    </div>
-                      <div className="ui two item menu secondary fluid">
-
-                        <div className="ui item statistic dotted button-animated" style={{margin:"2px"}}>
-                            <div className="value">
-                              <span className='label-small'>5,550</span>
-                            </div>
-                            <div className="label">
-                              Users
-                            </div>
-                        </div>
-
-                        <div className="ui item statistic dotted button-animated forward" style={{margin:"2px"}}>
-                            <div className="value">
-                              <span className='label-small'>5,550</span>
-                            </div>
-                            <div className="label">
-                              Users
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <Segment>Sub 2</Segment>
-                </GridColumn>
-              <div className='column stackable'>
-
-                    <div className="ui three item menu fluid">
-                      <a className="item">Item</a>
-                      <a className="item">Item</a>
-                      <a className="item">Item</a>
-                    </div>
-
-                  <Segment>2</Segment>
-                  <Segment>3</Segment>
-                  <Segment>3</Segment>
-              </div>
-
-          </div>
-
-        </div>
-
 
 
 
@@ -370,8 +364,8 @@ export const HomePage = () => {
       <div className="ui vertical stripe quote segment ">
         <div className="ui middle aligned stackable grid container">
           <div className="row">
-              <div className="six wide right floated column">
-                <h3>Welcome </h3>
+              <div className="eight wide right floated column">
+                <h3 className='ui segment'>Welcome </h3>
               </div>
             </div>
             <div className="eight wide left floated column">

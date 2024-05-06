@@ -5,17 +5,19 @@ import { Applications } from '../fetch/raw/applications'
 import { ImagesClubs } from '../fetch/raw/images'
 import { Unions } from '../fetch/raw/unions'
 import * as Set from '../constants';
+import * as Alert from "../alerts/alerts"
 
 export const UpsertClubs = ({selectedData,recallData}) => {
   const appDD = Applications().data
   const imgDD = ImagesClubs().data
   const uniDD = Unions().data
+  const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
   const Token = JSON.parse( localStorage.getItem('Token') );
-  const [loading, setLoading] =         useState(false);
-  const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
+  const [loading, setLoading] =           useState(false);
+  const [button, setButton] =             useState("Add New Data");
   const [cancels, setCancels] =           useState(false);
+  const [selected, setSelected] =         useState(selectedData ? selectedData : null);
 
   const [clubID, setclubID] =               useState("0");
   const [clubIDD, setclubIDD] =             useState("");
@@ -54,10 +56,18 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     e.preventDefault()
     setLoading(true)
       if(!YesWithvalues){
-        setMessage("Details incomplete!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please fill out missing details",
+          });
       } else {
         if(clubType == "UNION" && (clubUnion == "" || clubUnion == undefined || clubUnion == null)){
-          setMessage("Details incomplete! Select a union.")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please select a club union",
+          });
         } else {
           console.log(JSON.stringify(Upsert))
           reCheckValues()
@@ -68,12 +78,13 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
   const cancel = () => {
     setclubID("0")
-    setMessage("")
     setButton("Add New Data")
     setCancels(false)
   }
 
   const resetForm = () => {
+    
+
     setclubID("0")
     setclubIDD("")
     setclubName("")
@@ -105,23 +116,23 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
   const fromTable = () => {
 
-    setclubID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
-    setclubIDD(selectedData.idd === null || selectedData.idd === undefined ? "" : selectedData.idd)
-    setclubName(selectedData.name === null || selectedData.name === undefined ? "" : selectedData.name)
-    setclubImage(selectedData.image === null || selectedData.image === undefined ? "" : selectedData.image)
-    setclubApp(selectedData.app === null || selectedData.app === undefined ? "" : selectedData.app)
-    setclubDetails(selectedData.details === null || selectedData.details === undefined ? "" : selectedData.details)
-    setclubType(selectedData.type === null || selectedData.type === undefined ? "" : selectedData.type)
-    setclubUnion(selectedData.union === null || selectedData.union === undefined ? "" : selectedData.union)
-    if(selectedData.status=="0" || selectedData.status=="Active"){
+    setclubID(selected.id === null || selected.id === undefined ? "0" : selected.id)
+    setclubIDD(selected.idd === null || selected.idd === undefined ? "" : selected.idd)
+    setclubName(selected.name === null || selected.name === undefined ? "" : selected.name)
+    setclubImage(selected.image === null || selected.image === undefined ? "" : selected.image)
+    setclubApp(selected.app === null || selected.app === undefined ? "" : selected.app)
+    setclubDetails(selected.details === null || selected.details === undefined ? "" : selected.details)
+    setclubType(selected.type === null || selected.type === undefined ? "" : selected.type)
+    setclubUnion(selected.union === null || selected.union === undefined ? "" : selected.union)
+    if(selected.status=="0" || selected.status=="Active"){
       setclubStatus("0")
-    } else if(selectedData.status=="Pending"){
+    } else if(selected.status=="Pending"){
       setclubStatus("1")
     } else {
       setclubStatus("2")
     }
 
-    if(selectedData.id == "0" || selectedData.id == null) {
+    if(selected.id == "0" || selected.id == null) {
       setButton("Add New Data")
       setclubStatus("0")
       setCancels(false)
@@ -133,8 +144,8 @@ export const UpsertClubs = ({selectedData,recallData}) => {
   }
 
   useEffect(() => {
-    fromTable()
-  }, [selectedData.clicked]);
+      fromTable()
+  }, [selected.clicked]);
 
   const changeStatus = () => {
     if(clubStatus=="0"){
@@ -155,79 +166,84 @@ export const UpsertClubs = ({selectedData,recallData}) => {
         const number = parseFloat( response.data.match(/[\d.]+/) );
         setclubID( number )
         setButton("Proceed to Update")
-        setMessage("Duplicate found! Would you like to update existing data? Check club ID#"+ number);
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Duplicate!",
+              Message: "Please check club ID#"+ number,
+          });
         setCancels(true)
     } else if(response.data.includes("Added")){
-        setMessage("New poker club successfully added!");
+          setAlertMessage({
+              Alert: "success",
+              Title: "Success!",
+              Message: "Poker club added",
+          });
         recallData(1)
         resetForm()
     } else if(response.data.includes("Updated")){
-        setMessage("Poker club successfully updated!");
+          setAlertMessage({
+              Alert: "success",
+              Title: "Success!",
+              Message: "Poker club updated",
+          });
         recallData(1)
         resetForm()
     } else {
-      setMessage("Something went wrong! Please retry :" + response.data);
-      resetForm()
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Something went wrong! Please retry",
+          });
+        resetForm()
     }
       
     } catch (error) {
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Something went wrong! Please retry",
+          });
       console.error("Error submission: ", error);
     }
   }
 
-
-
     return (
-      <div className="ui segment basic">
-        <h2>Insert / Update Club</h2>
+          <>
+
+      { AlertMessage['Alert'] == "success" ? 
+          <Alert.SuccessRefresh 
+                key="SuccessRefresh" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "success" ? true : false}  
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      :  AlertMessage['Alert'] == "warning" ? 
+          <Alert.Warning 
+                key="Warning" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "warning" ? true : false} 
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      : null
+      }
+
+      <div className="ui segment basic left aligned">
+        <h3 class="ui horizontal divider header">
+          Insert / Update Clubs
+        </h3>
+        <br />
 
         <div className="ui form">
 
-          <div className='five fields'>
+          <div className='two fields'>
 
           <div className="field">
-              <label>Club IDD</label>
-              <input type="number" value={clubIDD} onChange={(e) => setclubIDD(e.currentTarget.value)}/>
-            </div>
-
-            <div className="field">
-              <label>Name</label>
-              <input type="text" value={clubName} onChange={(e) => setclubName(e.currentTarget.value)}/>
-            </div>
-
-            <div className="field">
-              <label>Image</label>
-              <SUI.Dropdown
-                    placeholder="Select image"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select image"
-                    onChange={(event, { value }) => { setclubImage(value); }}
-                    value={clubImage}
-                    options={imgDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.pathFull },
-                      };
-                    })}
-                  />
-            </div>
-
-            <div className="field">
               <label>Application</label>
               <SUI.Dropdown
-                    placeholder="Select"
+                    placeholder="Select application"
                     scrolling
                     clearable
                     fluid
                     selection
-                    search={false}
+                    search={true}
                     multiple={false}
                     header="Select application"
                     onChange={(event, { value }) => { setclubApp(value); }}
@@ -243,82 +259,145 @@ export const UpsertClubs = ({selectedData,recallData}) => {
                   />
             </div>
 
-            <div className="field">
-              <label>Details</label>
-              <input type="text" value={clubDetails} onChange={(e) => setclubDetails(e.currentTarget.value)}/>
+          </div>
+
+          <div className='two fields'>
+
+          <div className="field">
+              <label>Club Name</label>
+              <input type="text" value={clubName} onChange={(e) => setclubName(e.currentTarget.value)}/>
             </div>
 
             <div className="field">
-              <label>Type</label>
-              <SUI.Dropdown
-                    placeholder="Select type"
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    header="Select type"
-                    onChange={(event, { value }) => { setclubType(value); }}
-                    value={clubType}
-                    options={Set.unionType}
-                  />
+              <label>Club ID</label>
+              <input type="number" value={clubIDD} onChange={(e) => setclubIDD(e.currentTarget.value)}/>
             </div>
 
-            <div className="field">
-              <label>Union</label>
-              <SUI.Dropdown
-                    placeholder="Select union"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select union"
-                    onChange={(event, { value }) => { setclubUnion(value); }}
-                    value={clubUnion}
-                    options={uniDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
-            </div>
+          </div>
 
-            <div className="field">
-            <label>Status {clubStatus}</label>
-              { clubStatus === "0" || clubStatus === "Active" ? 
-                <div className="ui button green fluid center aligned" onClick={changeStatus}>
-                  <i className="check circle outline icon"></i>
-                  Active
-                </div>
-              :  
-                <div className="ui button red fluid center aligned" onClick={changeStatus}>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-                </div>
-              } 
-            </div>
+          <div className='two fields'>
+
+              <div className="field">
+                <label>Type</label>
+                <SUI.Dropdown
+                      placeholder="Select type"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={false}
+                      header="Select type"
+                      onChange={(event, { value }) => { setclubType(value); }}
+                      value={clubType}
+                      options={Set.unionType}
+                    />
+
+              </div>
+
+              <div className="field">
+                <label>Union</label>
+                <SUI.Dropdown
+                      placeholder="Select union"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={true}
+                      multiple={false}
+                      header="Select union"
+                      onChange={(event, { value }) => { setclubUnion(value); }}
+                      disabled={clubType == "UNION" ? false : true}
+                      value={clubType == "UNION" ? clubUnion : "" }
+                      options={uniDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.name,
+                          value: i.id,
+                          image: { avatar: true, src: i.imageFull },
+                        };
+                      })}
+                    />
+              </div>
 
           </div>
 
           <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
-              <i className="plus icon"></i>
-              {button}
-            </div>
-
-            { cancels ?  <>
-              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
-            </> :  null }
-            <p>{message}</p>
+              <label>Details</label>
+              <textarea type="text" rows="2" placeholder='Other details (100)' value={clubDetails} onChange={(e) => setclubDetails(e.currentTarget.value)}/>
           </div>
+
+          <div className="field">
+                <label>Image</label>
+                <SUI.Dropdown
+                      placeholder="Select image"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={false}
+                      multiple={false}
+                      header="Select image"
+                      onChange={(event, { value }) => { setclubImage(value); }}
+                      value={clubImage}
+                      options={imgDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.name,
+                          value: i.id,
+                          image: { avatar: true, src: i.pathFull },
+                        };
+                      })}
+                    />
+              </div>
+
+          <div className='two fields'>
+
+
+
+              <div className="field">
+                  <label>Status</label>
+                  { clubStatus === "0" || clubStatus === "Active" ? 
+                    <div className="ui button green fluid center aligned" onClick={changeStatus}>
+                      <i className="check circle outline icon"></i>
+                      Active
+                    </div>
+                  :  
+                    <div className="ui button red fluid center aligned" onClick={changeStatus}>
+                      <i className="times circle outline icon"></i>
+                      Inactive
+                    </div>
+                  } 
+              </div>
+
+          </div>
+
+           
+          <div class="ui horizontal  inverted divider">
+            <div className="field center aligned">
+              <div className="ui button purple" onClick={ValidateForm}>
+                <i className="plus icon"></i>
+                {button}
+              </div>
+
+              { cancels ?  <>
+                <div className="ui button grey basic" onClick={cancel}>
+                  <i className='icon times'></i>
+                  Cancel
+                </div>
+                <div className="ui button grey basic" onClick={resetForm}>
+                  <i className="eraser icon"></i>
+                  Clear
+                </div>
+              </> :  null }
+
+            </div>
+          </div>
+
+
 
         </div>
       </div>
+          </>
     );
   };
   

@@ -59,15 +59,19 @@ export const unionType = [
                         },
                       ]
 
-const i = JSON.parse( localStorage.getItem('User') );
+export const LoadingData = () => {
+    return (
+            <>
+              <div className="ui segment basic">
+                <div className="ui active inverted dimmer">
+                  <div className="ui indeterminate text loader">Loading data...</div>
+                </div>
+                <br /> <br /><br /><br /><br /><br /><br />
+              </div>
+            </>
+    )
+}
 
-export const Profile = {
-                        rolename:               i['rolename'],
-                        nickname:               i['nickname'],
-                        avatar:                 i['avatar'],
-                        avatarID:               i['avatarID'],
-                        email:                  i['email'],
-                        telegram:               i['telegram'],
-                        username:               i['username'],
-                    };
+
+
                     

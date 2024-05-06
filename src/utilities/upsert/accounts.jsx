@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
+import * as Alert from "../alerts/alerts"
 
 import { Applications } from '../fetch/raw/applications'
 import { Roles } from '../fetch/raw/roles'
@@ -13,10 +14,10 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
   const roleDD = Roles().data
   const usersDD = Users().data
   const acctDD = Accounts().data
-
+  const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
+  
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
-  const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
   const [cancels, setCancels] =         useState(false);
   const [requestTo, setrequestTo] =     useState("0");
@@ -55,10 +56,13 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     e.preventDefault()
     setLoading(true)
       if( !YesWithvalues ){
-        setMessage("Details incomplete!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please fill out missing details",
+          });
         console.log(JSON.stringify(Upsert))
       } else {
-        setMessage("Submitting data...")
         console.log(JSON.stringify(Upsert))
         SubmitForm()
       }
@@ -66,7 +70,6 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
   const cancel = () => {
     setaccountID("0")
-    setMessage("")
     setButton("Add New Data")
     setCancels(false)
   }
@@ -139,114 +142,161 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
             const number = parseFloat( response.data.match(/[\d.]+/) );
             setaccountID( number )
             setButton("Proceed to Update")
-            setMessage("Duplicate found! Would you like to update existing data? Check account ID#"+ number);
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Duplicate!",
+                Message: "Please check account ID#"+ number,
+            });
             setCancels(true)
         } else if(response.data.includes("Added")){
-            setMessage("New user successfully added!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "New account added!",
+            });
             recallData(1)
             resetForm()
         } else if(response.data.includes("Updated")){
-            setMessage("User successfully updated!");
+            setAlertMessage({
+                Alert: "success",
+                Title: "Success!",
+                Message: "Account updated!",
+            });
             recallData(1)
             resetForm()
         } else {
-        setMessage("Something went wrong! Please retry");
+            setAlertMessage({
+                Alert: "warning",
+                Title: "Oops!",
+                Message: "Something went wrong! Please retry",
+            });
         resetForm()
         }
         
     } catch (error) {
-      setMessage(error);
+      setAlertMessage({
+          Alert: "warning",
+          Title: "Oops!",
+          Message: "Something went wrong! Please retry",
+      });
       console.error("Error fetching data: ", error);
     }
   }
 
     return (
-      <div className="ui segment basic">
-        <h2>Insert / Update Accounts</h2>
+          <>
+
+{ AlertMessage['Alert'] == "success" ? 
+          <Alert.Success
+                key="Success" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "success" ? true : false}  
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      :  AlertMessage['Alert'] == "warning" ? 
+          <Alert.Warning 
+                key="Warning" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "warning" ? true : false} 
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      : null
+      }
+
+      <div className="ui segment basic  left aligned">
+        <h3 class="ui horizontal divider header">
+          Insert / Update Accounts
+        </h3>
+        <br />
+
         <div className="ui form">
+          <div className='three fields'>
 
-          <div className='five fields'>
+              <div className="field">
+                <label>Role</label>
+                <SUI.Dropdown
+                      placeholder="Select role"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={false}
+                      multiple={false}
+                      header="Select role"
+                      onChange={(event, { value }) => { setaccountRole(value); }}
+                      value={accountRole}
+                      options={roleDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.name,
+                          value: i.id,
+                        };
+                      })}
+                    />
+              </div>
 
+              <div className="field">
+                <label>Nickname {selectedData.nickname}</label>
+                <input type="text" value={accountNickname} onChange={(e) => setaccountNickname(e.currentTarget.value)}/>
+              </div>
 
-            <div className="field">
-              <label>User</label>
-              <SUI.Dropdown
-                    placeholder="Select user"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={true}
-                    multiple={false}
-                    header="Select user"
-                    onChange={(event, { value }) => { setaccountuserID(value); }}
-                    value={accountuserID}
-                    options={usersDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.nickname + " (ID# "+i.id+")",
-                        value: i.id,
-                      };
-                    })}
-                  />
-            </div>
+              <div className="field">
+                <label>Account ID </label>
+                <input type="number" value={accountIDD} onChange={(e) => setaccountIDD(e.currentTarget.value)} />
+              </div>
 
-            <div className="field">
-              <label>Account ID </label>
-              <input type="number" value={accountIDD} onChange={(e) => setaccountIDD(e.currentTarget.value)} />
-            </div>
+          </div>
 
-            <div className="field">
-              <label>Role</label>
-              <SUI.Dropdown
-                    placeholder="Select role"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select role"
-                    onChange={(event, { value }) => { setaccountRole(value); }}
-                    value={accountRole}
-                    options={roleDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                      };
-                    })}
-                  />
-            </div>
+          <div className='two fields'>
 
-            <div className="field">
-              <label>Nickname {selectedData.nickname}</label>
-              <input type="text" value={accountNickname} onChange={(e) => setaccountNickname(e.currentTarget.value)}/>
-            </div>
+              <div className="field">
+                <label>Application</label>
+                <SUI.Dropdown
+                      placeholder="Select"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={true}
+                      multiple={false}
+                      header="Select application"
+                      onChange={(event, { value }) => { setaccountappID(value); }}
+                      value={accountappID}
+                      options={appDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.name,
+                          value: i.id,
+                          image: { avatar: true, src: i.imageFull },
+                        };
+                      })}
+                    />
+              </div>
 
-            <div className="field">
-              <label>Application</label>
-              <SUI.Dropdown
-                    placeholder="Select"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={false}
-                    multiple={false}
-                    header="Select application"
-                    onChange={(event, { value }) => { setaccountappID(value); }}
-                    value={accountappID}
-                    options={appDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.id,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
-            </div>
+              <div className="field">
+                <label>User</label>
+                <SUI.Dropdown
+                      placeholder="Select user"
+                      scrolling
+                      clearable
+                      fluid
+                      selection
+                      search={true}
+                      multiple={false}
+                      header="Select user"
+                      onChange={(event, { value }) => { setaccountuserID(value); }}
+                      value={accountuserID}
+                      options={usersDD.map(i => {
+                        return {
+                          key: i.id,
+                          text: i.nickname + " (ID# "+i.id+")",
+                          value: i.id,
+                        };
+                      })}
+                    />
+              </div>
+
+          </div>
+
+          <div className='two fields'>
 
             <div className="field">
             <label>Status</label>
@@ -298,22 +348,31 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
             : null }
 
           </div>
+          
+          <div class="ui horizontal  inverted divider">
+            <div className="field center aligned">
+              <div className="ui button purple" onClick={ValidateForm}>
+                <i className="plus icon"></i>
+                {button}
+              </div>
 
-          <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
-              <i className="plus icon"></i>
-              {button}
+              { cancels ?  <>
+                <div className="ui button grey basic" onClick={cancel}>
+                  <i className='icon times'></i>
+                  Cancel
+                </div>
+                <div className="ui button grey basic" onClick={resetForm}>
+                  <i className="eraser icon"></i>
+                  Clear
+                </div>
+              </> :  null }
+
             </div>
-
-            { cancels ?  <>
-              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
-            </> :  null }
-            <p>{message}</p>
           </div>
 
         </div>
       </div>
+          </>
     );
   };
   

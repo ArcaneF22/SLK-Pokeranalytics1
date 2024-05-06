@@ -19,13 +19,13 @@ export const UnionsPage = () => {
           </h2>
       </div>
         
-        <table className="ui table basic">
+        <table className="ui table basic noBorder">
           <tr className="ui middle aligned divided list">
             <td className='center aligned'>
             <FetchUnions selectUnion={selectUnion} />
             </td>
             <td className="left aligned collapsing top aligned" style={{minWidth:"300px", border:"none"}}>
-              <div className=' ui message info' style={{marginTop:"68px"}}>
+              <div className=' ui message info' style={{marginTop:"55px"}}>
                   <h3 className='header'>Recent Activity</h3>
                   <div className="ui relaxed divided list">
                     <div className="item">

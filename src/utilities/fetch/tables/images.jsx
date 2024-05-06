@@ -1,20 +1,23 @@
 import { useState } from 'react';
-import { Images } from '../raw/images'
-import {
-    CardMeta,
-    CardHeader,
-    CardDescription,
-    CardContent,
-    Card,
-    Icon,
-    Image,
-  } from 'semantic-ui-react'
+import {ImagesApps, ImagesClubs, ImagesAvatars, ImagesLogo} from '../raw/images'
+import * as SUI from 'semantic-ui-react'
 
 export const FetchImages = ({ selectImage }) => {
 
   const [clicked, setClicked] = useState(0)
-  const data = Images().data
-  const load = Images().load
+  const dataApps = ImagesApps().data
+  const loadApps = ImagesApps().load
+
+  const dataClubs = ImagesClubs().data
+  const loadClubs = ImagesClubs().load
+
+  const dataAvat = ImagesAvatars().data
+  const loadAvat = ImagesAvatars().load
+
+  const dataLogo = ImagesLogo().data
+  const loadLogo = ImagesLogo().load
+
+
 
   const editImage = (id,name,type,path,status) => {
     setClicked(clicked+1)
@@ -34,45 +37,79 @@ export const FetchImages = ({ selectImage }) => {
   return (
 <>
 
-{load ? (
+{loadApps ? (
       <div className="ui segment basic">
         <div className="ui active inverted dimmer">
           <div className="ui indeterminate text loader">Loading table...</div>
         </div>
       </div>
       ) : ( 
-        <div className="ui segment ">
-        <h3>Images List</h3>
+        <div className="ui segment basic">
 
-   
+          <div className='ui message violet'>
+            <h3 class="ui header">
+              Avatar Images
+            </h3>
+            <div class="ui divider"></div>
+            <SUI.ImageGroup size='tiny' >
+              {dataAvat.map((i, index) => (
+                  <SUI.Image 
+                      key={index} 
+                      src={i.pathFull} 
+                      label={{ as: 'a', color: 'violet', corner: 'right', icon: 'edit outline', size: 'mini' }}
+                      className='' />
+                  ))}
+            </SUI.ImageGroup>
+          </div>
 
-        <div className="ui grid">
+          <div className='ui message violet'>
+            <h3 class="ui header">
+              Application Images
+            </h3>
+            <div class="ui divider"></div>
+            <SUI.ImageGroup size='tiny' >
+              {dataApps.map((i, index) => (
+                  <SUI.Image 
+                  key={index} 
+                  src={i.pathFull} 
+                  label={{ as: 'a', color: 'violet', corner: 'right', icon: 'edit outline', size: 'mini' }}
+                  className='' />
+              ))}
+            </SUI.ImageGroup>
+          </div>
 
-        </div>
-          {data.map((i, index) => (
-            <tr key={index}>
-              <td>{i.id}</td>
-              <td>
-                <h4 className="ui image header">
-                    <img src={i.pathFull} className="ui mini rounded image" />
-                    <img src={`data:image/svg+xml;base64,${btoa(i.svg)}`}/>
+          <div className='ui message violet'>
+            <h3 class="ui header">
+              Clubs Images
+            </h3>
+            <div class="ui divider"></div>
+            <SUI.ImageGroup size='tiny' >
+              {dataClubs.map((i, index) => (
+                  <SUI.Image 
+                  key={index} 
+                  src={i.pathFull} 
+                  label={{ as: 'a', color: 'violet', corner: 'right', icon: 'edit outline', size: 'mini' }}
+                  className='' />
+              ))}
+            </SUI.ImageGroup>
+          </div>
 
-                    <div className="content">
-                        {i.name}
-                        <div className="sub header">
-                            {i.type}
-                        </div>
-                    </div>
-                </h4>
-              </td>
-              <td>
-                <button className='ui button blue' onClick={()=> editImage(i.id,i.name,i.type)}>
-                    <i className="edit outline icon"></i>
-                    Edit
-                </button>
-              </td>
-            </tr>
-          ))}
+          <div className='ui message violet'>
+            <h3 class="ui header">
+              Logo Images
+            </h3>
+            <div class="ui divider"></div>
+            <SUI.ImageGroup size='tiny' >
+              {dataLogo.map((i, index) => (
+                  <SUI.Image 
+                  key={index} 
+                  src={i.pathFull} 
+                  label={{ as: 'a', color: 'violet', corner: 'right', icon: 'edit outline', size: 'mini' }}
+                  className='' />
+              ))}
+            </SUI.ImageGroup>
+          </div>
+
 
     </div>
       )}

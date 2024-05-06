@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Clubs } from '../raw/clubs'
+import * as Set from '../../constants'
 
 export const FetchClubs = ({ selectData }) => {
 
@@ -11,6 +12,7 @@ export const FetchClubs = ({ selectData }) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
+                    "proceed": "true",
                     "id": id, 
                     "idd": idd, 
                     "name": name, 
@@ -23,9 +25,9 @@ export const FetchClubs = ({ selectData }) => {
                   }
       setClicked(clicked+1)
       selectData(array);
-      setTimeout(
+
         window.scrollTo({ top: 0, behavior: 'smooth' })
-      , 1000)
+
   };
 
   function setStatus(i) {
@@ -51,18 +53,16 @@ export const FetchClubs = ({ selectData }) => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+          <Set.LoadingData />
       ) : ( 
         <div className="ui segment basic">
-        <h2>Clubs List</h2>
-        <table className='ui celled striped table'>
+        <h3 class="ui horizontal divider header">
+          Clubs List
+        </h3>
+        <br />
+        <table className='ui celled striped table fluid small compact'>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Club</th>
             <th>Application</th>
             <th>Details</th>
@@ -75,9 +75,8 @@ export const FetchClubs = ({ selectData }) => {
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.id}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.name}
@@ -85,7 +84,7 @@ export const FetchClubs = ({ selectData }) => {
                         ID: {i.idd}
                       </div>
                   </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.appName}</td>
               <td>{i.details}</td>
@@ -99,12 +98,11 @@ export const FetchClubs = ({ selectData }) => {
                   </div>
                 </div>
               </td>
-              <td>{i.users} {i.status}</td>
+              <td>{i.users === 0 ? "No Users" : i.users === 1 ? "1 User" : (i.users+" Users")}</td>
               <td>{setStatus(i)} </td>
               <td>
-                <button className='ui button blue' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>
-                    <i className="edit outline icon"></i>
-                    Edit
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>
+                    <i className="pencil icon"></i>
                 </button>
               </td>
             </tr>

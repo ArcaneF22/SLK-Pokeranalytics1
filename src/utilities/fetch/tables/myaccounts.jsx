@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MyAccounts } from '../raw/accounts'
+import * as Set from '../../constants'
 
 export const FetchMyAccounts = ({selectMyAccount}) => {
 
@@ -46,15 +47,14 @@ export const FetchMyAccounts = ({selectMyAccount}) => {
 <>
 
 {load ? (
-      <div className="ui segment basic">
-        <div className="ui active inverted dimmer">
-          <div className="ui indeterminate text loader">Loading table...</div>
-        </div>
-      </div>
+      <Set.LoadingData />
       ) : (
       <div className="ui segment ">
-        <h3>Accounts List</h3>
-        <table className='ui celled striped table'>
+        <h3 class="ui horizontal divider header">
+          My Accounts List
+        </h3>
+        <br />
+        <table className='ui celled striped table small compact'>
         <thead>
           <tr>
             <th>Account ID</th>
@@ -75,7 +75,7 @@ export const FetchMyAccounts = ({selectMyAccount}) => {
               <td>{i.accountRole}</td>
               <td>{i.accountClubsCount}</td>
               <td>
-                <h4 className="ui image header">
+                <h5 className="ui image header">
                     <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
                       {i.userNickname}
@@ -83,12 +83,12 @@ export const FetchMyAccounts = ({selectMyAccount}) => {
                        ID# {i.userID}
                       </div>
                     </div>
-                </h4>
+                </h5>
               </td>
               <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui button blue' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
+                <button className='ui icon button violet' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
                     <i className="edit outline icon"></i>
                     Edit
                 </button>
