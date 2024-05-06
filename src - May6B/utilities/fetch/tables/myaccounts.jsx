@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import { Accounts } from '../raw/accounts'
+import { MyAccounts } from '../raw/accounts'
 import * as Set from '../../constants'
 
-export const FetchAccounts = ({selectData}) => {
+export const FetchMyAccounts = ({selectMyAccount}) => {
 
-  const [clicked, setClicked] = useState(1)
-  const data = Accounts().data
-  const load = Accounts().load
+  const [clicked, setClicked] = useState(0)
+  const data = MyAccounts().data
+  const load = MyAccounts().load
 
   function setStatus(i) {
-    if (i.statusLabel == "Active") {
+    if (i.status == "Active") {
       return  <button className='ui button green basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
-    } else if (i.statusLabel == "Pending") {
+    } else if (i.status == "Pending") {
       return  <button className='ui button yellow basic'>
                   <i className="spinner icon"></i>
                   Pending
@@ -27,25 +27,21 @@ export const FetchAccounts = ({selectData}) => {
     }
   }
 
-  const editData = (id,idd,accountNickname,accountRole,userID,appID,status) => {
+  const editMyAccount = (accountID,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
-                    "selected": 1,
-                    "id": id,
-                    "idd": idd, 
-                    "nickname": accountNickname, 
-                    "role": accountRole, 
+                    "accountID": accountID, 
+                    "accountNickname": accountNickname, 
+                    "accountRole": accountRole, 
                     "userID": userID, 
                     "appID": appID, 
                     "status": status
                   }
-      setClicked(clicked+1)
-      selectData(array);
-      setTimeout(
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      , 1000)
+    //selectAccount(array);
+    console.log(array)
   };
+
 
   return (
 <>
@@ -53,18 +49,18 @@ export const FetchAccounts = ({selectData}) => {
 {load ? (
       <Set.LoadingData />
       ) : (
-      <div className="ui segment basic">
+      <div className="ui segment ">
         <h3 class="ui horizontal divider header">
-          Accounts List
+          My Accounts List
         </h3>
         <br />
         <table className='ui celled striped table small compact'>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nickname</th>
-            <th>Role</th>
-            <th>Clubs</th>
+            <th>Account ID</th>
+            <th>Account Nickname</th>
+            <th>Account Role</th>
+            <th>Account Clubs</th>
             <th>User</th>
             <th>Application</th>
             <th>Status</th>
@@ -80,7 +76,7 @@ export const FetchAccounts = ({selectData}) => {
               <td>{i.accountClubsCount}</td>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.userAvatar ? i.userAvatar : "./images/joker.png" } className="ui mini rounded image" />
+                    <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
                       {i.userNickname}
                       <div className='sub header'>
@@ -92,8 +88,9 @@ export const FetchAccounts = ({selectData}) => {
               <td>{i.appName}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui icon button violet' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
-                    <i className="pencil icon"></i>
+                <button className='ui icon button violet' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
+                    <i className="edit outline icon"></i>
+                    Edit
                 </button>
               </td>
             </tr>

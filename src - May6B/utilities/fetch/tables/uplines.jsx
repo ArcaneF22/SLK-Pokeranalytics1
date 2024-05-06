@@ -73,7 +73,7 @@ export const FetchUplines = ({ selectData }) => {
             <tr key={index}>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.appImage ? i.appImage : "./images/default.png"} className="ui mini rounded image" />
+                    <img src={i.appImage} className="ui mini rounded image" />
                     <div className="content">
                       {i.clubName}
                       <div className="sub header">
@@ -86,7 +86,7 @@ export const FetchUplines = ({ selectData }) => {
               </td>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.downAvatar ? i.downAvatar : "./images/joker.png"} className="ui mini rounded image" />
+                    <img src={i.downAvatar} className="ui mini rounded image" />
                     <div className="content">
                       ID: {i.downacctID}
                       <div className="sub header">
@@ -101,7 +101,7 @@ export const FetchUplines = ({ selectData }) => {
               </td>
               <td>
               <h5 className="ui image header">
-                    <img src={i.upAvatar ? i.upAvatar : "./images/joker.png"} className="ui mini rounded image" />
+                    <img src={i.upAvatar} className="ui mini rounded image" />
                     <div className="content">
                       ID: {i.upacctID}
                       <div className="sub header">

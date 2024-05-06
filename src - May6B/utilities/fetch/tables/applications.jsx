@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Accounts } from '../raw/accounts'
+import { useState, useEffect } from 'react';
+import { Applications } from '../raw/applications'
 import * as Set from '../../constants'
 
-export const FetchAccounts = ({selectData}) => {
+export const FetchApplications = ({selectData}) => {
 
   const [clicked, setClicked] = useState(1)
-  const data = Accounts().data
-  const load = Accounts().load
+  const data = Applications().data
+  const load = Applications().load
 
   function setStatus(i) {
     if (i.statusLabel == "Active") {
@@ -27,17 +27,16 @@ export const FetchAccounts = ({selectData}) => {
     }
   }
 
-  const editData = (id,idd,accountNickname,accountRole,userID,appID,status) => {
+  const editData = (id,name,image,company,details,count,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
-                    "selected": 1,
-                    "id": id,
-                    "idd": idd, 
-                    "nickname": accountNickname, 
-                    "role": accountRole, 
-                    "userID": userID, 
-                    "appID": appID, 
+                    "id": id, 
+                    "name": name, 
+                    "image": image, 
+                    "company": company, 
+                    "details": details, 
+                    "count": count,
                     "status": status
                   }
       setClicked(clicked+1)
@@ -45,28 +44,32 @@ export const FetchAccounts = ({selectData}) => {
       setTimeout(
         window.scrollTo({ top: 0, behavior: 'smooth' })
       , 1000)
+    
   };
+
+
 
   return (
 <>
 
+
+
 {load ? (
-      <Set.LoadingData />
+        <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
         <h3 class="ui horizontal divider header">
-          Accounts List
+          Applications List
         </h3>
         <br />
-        <table className='ui celled striped table small compact'>
+        <table className='ui celled striped small table compact'>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nickname</th>
-            <th>Role</th>
-            <th>Clubs</th>
-            <th>User</th>
             <th>Application</th>
+            <th>Company</th>
+            <th>Details</th>
+            <th>Users</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -74,25 +77,21 @@ export const FetchAccounts = ({selectData}) => {
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.accountID}</td>
-              <td>{i.accountNickname}</td>
-              <td>{i.accountRole}</td>
-              <td>{i.accountClubsCount}</td>
+              <td>{i.id}</td>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.userAvatar ? i.userAvatar : "./images/joker.png" } className="ui mini rounded image" />
+                    <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
-                      {i.userNickname}
-                      <div className='sub header'>
-                       ID# {i.userID}
-                      </div>
-                    </div>
+                      {i.name}
+                  </div>
                 </h5>
               </td>
-              <td>{i.appName}</td>
+              <td>{i.company}</td>
+              <td>{i.details}</td>
+              <td>{i.accountCount == 0 || i.accountCount == 1 ? i.accountCount+" User" :  i.accountCount+" Users"}</td>
               <td>{setStatus(i)}</td>
               <td>
-                <button className='ui icon button violet' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.name,i.imageID,i.companyID,i.details,i.accountCount,i.status)}>
                     <i className="pencil icon"></i>
                 </button>
               </td>

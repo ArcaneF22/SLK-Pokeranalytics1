@@ -77,7 +77,7 @@ export const FetchClubs = ({ selectData }) => {
             <tr key={index}>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.imageFull ? i.imageFull : "./images/club.png"} className="ui mini rounded image" />
+                    <img src={i.imageFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.name}
                       <div className="sub header">

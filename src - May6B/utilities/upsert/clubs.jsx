@@ -263,7 +263,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
 
           <div className='two fields'>
 
-            <div className="field">
+          <div className="field">
               <label>Club Name</label>
               <input type="text" value={clubName} onChange={(e) => setclubName(e.currentTarget.value)}/>
             </div>
@@ -350,7 +350,9 @@ export const UpsertClubs = ({selectedData,recallData}) => {
                     />
               </div>
 
-          <div className='three fields'>
+          <div className='two fields'>
+
+
 
               <div className="field">
                   <label>Status</label>

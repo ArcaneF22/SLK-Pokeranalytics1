@@ -75,7 +75,7 @@ export const FetchUsers = ({ selectData }) => {
             <tr key={index}>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.avatarFull ? i.avatarFull : "./images/joker-colored.png"} className="ui mini rounded image" />
+                    <img src={i.avatarFull} className="ui mini rounded image" />
                     <div className="content">
                       {i.nickname}
                       <div className="sub header">

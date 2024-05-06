@@ -1,18 +1,16 @@
 import React, { useLayoutEffect, useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
-import { useDropzone } from 'react-dropzone'; //INSTALL { npm i react-dropzone }
 import axios from 'axios';
 
-export const MultipleClubs = () => {
-    const [CSVFile, setCSVFile] = useState('');
+export const MultipleUplines = () => {
     const [JSONData, setJSONData] = useState('');
-    const [message, setMessage] = useState("Upload a CSV file");
+    const [message, setMessage] = useState("");
     const [csvLoaded, setcsvLoaded] = useState(false);
 
     const CSVFileUpload = (event) => {
         const fileCSV = event.target.files[0];
         const reader = new FileReader();
-
+    
         if (fileCSV.type !== 'text/csv') {
             setMessage('Please select a CSV file.');
         } else {
@@ -32,15 +30,13 @@ export const MultipleClubs = () => {
         }
     };
   
-
-
     const functionCSVtoJSON = (csvArray) => {
         if (!Array.isArray(csvArray)) {
             setMessage('Invalid CSV data format (not an array)');
             setJSONData("")
         } else {
             const headerROW = csvArray[0];
-            if(headerROW[0] != "idd" || headerROW[1] != "club" || headerROW[2] != "app" || headerROW[3] != "union" || headerROW[4] != "status"){
+            if(headerROW[0] != "idd" || headerROW[1] != "Upline" || headerROW[2] != "app" || headerROW[3] != "union" || headerROW[4] != "status"){
               setMessage("CSV wrong format!")
               setJSONData("")
             } else {
@@ -128,8 +124,6 @@ export const MultipleClubs = () => {
         fetching();
       }, []);
 
-
-
     return (
         <div className="ui segment basic">
           {
@@ -139,44 +133,40 @@ export const MultipleClubs = () => {
                         {message}
                     </h3>
                     <input type="file" id='csvFile'
-                        style={{width:"100% !important"}}
-                        className="ui message violet basic center aligned fluid CSVFile"
-                        onChange={CSVFileUpload} />
-                <br />
-                <a className='ui button purple' href='./csv/csv_clubs.csv'>Download CSV template</a>
+                            style={{width:"100% !important"}}
+                            className="ui message violet basic center aligned fluid CSVFile"
+                            onChange={CSVFileUpload} />
+
+                <a className='ui button purple' href='./csv/csv_uplines.csv'>Download CSV template</a>
             </>
             : 
-            <div className="ui button red basic center aligned fluid" onClick={()=>{ resetCSV() } }>Reset CSV File</div>
+            <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }
-          
           
           {/* CSV to JSON Format */}
           {JSONData && (
             <div>
                 
-                <form className='ui form  left aligned' id='FormCSV'>
-                    <br />
-                    <h3 class="ui horizontal divider header">
-                        Uploaded Club CSV Form
-                    </h3>
+                <form className='ui form' id='FormCSV'>
+                    <h1>Form Fields</h1>
                         {JSONData.map((i, index) => (
-                            <div className='fields ui message clubs' key={index}>
+                            <div className='fields' key={index}>
                                 <div className='field'>
-                                    <label>Delete</label>
-                                    <div className='ui button red icon' onClick={() => deleteRow(index)}>
+                                    <label>Action</label>
+                                    <div className='ui button red icon basic' onClick={() => deleteRow(index)}>
                                         <i className='icon close'></i>
                                     </div>
                                 </div>
                                 <div className='field'>
-                                    <label>Club ID</label>
+                                    <label>Upline ID</label>
                                     <input value={i.idd} onChange={(e) => inputChange(e, index, "idd")}/>
                                 </div>
                                 <div className='field'>
-                                    <label>Club Name</label>
-                                    <input value={i.club} onChange={(e) => inputChange(e, index, "club")}/>
+                                    <label>Upline Name</label>
+                                    <input value={i.Upline} onChange={(e) => inputChange(e, index, "Upline")}/>
                                 </div>
                                 <div className='field'>
-                                    <label>Application Name</label>
+                                    <label>App Name</label>
                                     <input value={i.app} onChange={(e) => inputChange(e, index, "app")} />
                                 </div>
                                 <div className='field'>

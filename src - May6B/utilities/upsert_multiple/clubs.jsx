@@ -155,15 +155,12 @@ export const MultipleClubs = () => {
             <div>
                 
                 <form className='ui form  left aligned' id='FormCSV'>
-                    <br />
-                    <h3 class="ui horizontal divider header">
-                        Uploaded Club CSV Form
-                    </h3>
+                    <h1>Form Fields</h1>
                         {JSONData.map((i, index) => (
-                            <div className='fields ui message clubs' key={index}>
+                            <div className='fields' key={index}>
                                 <div className='field'>
-                                    <label>Delete</label>
-                                    <div className='ui button red icon' onClick={() => deleteRow(index)}>
+                                    <label>Action</label>
+                                    <div className='ui button red icon basic' onClick={() => deleteRow(index)}>
                                         <i className='icon close'></i>
                                     </div>
                                 </div>
@@ -176,7 +173,7 @@ export const MultipleClubs = () => {
                                     <input value={i.club} onChange={(e) => inputChange(e, index, "club")}/>
                                 </div>
                                 <div className='field'>
-                                    <label>Application Name</label>
+                                    <label>App Name</label>
                                     <input value={i.app} onChange={(e) => inputChange(e, index, "app")} />
                                 </div>
                                 <div className='field'>

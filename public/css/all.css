@@ -194,6 +194,9 @@ body {
           .imageAvatar{
             width: 40px !important;
           }
+          .message.clubs{
+            margin-top: 20px !important;
+          }
    }
 
   /* if screen size is bigger than 765px */

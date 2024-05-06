@@ -80,7 +80,7 @@ export const FetchAccounts = ({selectData}) => {
               <td>{i.accountClubsCount}</td>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.userAvatar ? i.userAvatar : "./images/joker.png" } className="ui mini rounded image" />
+                    <img src={i.userAvatar} className="ui mini rounded image" />
                     <div className="content">
                       {i.userNickname}
                       <div className='sub header'>

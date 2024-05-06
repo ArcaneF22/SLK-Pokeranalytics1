@@ -3,16 +3,17 @@ import Papa from 'papaparse'; //INSTALL { npm i papaparse }
 import { useDropzone } from 'react-dropzone'; //INSTALL { npm i react-dropzone }
 import axios from 'axios';
 
-export const MultipleClubs = () => {
-    const [CSVFile, setCSVFile] = useState('');
+export const MultipleAccounts = () => {
     const [JSONData, setJSONData] = useState('');
     const [message, setMessage] = useState("Upload a CSV file");
     const [csvLoaded, setcsvLoaded] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    
 
     const CSVFileUpload = (event) => {
         const fileCSV = event.target.files[0];
         const reader = new FileReader();
-
+        
         if (fileCSV.type !== 'text/csv') {
             setMessage('Please select a CSV file.');
         } else {
@@ -32,15 +33,13 @@ export const MultipleClubs = () => {
         }
     };
   
-
-
     const functionCSVtoJSON = (csvArray) => {
         if (!Array.isArray(csvArray)) {
             setMessage('Invalid CSV data format (not an array)');
             setJSONData("")
         } else {
             const headerROW = csvArray[0];
-            if(headerROW[0] != "idd" || headerROW[1] != "club" || headerROW[2] != "app" || headerROW[3] != "union" || headerROW[4] != "status"){
+            if(headerROW[0] != "idd" || headerROW[1] != "Account" || headerROW[2] != "app" || headerROW[3] != "union" || headerROW[4] != "status"){
               setMessage("CSV wrong format!")
               setJSONData("")
             } else {
@@ -59,6 +58,15 @@ export const MultipleClubs = () => {
           
         }
     };
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'csv/*',
+        onDrop: (acceptedFiles) => {
+            setSelectedFile(acceptedFiles[0]);
+        },
+      });
+
+
 
     const deleteRow = (index) => {
         const updatedData = [...JSONData]; // Create a copy of the state array
@@ -112,26 +120,8 @@ export const MultipleClubs = () => {
         }
     }
 
-    async function fetching() {
-        const url1 = "https://v6.exchangerate-api.com/v6/61b370327f102d95c5f30e60/latest/USD" //API: 61b370327f102d95c5f30e60
-        const url2 = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_3eWhXPMnNdgcR6DMhuo2lPBiRYZXMbfp99qVbGY1"
-      try {
-        const response = await axios.get(url1);
-
-        console.log(response.data)
-      } catch (error) {
-        console.error("Error fetching data: 61b370327f102d95c5f30e60", error);
-      }
-    }
-  
-    useLayoutEffect(() => {
-        fetching();
-      }, []);
-
-
-
     return (
-        <div className="ui segment basic">
+        <div className="ui segment basic" >
           {
             !csvLoaded ?
             <>
@@ -143,40 +133,36 @@ export const MultipleClubs = () => {
                         className="ui message violet basic center aligned fluid CSVFile"
                         onChange={CSVFileUpload} />
                 <br />
-                <a className='ui button purple' href='./csv/csv_clubs.csv'>Download CSV template</a>
+                <a className='ui button purple fluid' href='./csv/csv_clubs.csv'>Download CSV template</a>
             </>
             : 
-            <div className="ui button red basic center aligned fluid" onClick={()=>{ resetCSV() } }>Reset CSV File</div>
+            <div className='ui button teal' onClick={()=>{ resetCSV() } }>Reset CSV File</div>
           }
-          
           
           {/* CSV to JSON Format */}
           {JSONData && (
             <div>
                 
-                <form className='ui form  left aligned' id='FormCSV'>
-                    <br />
-                    <h3 class="ui horizontal divider header">
-                        Uploaded Club CSV Form
-                    </h3>
+                <form className='ui form' id='FormCSV'>
+                    <h1>Form Fields</h1>
                         {JSONData.map((i, index) => (
-                            <div className='fields ui message clubs' key={index}>
+                            <div className='fields' key={index}>
                                 <div className='field'>
-                                    <label>Delete</label>
-                                    <div className='ui button red icon' onClick={() => deleteRow(index)}>
+                                    <label>Action</label>
+                                    <div className='ui button red icon basic' onClick={() => deleteRow(index)}>
                                         <i className='icon close'></i>
                                     </div>
                                 </div>
                                 <div className='field'>
-                                    <label>Club ID</label>
+                                    <label>Account ID</label>
                                     <input value={i.idd} onChange={(e) => inputChange(e, index, "idd")}/>
                                 </div>
                                 <div className='field'>
-                                    <label>Club Name</label>
-                                    <input value={i.club} onChange={(e) => inputChange(e, index, "club")}/>
+                                    <label>Account Name</label>
+                                    <input value={i.Account} onChange={(e) => inputChange(e, index, "Account")}/>
                                 </div>
                                 <div className='field'>
-                                    <label>Application Name</label>
+                                    <label>App Name</label>
                                     <input value={i.app} onChange={(e) => inputChange(e, index, "app")} />
                                 </div>
                                 <div className='field'>
