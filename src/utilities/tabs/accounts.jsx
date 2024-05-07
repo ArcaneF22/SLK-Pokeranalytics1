@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState, setState } from 'react';
 import * as SUI from 'semantic-ui-react';
+import * as Set from '../constants'
 
 import { FetchAccounts } from '../fetch/tables/accounts'
 import { MultipleAccounts } from '../upsert_multiple/accounts'
@@ -9,20 +10,21 @@ export const TabAccounts = () => {
 
     const [gotData, setgotData] = useState([]);
     const [recall, setRecall] = useState(0);
+    const [resetSelect, setresetSelect] = useState("false");
     const [activeIndex, setActiveIndex] = useState(0);
 
     const selectData = (newValue) => {
-      setgotData(newValue)
-      setSelected(newValue.selected)
-    };
-    const selectImage = (newValue) => {
       setgotData(newValue)
     };
   
     const recallData = (re) => {
       setRecall(re)
     };
-    
+
+    const resetSelected = (se) => {
+        setresetSelect(se)
+    };
+
     useLayoutEffect(() => {
       if(recall==1){
         setRecall(0)
@@ -30,19 +32,32 @@ export const TabAccounts = () => {
     }, [recall]);
 
 
+
+    useLayoutEffect(() => {
+      if(gotData['proceed'] == "true"){
+            gotData['proceed'] = "false"
+            setActiveIndex(1)
+            setgotData(gotData)
+      } else {
+            setgotData([])
+      }
+    }, [gotData['id']]);
+
+    useLayoutEffect(() => {
+      if(resetSelect == "true"){
+        setgotData([])
+        selectData("")
+        setresetSelect("false")
+        resetSelected("false")
+      } 
+    }, [resetSelect]);
+
     const panes = [
         {
           render: () => 
             <SUI.TabPane attached={false}>
                     {recall === 1 ? (
-                        <SUI.Segment>
-                            <SUI.Dimmer active>
-                                <SUI.Loader indeterminate>
-                                    Preparing Table
-                                </SUI.Loader>
-                            </SUI.Dimmer>
-                            <SUI.Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-                        </SUI.Segment>
+                        <Set.LoadingData/>
                     ) : (
                         <FetchAccounts selectData={selectData} />
                     )}
@@ -51,7 +66,7 @@ export const TabAccounts = () => {
         {
           render: () => 
             <SUI.TabPane attached={false}>
-                <UpsertAccounts selectedData={gotData} recallData={recallData} />
+                <UpsertAccounts selectedData={gotData} recallData={recallData} resetSelected={resetSelected} />
             </SUI.TabPane>,
         },
         {

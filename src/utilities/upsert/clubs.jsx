@@ -7,7 +7,7 @@ import { Unions } from '../fetch/raw/unions'
 import * as Set from '../constants';
 import * as Alert from "../alerts/alerts"
 
-export const UpsertClubs = ({selectedData,recallData}) => {
+export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
   const appDD = Applications().data
   const imgDD = ImagesClubs().data
   const uniDD = Unions().data
@@ -98,7 +98,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
     setButton("Add New Data")
     setLoading(false)
     setCancels(false)
-
+    resetSelected("true")
   }
 
   const reCheckValues = () => {
@@ -168,7 +168,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
         setButton("Proceed to Update")
           setAlertMessage({
               Alert: "warning",
-              Title: "Duplicate!",
+              Title: "Found duplicate!",
               Message: "Please check club ID#"+ number,
           });
         setCancels(true)
@@ -226,7 +226,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
       }
 
       <div className="ui segment basic left aligned">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Insert / Update Clubs
         </h3>
         <br />
@@ -370,7 +370,7 @@ export const UpsertClubs = ({selectedData,recallData}) => {
           </div>
 
            
-          <div class="ui horizontal  inverted divider">
+          <div className="ui horizontal  inverted divider">
             <div className="field center aligned">
               <div className="ui button purple" onClick={ValidateForm}>
                 <i className="plus icon"></i>

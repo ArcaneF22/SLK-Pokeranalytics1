@@ -50,7 +50,7 @@ export const FetchMyAccounts = ({selectMyAccount}) => {
       <Set.LoadingData />
       ) : (
       <div className="ui segment ">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           My Accounts List
         </h3>
         <br />

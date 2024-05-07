@@ -10,17 +10,17 @@ export const FetchAccounts = ({selectData}) => {
 
   function setStatus(i) {
     if (i.statusLabel == "Active") {
-      return  <button className='ui button green basic'>
+      return  <button className='ui button violet fluid basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
     } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button yellow basic'>
+      return  <button className='ui button orange fluid basic'>
                   <i className="spinner icon"></i>
                   Pending
               </button>;
     } else {
-      return  <button className='ui button red basic'>
+      return  <button className='ui button red fluid basic'>
                   <i className="times circle outline icon"></i>
                   Inactive
               </button>;
@@ -31,6 +31,7 @@ export const FetchAccounts = ({selectData}) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
+                    "proceed": "true",
                     "selected": 1,
                     "id": id,
                     "idd": idd, 
@@ -54,7 +55,7 @@ export const FetchAccounts = ({selectData}) => {
       <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Accounts List
         </h3>
         <br />
@@ -62,22 +63,22 @@ export const FetchAccounts = ({selectData}) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nickname</th>
-            <th>Role</th>
-            <th>Clubs</th>
-            <th>User</th>
-            <th>Application</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>NICKNAME</th>
+            <th>ROLE</th>
+            <th>USER</th>
+            <th>APPLICATION</th>
+            <th>STATUS</th>
+            <th>EDIT</th>
           </tr>
         </thead>
         <tbody>
           {data.map((i, index) => (
             <tr key={index}>
-              <td>{i.accountID}</td>
+              <td className='center aligned'>
+                <b>{i.accountID}</b>
+              </td>
               <td>{i.accountNickname}</td>
               <td>{i.accountRole}</td>
-              <td>{i.accountClubsCount}</td>
               <td>
                 <h5 className="ui image header">
                     <img src={i.userAvatar ? i.userAvatar : "./images/joker.png" } className="ui mini rounded image" />
@@ -89,7 +90,16 @@ export const FetchAccounts = ({selectData}) => {
                     </div>
                 </h5>
               </td>
-              <td>{i.appName}</td>
+              <td>
+                <h5 className="ui header">
+                    <div className="content">
+                    {i.appName}
+                      <div className='sub header'>
+                       {i.accountClubsCount == 0 ? "No club" : i.accountClubsCount == 1 ? "1 club" : i.accountClubsCount+" clubs" }
+                      </div>
+                    </div>
+                </h5>
+              </td>
               <td>{setStatus(i)}</td>
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>

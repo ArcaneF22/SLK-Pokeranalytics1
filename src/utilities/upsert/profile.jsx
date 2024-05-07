@@ -289,7 +289,7 @@ const panels = [
                                   <input type="password" placeholder="Current password" value={password.replace(/\s/g, "")} maxLength={20} onChange={(e) => setPassword(e.currentTarget.value.trim())}/>
                               </div>
 
-                              <div class="ui horizontal  inverted divider">
+                              <div className="ui horizontal  inverted divider">
                                 <div className="field center aligned">
                                     { updateButton ? 
                                         <div className="ui button purple right labeled icon" onClick={ValidateForm}>

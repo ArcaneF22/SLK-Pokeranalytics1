@@ -10,17 +10,17 @@ export const FetchApplications = ({selectData}) => {
 
   function setStatus(i) {
     if (i.statusLabel == "Active") {
-      return  <button className='ui button green basic'>
+      return  <button className='ui button violet fluid basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
     } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button yellow basic'>
+      return  <button className='ui button orange fluid basic'>
                   <i className="spinner icon"></i>
                   Pending
               </button>;
     } else {
-      return  <button className='ui button red basic'>
+      return  <button className='ui button red fluid basic'>
                   <i className="times circle outline icon"></i>
                   Inactive
               </button>;
@@ -31,6 +31,7 @@ export const FetchApplications = ({selectData}) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
+                    "proceed": "true",
                     "id": id, 
                     "name": name, 
                     "image": image, 
@@ -41,10 +42,7 @@ export const FetchApplications = ({selectData}) => {
                   }
       setClicked(clicked+1)
       selectData(array);
-      setTimeout(
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      , 1000)
-    
+      window.scrollTo({ top: 0, behavior: 'smooth' })
   };
 
 
@@ -52,13 +50,11 @@ export const FetchApplications = ({selectData}) => {
   return (
 <>
 
-
-
 {load ? (
         <Set.LoadingData />
       ) : (
       <div className="ui segment basic">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Applications List
         </h3>
         <br />
@@ -66,12 +62,12 @@ export const FetchApplications = ({selectData}) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Application</th>
-            <th>Company</th>
-            <th>Details</th>
-            <th>Users</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>APPLICATION</th>
+            <th>COMPANY</th>
+            <th>DETAILS</th>
+            <th>USERS</th>
+            <th>STATUS</th>
+            <th>EDIT</th>
           </tr>
         </thead>
         <tbody>

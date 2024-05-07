@@ -14,7 +14,7 @@ export const FetchUnions = () => {
       <Set.LoadingData />
       ) : (
       <div className="ui segment ">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Unions List
         </h3>
         <br />

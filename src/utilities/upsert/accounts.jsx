@@ -9,7 +9,7 @@ import { Users } from '../fetch/raw/users'
 import { Accounts } from '../fetch/raw/accounts'
 import * as Set from '../constants';
 
-export const UpsertAccounts = ({selectedData,recallData}) => {
+export const UpsertAccounts = ({selectedData,recallData,resetSelected}) => {
   const appDD = Applications().data
   const roleDD = Roles().data
   const usersDD = Users().data
@@ -86,6 +86,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
     setButton("Add New Data")
     setLoading(false)
     setCancels(false)
+    resetSelected("true")
   }
 
 
@@ -101,7 +102,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
         if(selectedData.status=="0" || selectedData.status=="Active"){
             setaccountStatus("0")
-        } else if(selectedData.status=="Pending"){
+        } else if(selectedData.status=="1" || selectedData.status=="Pending"){
             setaccountStatus("1")
         } else {
             setaccountStatus("2")
@@ -202,11 +203,10 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
       }
 
       <div className="ui segment basic  left aligned">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Insert / Update Accounts
         </h3>
         <br />
-
         <div className="ui form">
           <div className='three fields'>
 
@@ -297,15 +297,15 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
           </div>
 
           <div className='two fields'>
-
+              
             <div className="field">
             <label>Status</label>
-            { accountStatus === "0" ? (
+            { accountStatus == "0" ? (
                         <button className='ui button green fluid center aligned' onClick={ changeStatus }>
                             <i className="check circle outline icon"></i>
                             Active
                         </button>
-              ) : accountStatus === "1" ? (
+              ) : accountStatus == "1" ? (
                         <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
                             <i className="spinner icon"></i>
                             Pending
@@ -349,7 +349,7 @@ export const UpsertAccounts = ({selectedData,recallData}) => {
 
           </div>
           
-          <div class="ui horizontal  inverted divider">
+          <div className="ui horizontal  inverted divider">
             <div className="field center aligned">
               <div className="ui button purple" onClick={ValidateForm}>
                 <i className="plus icon"></i>

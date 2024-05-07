@@ -112,7 +112,7 @@ export const LoginPage = () => {
 
   return (
     <>
-<div className='bg-color-login login '>
+<div className='bg-color-login login ' >
     <br /> <br /> <br /> <br /> <br />
     <div className="ui two stackable middle aligned center aligned grid">
 
@@ -121,8 +121,8 @@ export const LoginPage = () => {
         <img className="ui fluid centered medium image unClickable" src={image} />
       </div>
 
-      <div className="six wide column on-top-reduce">
-        <div className="ui large form segment minus-top">
+      <div className="six wide column on-top-reduce" >
+        <div className="ui large form segment minus-top" >
 
           <h2 className="ui image header">
             <div className="content title-header fontRubik">

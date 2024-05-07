@@ -25,24 +25,23 @@ export const FetchClubs = ({ selectData }) => {
                   }
       setClicked(clicked+1)
       selectData(array);
-
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
 
   };
 
   function setStatus(i) {
     if (i.statusLabel == "Active") {
-      return  <button className='ui button green basic'>
+      return  <button className='ui button fluid violet basic'>
                   <i className="check circle outline icon"></i>
                   Active
               </button>;
     } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button yellow basic'>
+      return  <button className='ui button fluid orange basic'>
                   <i className="spinner icon"></i>
                   Pending
               </button>;
     } else {
-      return  <button className='ui button red basic'>
+      return  <button className='ui button fluid red basic'>
                   <i className="times circle outline icon"></i>
                   Inactive
               </button>;
@@ -56,20 +55,20 @@ export const FetchClubs = ({ selectData }) => {
           <Set.LoadingData />
       ) : ( 
         <div className="ui segment basic">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Clubs List
         </h3>
         <br />
         <table className='ui celled striped table fluid small compact'>
         <thead>
           <tr>
-            <th>Club</th>
-            <th>Application</th>
-            <th>Details</th>
-            <th>Type</th>
-            <th>Users</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>CLUB</th>
+            <th>APPLICATION</th>
+            <th>DETAILS</th>
+            <th>TYPE</th>
+            <th>ACCOUNTS</th>
+            <th>STATUS</th>
+            <th>EDIT</th>
           </tr>
         </thead>
         <tbody>
@@ -88,17 +87,17 @@ export const FetchClubs = ({ selectData }) => {
               </td>
               <td>{i.appName}</td>
               <td>{i.details}</td>
-              <td>
-                <div className="content">
-                  <div className="header">
-                    {i.type}
+              <td className='ui relaxed divided list'>
+                  <div className='item'>
+                      <div className="content">
+                        <div className="header">
+                          {i.type}
+                        </div>
+                        {i.unionName ? <div className="description">{i.unionName}</div> : null}
+                      </div>
                   </div>
-                  <div className="description">
-                    {i.unionName}
-                  </div>
-                </div>
               </td>
-              <td>{i.users === 0 ? "No Users" : i.users === 1 ? "1 User" : (i.users+" Users")}</td>
+              <td>{i.users == 0 ? "No account" : i.users == 1 ? "1 account" : (i.users+" accounts")}</td>
               <td>{setStatus(i)} </td>
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>

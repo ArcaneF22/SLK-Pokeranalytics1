@@ -113,7 +113,7 @@ export const MultipleUnions = () => {
           {
             !csvLoaded ? 
             <>
-                    <h3 class="ui horizontal divider header">
+                    <h3 className="ui horizontal divider header">
                         {message}
                     </h3>
                     <input type="file" id='csvFile'

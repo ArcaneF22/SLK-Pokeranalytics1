@@ -239,7 +239,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
       }
 
 <div className="ui segment basic left aligned">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Insert / Update Users
         </h3>
         <br />
@@ -304,7 +304,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
           <div className='three fields'>
               <div className="field">
                 <label>Username</label>
-                <input type="text" Email value={newuserUsername.replace(/\s/g, "")} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
+                <input type="text" value={newuserUsername.replace(/\s/g, "")} onChange={(e) => setnewuserUsername(e.currentTarget.value)}/>
               </div>
 
               <div className="field">

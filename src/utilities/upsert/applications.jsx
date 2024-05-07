@@ -6,7 +6,7 @@ import * as SUI from 'semantic-ui-react'
 import * as Set from '../constants';
 import * as Alert from "../alerts/alerts"
 
-export const UpsertApplications = ({selectedData,recallData}) => {
+export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const imgDD = ImagesApps().data
@@ -77,6 +77,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
       setButton("Add New Data")
       setLoading(false)
       setCancels(false)
+      resetSelected("true")
     }
 
     const reCheckValues = () => {
@@ -133,7 +134,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
             setappID( number )
             setAlertMessage({
                 Alert: "warning",
-                Title: "Duplicate!",
+                Title: "Found duplicate!",
                 Message: "Please check application ID#"+ number,
             });
             setButton("Proceed to Update")
@@ -191,7 +192,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
       }
 
       <div className="ui segment basic left aligned">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Insert / Update Applications
         </h3>
         <br />
@@ -278,7 +279,7 @@ export const UpsertApplications = ({selectedData,recallData}) => {
 
           </div>
 
-          <div class="ui horizontal inverted divider">
+          <div className="ui horizontal inverted divider">
             <div className="field center aligned">
               <div className="ui button purple" onClick={ValidateForm}>
                 <i className="plus icon"></i>

@@ -359,8 +359,6 @@ export const HomePage = () => {
 
 
 
-
-
       <div className="ui vertical stripe quote segment ">
         <div className="ui middle aligned stackable grid container">
           <div className="row">

@@ -10,6 +10,7 @@ export const TabClubs = () => {
 
     const [gotData, setgotData] = useState([]);
     const [recall, setRecall] = useState(0);
+    const [resetSelect, setresetSelect] = useState("false");
     const [activeIndex, setActiveIndex] = useState(0);
     
     const selectData = (newValue) => {
@@ -20,11 +21,24 @@ export const TabClubs = () => {
       setRecall(re)
     };
     
+    const resetSelected = (se) => {
+        setresetSelect(se)
+    };
+
     useLayoutEffect(() => {
       if(recall==1){
         setRecall(0)
       }
     }, [recall]);
+
+    useLayoutEffect(() => {
+      if(resetSelect == "true"){
+        setgotData([])
+        selectData("")
+        setresetSelect("false")
+        resetSelected("false")
+      } 
+    }, [resetSelect]);
 
     useEffect(() => {
       if(gotData['proceed'] == "true"){
@@ -50,7 +64,7 @@ export const TabClubs = () => {
         {
           render: () => 
             <SUI.TabPane attached={false}>
-                <UpsertClubs selectedData={gotData} recallData={recallData} />
+                <UpsertClubs selectedData={gotData} recallData={recallData} resetSelected={resetSelected} />
             </SUI.TabPane>,
         },
         {

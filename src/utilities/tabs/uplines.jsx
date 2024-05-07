@@ -34,14 +34,7 @@ export const TabUplines = () => {
           render: () => 
             <SUI.TabPane attached={false}>
                     {recall === 1 ? (
-                        <SUI.Segment>
-                            <SUI.Dimmer active>
-                                <SUI.Loader indeterminate>
-                                    Preparing Table
-                                </SUI.Loader>
-                            </SUI.Dimmer>
-                            <SUI.Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-                        </SUI.Segment>
+                        <Set.LoadingData/>
                     ) : (
                         <FetchUplines selectData={selectData} />
                     )}

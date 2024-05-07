@@ -135,7 +135,7 @@ export const MultipleClubs = () => {
           {
             !csvLoaded ?
             <>
-                    <h3 class="ui horizontal divider header">
+                    <h3 className="ui horizontal divider header">
                         {message}
                     </h3>
                     <input type="file" id='csvFile'
@@ -156,7 +156,7 @@ export const MultipleClubs = () => {
                 
                 <form className='ui form  left aligned' id='FormCSV'>
                     <br />
-                    <h3 class="ui horizontal divider header">
+                    <h3 className="ui horizontal divider header">
                         Uploaded Club CSV Form
                     </h3>
                         {JSONData.map((i, index) => (

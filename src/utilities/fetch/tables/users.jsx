@@ -53,7 +53,7 @@ export const FetchUsers = ({ selectData }) => {
       <Set.LoadingData/>
       ) : (
       <div className="ui segment basic">
-        <h3 class="ui horizontal divider header">
+        <h3 className="ui horizontal divider header">
           Users List
         </h3>
         <br />

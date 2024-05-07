@@ -47,10 +47,10 @@ export const FetchImages = ({ selectImage }) => {
         <div className="ui segment basic">
 
           <div className='ui message violet'>
-            <h3 class="ui header">
+            <h3 className="ui header">
               Avatar Images
             </h3>
-            <div class="ui divider"></div>
+            <div className="ui divider"></div>
             <SUI.ImageGroup size='tiny' >
               {dataAvat.map((i, index) => (
                   <SUI.Image 
@@ -63,10 +63,10 @@ export const FetchImages = ({ selectImage }) => {
           </div>
 
           <div className='ui message violet'>
-            <h3 class="ui header">
+            <h3 className="ui header">
               Application Images
             </h3>
-            <div class="ui divider"></div>
+            <div className="ui divider"></div>
             <SUI.ImageGroup size='tiny' >
               {dataApps.map((i, index) => (
                   <SUI.Image 
@@ -79,10 +79,10 @@ export const FetchImages = ({ selectImage }) => {
           </div>
 
           <div className='ui message violet'>
-            <h3 class="ui header">
+            <h3 className="ui header">
               Clubs Images
             </h3>
-            <div class="ui divider"></div>
+            <div className="ui divider"></div>
             <SUI.ImageGroup size='tiny' >
               {dataClubs.map((i, index) => (
                   <SUI.Image 
@@ -95,10 +95,10 @@ export const FetchImages = ({ selectImage }) => {
           </div>
 
           <div className='ui message violet'>
-            <h3 class="ui header">
+            <h3 className="ui header">
               Logo Images
             </h3>
-            <div class="ui divider"></div>
+            <div className="ui divider"></div>
             <SUI.ImageGroup size='tiny' >
               {dataLogo.map((i, index) => (
                   <SUI.Image 

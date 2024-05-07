@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import * as SUI from 'semantic-ui-react';
+import * as Set from '../constants'
 
 import { FetchUnions } from '../fetch/tables/unions'
 import { MultipleUnions } from '../upsert_multiple/unions'
@@ -34,14 +35,7 @@ export const TabUnions = () => {
           render: () => 
             <SUI.TabPane attached={false}>
                     {recall === 1 ? (
-                        <SUI.Segment>
-                            <SUI.Dimmer active>
-                                <SUI.Loader indeterminate>
-                                    Preparing Table
-                                </SUI.Loader>
-                            </SUI.Dimmer>
-                            <SUI.Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-                        </SUI.Segment>
+                        <Set.LoadingData/>
                     ) : (
                         <FetchUnions selectData={selectData} />
                     )}

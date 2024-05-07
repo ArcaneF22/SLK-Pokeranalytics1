@@ -15,6 +15,7 @@ export const AccountsPage = () => {
       </div>
 
       <table className="ui table basic noBorder">
+        <tbody>
           <tr className="ui middle aligned divided list">
             <td className='center aligned'>
               <TabAccounts defaultActiveIndex={1} />
@@ -41,6 +42,7 @@ export const AccountsPage = () => {
               </div>
             </td>
           </tr>
+          </tbody>
         </table>
     </>
       
