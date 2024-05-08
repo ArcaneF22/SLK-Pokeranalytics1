@@ -117,7 +117,7 @@ export const LoginPage = () => {
     <div className="ui two stackable middle aligned center aligned grid">
 
       <div className="ten wide column n-bot-reduce">
-      <br /> <br /> <br /> <br /> <br />
+      <br /> <br /> <br /> 
         <img className="ui fluid centered medium image unClickable" src={image} />
       </div>
 

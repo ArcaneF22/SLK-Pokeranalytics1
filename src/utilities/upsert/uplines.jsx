@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
 import { Uplines } from '../fetch/raw/uplines'
 import { Accounts } from '../fetch/raw/accounts'
+import { Clubs } from '../fetch/raw/clubs'
 import { Roles } from '../fetch/raw/roles'
 import * as Set from '../constants';
 
@@ -10,6 +11,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const UplineDD = Uplines().data
   const acctDD = Accounts().data
   const roleDD = Roles().data
+  const clubDD = Clubs().data
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
@@ -18,6 +20,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const [cancels, setCancels] =           useState(false);
 
   const [id, setID] =                           useState("0");
+  const [clubID, setclubID] =           useState("");
   const [downlineID, setdownlineID] =           useState("");
   const [uplineID, setuplineID] =               useState("");
   const [percentage, setPercentage] =           useState("");
@@ -41,7 +44,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
       Object.entries(Upsert).map(([key, value]) => [key, value.toString().trim()])
   );
 
-  const AllGotValues = [UplineID,downlineID,uplineID,percentage,status]
+  const AllGotValues = [downlineID,uplineID,percentage,status]
   const YesWithvalues = AllGotValues.every(value => Boolean(value));
 
   const ValidateForm = (e) => {
@@ -64,7 +67,6 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
   const resetForm = () => {
     setID("0")
-    setUplineID("")
     setdownlineID("")
     setdownlineRole("")
     setuplineID("")
@@ -82,7 +84,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const fromTable = () => {
 
     setID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
-    setUplineID(selectedData.UplineIDD === null || selectedData.UplineIDD === undefined ? "" : selectedData.UplineIDD)
+
     setdownlineID(selectedData.downlineID === null || selectedData.downlineID === undefined ? "" : selectedData.downlineID)
     setuplineID(selectedData.uplineID === null || selectedData.uplineID === undefined ? "" : selectedData.uplineID)
     setPercentage(selectedData.percentage === null || selectedData.percentage === undefined ? "" : selectedData.percentage)
@@ -175,14 +177,14 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                         search={true}
                         multiple={false}
                         header="Select Upline"
-                        onChange={(event, { value }) => { setUplineID(value); }}
-                        value={UplineID}
-                        options={UplineDD.map(i => {
+                        onChange={(event, { value }) => { setclubID(value); }}
+                        value={clubID}
+                        options={clubDD.map(i => {
                           return {
                             key: i.id,
                             text: i.name,
-                            value: i.idd,
-                            image: { avatar: true, src: i.imageFull },
+                            value: i.id,
+                            image: { avatar: true, src: (i.imageFull ? i.imageFull : "./images/club.png") },
                           };
                         })}
                       />
