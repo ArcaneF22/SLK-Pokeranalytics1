@@ -196,9 +196,9 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
           Insert / Update Applications
         </h3>
         <br />
-        <div className="ui form">
+        <div className="ui form fitted">
 
-          <div className='three fields'>
+          <div className='two fields'>
 
               <div className="field">
                 <label>Name</label>
@@ -260,7 +260,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
               <textarea type="text" rows="2" placeholder='Other details (100)' value={appDetails} onChange={(e) => setappDetails(e.currentTarget.value)}/>
           </div>
 
-          <div className='two fields'>
+          <div className='three fields'>
 
             <div className="field">
             <label>Status</label>

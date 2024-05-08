@@ -10,17 +10,19 @@ export const TabUsers = () => {
 
     const [gotData, setgotData] = useState([]);
     const [recall, setRecall] = useState(0);
+    const [resetSelect, setresetSelect] = useState("false");
     const [activeIndex, setActiveIndex] = useState(0);
 
     const selectData = (newValue) => {
       setgotData(newValue)
     };
-    const selectImage = (newValue) => {
-      setgotData(newValue)
-    };
   
     const recallData = (re) => {
       setRecall(re)
+    };
+    
+    const resetSelected = (se) => {
+        setresetSelect(se)
     };
     
     useLayoutEffect(() => {
@@ -29,6 +31,24 @@ export const TabUsers = () => {
       }
     }, [recall]);
   
+    useLayoutEffect(() => {
+      if(resetSelect == "true"){
+        setgotData([])
+        selectData("")
+        setresetSelect("false")
+        resetSelected("false")
+      } 
+    }, [resetSelect]);
+
+    useLayoutEffect(() => {
+      if(gotData['proceed'] == "true"){
+            gotData['proceed'] = "false"
+            setActiveIndex(1)
+            setgotData(gotData)
+      } else {
+            setgotData([])
+      }
+    }, [gotData['id']]);
 
     const panes = [
         {
@@ -44,7 +64,7 @@ export const TabUsers = () => {
         {
           render: () => 
             <SUI.TabPane attached={false}>
-                <UpsertUsers selectedData={gotData} recallData={recallData} />
+                <UpsertUsers selectedData={gotData} recallData={recallData} resetSelected={resetSelected} />
             </SUI.TabPane>,
         },
         {

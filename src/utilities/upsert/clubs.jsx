@@ -231,7 +231,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
         </h3>
         <br />
 
-        <div className="ui form">
+        <div className="ui form fitted">
 
           <div className='two fields'>
 
@@ -370,7 +370,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
           </div>
 
            
-          <div className="ui horizontal  inverted divider">
+          <div className="ui horizontal inverted divider">
             <div className="field center aligned">
               <div className="ui button purple" onClick={ValidateForm}>
                 <i className="plus icon"></i>
@@ -387,7 +387,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
                   Clear
                 </div>
               </> :  null }
-
             </div>
           </div>
 

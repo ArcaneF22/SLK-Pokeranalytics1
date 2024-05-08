@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const MultipleUplines = () => {
     const [JSONData, setJSONData] = useState('');
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("Upload a CSV file");
     const [csvLoaded, setcsvLoaded] = useState(false);
 
     const CSVFileUpload = (event) => {

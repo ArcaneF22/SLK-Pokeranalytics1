@@ -30,6 +30,7 @@ export const FetchUsers = ({ selectData }) => {
     setClicked(clicked+1)
     const array = {
                     "clicked":clicked,
+                    "proceed": "true",
                     "id": id, 
                     "nickname": nickname, 
                     "role": role, 

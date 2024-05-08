@@ -18,7 +18,6 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const [cancels, setCancels] =           useState(false);
 
   const [id, setID] =                           useState("0");
-  const [UplineID, setUplineID] =                   useState("");
   const [downlineID, setdownlineID] =           useState("");
   const [uplineID, setuplineID] =               useState("");
   const [percentage, setPercentage] =           useState("");
@@ -31,7 +30,6 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                   C: Token['gadget'],
                   D: Set.TimeZoned,
                   id,
-                  UplineID,
                   downlineID,
                   uplineID,
                   percentage,
@@ -154,72 +152,71 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     }
   }
 
-
+    // check downline if exists, show clubs and upline from application where downline is registered.. 
     return (
-      <div className="ui segment">
+      <div className="ui segment basic">
         <h3 className="ui horizontal divider header">
           Insert / Update Uplines
         </h3>
         <br />
 
-        <div className="ui form">
+        <div className="ui form fitted">
 
-          <div className='five fields'>
-
-            <div className="field">
-              <label>ID</label>
-              <input type="number" value={id} onChange={(e) => setID(e.currentTarget.value)}/>
-            </div>
-
-              <div className="field">
-              <label>Upline</label>
-              <SUI.Dropdown
-                    placeholder="Select Upline"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={true}
-                    multiple={false}
-                    header="Select Upline"
-                    onChange={(event, { value }) => { setUplineID(value); }}
-                    value={UplineID}
-                    options={UplineDD.map(i => {
-                      return {
-                        key: i.id,
-                        text: i.name,
-                        value: i.idd,
-                        image: { avatar: true, src: i.imageFull },
-                      };
-                    })}
-                  />
-            </div>
+        <div className='two fields'>
 
             <div className="field">
-              <label>Downline Account</label>
-              <SUI.Dropdown
-                    placeholder="Select image"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={true}
-                    multiple={false}
-                    header="Select image"
-                    onChange={(event, { value }) => { setdownlineID(value); }}
-                    value={downlineID}
-                    options={acctDD.map(i => {
-                      return {
-                        key: i.accountID,
-                        text: i.accountRole+": "+i.accountNickname,
-                        value: i.accountID,
-                        image: { avatar: true, src: i.userAvatar },
-                      };
-                    })}
-                  />
-            </div>
+                  <label>Clubs</label>
+                  <SUI.Dropdown
+                        placeholder="Select Upline"
+                        scrolling
+                        clearable
+                        fluid
+                        selection
+                        search={true}
+                        multiple={false}
+                        header="Select Upline"
+                        onChange={(event, { value }) => { setUplineID(value); }}
+                        value={UplineID}
+                        options={UplineDD.map(i => {
+                          return {
+                            key: i.id,
+                            text: i.name,
+                            value: i.idd,
+                            image: { avatar: true, src: i.imageFull },
+                          };
+                        })}
+                      />
+                </div>
 
-            <div className="field">
+                <div className="field">
+                  <label>Downline Account</label>
+                  <SUI.Dropdown
+                        placeholder="Select image"
+                        scrolling
+                        clearable
+                        fluid
+                        selection
+                        search={true}
+                        multiple={false}
+                        header="Select image"
+                        onChange={(event, { value }) => { setdownlineID(value); }}
+                        value={downlineID}
+                        options={acctDD.map(i => {
+                          return {
+                            key: i.accountID,
+                            text: i.accountRole+": "+i.accountNickname,
+                            value: i.accountID,
+                            image: { avatar: true, src: i.userAvatar },
+                          };
+                        })}
+                      />
+                </div>
+
+        </div>
+
+        <div className='two fields'>
+
+        <div className="field">
               <label>Upline Account</label>
               <SUI.Dropdown
                     placeholder="Select image"
@@ -248,6 +245,10 @@ export const UpsertUplines = ({selectedData,recallData}) => {
               <input type="number" value={percentage} onChange={(e) => setPercentage(e.currentTarget.value)}/>
             </div>
 
+        </div>
+
+          <div className='three fields'>
+
             <div className="field">
             <label>Status</label>
               { status === "0" || status === "Active" ? 
@@ -271,17 +272,24 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
           </div>
 
-          <div className="field">
-            <div className="ui button purple" onClick={ValidateForm}>
-              <i className="plus icon"></i>
-              {button}
-            </div>
+          <div className="ui horizontal inverted divider">
+            <div className="field center aligned">
+              <div className="ui button purple" onClick={ValidateForm}>
+                <i className="plus icon"></i>
+                {button}
+              </div>
 
-            { cancels ?  <>
-              <div className="ui button grey basic" onClick={cancel}>Cancel</div>
-              <div className="ui button grey basic" onClick={resetForm}>Clear</div>
-            </> :  null }
-            <p>{message}</p>
+              { cancels ?  <>
+                <div className="ui button grey basic" onClick={cancel}>
+                  <i className='icon times'></i>
+                  Cancel
+                </div>
+                <div className="ui button grey basic" onClick={resetForm}>
+                  <i className="eraser icon"></i>
+                  Clear
+                </div>
+              </> :  null }
+            </div>
           </div>
 
         </div>

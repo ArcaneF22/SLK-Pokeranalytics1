@@ -40,7 +40,7 @@ export const TabClubs = () => {
       } 
     }, [resetSelect]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if(gotData['proceed'] == "true"){
             gotData['proceed'] = "false"
             setActiveIndex(1)

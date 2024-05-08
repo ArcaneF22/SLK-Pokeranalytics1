@@ -10,7 +10,7 @@ import { Accounts } from '../fetch/raw/accounts'
 
 import * as Set from '../constants';
 
-export const UpsertUsers = ({selectedData,recallData}) => {
+export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
 
   const imgDD = ImagesAvatars().data
   const roleDD = Roles().data
@@ -116,6 +116,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
     setButton("Add New Data")
     setLoading(false)
     setCancels(false)
+    resetSelected("true")
   }
 
   const reCheckValues = () => {
@@ -244,9 +245,9 @@ export const UpsertUsers = ({selectedData,recallData}) => {
         </h3>
         <br />
 
-        <div className="ui form">
+        <div className="ui form fitted">
 
-        <div className='three fields'>
+        <div className='two fields'>
               <div className="field">
                 <label>Role</label>
                 <SUI.Dropdown
@@ -309,12 +310,12 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
               <div className="field">
                 <label>Password</label>
-                <input type="text" placeholder='Password' value={newuserPassword.replace(/\s/g, "")} onChange={(e) => setnewuserPassword(e.currentTarget.value) }/>
+                <input type="password" placeholder='Password' value={newuserPassword.replace(/\s/g, "")} onChange={(e) => setnewuserPassword(e.currentTarget.value) }/>
               </div>
 
               <div className="field">
                 <label>Re-type Password</label>
-                <input type="text" placeholder='Re-type Password' value={newuserRePassword.replace(/\s/g, "")} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
+                <input type="password" placeholder='Re-type Password' value={newuserRePassword.replace(/\s/g, "")} onChange={(e) => setnewuserRePassword(e.currentTarget.value)}/>
               </div>
           </div>
 
@@ -363,7 +364,7 @@ export const UpsertUsers = ({selectedData,recallData}) => {
 
 
           </div>
-          <div className='two fields'>
+          <div className='three fields'>
               <div className="field">
                 <label>Status</label>
                   { newuserStatus === "0" ? (
@@ -386,22 +387,24 @@ export const UpsertUsers = ({selectedData,recallData}) => {
           </div>
 
 
+          <div className="ui horizontal inverted divider">
             <div className="field center aligned">
-                  <div className="ui button purple" onClick={ValidateForm}>
-                    <i className="plus icon"></i>
-                    {button}
-                  </div>
+              <div className="ui button purple" onClick={ValidateForm}>
+                <i className="plus icon"></i>
+                {button}
+              </div>
 
-                { cancels ?  <>
-                    <div className="ui button grey basic" onClick={cancel}>
-                      <i className='icon times'></i>
-                      Cancel
-                    </div>
-                    <div className="ui button grey basic" onClick={resetForm}>
-                      <i className="eraser icon"></i>
-                      Clear
-                    </div>
-                </> :  null }
+              { cancels ?  <>
+                <div className="ui button grey basic" onClick={cancel}>
+                  <i className='icon times'></i>
+                  Cancel
+                </div>
+                <div className="ui button grey basic" onClick={resetForm}>
+                  <i className="eraser icon"></i>
+                  Clear
+                </div>
+              </> :  null }
+            </div>
           </div>
 
         </div>

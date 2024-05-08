@@ -207,7 +207,7 @@ export const UpsertAccounts = ({selectedData,recallData,resetSelected}) => {
           Insert / Update Accounts
         </h3>
         <br />
-        <div className="ui form">
+        <div className="ui form fitted">
           <div className='three fields'>
 
               <div className="field">
@@ -296,7 +296,7 @@ export const UpsertAccounts = ({selectedData,recallData,resetSelected}) => {
 
           </div>
 
-          <div className='two fields'>
+          <div className='three fields'>
               
             <div className="field">
             <label>Status</label>
