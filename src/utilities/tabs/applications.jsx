@@ -77,7 +77,7 @@ export const TabApplications = () => {
 
     return (
         <>
-            <div className="ui three item menu">
+            <div className="ui three item menu fluid">
                 <a className={activeIndex == "0" ? "item active violet" : "item" } id='0' onClick={ ()=>setActiveIndex(0) }>
                 <i className="tasks icon"></i>
                     LIST
