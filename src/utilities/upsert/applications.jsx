@@ -211,7 +211,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                     placeholder="Select company"
                     scrolling
                     clearable
-                    fluid
+
                     selection
                     search={false}
                     multiple={false}
@@ -237,7 +237,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                     placeholder="Select image"
                     scrolling
                     clearable
-                    fluid
+
                     selection
                     search={false}
                     multiple={false}
@@ -265,12 +265,12 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
             <div className="field">
             <label>Status</label>
               { appStatus === "0" ? 
-                <div className="ui button green fluid center aligned" onClick={changeStatus}>
+                <div className="ui button green  center aligned" onClick={changeStatus}>
                   <i className="check circle outline icon"></i>
                   Active
                 </div>
               :  
-                <div className="ui button red fluid center aligned" onClick={changeStatus}>
+                <div className="ui button red  center aligned" onClick={changeStatus}>
                   <i className="times circle outline icon"></i>
                   Inactive
                 </div>
