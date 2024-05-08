@@ -387,14 +387,17 @@ export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
           </div>
 
 
-          <div className="ui horizontal inverted divider">
-            <div className="field center aligned">
-              <div className="ui button purple" onClick={ValidateForm}>
+          <div class="ui section divider"></div>
+
+          <div className="two fields center aligned centered">
+            <div className="field">
+              <div className="ui button purple fluid" onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>
-
+            </div>
               { cancels ?  <>
+              <div className="field">
                 <div className="ui button grey basic" onClick={cancel}>
                   <i className='icon times'></i>
                   Cancel
@@ -403,8 +406,8 @@ export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
                   <i className="eraser icon"></i>
                   Clear
                 </div>
+              </div>
               </> :  null }
-            </div>
           </div>
 
         </div>

@@ -278,10 +278,12 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
             </div>
 
           </div>
+          
+          <div class="ui section divider"></div>
 
-          <div className="ui horizontal divider two fields center aligned">
+          <div className="two fields center aligned centered">
             <div className="field">
-              <div className="ui button purple" onClick={ValidateForm}>
+              <div className="ui button purple fluid" onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>
@@ -298,12 +300,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                 </div>
               </div>
               </> :  null }
-            
           </div>
-
-
-
-
 
         </div>
       </div>
