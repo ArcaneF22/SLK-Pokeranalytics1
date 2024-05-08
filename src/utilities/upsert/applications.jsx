@@ -196,7 +196,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
           Insert / Update Applications
         </h3>
         <br />
-        <div className="ui equal width form fitted ">
+        <div className="ui form fitted">
 
           <div className='two fields'>
 
@@ -211,7 +211,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                     placeholder="Select company"
                     scrolling
                     clearable
-
+                    fluid
                     selection
                     search={false}
                     multiple={false}
@@ -237,7 +237,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                     placeholder="Select image"
                     scrolling
                     clearable
-
+                    fluid
                     selection
                     search={false}
                     multiple={false}
@@ -265,12 +265,12 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
             <div className="field">
             <label>Status</label>
               { appStatus === "0" ? 
-                <div className="ui button green  center aligned" onClick={changeStatus}>
+                <div className="ui button green fluid center aligned" onClick={changeStatus}>
                   <i className="check circle outline icon"></i>
                   Active
                 </div>
               :  
-                <div className="ui button red  center aligned" onClick={changeStatus}>
+                <div className="ui button red fluid center aligned" onClick={changeStatus}>
                   <i className="times circle outline icon"></i>
                   Inactive
                 </div>
@@ -279,13 +279,15 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
 
           </div>
 
-          <div className="ui horizontal inverted divider">
-            <div className="field center aligned">
-              <div className="ui button purple" onClick={ValidateForm}>
+          <div className="ui horizontal inverted divider inline fields center aligned">
+            <div className="field">
+              <div className="ui button fluid purple" onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>
+            </div>
               { cancels ?  <>
+              <div className="field fluid">
                 <div className="ui button grey basic" onClick={cancel}>
                   <i className='icon times'></i>
                   Cancel
@@ -294,8 +296,9 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
                   <i className="eraser icon"></i>
                   Clear
                 </div>
+              </div>
               </> :  null }
-            </div>
+            
           </div>
 
 
