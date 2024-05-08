@@ -287,7 +287,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
               </div>
             </div>
               { cancels ?  <>
-              <div className="field fluid">
+              <div className="field ui fluid">
                 <div className="ui button grey basic" onClick={cancel}>
                   <i className='icon times'></i>
                   Cancel
