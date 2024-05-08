@@ -196,7 +196,7 @@ export const UpsertApplications = ({selectedData,recallData,resetSelected}) => {
           Insert / Update Applications
         </h3>
         <br />
-        <div className="ui form fitted">
+        <div className="ui form fitted fluid">
 
           <div className='two fields'>
 
