@@ -254,18 +254,18 @@ export const UpsertUplines = ({selectedData,recallData}) => {
             <div className="field">
             <label>Status</label>
               { status === "0" || status === "Active" ? 
-                <div className="ui button green fluid center aligned" onClick={changeStatus}>
+                <div className="ui button green center aligned" onClick={changeStatus}>
                   <i className="check circle outline icon"></i>
                   Active
                 </div>
                 
               :  status === "1" || status === "Pending" ? 
-                <button className='ui button orange fluid center aligned' onClick={ changeStatus }>
+                <button className='ui button orange center aligned' onClick={ changeStatus }>
                     <i className="spinner icon"></i>
                     Pending
                 </button>
               :  
-                <div className="ui button red fluid center aligned" onClick={changeStatus}>
+                <div className="ui button red center aligned" onClick={changeStatus}>
                   <i className="times circle outline icon"></i>
                   Inactive
                 </div>

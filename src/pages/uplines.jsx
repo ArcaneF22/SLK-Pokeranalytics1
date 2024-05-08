@@ -4,8 +4,8 @@ export const UplinesPage = () => {
 
     return (
     <>
-      <div className='ui segment message purple-box div-animated'>
-        <h2 className="ui header inverted">
+      <div className='ui segment message purple-box div-animated glass'>
+        <h2 className="ui header inverted ">
               <i className="layer group big icon"></i>
               <div className="content">
                   Uplines Page
