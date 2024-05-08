@@ -77,20 +77,7 @@ export const TabApplications = () => {
 
     return (
         <>
-            <div className="ui three item menu fluid">
-                <a className={activeIndex == "0" ? "item active violet" : "item" } id='0' onClick={ ()=>setActiveIndex(0) }>
-                <i className="tasks icon"></i>
-                    LIST
-                </a>
-                <a className={activeIndex == "1" ? "item active violet" : "item" } id='1' onClick={ ()=>setActiveIndex(1) }>
-                    <i className="plus icon"></i>
-                    INSERT
-                </a>
-                <a className={activeIndex == "2" ? "item active violet" : "item" } id='2'onClick={ ()=>setActiveIndex(2) }>
-                    <i className="file excel outline icon"></i>
-                    UPLOAD
-                </a>
-            </div>
+
 
             <SUI.Tab menu={{ text: true }} activeIndex={activeIndex} panes={panes} style={{marginTop:"-55px"}} />
         </>
