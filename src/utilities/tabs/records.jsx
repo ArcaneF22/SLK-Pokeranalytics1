@@ -15,7 +15,9 @@ export const TabRecords = () => {
   
     const selectData = (newValue) => {
         setgotData(newValue)
+        setActiveIndex(2)
       };
+
 
 
     const panes = [
@@ -48,7 +50,7 @@ export const TabRecords = () => {
             <div className="ui three item menu">
                 <a className={activeIndex == "0" ? "item active violet" : "item" } id='0' onClick={ ()=>setActiveIndex(0) }>
                 <i className="tasks icon"></i>
-                    LIST
+                    LISTs {gotData['CLUB']}
                 </a>
                 <a className={activeIndex == "1" ? "item active violet" : "item" } id='1'onClick={ ()=>setActiveIndex(1) }>
                     <i className="file excel outline icon"></i>

@@ -4,6 +4,7 @@ import * as SUI from 'semantic-ui-react'
 import * as Alert from "../alerts/alerts"
 
 import * as Set from '../constants';
+import * as Func from '../functions';
 
 export const UpsertRecords = ({selectedData,recallData}) => {
     const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
@@ -12,7 +13,7 @@ export const UpsertRecords = ({selectedData,recallData}) => {
     const [currency, setCurrency] =                     useState(1);
     const [agencyPercent, setagencyPercent] =           useState(30);
     const [customPercent, setcustomPercent] =           useState(15);
-
+    const [extraPercent, setextraPercent] =           useState(15);
     const fromTable = () => {
 
             setaccountID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
@@ -30,6 +31,13 @@ export const UpsertRecords = ({selectedData,recallData}) => {
         return formattedDate;
     }
 
+    function toUSD(i) {
+        const number = parseFloat(i).toLocaleString('en-EN', {
+            style: 'currency',
+            currency: 'USD',
+          })
+        return number;
+    }
 
     function fromDate(i) {
         const ddate = new Date(i.DATEUNTIL);
@@ -63,8 +71,8 @@ export const UpsertRecords = ({selectedData,recallData}) => {
         </h3>
         <br />
 
-        <div className='ui form'>
-            <div className='four fields'>
+        <div className='ui form message violet'>
+            <div className='five fields'>
                 <div className='field'>
                     <label>Currency</label>
                     <input value={currency} onChange={(e) => setCurrency(e.currentTarget.value)} />
@@ -74,17 +82,21 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                     <input value={fxUSD} onChange={(e) => setfxUSD(e.currentTarget.value)} />
                 </div>
                 <div className='field'>
-                    <label>Agency %</label>
+                    <label>Club Percentage</label>
                     <input value={agencyPercent} onChange={(e) => setagencyPercent(e.currentTarget.value)} />
                 </div>
                 <div className='field'>
-                    <label>Customer %</label>
+                    <label>Customer Percentage</label>
+                    <input value={customPercent} onChange={(e) => setcustomPercent(e.currentTarget.value)} />
+                </div>
+                <div className='field'>
+                    <label>Extra Percentage</label>
                     <input value={customPercent} onChange={(e) => setcustomPercent(e.currentTarget.value)} />
                 </div>
             </div>
         </div>
         
-        <table className='ui table'>
+        <table className='ui table mini'>
             <thead>
             <tr>
                 <th>FROM</th>
@@ -96,14 +108,15 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
                 <th>FX (USD)</th>
-                <th>BONUS %</th>
+                <th>BONUS%</th>
                 <th>RESULT</th>
                 <th>AGENCY ACTION</th>
+                <th>AGENCY BONUS</th>
             </tr>
             </thead>
             <tbody>
             {selectedData.map((i, index) => (
-                <tr key={index}>
+                <tr key={index} >
                 <td>{fromDate(i)}</td>
                 <td>{convertDate(i)}</td>
                 <td>{i.PLAYERID}</td>
@@ -132,8 +145,9 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                 <td>{i.BONUSTOTAL}</td>
                 <td>{fxUSD}</td>
                 <td>{i.BONUSTOTAL * (agencyPercent / 100)}</td>
-                <td>{(i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD * customPercent}</td>
-                <td>{(i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD}</td>
+                <td>{Func.toUSD((i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD * customPercent)}</td>
+                <td>{Func.toUSD((i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD)}</td>
+                <td>{Func.toUSD((i.BONUSTOTAL * fxUSD) * extraPercent)}</td>
                 </tr>
             ))}
             </tbody>
