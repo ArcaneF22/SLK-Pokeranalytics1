@@ -8,8 +8,8 @@ import * as Set from '../constants';
 export const UpsertRecords = ({selectedData,recallData}) => {
     const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
-    const [fxUSD, setfxUSD] =                           useState(0);
-    const [currency, setCurrency] =           useState(0);
+    const [fxUSD, setfxUSD] =                           useState(.95);
+    const [currency, setCurrency] =                     useState(1);
     const [agencyPercent, setagencyPercent] =           useState(0);
     const [customPercent, setcustomPercent] =           useState(0);
 
@@ -89,32 +89,50 @@ export const UpsertRecords = ({selectedData,recallData}) => {
             <tr>
                 <th>FROM</th>
                 <th>UNTIL</th>
-                <th>CLUB</th>
                 <th>DOWNLINE</th>
+                <th>CLUB</th>
+
+                <th>UPLINE</th>
                 <th>CURRENCY</th>
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
                 <th>FX (USD)</th>
-                <th>Club%</th>
                 <th>Customer%</th>
                 <th>BONUS %</th>
                 <th>RESULT</th>
                 <th>AGENCY ACTION</th>
             </tr>
             </thead>
-            <tbody className='center aligned'>
+            <tbody>
             {selectedData.map((i, index) => (
                 <tr key={index}>
                 <td>{fromDate(i)}</td>
                 <td>{convertDate(i)}</td>
-                <td>{i.CLUB}</td>
                 <td>{i.PLAYERID}</td>
+                <td>
+                    <h5 className="ui header">
+                        <div className="content">
+                        {i.CLUB}
+                        <div className='sub header'>
+                            Cut# {agencyPercent}%
+                        </div>
+                    </div>
+                    </h5>
+                </td>
+                <td>
+                    <h5 className="ui header">
+                        <div className="content">
+                        UPLINE01
+                        <div className='sub header'>
+                            Cut# {customPercent}%
+                        </div>
+                    </div>
+                    </h5>
+                </td>
                 <td>{currency}</td>
                 <td>{i.WINNINGTOTAL}</td>
                 <td>{i.BONUSTOTAL}</td>
                 <td>{fxUSD}</td>
-                <td>{agencyPercent}</td>
-                <td>{customPercent}</td>
                 <td>{i.BONUSTOTAL * (agencyPercent / 100)}</td>
                 <td>{(i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD * customPercent}</td>
                 <td>{(i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD}</td>
