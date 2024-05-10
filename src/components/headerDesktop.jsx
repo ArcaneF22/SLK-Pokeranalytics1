@@ -85,6 +85,13 @@ export const HeaderDesktop = () => {
             </div>
           </a>
 
+          <a className="item" onClick={() => navigateTo('/records')}>
+            <div>
+            <i className="group layer icon"></i>
+              RECORDS
+            </div>
+          </a>
+
           <a className="item" onClick={() => navigateTo('/history')}>
             <div>
             <i className="history icon"></i>

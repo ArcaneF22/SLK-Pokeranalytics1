@@ -1,31 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
 import { Uplines } from '../fetch/raw/uplines'
 import { Accounts } from '../fetch/raw/accounts'
-import { Clubs } from '../fetch/raw/clubs'
-import { Roles } from '../fetch/raw/roles'
 import * as Set from '../constants';
+import * as UPL from '../fetch/dropdowns/upline'
+
+var onselectedDownline=0
+
+export const selectedDownlineID = () => {
+
+  const [data, setdata] = useState(0)
+
+  useLayoutEffect(() => {
+    if(onselectedDownline == "" || onselectedDownline==0){
+      setdata(0);
+    } else {
+      setdata(onselectedDownline);
+    }
+    
+
+  }, [onselectedDownline]);
+
+  return ({data})
+}
+
 
 export const UpsertUplines = ({selectedData,recallData}) => {
   const UplineDD = Uplines().data
   const acctDD = Accounts().data
-  const roleDD = Roles().data
-  const clubDD = Clubs().data
 
   const Token = JSON.parse( localStorage.getItem('Token') );
   const [loading, setLoading] =         useState(false);
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
-  const [cancels, setCancels] =           useState(false);
+  const [cancels, setCancels] =         useState(false);
+  
 
   const [id, setID] =                           useState("0");
-  const [clubID, setclubID] =           useState("");
+  const [clubID, setclubID] =                   useState("");
   const [downlineID, setdownlineID] =           useState("");
   const [uplineID, setuplineID] =               useState("");
   const [percentage, setPercentage] =           useState("");
   const [status, setStatus] =                   useState("");
   const [replace, setReplace] =                 useState("F");
+
+  const [uplineDD, setuplineDD] =               useState(Accounts().data);
+
+
+  const DDClubs = (value) => {
+    setclubID(value)
+  };
+  
+  const DDUplines = (value) => {
+    setuplineID(value)
+  };
 
   let Upsert = {
                   A: Token['id'],
@@ -112,6 +141,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     fromTable()
   }, [selectedData.clicked]);
 
+
   const changeStatus = () => {
     if(status=="0"){
         setStatus("1")
@@ -154,43 +184,20 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     }
   }
 
-    // check downline if exists, show clubs and upline from application where downline is registered.. 
+   
     return (
       <div className="ui segment basic">
+        
         <h3 className="ui horizontal divider header">
           Insert / Update Uplines
         </h3>
         <br />
-
+        <p>Select downline then show clubs from then select to auto select app, show players/upline enrolled from club.. </p>
         <div className="ui form fitted">
 
         <div className='two fields'>
 
             <div className="field">
-                  <label>Clubs</label>
-                  <SUI.Dropdown
-                        placeholder="Select Upline"
-                        scrolling
-                        clearable
-                        fluid
-                        selection
-                        search={true}
-                        multiple={false}
-                        header="Select Upline"
-                        onChange={(event, { value }) => { setclubID(value); }}
-                        value={clubID}
-                        options={clubDD.map(i => {
-                          return {
-                            key: i.id,
-                            text: i.name,
-                            value: i.id,
-                            image: { avatar: true, src: (i.imageFull ? i.imageFull : "./images/club.png") },
-                          };
-                        })}
-                      />
-                </div>
-
-                <div className="field">
                   <label>Downline Account</label>
                   <SUI.Dropdown
                         placeholder="Select image"
@@ -201,7 +208,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                         search={true}
                         multiple={false}
                         header="Select image"
-                        onChange={(event, { value }) => { setdownlineID(value); }}
+                        onChange={(event, { value }) => { onselectedDownline=value,setdownlineID(value); }}
                         value={downlineID}
                         options={acctDD.map(i => {
                           return {
@@ -212,39 +219,25 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                           };
                         })}
                       />
-                </div>
+          </div>
+                
+            <div className='field'>
+                <label>From DD Club</label>
+                <UPL.Clubs dropdown={DDClubs}/>
+            </div>
 
         </div>
 
         <div className='two fields'>
 
-        <div className="field">
-              <label>Upline Account</label>
-              <SUI.Dropdown
-                    placeholder="Select image"
-                    scrolling
-                    clearable
-                    fluid
-                    selection
-                    search={true}
-                    multiple={false}
-                    header="Select image"
-                    onChange={(event, { value }) => { setuplineID(value); }}
-                    value={uplineID}
-                    options={acctDD.map(i => {
-                      return {
-                        key: i.accountID,
-                        text: i.accountRole+": "+i.accountNickname,
-                        value: i.accountID,
-                        image: { avatar: true, src: i.userAvatar },
-                      };
-                    })}
-                  />
+            <div className="field">
+                <label>Upline Account</label>
+                <UPL.Uplines dropdown={DDUplines}/>
             </div>
 
             <div className="field">
-              <label>Percentage</label>
-              <input type="number" value={percentage} onChange={(e) => setPercentage(e.currentTarget.value)}/>
+                <label>Percentage {percentage}</label>
+                <input type="number" value={percentage} onChange={(e) => setPercentage(e.currentTarget.value)}/>
             </div>
 
         </div>
@@ -274,7 +267,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
           </div>
 
-          <div class="ui section divider"></div>
+          <div className="ui section divider"></div>
 
           <div className="two fields center aligned centered">
             <div className="field">
@@ -301,4 +294,5 @@ export const UpsertUplines = ({selectedData,recallData}) => {
       </div>
     );
   };
+
   

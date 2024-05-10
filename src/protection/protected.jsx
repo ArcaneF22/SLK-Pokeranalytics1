@@ -181,6 +181,27 @@ export const Protected = ({ children }) => {
             </div>
           </a>
 
+          <a className="item" onClick={() => navigateTo('/uplines')}>
+            <div>
+            <i className="history icon"></i>
+              Uplines
+            </div>
+          </a>
+
+          <a className="item" onClick={() => navigateTo('/records')}>
+            <div>
+            <i className="history icon"></i>
+              Records
+            </div>
+          </a>
+
+          <a className="item" onClick={() => navigateTo('/images')}>
+            <div>
+            <i className="history icon"></i>
+              Images
+            </div>
+          </a>
+
           <a className="item" onClick={() => navigateTo('/exchangerates')}>
             <div>
             <i className="history icon"></i>

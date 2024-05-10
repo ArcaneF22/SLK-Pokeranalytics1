@@ -71,7 +71,9 @@ export const LoadingData = () => {
             </>
     )
 }
-
-
-
-                    
+export const getDateTime = (i) => {
+  const d = new Date(i);
+  const o = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+  const w = d.toLocaleDateString('en-US', o);
+  return w;
+}

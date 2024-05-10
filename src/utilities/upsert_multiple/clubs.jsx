@@ -64,9 +64,8 @@ export const MultipleClubs = () => {
         const updatedData = [...JSONData]; // Create a copy of the state array
         updatedData.splice(index, 1);
         setJSONData(updatedData);
-        const countInput = parseInt(document.getElementById("FormCSV").querySelectorAll('input').length)-4;
-        console.log("Count: " + countInput)
-        if(countInput === 0){
+        const countInput = parseInt(document.querySelectorAll("#countDiv").length)-1;
+        if(countInput < 1){
             resetCSV()
         }
     };
@@ -155,12 +154,13 @@ export const MultipleClubs = () => {
             <div>
                 
                 <form className='ui form  left aligned' id='FormCSV'>
+                <br />
+                        <h3 className="ui horizontal divider header">
+                            Uploaded Club CSV Form
+                        </h3>
                     <br />
-                    <h3 className="ui horizontal divider header">
-                        Uploaded Club CSV Form
-                    </h3>
                         {JSONData.map((i, index) => (
-                            <div className='fields ui message clubs' key={index}>
+                            <div className='fields ui message plusTop' id='countDiv' key={index}>
                                 <div className='field'>
                                     <label>Delete</label>
                                     <div className='ui button red icon' onClick={() => deleteRow(index)}>

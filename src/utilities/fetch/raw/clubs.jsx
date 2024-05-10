@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
+import {selectedDownlineID} from '../../upsert/uplines'
 
 const Token = JSON.parse( localStorage.getItem('Token') );
 
@@ -20,7 +21,7 @@ export const Clubs = () => {
       const response = await axios.post(Set.Fetch['clubs'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Clubs items fetched...")
+      console.log("Clubs items fetched..." + selectedDownlineID)
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -32,4 +33,3 @@ export const Clubs = () => {
 
   return ({load, data})
 }
-

@@ -60,9 +60,8 @@ export const MultipleUsers = () => {
         const updatedData = [...JSONData]; // Create a copy of the state array
         updatedData.splice(index, 1);
         setJSONData(updatedData);
-        const countInput = parseInt(document.getElementById("FormCSV").querySelectorAll('input').length)-4;
-        console.log("Count: " + countInput)
-        if(countInput === 0){
+        const countInput = parseInt(document.querySelectorAll("#countDiv").length)-1;
+        if(countInput < 1){
             resetCSV()
         }
     };
@@ -136,7 +135,7 @@ export const MultipleUsers = () => {
                 <form className='ui form' id='FormCSV'>
                     <h1>Form Fields</h1>
                         {JSONData.map((i, index) => (
-                            <div className='fields' key={index}>
+                            <div className='fields' id='countDiv' key={index}>
                                 <div className='field'>
                                     <label>Action</label>
                                     <div className='ui button red icon basic' onClick={() => deleteRow(index)}>

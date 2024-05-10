@@ -4,11 +4,10 @@
     font-family: 'Metrophobic', sans-serif;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-
 }
 
 body {
-  background-color: #ffff ;
+  /* background: radial-gradient(circle at 52.1% -99.6%, rgb(58, 55, 55) 15%, rgb(83, 9, 115) 110.2%) center center / cover no-repeat fixed !important; */
 }
 
 .pages-body {
@@ -52,9 +51,14 @@ body {
 }
 
 .purple-box{
-  background-color: #8A39E1 !important; /* Green */
+  background-color: rgba(138, 57, 225, 0.1) !important;
   border: none !important;
   color: white !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(5.4px) !important;
+  -webkit-backdrop-filter: blur(5.4px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.89) !important;
 }
 
 .purple{
@@ -194,8 +198,12 @@ body {
           .imageAvatar{
             width: 40px !important;
           }
-          .message.clubs{
+          .message.plusTop{
             margin-top: 20px !important;
+          }
+          .mobileOnly{
+
+            display: inline !important;
           }
    }
 
@@ -219,6 +227,7 @@ body {
             margin-left: 18.1rem !important;
             padding-right: 19.5rem !important;
             margin-bottom: 0 !important;
+            
           }
 
           .lefted-content{
@@ -259,8 +268,12 @@ body {
             font-size:2.4vw !important;
           }
           .fitted{
-            padding-left: 80px !important;
-            padding-right: 100px !important;
+            padding-left: 75px !important;
+            padding-right: 95px !important;
+          }
+          .mobileOnly{
+            display: none !important;
+
           }
     } 
 

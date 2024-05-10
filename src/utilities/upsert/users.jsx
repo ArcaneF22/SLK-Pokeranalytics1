@@ -387,7 +387,7 @@ export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
           </div>
 
 
-          <div class="ui section divider"></div>
+          <div className="ui section divider"></div>
 
           <div className="two fields center aligned centered">
             <div className="field">

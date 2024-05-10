@@ -75,7 +75,7 @@ export const FetchUplines = ({ selectData }) => {
                 <h5 className="ui image header">
                     <img src={i.appImage ? i.appImage : "./images/default.png"} className="ui mini rounded image" />
                     <div className="content">
-                      {i.clubName}
+                    <span className='mobileOnly'>CLUB: </span> {i.clubName}
                       <div className="sub header">
                         ID: {i.clubIDD}
                         <br />
@@ -88,7 +88,7 @@ export const FetchUplines = ({ selectData }) => {
                 <h5 className="ui image header">
                     <img src={i.downAvatar ? i.downAvatar : "./images/joker.png"} className="ui mini rounded image" />
                     <div className="content">
-                      ID: {i.downacctID}
+                      <span className='mobileOnly'>DOWNLINE </span>ID: {i.downacctID}
                       <div className="sub header">
                         {i.downacctRole}: {i.downacctNickname}
                         <br />
@@ -103,9 +103,9 @@ export const FetchUplines = ({ selectData }) => {
               <h5 className="ui image header">
                     <img src={i.upAvatar ? i.upAvatar : "./images/joker.png"} className="ui mini rounded image" />
                     <div className="content">
-                      ID: {i.upacctID}
+                      <span className='mobileOnly'>UPLINE </span> ID: {i.upacctID}
                       <div className="sub header">
-                        {i.upacctRole}: {i.upacctNickname}
+                      {i.upacctRole}: {i.upacctNickname}
                         <br />
                         <i>(User: {i.upuserNickname}) </i>
                         <br />
