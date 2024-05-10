@@ -10,8 +10,8 @@ export const UpsertRecords = ({selectedData,recallData}) => {
 
     const [fxUSD, setfxUSD] =                           useState(.95);
     const [currency, setCurrency] =                     useState(1);
-    const [agencyPercent, setagencyPercent] =           useState(0);
-    const [customPercent, setcustomPercent] =           useState(0);
+    const [agencyPercent, setagencyPercent] =           useState(30);
+    const [customPercent, setcustomPercent] =           useState(15);
 
     const fromTable = () => {
 
@@ -91,13 +91,11 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                 <th>UNTIL</th>
                 <th>DOWNLINE</th>
                 <th>CLUB</th>
-
                 <th>UPLINE</th>
                 <th>CURRENCY</th>
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
                 <th>FX (USD)</th>
-                <th>Customer%</th>
                 <th>BONUS %</th>
                 <th>RESULT</th>
                 <th>AGENCY ACTION</th>
