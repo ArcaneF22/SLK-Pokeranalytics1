@@ -91,9 +91,9 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                 <th>UNTIL</th>
                 <th>CLUB</th>
                 <th>DOWNLINE</th>
+                <th>CURRENCY</th>
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
-                <th>CURRENCY</th>
                 <th>FX (USD)</th>
                 <th>Club%</th>
                 <th>Customer%</th>
@@ -109,9 +109,9 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                 <td>{convertDate(i)}</td>
                 <td>{i.CLUB}</td>
                 <td>{i.PLAYERID}</td>
+                <td>{currency}</td>
                 <td>{i.WINNINGTOTAL}</td>
                 <td>{i.BONUSTOTAL}</td>
-                <td>{currency}</td>
                 <td>{fxUSD}</td>
                 <td>{agencyPercent}</td>
                 <td>{customPercent}</td>
