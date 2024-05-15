@@ -20,7 +20,7 @@ export const Users = () => {
       const response = await axios.post(Set.Fetch['users'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Users items fetched...")
+      //console.log("Users items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

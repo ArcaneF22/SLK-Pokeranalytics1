@@ -21,7 +21,7 @@ export const History = () => {
       const response = await axios.post(Set.Fetch['history'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("History items fetched...")
+      //console.log("History items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -52,7 +52,7 @@ export const MyHistory = () => {
       const response = await axios.post(Set.Fetch['history'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("History items fetched...")
+      //console.log("History items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

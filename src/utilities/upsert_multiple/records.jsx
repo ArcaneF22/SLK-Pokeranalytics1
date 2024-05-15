@@ -125,7 +125,7 @@ export const MultipleRecords = ({selectData}) => {
             </>
             : 
             <div className='ui button red' onClick={()=>{ resetCSV() } }>
-                <i class="trash alternate outline icon"></i>
+                <i className="trash alternate outline icon"></i>
                 Reset CSV form
             </div>
           }

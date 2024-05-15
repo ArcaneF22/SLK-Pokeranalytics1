@@ -4,8 +4,7 @@ export const MyProfilePage = () => {
 
     return (
       <>
-
-      <div className='ui segment message purple-box'>
+      <div className='ui segment message inverted purple-box button-animated'>
         <h2 className="ui header inverted">
               <i className="user secret big icon"></i>
               <div className="content">

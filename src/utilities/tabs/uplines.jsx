@@ -8,13 +8,12 @@ import { UpsertUplines } from '../upsert/uplines'
 
 export const TabUplines = () => {
 
-    const [gotData, setgotData] = useState([]);
-    const [recall, setRecall] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [gotData, setgotData]           = useState([]);
+    const [recall, setRecall]             = useState(0);
+    const [resetSelect, setresetSelect]   = useState("false");
+    const [activeIndex, setActiveIndex]   = useState(0);
+    
     const selectData = (newValue) => {
-      setgotData(newValue)
-    };
-    const selectImage = (newValue) => {
       setgotData(newValue)
     };
   
@@ -22,12 +21,34 @@ export const TabUplines = () => {
       setRecall(re)
     };
     
+    const resetSelected = (se) => {
+        setresetSelect(se)
+    };
+
     useLayoutEffect(() => {
       if(recall==1){
         setRecall(0)
       }
     }, [recall]);
-  
+
+    useLayoutEffect(() => {
+      if(resetSelect == "true"){
+        setgotData([])
+        selectData("")
+        setresetSelect("false")
+        resetSelected("false")
+      } 
+    }, [resetSelect]);
+
+    useLayoutEffect(() => {
+      if(gotData['proceed'] == "true"){
+            gotData['proceed'] = "false"
+            setActiveIndex(1)
+            setgotData(gotData)
+      } else {
+            setgotData([])
+      }
+    }, [gotData['id']]);
 
     const panes = [
         {
@@ -43,7 +64,7 @@ export const TabUplines = () => {
         {
           render: () => 
             <SUI.TabPane attached={false}>
-                <UpsertUplines selectedData={gotData} recallData={recallData} />
+                <UpsertUplines selectedData={gotData} recallData={recallData} resetSelected={resetSelected} />
             </SUI.TabPane>,
         },
         {
@@ -62,8 +83,9 @@ export const TabUplines = () => {
                     LIST
                 </a>
                 <a className={activeIndex == "1" ? "item active violet" : "item" } id='1' onClick={ ()=>setActiveIndex(1) }>
-                    <i className="plus icon"></i>
-                    INSERT
+                  {gotData.length === 0  ?
+                      <><i className="plus icon"></i>INSERT</>
+                    : <><i className="pencil alternate icon"></i>UPDATE</> }
                 </a>
                 <a className={activeIndex == "2" ? "item active violet" : "item" } id='2'onClick={ ()=>setActiveIndex(2) }>
                     <i className="file excel outline icon"></i>

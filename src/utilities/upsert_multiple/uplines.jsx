@@ -107,21 +107,6 @@ export const MultipleUplines = () => {
         }
     }
 
-    async function fetching() {
-        const url1 = "https://v6.exchangerate-api.com/v6/61b370327f102d95c5f30e60/latest/USD" //API: 61b370327f102d95c5f30e60
-        const url2 = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_3eWhXPMnNdgcR6DMhuo2lPBiRYZXMbfp99qVbGY1"
-      try {
-        const response = await axios.get(url1);
-
-        console.log(response.data)
-      } catch (error) {
-        console.error("Error fetching data: 61b370327f102d95c5f30e60", error);
-      }
-    }
-  
-    useLayoutEffect(() => {
-        fetching();
-      }, []);
 
     return (
         <div className="ui segment basic">

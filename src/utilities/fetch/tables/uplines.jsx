@@ -8,11 +8,13 @@ export const FetchUplines = ({ selectData }) => {
   const data = Uplines().data
   const load = Uplines().load
   
-  const editData = (id,clubID,clubIDD,downlineID,uplineID,percentage,status) => {
+  const editData = (id,appID,clubID,clubIDD,downlineID,uplineID,percentage,status) => {
     setClicked(clicked+1)
     const array = {
                     "clicked"       :clicked,
+                    "proceed"       : "true",
                     "id"            : id, 
+                    "appID"         : appID,
                     "clubID"        : clubID, 
                     "clubIDD"       : clubIDD, 
                     "downlineID"    : downlineID, 
@@ -119,7 +121,7 @@ export const FetchUplines = ({ selectData }) => {
               <td>{setStatus(i)}</td>
 
               <td>
-                <button className='ui icon button violet' onClick={()=> editData(i.id,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.appID,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>
                     <i className="pencil icon"></i>
                 </button>
               </td>

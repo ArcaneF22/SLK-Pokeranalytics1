@@ -83,7 +83,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
   }
 
   const resetForm = () => {
-    
 
     setclubID("0")
     setclubIDD("")
@@ -99,6 +98,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
     setLoading(false)
     setCancels(false)
     resetSelected("true")
+
   }
 
   const reCheckValues = () => {
@@ -227,7 +227,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
 
       <div className="ui segment basic left aligned">
         <h3 className="ui horizontal divider header">
-          Insert / Update Clubs
+            {selectedData.length === 0  ? "Add Form" : "Update Form" }
         </h3>
         <br />
 
@@ -370,11 +370,11 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
           </div>
 
            
-          <div class="ui section divider"></div>
+          <div className="ui section divider"></div>
 
-          <div className="two fields center aligned centered">
+          <div className="ui segment center aligned basic">
             <div className="field">
-              <div className="ui button purple fluid" onClick={ValidateForm}>
+              <div className="ui button purple " onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>

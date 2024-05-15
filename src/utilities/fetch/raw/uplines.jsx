@@ -21,7 +21,7 @@ export const Uplines = () => {
       const response = await axios.post(Set.Fetch['uplines'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Upline items fetched...")
+      //console.log("Upline items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -52,7 +52,7 @@ export const MyUplines = () => {
         const response = await axios.post(Set.Fetch['uplines'], Auth);
         setdata(response.data);
         setLoad(false)
-        console.log("Upline items fetched...")
+        //console.log("Upline items fetched...")
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

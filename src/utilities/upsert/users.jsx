@@ -241,7 +241,7 @@ export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
 
 <div className="ui segment basic left aligned">
         <h3 className="ui horizontal divider header">
-          Insert / Update Users
+            {selectedData.length === 0  ? "Add Form" : "Update Form" }
         </h3>
         <br />
 
@@ -389,9 +389,9 @@ export const UpsertUsers = ({selectedData,recallData,resetSelected}) => {
 
           <div className="ui section divider"></div>
 
-          <div className="two fields center aligned centered">
+          <div className="ui segment center aligned basic">
             <div className="field">
-              <div className="ui button purple fluid" onClick={ValidateForm}>
+              <div className="ui button purple " onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>

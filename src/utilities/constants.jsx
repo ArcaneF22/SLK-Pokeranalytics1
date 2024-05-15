@@ -20,6 +20,18 @@ export const Fetch = {
                         company:            import.meta.env.VITE_GET_COMPANY,
                         roles:              import.meta.env.VITE_GET_ROLES,
                         uplines:            import.meta.env.VITE_GET_UPLINES,
+                        exchangerates:       import.meta.env.VITE_GET_EXCHANGERATE,
+                    };
+
+                    
+export const URL = {
+                        fxusd1:             import.meta.env.VITE_URL_FXUSD1,
+                        fxusd2:             import.meta.env.VITE_URL_FXUSD2,
+                        fxusd3:             import.meta.env.VITE_URL_FXUSD3,
+                    };
+
+export const API = {
+                        fxusd1API:          import.meta.env.VITE_API_FXUSD1,
                     };
 
 export const Upsert = {
@@ -30,6 +42,7 @@ export const Upsert = {
                         unions:             import.meta.env.VITE_UPSERT_UNIONS,
                         uplines:            import.meta.env.VITE_UPSERT_UPLINES,
                         profile:            import.meta.env.VITE_UPSERT_PROFILE,
+                        exchangerate:       import.meta.env.VITE_UPSERT_EXCHANGERATE,
                     };
 
 export const Path = {

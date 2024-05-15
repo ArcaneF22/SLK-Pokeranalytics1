@@ -21,7 +21,7 @@ export const Accounts = () => {
       const response = await axios.post(Set.Fetch['accounts'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Accounts items fetched...")
+      //console.log("Accounts items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -51,7 +51,7 @@ export const MyAccounts = () => {
       const response = await axios.post(Set.Fetch['accounts'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("My Accounts items fetched...")
+      //console.log("My Accounts items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -82,7 +82,7 @@ export const AccountsDownline = () => {
       const response = await axios.post(Set.Fetch['accounts'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("My Accounts items fetched...")
+      //console.log("My Accounts items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

@@ -20,7 +20,7 @@ export const Company = () => {
       const response = await axios.post(Set.Fetch['company'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Clubs items fetched...")
+      //console.log("Clubs items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

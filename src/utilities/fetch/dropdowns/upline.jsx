@@ -2,56 +2,63 @@ import { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
 import * as Set from '../../constants';
-import { selectedDownlineID } from '../../upsert/uplines'
+import useInterval from 'use-interval';
 
 const Token = JSON.parse( localStorage.getItem('Token') );
 
-var selectedClub = 0
+export const Clubs = ({dropdown, downID, appID, clubID}) => {
 
-export const Clubs = ({dropdown}) => {
-
-    const gotdownlineID = selectedDownlineID().data
-    
     const [data, setdata] = useState([])
     const [load, setLoad] = useState(false)
-    const [selected, setSelected] = useState(0)
+    const [selected, setSelected] = useState("")
 
     const Auth = {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                DLID: "seldownlineID",
+                FOR: appID ? appID : 0,
             }; 
   
     async function fetching() {
         setLoad(true)
       try {
         const response = await axios.post(Set.Fetch['clubs'], Auth);
-        setdata(response.data);
+        setdata(response.data.filter((e) => e.idd !== null));
         setLoad(false)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
-  
+
+    const arrayed = data.map(i => 
+      { return {
+                  key: i.idd,
+                  text: i.idd+": "+i.name,
+                  value: i.idd,
+                  image: { avatar: true, src: (i.imageFull ? i.imageFull : "./images/club.png") },
+                  disabled: i.idd === null,
+        }})
+
     useLayoutEffect(() => {
-        setSelected("")
-        if(gotdownlineID == 0 || gotdownlineID == "" ){
+        if(downID == 0 || downID == ""){
             setdata([])
             setLoad(true)
-            selectedClub=0
+            setSelected("")
         } else {
-            fetching();
+          fetching();
+          setSelected(clubID.includes(arrayed) ? clubID : "")
         }
-      }, [gotdownlineID]);
+      }, [downID]);
+      
+
 
     useLayoutEffect(() => {
         dropdown(selected)
       }, [selected]);
   
     return (<SUI.Dropdown
-                        placeholder="Select club"
+                        placeholder={"Select club"}
                         scrolling
                         clearable
                         fluid
@@ -61,23 +68,13 @@ export const Clubs = ({dropdown}) => {
                         search={true}
                         multiple={false}
                         header="Select club"
-                        onChange={(event, { value }) => { selectedClub=value,setSelected(value); }}
+                        onChange={(event, { value }) => { setSelected(value); }}
                         value={selected}
-                        options={data.map(i => {
-                          return {
-                            key: i.id,
-                            text: i.name,
-                            value: i.id,
-                            image: { avatar: true, src: (i.imageFull ? i.imageFull : "./images/club.png") },
-                          };
-                        })}
+                        options={arrayed}
                       />)
   }
   
-  
-export const Uplines = ({dropdown}) => {
-
-    const gotdownlineID = selectedDownlineID().data
+export const Uplines = ({dropdown, downID, appID, clubID, uplineID}) => {
     
     const [data, setdata] = useState([])
     const [load, setLoad] = useState(false)
@@ -88,29 +85,40 @@ export const Uplines = ({dropdown}) => {
         B: Token['token'],
         C: Token['gadget'],
         D: Set.TimeZoned,
-        FOR: "ALL",
+        FOR: clubID,
+        DOWN: downID,
     }; 
-  
+
     async function fetching() {
         setLoad(true)
       try {
         const response = await axios.post(Set.Fetch['accounts'], Auth);
-        setdata(response.data);
+        setdata(response.data.filter((e) => e.accountID !== null));
         setLoad(false)
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
     }
   
+    const arrayed = data.map(i => 
+      { return {
+                  key: i.accountID,
+                  text: i.accountID+": "+i.accountNickname,
+                  description: i.accountRole,
+                  value: i.accountID,
+                  image: { avatar: true, src: i.userAvatar },
+                  disabled: i.accountID === null,
+        }})
+
     useLayoutEffect(() => {
-        setSelected("")
-        if(selectedClub == 0  ){
+        if(clubID == 0 || clubID == null || clubID == "" ){
             setdata([])
             setLoad(true)
         } else {
             fetching();
+            setSelected(uplineID.includes(arrayed) ? uplineID : "")
         }
-      }, [selectedClub]);
+      }, [clubID]);
 
     useLayoutEffect(() => {
         dropdown(selected)
@@ -120,6 +128,7 @@ export const Uplines = ({dropdown}) => {
                         placeholder={"Select upline"}
                         scrolling
                         clearable
+                        floating
                         fluid
                         loading={load ? true : false}
                         disabled={load ? true : false}
@@ -129,14 +138,7 @@ export const Uplines = ({dropdown}) => {
                         header="Select upline"
                         onChange={(event, { value }) => { setSelected(value); }}
                         value={selected}
-                        options={data.map(i => {
-                          return {
-                            key: i.accountID,
-                            text: i.accountRole+": "+i.accountNickname,
-                            value: i.accountID,
-                            image: { avatar: true, src: i.userAvatar },
-                          };
-                        })}
+                        options={arrayed}
                       />)
   }
 

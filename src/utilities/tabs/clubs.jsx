@@ -83,8 +83,9 @@ export const TabClubs = () => {
                     LIST
                 </a>
                 <a className={activeIndex == "1" ? "item active violet" : "item" } id='1' onClick={ ()=>setActiveIndex(1) }>
-                    <i className="plus icon"></i>
-                    INSERT
+                  {gotData.length === 0  ?
+                      <><i className="plus icon"></i>INSERT</>
+                    : <><i class="pencil alternate icon"></i>UPDATE</> }
                 </a>
                 <a className={activeIndex == "2" ? "item active violet" : "item" } id='2'onClick={ ()=>setActiveIndex(2) }>
                     <i className="file excel outline icon"></i>

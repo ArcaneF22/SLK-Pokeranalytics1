@@ -1,19 +1,28 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
+import { ExchangeRates } from '../fetch/raw/exchangerates'
+import CurrencyInput from 'react-currency-input-field';
 import * as SUI from 'semantic-ui-react'
 import * as Alert from "../alerts/alerts"
-
 import * as Set from '../constants';
 import * as Func from '../functions';
 
 export const UpsertRecords = ({selectedData,recallData}) => {
+
+    const data = ExchangeRates().data
+    const load = ExchangeRates().load
+
     const [AlertMessage, setAlertMessage] =   useState([{Alert:"", Title:"", Message:"",}]);
 
     const [fxUSD, setfxUSD] =                           useState(.95);
+    const [fxUSDDate, setfxUSDDate] =                   useState("");
     const [currency, setCurrency] =                     useState(1);
     const [agencyPercent, setagencyPercent] =           useState(30);
     const [customPercent, setcustomPercent] =           useState(15);
-    const [extraPercent, setextraPercent] =           useState(15);
+    const [extraPercent, setextraPercent] =             useState(0);
+    const [onradio, setonRadio] =             useState(0);
+
+    const [xdecimal, setxDecimal] =             useState(2);
     const fromTable = () => {
 
             setaccountID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
@@ -25,28 +34,46 @@ export const UpsertRecords = ({selectedData,recallData}) => {
 
     }
 
-    function convertDate(i) {
-        const newDate = new Date(i.DATEUNTIL).getTime()
-        const formattedDate = Set.getDateTime(newDate);
-        return formattedDate;
-    }
+    function setRates(i,e){
+        const arr = JSON.parse(i.rates);
+        const keys = Object.keys(arr);
+        const values = Object.values(arr);
+        const combinedArray = keys.map((value, index) => ({
+            Currency: value,
+            Value: values[index] || null,
+          }));
+    
+        return (combinedArray)
+      }
 
-    function toUSD(i) {
-        const number = parseFloat(i).toLocaleString('en-EN', {
-            style: 'currency',
-            currency: 'USD',
-          })
-        return number;
+//Accordion
+const panels = [
+    {
+      key: '1',
+      title: {
+        content: <span className='violetCenter'>Additional Settings</span>,
+        icon: 'cogs',
+      },
+      content: {
+        content: (
+                <>
+                <div className="four fields">
+                    <div className="field">
+                        <label>Decimal number</label>
+                        <input type='text' className='violetCenter' placeholder="0" value={xdecimal} onChange={(e) => Func.toWholeNumber5(e.currentTarget.value,setxDecimal)} />
+                    </div>
+                </div>
+                <div>
+                </div>
+                </>
+        ),
+      },
     }
+  ]
 
-    function fromDate(i) {
-        const ddate = new Date(i.DATEUNTIL);
-        const numDay = ddate.getDay();
-        const Sun = new Date(ddate);
-        Sun.setDate(ddate.getDate() - numDay);
-        const sunday = Sun.toDateString()
-        return sunday;
-    }
+  const radioChange = (e, { value }) => {
+    setonRadio(value);
+  };
     return (
           <>
 
@@ -66,48 +93,115 @@ export const UpsertRecords = ({selectedData,recallData}) => {
       }
 
       <div className="ui segment basic  left aligned">
-        <h3 className="ui horizontal divider header">
-          Insert / Update Accounts
-        </h3>
-        <br />
 
-        <div className='ui form message violet'>
-            <div className='five fields'>
-                <div className='field'>
-                    <label>Currency</label>
-                    <input value={currency} onChange={(e) => setCurrency(e.currentTarget.value)} />
-                </div>
-                <div className='field'>
-                    <label>FX (USD)</label>
-                    <input value={fxUSD} onChange={(e) => setfxUSD(e.currentTarget.value)} />
-                </div>
-                <div className='field'>
-                    <label>Club Percentage</label>
-                    <input value={agencyPercent} onChange={(e) => setagencyPercent(e.currentTarget.value)} />
-                </div>
-                <div className='field'>
-                    <label>Customer Percentage</label>
-                    <input value={customPercent} onChange={(e) => setcustomPercent(e.currentTarget.value)} />
-                </div>
-                <div className='field'>
-                    <label>Extra Percentage</label>
-                    <input value={customPercent} onChange={(e) => setcustomPercent(e.currentTarget.value)} />
-                </div>
-            </div>
+        <div className="ui attached message violet">
+            <h3 className="header">
+                <i className="calculator icon"></i>
+                CALCULATION SETTINGS
+            </h3>
         </div>
         
-        <table className='ui table mini'>
+        <div className='ui form message violet attached fitted' style={{paddingBottom:"30px",paddingTop:"25px"}}>
+            <div className='five field violetText'>
+                    <div className='field'>
+                        <label>Radio {onradio}</label>
+                        <SUI.Radio
+                            label="Option 1"
+                            name="myRadioGroup"
+                            value="option1"
+                            checked={onradio === 'option1'}
+                            onChange={radioChange}
+                        />
+                        <SUI.Radio
+                            label="Option 2"
+                            name="myRadioGroup"
+                            value="option2"
+                            checked={onradio === 'option2'}
+                            onChange={radioChange}
+                        />
+                        <CurrencyInput
+                        placeholder="Please enter a number"
+                        defaultValue={1000}
+                        decimalsLimit={2}
+                        onValueChange={(e) => console.log('Value:', e)}
+                        />
+                    </div>
+                <div className='three fields unstackable'>
+                    <div className='field'>
+                        <label>FX Date</label>
+                        <SUI.Dropdown
+                                    placeholder="Select application"
+                                    scrolling
+                                    clearable
+                                    fluid
+                                    selection
+                                    search={true}
+                                    multiple={false}
+                                    header="Select application"
+                                    onChange={(event, { value }) => { setcfxUSDDate(value); }}
+                                    value={fxUSDDate}
+
+                                />
+                                <p>{JSON.stringify(data[1])}</p>
+                    </div>
+                    <div className='field'>
+                        <label>Currency to FX(USD)</label>
+                        <input type='number' className='violetCenter' placeholder="Select currency" value={currency} onChange={(e) => setCurrency(e.currentTarget.value)} />
+                    </div>
+                    <div className='field'>
+                        <label>FX (USD)</label>
+                        <div className="ui left labeled left icon input">
+                            <i className="dollar icon violet"></i>
+                            <input type="number" className='violetCenter' placeholder={currency+" to USD value"} value={fxUSD} onChange={(e) => Func.toCurrency(e.currentTarget.value,setfxUSD,xdecimal)}  />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className='three fields unstackable'>
+                <div className='field'>
+                        <label>Club Percent</label>
+                        <div className="ui left labeled right icon input">
+                            <i className="percent icon violet"></i>
+                            <input type="text" className='violetCenter' placeholder="0-100"  value={agencyPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setagencyPercent)}  />
+                        </div>
+                    </div>
+                    <div className='field'>
+                        <label>Customer Percent</label>
+                        <div className="ui left labeled right icon input">
+                            <i className="percent icon violet"></i>
+                            <input type="text" className='violetCenter' placeholder="0-100" value={customPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setcustomPercent)}  />
+                        </div>
+                    </div>
+                    <div className='field'>
+                        <label>Extra Percent</label>
+                        <div className="ui left labeled right icon input">
+                            <i className="percent icon violet"></i>
+                            <input type="text" className='violetCenter' placeholder="0-100" value={extraPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setextraPercent)}  />
+                        </div>
+                    </div>
+                </div>
+                <SUI.Accordion panels={panels}  styled fluid className='marginTop15' />
+            </div>
+        </div>
+        <br />
+        <div className="ui attached message">
+            <h3 className="header">
+                <i className="table icon"></i>
+                COMPUTATION RESULT
+            </h3>
+        </div>
+        <table className='ui table mini compact attached'>
             <thead>
             <tr>
-                <th>FROM</th>
-                <th>UNTIL</th>
+                <th>DATE</th>
                 <th>DOWNLINE</th>
                 <th>CLUB</th>
                 <th>UPLINE</th>
                 <th>CURRENCY</th>
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
-                <th>FX (USD)</th>
+                <th>FX(USD)</th>
                 <th>BONUS%</th>
                 <th>RESULT</th>
                 <th>AGENCY ACTION</th>
@@ -117,8 +211,7 @@ export const UpsertRecords = ({selectedData,recallData}) => {
             <tbody>
             {selectedData.map((i, index) => (
                 <tr key={index} >
-                <td>{fromDate(i)}</td>
-                <td>{convertDate(i)}</td>
+                <td>{Func.lastSunday(i)} - {Func.toWordDate(i)}</td>
                 <td>{i.PLAYERID}</td>
                 <td>
                     <h5 className="ui header">
@@ -140,14 +233,14 @@ export const UpsertRecords = ({selectedData,recallData}) => {
                     </div>
                     </h5>
                 </td>
-                <td>{currency}</td>
+                <td> {currency} </td>
                 <td>{i.WINNINGTOTAL}</td>
                 <td>{i.BONUSTOTAL}</td>
                 <td>{fxUSD}</td>
-                <td>{i.BONUSTOTAL * (agencyPercent / 100)}</td>
-                <td>{Func.toUSD((i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD * customPercent)}</td>
+                <td>{( i.BONUSTOTAL * Func.turnPercent(agencyPercent) ).toFixed(xdecimal)}</td>
+                <td>{Func.toUSD((i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD * Func.turnPercent(customPercent))}</td>
                 <td>{Func.toUSD((i.WINNINGTOTAL + i.BONUSTOTAL) * fxUSD)}</td>
-                <td>{Func.toUSD((i.BONUSTOTAL * fxUSD) * extraPercent)}</td>
+                <td>{Func.toUSD((i.BONUSTOTAL * fxUSD)  * ( Func.turnPercent(extraPercent) == 0 || Func.turnPercent(extraPercent) == "" ? 1 : Func.turnPercent(extraPercent)))}</td>
                 </tr>
             ))}
             </tbody>

@@ -5,28 +5,9 @@ import { Uplines } from '../fetch/raw/uplines'
 import { Accounts } from '../fetch/raw/accounts'
 import * as Set from '../constants';
 import * as UPL from '../fetch/dropdowns/upline'
+import * as Func from '../functions';
 
-var onselectedDownline=0
-
-export const selectedDownlineID = () => {
-
-  const [data, setdata] = useState(0)
-
-  useLayoutEffect(() => {
-    if(onselectedDownline == "" || onselectedDownline==0){
-      setdata(0);
-    } else {
-      setdata(onselectedDownline);
-    }
-    
-
-  }, [onselectedDownline]);
-
-  return ({data})
-}
-
-
-export const UpsertUplines = ({selectedData,recallData}) => {
+export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
   const UplineDD = Uplines().data
   const acctDD = Accounts().data
 
@@ -35,17 +16,15 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   const [message, setMessage] =         useState("");
   const [button, setButton] =           useState("Add New Data");
   const [cancels, setCancels] =         useState(false);
-  
 
   const [id, setID] =                           useState("0");
+  const [appID, setappID]                       = useState(null);
   const [clubID, setclubID] =                   useState("");
   const [downlineID, setdownlineID] =           useState("");
   const [uplineID, setuplineID] =               useState("");
   const [percentage, setPercentage] =           useState("");
   const [status, setStatus] =                   useState("");
   const [replace, setReplace] =                 useState("F");
-
-  const [uplineDD, setuplineDD] =               useState(Accounts().data);
 
 
   const DDClubs = (value) => {
@@ -62,6 +41,7 @@ export const UpsertUplines = ({selectedData,recallData}) => {
                   C: Token['gadget'],
                   D: Set.TimeZoned,
                   id,
+                  clubID,
                   downlineID,
                   uplineID,
                   percentage,
@@ -81,6 +61,8 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     setLoading(true)
       if(!YesWithvalues){
         setMessage("Details incomplete!")
+      } else if(downlineID == uplineID){
+        setMessage("Upline and downline cannot be the same!")
       } else {
         console.log(JSON.stringify(Upsert))
         SubmitForm()
@@ -95,18 +77,18 @@ export const UpsertUplines = ({selectedData,recallData}) => {
   }
 
   const resetForm = () => {
+    
     setID("0")
     setdownlineID("")
-    setdownlineRole("")
     setuplineID("")
-    setuplineRole("")
     setPercentage("")
-    setStatus("0")
+    setStatus("1")
     setReplace("F")
-
+    
     setButton("Add New Data")
     setLoading(false)
     setCancels(false)
+    resetSelected("true")
 
   }
 
@@ -115,6 +97,8 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     setID(selectedData.id === null || selectedData.id === undefined ? "0" : selectedData.id)
 
     setdownlineID(selectedData.downlineID === null || selectedData.downlineID === undefined ? "" : selectedData.downlineID)
+    setappID(selectedData.appID === null || selectedData.appID === undefined ? "" : selectedData.appID)
+    setclubID(selectedData.clubIDD === null || selectedData.clubIDD === undefined ? "" : selectedData.clubIDD)
     setuplineID(selectedData.uplineID === null || selectedData.uplineID === undefined ? "" : selectedData.uplineID)
     setPercentage(selectedData.percentage === null || selectedData.percentage === undefined ? "" : selectedData.percentage)
 
@@ -180,50 +164,61 @@ export const UpsertUplines = ({selectedData,recallData}) => {
     }
       
     } catch (error) {
-      console.error("Error submission: ", error);
+     // console.error("Error submission: ", error);
     }
   }
+
+const downlines = acctDD.map(i => {
+  return {
+    key: i.id,
+    text: i.accountID+": "+i.accountNickname,
+    description: i.accountRole,
+    value: i.accountID,
+    image: { avatar: true, src: i.userAvatar },
+    ddd: i.appID ? i.appID : 0,
+  };
+})
+
+  
+  const handleDropdownChange = (event, data) => {
+    setdownlineID(data.value);
+    const selected = downlines.find(option => option.value === data.value);
+    setappID(selected.ddd ? selected.ddd : 0);
+  };
 
    
     return (
       <div className="ui segment basic">
         
         <h3 className="ui horizontal divider header">
-          Insert / Update Uplines
+            {selectedData.length === 0  ? "Add Form" : "Update Form" }
         </h3>
+        <p>{message}</p>
         <br />
-        <p>Select downline then show clubs from then select to auto select app, show players/upline enrolled from club.. </p>
-        <div className="ui form fitted">
+
+        <div className="ui form fitted left aligned">
 
         <div className='two fields'>
 
             <div className="field">
                   <label>Downline Account</label>
                   <SUI.Dropdown
-                        placeholder="Select image"
+                        placeholder="Select account"
                         scrolling
-                        clearable
                         fluid
                         selection
                         search={true}
                         multiple={false}
-                        header="Select image"
-                        onChange={(event, { value }) => { onselectedDownline=value,setdownlineID(value); }}
+                        header="Select account"
+                        onChange={handleDropdownChange}
                         value={downlineID}
-                        options={acctDD.map(i => {
-                          return {
-                            key: i.accountID,
-                            text: i.accountRole+": "+i.accountNickname,
-                            value: i.accountID,
-                            image: { avatar: true, src: i.userAvatar },
-                          };
-                        })}
+                        options={downlines}
                       />
           </div>
                 
             <div className='field'>
-                <label>From DD Club</label>
-                <UPL.Clubs dropdown={DDClubs}/>
+                <label>Club</label>
+                <UPL.Clubs dropdown={DDClubs} appID={appID} downID={downlineID}  clubID={clubID} />
             </div>
 
         </div>
@@ -232,12 +227,15 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
             <div className="field">
                 <label>Upline Account</label>
-                <UPL.Uplines dropdown={DDUplines}/>
+                <UPL.Uplines dropdown={DDUplines} appID={appID} downID={downlineID} clubID={clubID} uplineID={uplineID}/>
             </div>
 
             <div className="field">
-                <label>Percentage {percentage}</label>
-                <input type="number" value={percentage} onChange={(e) => setPercentage(e.currentTarget.value)}/>
+                <label>Percentage</label>
+                <div className="ui left labeled right icon input">
+                    <i className="percent icon violet"></i>
+                    <input type="text" className='violetCenter' placeholder="0-100" value={percentage} onChange={(e) => Func.toHundred(e.currentTarget.value,setPercentage)}  />
+                </div>
             </div>
 
         </div>
@@ -269,9 +267,9 @@ export const UpsertUplines = ({selectedData,recallData}) => {
 
           <div className="ui section divider"></div>
 
-          <div className="two fields center aligned centered">
+          <div className="ui segment center aligned basic">
             <div className="field">
-              <div className="ui button purple fluid" onClick={ValidateForm}>
+              <div className="ui button purple " onClick={ValidateForm}>
                 <i className="plus icon"></i>
                 {button}
               </div>
