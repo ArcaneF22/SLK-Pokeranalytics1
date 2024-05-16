@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef  } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
 import { Accounts } from '../fetch/raw/accounts'
 import axios from 'axios';
@@ -115,24 +115,10 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
             };
       })
 
-      const autoSelect = (key) => {
-        const i = JSON.stringify(key)
-        return i;
+      const autoSelectOptionByKey = (key) => {
+        const autoSelectedOption = acctDD.find(option => option.key === key);
+        return autoSelectedOption;
       };
-
-      const downlineChange = (event, i) => {
-        const s = downlines.find(o => o.value === i.value);
-        setappID(s.key ? s.ddd : 0);
-
-      };
-
-      const dropdownRef = useRef(null);
-
-      const handleSelectOption = (value) => {
-        dropdownRef.current.value = value; // Set the dropdown value
-        if (onSelect) onSelect(value); // Optional callback for selection handling
-      };
-
 
     return (
         <div className="ui segment basic">
@@ -186,7 +172,7 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                                 <div className='field'>
                                     <label>Player ID</label>
                                     <SUI.Dropdown
-                                            placeholder={i.PLAYERID}
+                                            placeholder="Select account"
                                             scrolling
                                             fluid
                                             selection
@@ -194,19 +180,19 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                                             multiple={false}
                                             header="Select account"
                                             onChange={(e,i) => dropdownChange(i.value, index, "PLAYERID")}
+
                                             options={acctDD.map(i => {
                                                 return {
-                                                    key:    i.id,
+                                                    key:    i.accountID,
                                                     text:   i.accountID+": "+i.accountNickname,
                                                     value:  i.accountID,
                                                     image:  { avatar: true, src: i.userAvatar },
                                                     app:    i.appID ? i.appID : 0,
+                                                    selected:    i.accountID === i.PLAYERID ? true : false,
                                                 };
                                           })}
-                                          defaultValue={i.PLAYERID}
 
                                         />
-
                                     <input value={i.PLAYERID} onChange={(e) => inputChange(e, index, "PLAYERID")} />
                                 </div>
                                 <div className='field'>
@@ -222,7 +208,7 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                         <div className='ui segment basic center aligned'>
                                 <div className='ui button violet large' onClick={()=> selectData(JSONData)}>
                                     <i className='calculator icon'></i>
-                                    Calculate 
+                                    Calculate
                                 </div>
                         </div>
                 </form>
