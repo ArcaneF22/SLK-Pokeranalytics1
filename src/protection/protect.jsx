@@ -1,5 +1,4 @@
-import { isNumeric } from '../utilities/tools'
-
+import * as Func from '../utilities/functions'
 export class Protect {
 
   static logIn() {
@@ -14,8 +13,8 @@ export class Protect {
   }
 
   static isLoggedIn() {
-    const isLogged = localStorage.getItem('Auth')
-    const isNum = isNumeric(JSON.parse(localStorage.getItem('Token'))["id"])
+    const isLogged  = localStorage.getItem('Auth')
+    const isNum     = Func.isNumeric(JSON.parse(localStorage.getItem('Token'))["id"])
 
     return new Promise((resolve) => {
       setTimeout(() => {

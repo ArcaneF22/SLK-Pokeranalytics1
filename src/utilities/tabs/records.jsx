@@ -10,13 +10,19 @@ import { json } from 'react-router-dom';
 
 export const TabRecords = () => {
 
-    const [gotData, setgotData] = useState([]);
-    const [recall, setRecall] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
-  
-    const selectData = (newValue) => {
-        setgotData(newValue)
+    const [gotData, setgotData]             = useState([]);
+    const [gotCSVData, setgotCSVData]       = useState([]);
+    const [recall, setRecall]               = useState(0);
+    const [activeIndex, setActiveIndex]     = useState(0);
+    
+
+    const selectData = (v) => {
+        setgotData(v)
         setActiveIndex(2)
+      };
+
+    const CSVData = (v) => {
+        setgotCSVData(v)
       };
 
     const panes = [
@@ -33,7 +39,7 @@ export const TabRecords = () => {
         {
             render: () => 
                 <SUI.TabPane attached={false}>
-                    <MultipleRecords selectData={selectData} />
+                    <MultipleRecords selectData={selectData} CSVData={CSVData} reCSVData={gotCSVData} />
                 </SUI.TabPane>,
         },
         {
@@ -61,6 +67,7 @@ export const TabRecords = () => {
                 </a>
             </div>
             <SUI.Tab menu={{ text: true }} activeIndex={activeIndex} panes={panes} style={{marginTop:"-55px"}} />
+
         </>
       );
 }

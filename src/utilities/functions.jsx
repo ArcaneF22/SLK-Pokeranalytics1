@@ -1,5 +1,12 @@
 import * as Set from './constants';
 
+export function stringify(i) { 
+  return JSON.stringify(i, null, 2);; 
+}
+
+export function isNumeric(i) { 
+  return !isNaN(parseFloat(i)) && isFinite(i); 
+}
 
 export const toUSD = (i) => {
     const num = parseFloat(i).toLocaleString('en-EN', {
@@ -74,19 +81,21 @@ export const turnPercent = (i) => {
 }
 
 export const toWordDate = (i) => {
-  const newDate = new Date(i.DATEUNTIL).getTime()
-  const formattedDate = Set.getDateTime(newDate);
-  return formattedDate;
+  const form = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+  const dated = new Date(i).toLocaleDateString([], form);
+  return dated;
 }
 
 export const lastSunday = (i) => {
-  const ddate = new Date(i.DATEUNTIL);
+  const ddate = new Date(i);
   const numDay = ddate.getDay();
   const Sun = new Date(ddate);
   Sun.setDate(ddate.getDate() - numDay);
-  const sunday = Sun.toDateString()
-  return sunday;
+  const form = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+  const dated = new Date(Sun).toLocaleDateString([], form);
+  return dated;
 }
+
 export const toFXDate = (i) => {
   const Nows      = new Date();
   const e         = new Intl.DateTimeFormat('en-US', { day: '2-digit', month: '2-digit', year: 'numeric'});
@@ -95,5 +104,38 @@ export const toFXDate = (i) => {
   } else {
       const u = new Date(i);
       return e.format(u);
+  }
+}
+
+export const toListState = (i,e) => {
+  if (i == 1) {
+    return  <div className='item'>
+                {i} {e}
+            </div>;
+  } else if (i > 1) {
+    return  <div className='item'>
+                {i} {e}
+            </div>;
+  } else {
+    return  ("");
+  }
+}
+
+export const toStatus = (i,e) => {
+  if (i == "Active" || i == 0) {
+    return  <div className='ui label green basic center aligned fluid'>
+                <i className="check circle outline icon"></i>
+                Active
+            </div>;
+  } else if (i == "Pending" || i == 1) {
+    return  <div className='ui label orange basic center aligned fluid'>
+                <i className="spinner icon"></i>
+                Pending
+            </div>;
+  } else {
+    return  <div className='ui label red basic center aligned fluid'>
+                <i className="times circle outline icon"></i>
+                Inactive
+            </div>;
   }
 }

@@ -8,7 +8,7 @@ export const Logout = (props) => {
   return (
       <>
         <Transition animation='pulse' duration={500} >
-          <Modal size="mini" closeIcon  onClose={props.onClose} open={props.open}>
+          <Modal dimmer="blurring" size="mini" closeIcon  onClose={props.onClose} open={props.open}>
           
             <h2 className="ui icon header">
               <i className="log out icon"></i>
@@ -39,7 +39,7 @@ export const SessionExpire = (props) => {
   }
   return (
       <>
-        <Transition  animation='pulse' duration={500} >
+        <Transition dimmer="blurring" animation='pulse' duration={500} >
         <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
             <h2 className="ui icon header">
               <i className="exclamation triangle icon red"></i>
@@ -62,36 +62,11 @@ export const SessionExpire = (props) => {
         );
 };
 
-
-export const Duplicate = (props) => {
-
-    return (
-        <>
-          <Transition animation='pulse' duration={500} >
-            <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
-              <h2 className="ui icon header">
-                <i className="exclamation circle icon yellow"></i>
-                <div className="content">
-                  Duplicate!
-                <div className="sub header">Details already exist.</div>
-                </div>
-              </h2>
-                <div className="actions">
-                  <div className="ui cancel button" onClick={props.onClose} open={props.open}>
-                    Close
-                  </div>
-                </div>
-            </Modal>
-          </Transition>
-        </>
-          );
-};
-
 export const Warning = (props) => {
     return (
         <>
           <Transition animation='tada' duration={500} >
-            <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
+            <Modal dimmer="blurring" size="mini" closeIcon onClose={props.onClose} open={props.open}>
               <h2 className="ui icon header">
                 <i className="exclamation circle icon yellow"></i>
                 <div className="content">
@@ -106,6 +81,7 @@ export const Warning = (props) => {
                   Close
                   </div>
                 </div>
+
             </Modal>
           </Transition>
         </>
@@ -116,7 +92,7 @@ export const Success = (props) => {
     return (
         <>
           <Transition animation='pulse' duration={500} >
-            <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
+            <Modal dimmer="blurring" size="mini" closeIcon onClose={props.onClose} open={props.open}>
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
@@ -144,7 +120,7 @@ export const SuccessRefresh = (props) => {
     return (
         <>
           <Transition animation='pulse'  duration={500} >
-            <Modal size="mini" open={props.open}>
+            <Modal dimmer="blurring" size="mini" open={props.open}>
               <h2 className="ui icon header">
                 <i className="check circle outline icon green"></i>
                 <div className="content">
@@ -172,7 +148,7 @@ export const Error = (props) => {
     return (
         <>
           <Transition animation='pulse' duration={500} >
-            <Modal size="mini" closeIcon onClose={props.onClose} open={props.open}>
+            <Modal dimmer="blurring" size="mini" closeIcon onClose={props.onClose} open={props.open}>
               <h2 className="ui icon header">
                 <i className="exclamation triangle icon red"></i>
                 <div className="content">
@@ -195,7 +171,7 @@ export const ErrorRefresh = (props) => {
     return (
         <>
           <Transition animation='pulse' duration={500} >
-          <Modal size="mini" open={props.open}>
+          <Modal dimmer="blurring" size="mini" open={props.open}>
               <h2 className="ui icon header">
                 <i className="exclamation triangle icon red"></i>
                 <div className="content">
@@ -213,4 +189,3 @@ export const ErrorRefresh = (props) => {
         </>
           );
 };
-

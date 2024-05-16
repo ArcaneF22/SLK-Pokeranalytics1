@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Clubs } from '../raw/clubs'
 import * as Set from '../../constants'
+import * as Func from '../../functions'
 
 export const FetchClubs = ({ selectData }) => {
 
@@ -28,25 +29,6 @@ export const FetchClubs = ({ selectData }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
 
   };
-
-  function setStatus(i) {
-    if (i.statusLabel == "Active") {
-      return  <button className='ui button fluid violet basic'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </button>;
-    } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button fluid orange basic'>
-                  <i className="spinner icon"></i>
-                  Pending
-              </button>;
-    } else {
-      return  <button className='ui button fluid red basic'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </button>;
-    }
-  }
 
   return (
 <>
@@ -97,8 +79,12 @@ export const FetchClubs = ({ selectData }) => {
                       </div>
                   </div>
               </td>
-              <td>{i.users == 0 ? "No account" : i.users == 1 ? "1 account" : (i.users+" accounts")}</td>
-              <td>{setStatus(i)} </td>
+              <td className="ui list">
+                {Func.toListState(i.usersActive,"active")}
+                {Func.toListState(i.usersPending,"active")}
+                {i.usersPending == 0 && i.usersActive == 0 ? "None" : null}
+              </td>
+              <td>{Func.toStatus(i.statusLabel)}</td>
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>
                     <i className="pencil icon"></i>

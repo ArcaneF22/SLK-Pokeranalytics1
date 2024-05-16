@@ -78,7 +78,7 @@ export const TabMyUplines = () => {
                 <a className={activeIndex == "1" ? "item active violet" : "item" } id='1' onClick={ ()=>setActiveIndex(1) }>
                   {gotData.length === 0  ?
                       <><i className="plus icon"></i>INSERT</>
-                    : <><i class="pencil alternate icon"></i>UPDATE</> }
+                    : <><i className="pencil alternate icon"></i>UPDATE</> }
                 </a>
             </div>
             <SUI.Tab menu={{ text: true }} activeIndex={activeIndex} panes={panes} style={{marginTop:"-55px"}} />

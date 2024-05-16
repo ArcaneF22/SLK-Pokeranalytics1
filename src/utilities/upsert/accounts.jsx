@@ -206,6 +206,7 @@ export const UpsertAccounts = ({selectedData,recallData,resetSelected}) => {
         <h3 className="ui horizontal divider header">
             {selectedData.length === 0  ? "Add Form" : "Update Form" }
         </h3>
+        
         <br />
         <div className="ui form fitted">
           <div className='three fields'>
@@ -234,7 +235,7 @@ export const UpsertAccounts = ({selectedData,recallData,resetSelected}) => {
               </div>
 
               <div className="field">
-                <label>Nickname {selectedData.nickname}</label>
+                <label>Nickname</label>
                 <input type="text" value={accountNickname} onChange={(e) => setaccountNickname(e.currentTarget.value)}/>
               </div>
 

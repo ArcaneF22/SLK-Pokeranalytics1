@@ -21,7 +21,7 @@ export const Unions = () => {
       const response = await axios.post(Set.Fetch['unions'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Unions items fetched...")
+      //console.log("Unions items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

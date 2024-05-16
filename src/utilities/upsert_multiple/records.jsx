@@ -1,11 +1,16 @@
 import React, { useLayoutEffect, useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
+import { Accounts } from '../fetch/raw/accounts'
 import axios from 'axios';
+import * as SUI from 'semantic-ui-react'
 
-export const MultipleRecords = ({selectData}) => {
-    const [JSONData, setJSONData] = useState('');
-    const [message, setMessage] = useState("");
-    const [csvLoaded, setcsvLoaded] = useState(false);
+export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
+
+    const acctDD                                    = Accounts().data
+    const [JSONData, setJSONData]                   = useState('');
+    const [message, setMessage]                     = useState("");
+    const [csvLoaded, setcsvLoaded]                 = useState(false);
+    const [CSVHeader, setCSVHeader]                 = useState("");
 
     const CSVFileUpload = (event) => {
         const fileCSV = event.target.files[0];
@@ -18,7 +23,10 @@ export const MultipleRecords = ({selectData}) => {
                 const csv = e.target.result;
                 Papa.parse(csv, {
                 complete: (i) => {
-                    functionCSVtoJSON(i.data);
+                    console.log(i.data);
+                    setCSVHeader(i.data[0])
+                    CSVData(i.data)
+                    functionCSVtoJSON(i.data)
                 },
                 error: (err) => {
                     console.error('Error parsing CSV:', err);
@@ -30,19 +38,26 @@ export const MultipleRecords = ({selectData}) => {
         }
     };
   
-    const functionCSVtoJSON = (csvArray) => {
-        if (!Array.isArray(csvArray)) {
+    useLayoutEffect(() => {
+        if(reCSVData != 0){
+            functionCSVtoJSON(reCSVData)
+            console.log(reCSVData);
+        }
+    }, []);
+
+    const functionCSVtoJSON = (csv) => {
+        if (!Array.isArray(csv)) {
             setMessage('Invalid CSV data format (not an array)');
             setJSONData("")
         } else {
-            const headerROW = csvArray[0];
+            const headerROW = csv[0];
             //if(headerROW[0] != "DATEUNTIL" || headerROW[1] != "CLUB" || headerROW[2] != "PLAYERID" || headerROW[3] != "WINNINGTOTAL" || headerROW[4] != "BONUSTOTAL" || headerROW[5] != "EXTRA" || headerROW[6] != "W-NLH" || headerROW[7] != "W-FLH" || headerROW[8] != "W-6+" || headerROW[9] != "W-PLOHI" || headerROW[10] != "W-PLIHiLo" || headerROW[11] != "W-MIXED" || headerROW[12] != "W-OFC" || headerROW[13] != "W-MTT" || headerROW[13] != "W-SNG" || headerROW[14] != "W-SPIN" || headerROW[15] != "B-NLH" || headerROW[16] != "B-FLH" || headerROW[17] != "B-6+" || headerROW[18] != "B-PLOHI" || headerROW[19] != "B-PLIHiLo" || headerROW[20] != "B-MIXED" || headerROW[21] != "B-OFC" || headerROW[22] != "B-MTT" || headerROW[23] != "B-SNG" || headerROW[24] != "B-SPIN"){
             if(headerROW[0] != "DATEUNTIL" || headerROW[1] != "CLUB" || headerROW[2] != "PLAYERID" || headerROW[3] != "WINNINGTOTAL" || headerROW[4] != "BONUSTOTAL"){
                 setMessage("CSV wrong format!")
                 setJSONData("")
             } else {
 
-                const jsonArray = csvArray.slice(1).map((rowData) => {
+                const jsonArray = csv.slice(1).map((rowData) => {
                     const jsonObject = {};
                     for (let i = 0; i < rowData.length; i++) {
                     jsonObject[headerROW[i]] = rowData[i];
@@ -68,6 +83,7 @@ export const MultipleRecords = ({selectData}) => {
     };
 
     const resetCSV = () => {
+        CSVData("")
         setcsvLoaded(false);
         setJSONData("");
         setMessage('Please select a CSV file.');
@@ -79,34 +95,30 @@ export const MultipleRecords = ({selectData}) => {
         setJSONData(updatedData);
       };
 
-      const statusChange = (e, index, x) => {
-        if(x=="Active"){
-            alert("Active")
-        } else if(x=="Pending"){
-            alert("Pending")
-        } else {
-            alert("Inactive")
-        }
+      const dropdownChange = (e, index, x) => {
+        const updatedData = [...JSONData]; // Create a copy of the state array
+        updatedData[index][x] = e;
+        setJSONData(updatedData);
       };
 
-    function setStatus(i) {
-        if (i.status == "Active") {
-          return  <div className='ui button green basic' onClick={(e) => statusChange(e, index, "Pending")}>
-                      <i className="check circle outline icon"></i>
-                      Active
-                  </div>;
-        } else if (i.status == "Pending") {
-          return  <div className='ui button yellow basic' onClick={(e) => statusChange(e, index, "Inactive")}>
-                      <i className="spinner icon"></i>
-                      Pending
-                  </div>;
-        } else {
-          return  <div className='ui button red basic' onClick={(e) => statusChange(e, index, "Active")}>
-                      <i className="times circle outline icon"></i>
-                      Inactive
-                  </div>;
-        }
-    }
+
+
+
+      const downlines = acctDD.map(i => {
+            return {
+                key:    i.accountID,
+                text:   i.accountID+": "+i.accountNickname,
+                value:  i.accountID,
+                image:  { avatar: true, src: i.userAvatar },
+                app:    i.appID ? i.appID : 0,
+                club:   i.clubID ? i.clubID : 0,
+            };
+      })
+
+      const autoSelectOptionByKey = (key) => {
+        const autoSelectedOption = acctDD.find(option => option.key === key);
+        return autoSelectedOption;
+      };
 
     return (
         <div className="ui segment basic">
@@ -159,6 +171,28 @@ export const MultipleRecords = ({selectData}) => {
                                 </div>
                                 <div className='field'>
                                     <label>Player ID</label>
+                                    <SUI.Dropdown
+                                            placeholder="Select account"
+                                            scrolling
+                                            fluid
+                                            selection
+                                            search={true}
+                                            multiple={false}
+                                            header="Select account"
+                                            onChange={(e,i) => dropdownChange(i.value, index, "PLAYERID")}
+
+                                            options={acctDD.map(i => {
+                                                return {
+                                                    key:    i.accountID,
+                                                    text:   i.accountID+": "+i.accountNickname,
+                                                    value:  i.accountID,
+                                                    image:  { avatar: true, src: i.userAvatar },
+                                                    app:    i.appID ? i.appID : 0,
+                                                    selected:    i.accountID === i.PLAYERID ? true : false,
+                                                };
+                                          })}
+
+                                        />
                                     <input value={i.PLAYERID} onChange={(e) => inputChange(e, index, "PLAYERID")} />
                                 </div>
                                 <div className='field'>
@@ -180,8 +214,10 @@ export const MultipleRecords = ({selectData}) => {
                 </form>
                 <h2>Converted JSON Data</h2>
                 <pre>{JSON.stringify(JSONData, null, 2)}</pre>
+               
             </div>
           )}
+
         </div>
       );
 }

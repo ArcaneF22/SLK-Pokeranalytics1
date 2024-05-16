@@ -1,30 +1,33 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
-import { Uplines } from '../fetch/raw/uplines'
 import { Accounts } from '../fetch/raw/accounts'
 import * as Set from '../constants';
+import * as Alert from "../alerts/alerts"
+import * as Note from "../alerts/note"
 import * as UPL from '../fetch/dropdowns/upline'
 import * as Func from '../functions';
 
 export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
-  const UplineDD = Uplines().data
-  const acctDD = Accounts().data
 
   const Token = JSON.parse( localStorage.getItem('Token') );
-  const [loading, setLoading] =         useState(false);
-  const [message, setMessage] =         useState("");
-  const [button, setButton] =           useState("Add New Data");
-  const [cancels, setCancels] =         useState(false);
 
-  const [id, setID] =                           useState("0");
+  const acctDD                                  = Accounts().data
+  const [loading, setLoading]                   = useState(false);
+  const [message, setMessage]                   = useState("");
+  const [button, setButton]                     = useState("Add New Data");
+  const [cancels, setCancels]                   = useState(false);
+  const [AlertMessage, setAlertMessage]         = useState([{Alert:"", Title:"", Message:"",}]);
+  const [NoteMessage, setNoteMessage]           = useState([{Note:"false", Title:"", Message:"",}]);
+
+  const [id, setID]                             = useState("0");
   const [appID, setappID]                       = useState(null);
-  const [clubID, setclubID] =                   useState("");
-  const [downlineID, setdownlineID] =           useState("");
-  const [uplineID, setuplineID] =               useState("");
-  const [percentage, setPercentage] =           useState("");
-  const [status, setStatus] =                   useState("");
-  const [replace, setReplace] =                 useState("F");
+  const [clubID, setclubID]                     = useState("");
+  const [downlineID, setdownlineID]             = useState("");
+  const [uplineID, setuplineID]                 = useState("");
+  const [percentage, setPercentage]             = useState("");
+  const [status, setStatus]                     = useState("1");
+  const [replace, setReplace]                   = useState("F");
 
 
   const DDClubs = (value) => {
@@ -60,9 +63,18 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
     e.preventDefault()
     setLoading(true)
       if(!YesWithvalues){
-        setMessage("Details incomplete!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Incomplete!",
+              Message: "Please fill out missing details",
+          });
+          
       } else if(downlineID == uplineID){
-        setMessage("Upline and downline cannot be the same!")
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Upline and downline cannot be the same!",
+          });
       } else {
         console.log(JSON.stringify(Upsert))
         SubmitForm()
@@ -74,6 +86,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
     setMessage("")
     setButton("Add New Data")
     setCancels(false)
+    setStatus("1")
   }
 
   const resetForm = () => {
@@ -104,7 +117,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
 
     if(selectedData.status=="0" || selectedData.status=="Active"){
         setStatus("0")
-    } else if(selectedData.status=="Pending"){
+    } else if(selectedData.status=="1" || selectedData.status=="Pending"){
         setStatus("1")
     } else {
         setStatus("2")
@@ -112,7 +125,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
 
     if(selectedData.id == "0" || selectedData.id == null) {
       setButton("Add New Data")
-      setStatus("0")
+      setStatus("1")
       setCancels(false)
     } else {
       setButton("Proceed to Update")
@@ -147,24 +160,45 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
         const number = parseFloat( response.data.match(/[\d.]+/) );
         setID( number )
         setButton("Proceed to Replace")
-        setMessage("Duplicate found! Would you like to replace existing data? Check Upline ID#"+ number);
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Found duplicate ID#"+ number,
+              Message: "Check details to update",
+          });
         setReplace("T")
         setCancels(true)
     } else if(response.data.includes("Added")){
-        setMessage("New Upline successfully added!");
+          setAlertMessage({
+              Alert: "success",
+              Title: "Success!",
+              Message: "New Upline added",
+          });
         recallData(1)
         resetForm()
     } else if(response.data.includes("Updated")){
-        setMessage("Upline successfully replaced!");
+          setAlertMessage({
+              Alert: "success",
+              Title: "Success!",
+              Message: "Upline updated",
+          });
         recallData(1)
         resetForm()
     } else {
-      setMessage("Something went wrong! Please retry :" + response.data);
-      resetForm()
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Something went wrong! Please retry",
+          });
+        resetForm()
     }
       
     } catch (error) {
-     // console.error("Error submission: ", error);
+          setAlertMessage({
+              Alert: "warning",
+              Title: "Oops!",
+              Message: "Something went wrong! Please retry",
+          });
+          console.error("Error submission: ", error);
     }
   }
 
@@ -180,14 +214,30 @@ const downlines = acctDD.map(i => {
 })
 
   
-  const handleDropdownChange = (event, data) => {
-    setdownlineID(data.value);
-    const selected = downlines.find(option => option.value === data.value);
-    setappID(selected.ddd ? selected.ddd : 0);
+  const downlineChange = (event, i) => {
+    setdownlineID(i.value);
+    const s = downlines.find(o => o.value === i.value);
+    setappID(s.ddd ? s.ddd : 0);
   };
 
    
     return (
+      <>
+      { AlertMessage['Alert'] == "success" ? 
+          <Alert.Success
+                key="SuccessRefresh" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "success" ? true : false}  
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      :  AlertMessage['Alert'] == "warning" ? 
+          <Alert.Warning 
+                key="Warning" 
+                AlertMessage={AlertMessage} 
+                open={AlertMessage['Alert'] == "warning" ? true : false} 
+                onClose={() => { setAlertMessage([{Alert:"", Title:"", Message:"",}]) }} />
+      : null
+      }
+
       <div className="ui segment basic">
         
         <h3 className="ui horizontal divider header">
@@ -201,7 +251,7 @@ const downlines = acctDD.map(i => {
         <div className='two fields'>
 
             <div className="field">
-                  <label>Downline Account</label>
+                  <label>Downline Account {downlineID}</label>
                   <SUI.Dropdown
                         placeholder="Select account"
                         scrolling
@@ -210,7 +260,7 @@ const downlines = acctDD.map(i => {
                         search={true}
                         multiple={false}
                         header="Select account"
-                        onChange={handleDropdownChange}
+                        onChange={downlineChange}
                         value={downlineID}
                         options={downlines}
                       />
@@ -249,7 +299,6 @@ const downlines = acctDD.map(i => {
                   <i className="check circle outline icon"></i>
                   Active
                 </div>
-                
               :  status === "1" || status === "Pending" ? 
                 <button className='ui button orange center aligned' onClick={ changeStatus }>
                     <i className="spinner icon"></i>
@@ -267,13 +316,22 @@ const downlines = acctDD.map(i => {
 
           <div className="ui section divider"></div>
 
+            <Note.Error Note={NoteMessage} />
+
+
+
+
           <div className="ui segment center aligned basic">
-            <div className="field">
-              <div className="ui button purple " onClick={ValidateForm}>
-                <i className="plus icon"></i>
-                {button}
+
+              <div className="field">
+                <div className="ui button purple " onClick={ValidateForm}>
+                  <i className="plus icon"></i>
+                  {button}
+                </div>
               </div>
-            </div>
+
+
+
               { cancels ?  <>
               <div className="field">
                 <div className="ui button grey basic" onClick={cancel}>
@@ -290,6 +348,7 @@ const downlines = acctDD.map(i => {
 
         </div>
       </div>
+      </>
     );
   };
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Uplines } from '../raw/uplines'
 import * as Set from '../../constants'
+import * as Func from '../../functions'
 
 export const FetchUplines = ({ selectData }) => {
 
@@ -28,25 +29,6 @@ export const FetchUplines = ({ selectData }) => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
       , 1000)
   };
-
-  function setStatus(i) {
-    if (i.statusLabel == "Active") {
-      return  <div className='ui label green basic center aligned fluid'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </div>;
-    } else if (i.statusLabel == "Pending") {
-      return  <div className='ui label orange basic center aligned fluid'>
-                  <i className="spinner icon"></i>
-                  Pending
-              </div>;
-    } else {
-      return  <div className='ui label red basic center aligned fluid'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </div>;
-    }
-  }
 
   return (
 <>
@@ -118,7 +100,7 @@ export const FetchUplines = ({ selectData }) => {
 
               </td>
               <td>{i.percentage}% </td>
-              <td>{setStatus(i)}</td>
+              <td>{Func.toStatus(i.statusLabel)}</td>
 
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.appID,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>

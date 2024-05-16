@@ -1,31 +1,13 @@
 import { useState } from 'react';
 import { MyAccounts } from '../raw/accounts'
 import * as Set from '../../constants'
+import * as Func from '../../functions'
 
 export const FetchMyAccounts = ({selectMyAccount}) => {
 
   const [clicked, setClicked] = useState(0)
   const data = MyAccounts().data
   const load = MyAccounts().load
-
-  function setStatus(i) {
-    if (i.status == "Active") {
-      return  <button className='ui button green basic'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </button>;
-    } else if (i.status == "Pending") {
-      return  <button className='ui button yellow basic'>
-                  <i className="spinner icon"></i>
-                  Pending
-              </button>;
-    } else {
-      return  <button className='ui button red basic'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </button>;
-    }
-  }
 
   const editMyAccount = (accountID,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
@@ -86,12 +68,11 @@ export const FetchMyAccounts = ({selectMyAccount}) => {
                 </h5>
               </td>
               <td>{i.appName}</td>
-              <td>{setStatus(i)}</td>
+              <td>{Func.toStatus(i.statusLabel)}</td>
               <td>
-                <button className='ui icon button violet' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
-                    <i className="edit outline icon"></i>
-                    Edit
-                </button>
+                <div className='ui icon button violet' onClick={()=> editAccount(i.accountID,i.accountNickname,i.accountRole,i.userID,i.appID,i.status)}>
+                    <i className="pencil alternate icon"></i>
+                </div>
               </td>
             </tr>
           ))}

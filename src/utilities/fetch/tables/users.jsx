@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Users } from '../raw/users'
 import * as Set from '../../constants'
+import * as Func from '../../functions'
 
 export const FetchUsers = ({ selectData }) => {
 
@@ -8,24 +9,6 @@ export const FetchUsers = ({ selectData }) => {
   const data = Users().data
   const load = Users().load
 
-  function setStatus(i) {
-    if (i.statusLabel == "Active") {
-      return  <div className='ui label green basic center aligned fluid'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </div>;
-    } else if (i.statusLabel == "Pending") {
-      return  <div className='ui label orange basic center aligned fluid'>
-                  <i className="spinner icon"></i>
-                  Pending
-              </div>;
-    } else {
-      return  <div className='ui label red basic center aligned fluid'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </div>;
-    }
-  }
   const editData = (id,nickname,role,email,telegram,username,password,avatar,status) => {
     setClicked(clicked+1)
     const array = {
@@ -111,14 +94,13 @@ export const FetchUsers = ({ selectData }) => {
                 <br />
                 PW: {i.password}
               </td>
-              <td>
+              <td className='ui list'>
+                {Func.toListState(i.activeAccounts,"active")}
+                {Func.toListState(i.pendingAccounts,"pending")}
+                {Func.toListState(i.disabledAccounts,"disabled")}
                 {i.activeAccounts == 0 ? null : i.activeAccounts == 1 ? (i.activeAccounts+" Active Account") : (i.activeAccounts+" Active Accounts")}
-                <br />
-                {i.pendingAccounts == 0 ? null : i.pendingAccounts == 1 ? ( i.pendingAccounts+" Pending Account") : (i.pendingAccounts+" Pending Accounts")}
-                <br />
-                {i.disabledAccounts == 0 ? null : i.disabledAccounts == 1 ? ( i.disabledAccounts+" Disabled Account") : (i.disabledAccounts+" Disabled Accounts")}
                 </td>
-              <td>{setStatus(i)}</td>
+              <td>{Func.toStatus(i.statusLabel)}</td>
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.nickname,i.roleID,i.email,i.telegram,i.username,i.password,i.avatarID,i.status)}>
                     <i className="pencil icon"></i>

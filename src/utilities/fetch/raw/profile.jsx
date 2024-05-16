@@ -30,7 +30,7 @@ export const UpdatingProfile = () => {
       }
 
       localStorage.setItem('User', JSON.stringify(User));
-      console.log("Profile items fetched...")
+      //console.log("Profile items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

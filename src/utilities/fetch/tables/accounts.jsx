@@ -1,31 +1,13 @@
 import { useState } from 'react';
 import { Accounts } from '../raw/accounts'
 import * as Set from '../../constants'
+import * as Func from '../../functions'
 
 export const FetchAccounts = ({selectData}) => {
 
   const [clicked, setClicked] = useState(1)
   const data = Accounts().data
   const load = Accounts().load
-
-  function setStatus(i) {
-    if (i.statusLabel == "Active") {
-      return  <button className='ui button violet fluid basic'>
-                  <i className="check circle outline icon"></i>
-                  Active
-              </button>;
-    } else if (i.statusLabel == "Pending") {
-      return  <button className='ui button orange fluid basic'>
-                  <i className="spinner icon"></i>
-                  Pending
-              </button>;
-    } else {
-      return  <button className='ui button red fluid basic'>
-                  <i className="times circle outline icon"></i>
-                  Inactive
-              </button>;
-    }
-  }
 
   const editData = (id,idd,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)
@@ -100,7 +82,7 @@ export const FetchAccounts = ({selectData}) => {
                     </div>
                 </h5>
               </td>
-              <td>{setStatus(i)}</td>
+              <td>{Func.toStatus(i.statusLabel)}</td>
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.accountID,i.accountNickname,i.accountRoleID,i.userID,i.appID,i.status)}>
                     <i className="pencil icon"></i>

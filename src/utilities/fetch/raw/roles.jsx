@@ -20,7 +20,7 @@ export const Roles = () => {
       const response = await axios.post(Set.Fetch['roles'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Roles items fetched...")
+      //console.log("Roles items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }

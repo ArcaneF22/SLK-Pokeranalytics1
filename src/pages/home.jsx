@@ -1,5 +1,5 @@
 
-import { isNumeric } from '../utilities/tools'
+import * as Func from '../utilities/functions'
 import { FetchNotificationPending } from '../utilities/fetch/items/notifications'
 import { useGlobalOutside  } from '../utilities/context/global';
 import React, { useState, useLayoutEffect, useEffect } from 'react';
@@ -11,7 +11,7 @@ export const HomePage = () => {
   const { countNotif } = useGlobalOutside();
   const isToken = JSON.parse(localStorage.getItem('Token'))["id"]
   const getUser = JSON.parse(localStorage.getItem('User'))
-  const isNum = isNumeric(isToken)
+  const isNum   = Func.isNumeric(isToken)
 
 
     useLayoutEffect(() => {

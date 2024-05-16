@@ -124,8 +124,9 @@ export const UpsertExchangeRates = () => {
 
               <div className="field">
                   <label>Application</label>
+                  <input type="text" value={fxID} onChange={(e) => setfxID(e.currentTarget.value)}/>
               </div>
-              
+
           </div>
 
         </div>

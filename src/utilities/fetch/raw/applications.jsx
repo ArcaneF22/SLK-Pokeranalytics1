@@ -20,7 +20,7 @@ export const Applications = () => {
       const response = await axios.post(Set.Fetch['applications'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Application items fetched...")
+      //console.log("Application items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
