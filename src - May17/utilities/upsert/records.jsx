@@ -2,14 +2,13 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import { ExchangeRates } from '../fetch/raw/exchangerates'
 import { Accounts } from '../fetch/raw/accounts'
-
 import * as SUI from 'semantic-ui-react'
 import * as Alert from "../alerts/alerts"
 import * as Set from '../constants';
 import * as Func from '../functions';
 import * as Calc from '../calculations'
 
-export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
+export const UpsertRecords = ({selectedData,recallData}) => {
 
     const fxDD                                      = ExchangeRates().data
     const load                                      = ExchangeRates().load
@@ -30,12 +29,6 @@ export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
     const [fxRates, setfxRates]                     = useState(0);
     const [xdecimal, setxDecimal]                   = useState(2);
 
-    formSetting = {
-        ifxDate: setfxDate,
-        ifxUSD: fxUSD,
-        ifxCurrency: fxCurrency,
-        ifxProvider: fxProvider,
-    }
 
         const downlinesDD = acctDD.map(i => {
             return {
@@ -110,6 +103,7 @@ export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
 
         useEffect(() => {
             if(fxUSD == "" || fxUSD == null){
+                setfxProvider("");
                 setfxUSD("1")
                 setfxCurrency("USD")
             }
@@ -120,13 +114,13 @@ const panels = [
     {
       key: '1',
       title: {
-        content: <span className='violetCenter'>ADDITIONAL SETTINGS</span>,
+        content: <span className='violetCenter'>Additional Settings</span>,
         icon: 'cogs',
       },
       content: {
         content: (
                 <>
-                <div className="three fields">
+                <div className="four fields">
                     <div className="field">
                         <label>Decimal number</label>
                         <input type='text' className='violetCenter' placeholder="0" value={xdecimal} onChange={(e) => Func.toWholeNumber5(e.currentTarget.value,setxDecimal)} />
@@ -137,63 +131,12 @@ const panels = [
                 </>
         ),
       },
-    },
-    {
-        key: '2',
-        title: {
-          content: <span className='violetCenter'>CLUB PERCENTAGES</span>,
-          icon: 'arrow up',
-        },
-        content: {
-          content: (
-                  <>
-                  <div className="three fields">
-                      <div className="field">
-                          <label>Upline Percentage from club </label>
-                          <div className="ui left labeled right icon input">
-                            <i className="club icon violet"></i>
-                            <input type="text" className='violetCenter' placeholder="0-100"  value={agencyPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setagencyPercent)}  />
-                        </div>
-                      </div>
-                  </div>
-                  <div>
-                  </div>
-                  </>
-          ),
-        },
-      },
-    {
-        key: '3',
-        title: {
-          content: <span className='violetCenter'>UPLINE PERCENTAGES</span>,
-          icon: 'arrow up',
-        },
-        content: {
-          content: (
-                  <>
-                  <div className="three fields">
-                      <div className="field">
-                          <label>Upline Percentage from club </label>
-                          <div className="ui left labeled right icon input">
-                            <i className="percent icon violet"></i>
-                            <input type="text" className='violetCenter' placeholder="0-100"  value={agencyPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setagencyPercent)}  />
-                        </div>
-                      </div>
-                  </div>
-                  <div>
-                  </div>
-                  </>
-          ),
-        },
-      }
+    }
   ]
 
-  const radioChanges = (e, { value }) => {
+  const radioChange = (e, { value }) => {
     setonRadio(value);
   };
-
-
-
     return (
           <>
 
@@ -213,17 +156,15 @@ const panels = [
       }
 
       <div className="ui segment basic  left aligned">
-        <h3 className="ui dividing header violet">
-            <i className="calculator icon"></i>
-            <div className="content">
-                <div className="header">
-                    CALCULATION SETTINGS
-                </div>
-                <i style={{fontSize:"13px"}}>Change values to recalculate data</i>
-            </div>
-        </h3>
 
-        <div className='ui form message  attached fitted' style={{paddingBottom:"30px",paddingTop:"25px"}}>
+        <div className="ui attached message violet">
+            <h3 className="header">
+                <i className="calculator icon"></i>
+                CALCULATION SETTINGS
+            </h3>
+        </div>
+        
+        <div className='ui form message violet attached fitted' style={{paddingBottom:"30px",paddingTop:"25px"}}>
             <div className='five field violetText'>
 
                 <div className='two fields stackable'>
@@ -292,17 +233,12 @@ const panels = [
             </div>
         </div>
         <br />
-
-        <h3 className="ui dividing header violet">
-            <i className="file excel outline icon"></i>
-            <div className="content">
-                <div className="header">
-                    RESULT
-                </div>
-                <i style={{fontSize:"13px"}}>Click submit below if result is finalized</i>
-            </div>
-        </h3>
-
+        <div className="ui attached message">
+            <h3 className="header">
+                <i className="table icon"></i>
+                COMPUTATION RESULT
+            </h3>
+        </div>
         <table className='ui table mini compact attached'>
             <thead>
             <tr>
@@ -399,17 +335,10 @@ const panels = [
             ))}
             </tbody>
         </table>
-        <div className='ui segment basic center aligned'>
-            <div className='ui button purple'>
-                <i className='check icon'></i>
-                SUBMIT
-            </div>
-        </div>
         {selectedData ? 
-            <div className='ui message black hidden'>
+            <div className='ui message black'>
                 <pre>
                     {Func.stringify(selectedData)}
-
                 </pre>
             </div>
         : null}

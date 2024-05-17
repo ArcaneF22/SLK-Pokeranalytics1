@@ -6,7 +6,6 @@ export const Fetch = {
                         users:              import.meta.env.VITE_GET_USERS,
                         myaccounts:         import.meta.env.VITE_GET_MYACCOUNTS,
                         accounts:           import.meta.env.VITE_GET_ACCOUNTS,
-                        accountsupline:     import.meta.env.VITE_GET_ACCOUNTS_UPLINE,
                         applications:       import.meta.env.VITE_GET_APPS,
                         myclubs:            import.meta.env.VITE_GET_MYCLUBS,
                         clubs:              import.meta.env.VITE_GET_CLUBS,
@@ -86,13 +85,6 @@ export const LoadingData = () => {
     )
 }
 export const getDateTime = (i) => {
-  const d = new Date(i);
-  const o = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-  const w = d.toLocaleDateString('en-US', o);
-  return w;
-}
-
-export const formSettings = (i) => {
   const d = new Date(i);
   const o = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
   const w = d.toLocaleDateString('en-US', o);

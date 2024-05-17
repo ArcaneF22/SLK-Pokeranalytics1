@@ -1,11 +1,8 @@
 import React, { useLayoutEffect, useState, useRef  } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
 import { Accounts } from '../fetch/raw/accounts'
-import { AccountsUpline } from '../fetch/raw/accountsupline'
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
-import * as Func from '../functions';
-import * as Rec from '../fetch/dropdowns/records'
 
 export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
 
@@ -44,6 +41,7 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
     useLayoutEffect(() => {
         if(reCSVData != 0){
             functionCSVtoJSON(reCSVData)
+            console.log(reCSVData);
         }
     }, []);
 
@@ -136,12 +134,6 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
       };
 
 
-      const [onSelected, setonSelected]                 = useState("");
-      const onSelect = (value) => {
-        setonSelected(value)
-      };
-
-
     return (
         <div className="ui segment basic">
           {
@@ -168,7 +160,7 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
           {JSONData && (
             <div>
                 
-                <form className='ui form tiny' id='FormCSV'>
+                <form className='ui form' id='FormCSV'>
                     <br />
                         <h3 className="ui horizontal divider header">
                             Uploaded CSV Form
@@ -185,12 +177,38 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
 
                                 <div className='field'>
                                     <label>Date Until</label>
-                                    <input type="date" value={i.DATEUNTIL} onChange={(e) => inputChange(e, index, "DATEUNTIL")}/>
+                                    <input value={i.DATEUNTIL} onChange={(e) => inputChange(e, index, "DATEUNTIL")}/>
                                 </div>
+                                <div className='field'>
+                                    <label>Club</label>
+                                    <input value={i.CLUB} onChange={(e) => inputChange(e, index, "CLUB")}/>
+                                </div>
+                                <div className='field'>
+                                    <label>Player ID</label>
+                                    <SUI.Dropdown
+                                            placeholder={i.PLAYERID}
+                                            scrolling
+                                            fluid
+                                            selection
+                                            search={true}
+                                            multiple={false}
+                                            header="Select account"
+                                            onChange={(e,i) => dropdownChange(i.value, index, "PLAYERID")}
+                                            options={acctDD.map(i => {
+                                                return {
+                                                    key:    i.id,
+                                                    text:   i.accountID+": "+i.accountNickname,
+                                                    value:  i.accountID,
+                                                    image:  { avatar: true, src: i.userAvatar },
+                                                    app:    i.appID ? i.appID : 0,
+                                                };
+                                          })}
+                                          defaultValue={i.PLAYERID}
 
-                                <Rec.DDAccountsClubs onFor={"ALL"} onWhat={""} onDefault={(i.CLUB)} onSelect={onSelect} />
-                                <Rec.DDAccountsUpline onFor={"ALL"} onWhat={""} onDefault={(i.PLAYERID)} onSelect={onSelect} />
+                                        />
 
+                                    <input value={i.PLAYERID} onChange={(e) => inputChange(e, index, "PLAYERID")} />
+                                </div>
                                 <div className='field'>
                                     <label>Win/Loss Total</label>
                                     <input value={i.WINNINGTOTAL} onChange={(e) => inputChange(e, index, "WINNINGTOTAL")} />
@@ -208,38 +226,11 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                                 </div>
                         </div>
                 </form>
-                
-                
+                <h2>Converted JSON Data</h2>
+                <pre>{JSON.stringify(JSONData, null, 2)}</pre>
                
             </div>
           )}
-
-            <div className='ui message black mini'>
-                <h4>Converted JSON Data</h4>
-                <pre>
-                <pre>{JSON.stringify(JSONData, null, 2)}</pre>
-                </pre>
-            </div>
-
-            <div className='ui message black hidden'>
-                <h3>Fetched JSON: Accounts Active</h3>
-                <pre>
-                    {Func.stringify(AccountsUpline("CLUB","698216").data)}
-                </pre>
-            </div>
-            <div className='ui message black hidden'>
-                <h3>PROCESS:</h3>
-                <p>Upload CSV file (with 2 valid format: long and short version)</p>
-                <p>Detect CSV file format if correct, else re-upload CSV file</p>
-                <p>An editable form will be automatically filled</p>
-                <p>Clubs can be changed</p>
-                <p>Upon club selection, accounts from the same app will be loaded as player accounts dropdown</p>
-                <p>Player Accounts can be modified</p>
-                <p>Upon club selection, uplines and percentage will be loaded</p>
-                <p>If player ID is not in the system, will notify user to add account to server even without a user</p>
-                <p>For new player id, upline must be will be requested for downline approval making the record on pending</p>
-            </div>
-            
 
         </div>
       );
