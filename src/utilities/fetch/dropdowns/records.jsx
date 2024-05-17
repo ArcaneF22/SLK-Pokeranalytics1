@@ -98,7 +98,7 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
             <div className='field'>
                 <label>Downline ID</label>
                 <SUI.Dropdown
-                        placeholder={"Select downline"+onDefault}
+                        placeholder={"Select downline"}
                         scrolling
                         clearable
                         floating
@@ -118,7 +118,7 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
             <div className='field'>
                 <label>Upline ID</label>
                 <SUI.Dropdown
-                        placeholder={"Select upline"+onDefault}
+                        placeholder={"Select upline"}
                         scrolling
                         clearable
                         floating
