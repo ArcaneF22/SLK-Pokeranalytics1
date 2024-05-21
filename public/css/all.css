@@ -538,10 +538,9 @@ border: 1px solid rgba(191, 0, 255, 0.42) !important;
 
 .CSVFile[type="file"]{
   width: 100% !important;
-  height: 100px !important;
-  padding:38px 16px !important;
+  height: 120px !important;
+  padding:48px 26px !important;
   place-items:center !important;
-
 }
 
 .imageAvatar{

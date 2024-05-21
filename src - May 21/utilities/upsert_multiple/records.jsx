@@ -97,17 +97,50 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
         setJSONData(updatedData);
       };
 
-    const [onClubSelected, setonClubSelected]                 = useState("");
-    const [onUplineSelected, setonUplineSelected]             = useState("");
+      const dropdownChange = (e, index, x) => {
+        const updatedData = [...JSONData]; // Create a copy of the state array
+        updatedData[index][x] = e;
+        setJSONData(updatedData);
+      };
 
 
-    const onClubSelect = (value) => {
-        setonClubSelected(value)
-    };
 
-    const onUplineSelect = (value) => {
-        setonUplineSelected(value)
-    };
+
+      const downlines = acctDD.map(i => {
+            return {
+                key:    i.accountID,
+                text:   i.accountID+": "+i.accountNickname,
+                value:  i.accountID,
+                image:  { avatar: true, src: i.userAvatar },
+                app:    i.appID ? i.appID : 0,
+                club:   i.clubID ? i.clubID : 0,
+            };
+      })
+
+      const autoSelect = (key) => {
+        const i = JSON.stringify(key)
+        return i;
+      };
+
+      const downlineChange = (event, i) => {
+        const s = downlines.find(o => o.value === i.value);
+        setappID(s.key ? s.ddd : 0);
+
+      };
+
+      const dropdownRef = useRef(null);
+
+      const handleSelectOption = (value) => {
+        dropdownRef.current.value = value; // Set the dropdown value
+        if (onSelect) onSelect(value); // Optional callback for selection handling
+      };
+
+
+      const [onSelected, setonSelected]                 = useState("");
+      const onSelect = (value) => {
+        setonSelected(value)
+      };
+
 
     return (
         <div className="ui segment basic">
@@ -117,7 +150,6 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                     <h3 className="ui horizontal divider header  center aligned">
                         {message}
                     </h3>
-
                     <input type="file" id='csvFile'
                             style={{width:"100% !important"}}
                             className="ui message violet basic center aligned fluid CSVFile"
@@ -136,42 +168,38 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
           {JSONData && (
             <div>
                 
-                <form className='ui form fluid tiny' id='FormCSV'>
+                <form className='ui form tiny' id='FormCSV'>
                     <br />
                         <h3 className="ui horizontal divider header">
                             Uploaded CSV Form
                         </h3>
                     <br />
                         {JSONData.map((i, index) => (
-                            <>
-                            <div className='seven fields ui message fluid plusTop' id='countDiv' key={index}>
-
+                            <div className='fields ui message plusTop' id='countDiv' key={index}>
+                                <div className='field'>
+                                    <label>Action</label>
                                     <div className='ui button red icon basic' onClick={() => deleteRow(index)}>
-                                        <i className='icon close center aligned' style={{ paddingTop:"50%"}}></i>
+                                        <i className='icon close'></i>
                                     </div>
+                                </div>
 
                                 <div className='field'>
                                     <label>Date Until</label>
                                     <input type="date" value={i.DATEUNTIL} onChange={(e) => inputChange(e, index, "DATEUNTIL")}/>
                                 </div>
-                                <td>
-                                    {JSON.stringify(onClubSelected)} <br/>
-                                    {JSON.stringify(onUplineSelected)}
-                                </td>
-                                
-                                <Rec.DDAccountsClubs onFor={"ALL"} onWhat={""} onDefault={(i.CLUB)} onSelect={onClubSelect} />
-                                <Rec.DDAccountsUpline onFor={"ALL"} onWhat={""} onDefault={(i.PLAYERID)} onSelect={onUplineSelect} />
+
+                                <Rec.DDAccountsClubs onFor={"ALL"} onWhat={""} onDefault={(i.CLUB)} onSelect={onSelect} />
+                                <Rec.DDAccountsUpline onFor={"ALL"} onWhat={""} onDefault={(i.PLAYERID)} onSelect={onSelect} />
 
                                 <div className='field'>
                                     <label>Win/Loss Total</label>
-                                    <input className='violetCenter' value={i.WINNINGTOTAL} onChange={(e) => inputChange(e, index, "WINNINGTOTAL")} />
+                                    <input value={i.WINNINGTOTAL} onChange={(e) => inputChange(e, index, "WINNINGTOTAL")} />
                                 </div>
                                 <div className='field'>
                                     <label>Bonus Total</label>
-                                    <input className='violetCenter' value={i.BONUSTOTAL} onChange={(e) => inputChange(e, index, "BONUSTOTAL")} />
+                                    <input value={i.BONUSTOTAL} onChange={(e) => inputChange(e, index, "BONUSTOTAL")} />
                                 </div>
                             </div>
-                            </>
                         ))}
                         <div className='ui segment basic center aligned'>
                                 <div className='ui button violet large' onClick={()=> selectData(JSONData)}>
@@ -192,14 +220,13 @@ export const MultipleRecords = ({selectData,CSVData,reCSVData}) => {
                 <pre>{JSON.stringify(JSONData, null, 2)}</pre>
                 </pre>
             </div>
-          
+
             <div className='ui message black hidden'>
                 <h3>Fetched JSON: Accounts Active</h3>
                 <pre>
                     {Func.stringify(AccountsUpline("CLUB","698216").data)}
                 </pre>
             </div>
-
             <div className='ui message black hidden'>
                 <h3>PROCESS:</h3>
                 <p>Upload CSV file (with 2 valid format: long and short version)</p>

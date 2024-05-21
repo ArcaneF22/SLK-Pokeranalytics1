@@ -27,6 +27,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
   const [uplineID, setuplineID]                 = useState("");
   const [percentage, setPercentage]             = useState("");
   const [status, setStatus]                     = useState("1");
+  const [replace, setReplace]                   = useState("F");
 
 
   const DDClubs = (value) => {
@@ -48,9 +49,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
                   uplineID,
                   percentage,
                   status,
-                  percent_Type:           "UPLINE",
-                  percent_IDD:            id,
-                  percent_Value:          percentage,
+                  replace,
               };
 
   Upsert = Object.fromEntries(
@@ -97,6 +96,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
     setuplineID("")
     setPercentage("")
     setStatus("1")
+    setReplace("F")
     
     setButton("Add New Data")
     setLoading(false)
@@ -140,15 +140,11 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
 
 
   const changeStatus = () => {
-    if( status=="0" ){
+    if(status=="0"){
         setStatus("1")
-    } else if( status=="1" ){
-      if(id == 0 || id == null){
-        setStatus("0")
-      } else {
+    } else if(status=="1"){
         setStatus("2")
-      }
-    } else if( status=="2" ){
+    } else {
         setStatus("0")
     }
   }
@@ -169,6 +165,7 @@ export const UpsertUplines = ({selectedData,recallData,resetSelected}) => {
               Title: "Found duplicate ID#"+ number,
               Message: "Check details to update",
           });
+        setReplace("T")
         setCancels(true)
     } else if(response.data.includes("Added")){
           setAlertMessage({
@@ -254,7 +251,7 @@ const downlines = acctDD.map(i => {
         <div className='two fields'>
 
             <div className="field">
-                  <label>Downline Account{id} </label>
+                  <label>Downline Account {downlineID}</label>
                   <SUI.Dropdown
                         placeholder="Select account"
                         scrolling
@@ -307,12 +304,11 @@ const downlines = acctDD.map(i => {
                     <i className="spinner icon"></i>
                     Pending
                 </button>
-              :  status === "2" || status === "Inactive" ?
+              :  
                 <div className="ui button red center aligned" onClick={changeStatus}>
                   <i className="times circle outline icon"></i>
                   Inactive
                 </div>
-                : null
               } 
             </div>
 
@@ -322,6 +318,9 @@ const downlines = acctDD.map(i => {
 
             <Note.Error Note={NoteMessage} />
 
+
+
+
           <div className="ui segment center aligned basic">
 
               <div className="field">
@@ -330,6 +329,8 @@ const downlines = acctDD.map(i => {
                   {button}
                 </div>
               </div>
+
+
 
               { cancels ?  <>
               <div className="field">

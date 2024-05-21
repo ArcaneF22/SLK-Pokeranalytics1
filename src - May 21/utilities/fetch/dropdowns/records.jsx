@@ -11,7 +11,7 @@ import useInterval from 'use-interval';
 export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
 
     const [valued, setValued]                   = useState(0)
-    const [uplineIDD, setuplineIDD]             = useState("")
+    const [uplineIDD, setuplineIDD]               = useState("")
     const [uplineName, setuplineName]           = useState("")
     const [uplinePercent, setuplinePercent]     = useState("")
     const [appID, setappID]                     = useState("")
@@ -34,7 +34,7 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
                             </div>
                         </div>
                   ),
-
+                  selected:         i.accountID ? i.accountID : 0,
                   uplineid:         i.uplineID ? i.uplineID : 0,
                   uplinename:       i.uplineNickname ? i.uplineNickname : 0,
                   uplinepercent:    i.uplinePercent ? i.uplinePercent : 0,
@@ -57,7 +57,7 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
                             </div>
                         </div>
                   ),
-
+                  selected:         i.accountID ? i.accountID : 0,
                   uplineid:         i.uplineID ? i.uplineID : 0,
                   uplinename:       i.uplineNickname ? i.uplineNickname : 0,
                   uplinepercent:    i.uplinePercent ? i.uplinePercent : 0,
@@ -73,11 +73,10 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
 
       const onChange = (event, i) => {
             setValued(i.value);
+            onSelect(valued)
             const e = arrayedDown.find((o) => o.value === i.value);
             setuplinePercent(e.uplinepercent ? e.uplinepercent : 0);
             setuplineIDD(e.uplineid ? e.uplineid : null);
-            setuplineName(e.uplinename ? e.uplinename : null);
-            setappID(e.appid ? e.appid : null);
       };
 
       const upChange = (event, i) => {
@@ -89,19 +88,10 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
             if (e) {
                 setuplinePercent(e.uplinepercent ? e.uplinepercent : 0);
                 setuplineIDD(e.uplineid ? e.uplineid : null);
-                setuplineName(e.uplinename ? e.uplinename : null);
-                setappID(e.appid ? e.appid : null);
             }
       }, [DropDown.load == true]);
 
-      useLayoutEffect(() => {
-        onSelect({
-            uplineID:           uplineIDD,
-            uplineName:         uplineName,
-            uplinePercent:      uplinePercent,
-            appID:              appID,
-        })
-    }, [uplineIDD,uplineName,uplinePercent]);
+
 
     return (
         <>
@@ -158,12 +148,10 @@ export const DDAccountsUpline = ({onFor, onWhat, onDefault, onSelect}) => {
   }
 
 
-
   
 export const DDAccountsClubs = ({onFor, onWhat, onDefault, onSelect}) => {
 
-    const [valueClub, setvalueClub]             = useState(0)
-    const [valuePercent, setvaluePercent]       = useState(0)
+    const [valued, setValued] = useState(0)
 
     const DropDown = Clubs(onFor ? onFor : "ALL", onWhat ? onWhat : "")
 
@@ -171,11 +159,11 @@ export const DDAccountsClubs = ({onFor, onWhat, onDefault, onSelect}) => {
       { return {
                   key:              i.idd,
                   text:             i.idd+": "+i.name,
+                  //description:      i.uplinePercent+"% Upline: "+i.uplineID,
                   value:            i.name,
                   //image:            { avatar: true, src: i.imageFull ? i.imageFull : "./images/club.png" },
                   appid:            i.appID ? i.appID : 0,
                   disabled:         i.idd ? false : true,
-                  percent:          i.percent ? i.percent : 0,
                   content: (
                         <div className="ui list mini">
                             <div className="item">
@@ -186,34 +174,16 @@ export const DDAccountsClubs = ({onFor, onWhat, onDefault, onSelect}) => {
                   ),
         }})
 
-        useLayoutEffect(() => {
-            setvalueClub(onDefault)
-        }, []);
-    
-        const onChange = (event, i) => {
-            setvalueClub(i.value);
-            const e = arrayed.find((o) => o.value === i.value);
-            setvaluePercent(e.percent ? e.percent : 0);
-        };
+    useLayoutEffect(() => {
+        setValued(onDefault)
+      }, []);
+  
 
-        useLayoutEffect(() => {
-            const  e = arrayed.find((o) => o.value === onDefault);
-            if (e) {
-                setvaluePercent(e.percent ? e.percent : 0);
-            }
-        }, [DropDown.load == true]);
-
-        useLayoutEffect(() => {
-            onSelect({
-                clubIDD:        valueClub,
-                clubPercent:    valuePercent,
-            })
-        }, [valueClub,valuePercent]);
 
     return (
         <>
             <div className='field'>
-                <label>Club ID {valueClub}</label>
+                <label>Club ID</label>
                 <SUI.Dropdown
                         placeholder={"Select club"}
                         scrolling
@@ -226,18 +196,10 @@ export const DDAccountsClubs = ({onFor, onWhat, onDefault, onSelect}) => {
                         search={true}
                         multiple={false}
                         header="Select club"
-                        onChange={onChange}
-                        value={valueClub}
+                        onChange={(event, { value }) => { setValued(value),onSelect(valued); }}
+                        value={valued}
                         options={arrayed}
                     />
-            </div>
-
-            <div className='field'>
-                <label>Club %</label>
-                <div className="ui left labeled right icon input" style={{maxWidth:"80px"}}>
-                    <i className="percent icon violet"></i>
-                    <input type="text" className='violetCenter' placeholder="0-100" value={valuePercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setvaluePercent)}  />
-                </div>
             </div>
 
         </>

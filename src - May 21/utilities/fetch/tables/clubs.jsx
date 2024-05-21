@@ -9,21 +9,20 @@ export const FetchClubs = ({ selectData }) => {
   const data = Clubs().data
   const load = Clubs().load
 
-  const editData = (id,idd,name,image,app,details,type,union,percent,status) => {
+  const editData = (id,idd,name,image,app,details,type,union,status) => {
     setClicked(clicked+1)
     const array = {
-                    "clicked":    clicked,
-                    "proceed":    "true",
-                    "id":         id, 
-                    "idd":        idd, 
-                    "name":       name, 
-                    "image":      image, 
-                    "app":        app, 
-                    "details":    details, 
-                    "type":       type,
-                    "union":      union,
-                    "percent":    percent,
-                    "status":     status,
+                    "clicked":clicked,
+                    "proceed": "true",
+                    "id": id, 
+                    "idd": idd, 
+                    "name": name, 
+                    "image": image, 
+                    "app": app, 
+                    "details": details, 
+                    "type": type,
+                    "union": union,
+                    "status": status,
                   }
       setClicked(clicked+1)
       selectData(array);
@@ -69,25 +68,7 @@ export const FetchClubs = ({ selectData }) => {
                 </h5>
               </td>
               <td>{i.appName}</td>
-              <td className='ui relaxed divided list'>
-                {i.details ? 
-                  <div className='item'>
-                      <div className="content">
-                        <div className="header">
-                          Details:
-                        </div>
-                        <div className="description">{i.details}</div>
-                      </div>
-                  </div>
-                : null}
-                {i.percent ? 
-                  <div className='item'>
-                        <div className="description">
-                          Cut: {i.percent}%
-                        </div>
-                  </div>
-                : null}
-              </td>
+              <td>{i.details}</td>
               <td className='ui relaxed divided list'>
                   <div className='item'>
                       <div className="content">
@@ -105,7 +86,7 @@ export const FetchClubs = ({ selectData }) => {
               </td>
               <td>{Func.toStatus(i.statusLabel)}</td>
               <td>
-                <button className='ui icon button violet' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.percent,i.statusLabel)}>
+                <button className='ui icon button violet' onClick={()=> editData(i.id,i.idd,i.name,i.imageID,i.appID,i.details,i.type,i.unionID,i.statusLabel)}>
                     <i className="pencil icon"></i>
                 </button>
               </td>

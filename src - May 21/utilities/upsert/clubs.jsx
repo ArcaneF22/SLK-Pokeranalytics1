@@ -6,7 +6,6 @@ import { ImagesClubs } from '../fetch/raw/images'
 import { Unions } from '../fetch/raw/unions'
 import * as Set from '../constants';
 import * as Alert from "../alerts/alerts"
-import * as Func from '../functions';
 
 export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
   const appDD = Applications().data
@@ -28,7 +27,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
   const [clubDetails, setclubDetails] =     useState("0");
   const [clubType, setclubType] =           useState("0");
   const [clubUnion, setclubUnion] =         useState("0");
-  const [clubPercent, setclubPercent] =     useState("0");
   const [clubStatus, setclubStatus] =       useState("0");
 
   let Upsert = {
@@ -43,11 +41,8 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
                   clubApp,
                   clubDetails,
                   clubType,
-                  clubUnion: clubType == "UNION" ? clubUnion : 0,
+                  clubUnion,
                   clubStatus,
-                  percent_Type:     "CLUB",
-                  percent_IDD:      clubIDD,
-                  percent_Value:    clubPercent,
               };
 
   Upsert = Object.fromEntries(
@@ -60,7 +55,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
   const ValidateForm = (e) => {
     e.preventDefault()
     setLoading(true)
-
       if(!YesWithvalues){
           setAlertMessage({
               Alert: "warning",
@@ -75,7 +69,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
               Message: "Please select a club union",
           });
         } else {
-          //console.log(JSON.stringify(Upsert))
+          console.log(JSON.stringify(Upsert))
           reCheckValues()
           SubmitForm()
         }
@@ -98,7 +92,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
     setclubDetails("")
     setclubType("")
     setclubUnion("")
-    setclubPercent("0")
     setclubStatus("0")
     
     setButton("Add New Data")
@@ -131,8 +124,6 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
     setclubDetails(selected.details === null || selected.details === undefined ? "" : selected.details)
     setclubType(selected.type === null || selected.type === undefined ? "" : selected.type)
     setclubUnion(selected.union === null || selected.union === undefined ? "" : selected.union)
-    setclubPercent(selected.percent === null || selected.percent === undefined ? "" : selected.percent)
-
     if(selected.status=="0" || selected.status=="Active"){
       setclubStatus("0")
     } else if(selected.status=="Pending"){
@@ -220,7 +211,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
           <>
 
       { AlertMessage['Alert'] == "success" ? 
-          <Alert.Success
+          <Alert.SuccessRefresh 
                 key="SuccessRefresh" 
                 AlertMessage={AlertMessage} 
                 open={AlertMessage['Alert'] == "success" ? true : false}  
@@ -287,7 +278,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
           <div className='two fields'>
 
               <div className="field">
-                <label>Type{clubType}</label>
+                <label>Type</label>
                 <SUI.Dropdown
                       placeholder="Select type"
                       scrolling
@@ -304,7 +295,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
               </div>
 
               <div className="field">
-                <label>Union {clubUnion}</label>
+                <label>Union</label>
                 <SUI.Dropdown
                       placeholder="Select union"
                       scrolling
@@ -314,7 +305,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
                       search={true}
                       multiple={false}
                       header="Select union"
-                      onChange={(event, { value }) => { setclubUnion(value) }}
+                      onChange={(event, { value }) => { setclubUnion(value); }}
                       disabled={clubType == "UNION" ? false : true}
                       value={clubType == "UNION" ? clubUnion : "" }
                       options={uniDD.map(i => {
@@ -358,15 +349,7 @@ export const UpsertClubs = ({selectedData,recallData,resetSelected}) => {
                       })}
                     />
               </div>
-          <div className='two fields'>
-              <div className="field">
-                <label>Percentage</label>
-                <div className="ui left labeled right icon input">
-                    <i className="percent icon violet"></i>
-                    <input type="text" className='violetCenter' placeholder="0-100" value={clubPercent} onChange={(e) => Func.toHundred(e.currentTarget.value,setclubPercent)}  />
-                </div>
-              </div>
-          </div>
+
           <div className='three fields'>
 
               <div className="field">
