@@ -3,9 +3,10 @@ import useInterval from 'use-interval'
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const UpdatingProfile = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const [timer, setTimer] = useState([]);
@@ -49,6 +50,7 @@ export const UpdatingProfile = () => {
 
 
 export const MyProfile = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {

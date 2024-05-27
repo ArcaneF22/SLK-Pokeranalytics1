@@ -3,10 +3,10 @@ import axios from 'axios';
 import useInterval from 'use-interval'
 import * as Set from '../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const UpsertExchangeRates = () => {
-
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const nowDate                         = new Date();
     const url1                            = "v6.exchangerate-api.com"
     const url2                            = "api.freecurrencyapi.com"

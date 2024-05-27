@@ -11,18 +11,14 @@ import { json } from 'react-router-dom';
 export const TabRecords = () => {
 
     const [gotData, setgotData]             = useState([]);
-    const [gotCSVData, setgotCSVData]       = useState([]);
+    const [returnedJSON, setreturnedJSON]   = useState([]);
+
     const [recall, setRecall]               = useState(0);
     const [activeIndex, setActiveIndex]     = useState(0);
     
 
-    const selectData = (v) => {
-        setgotData(v)
-        setActiveIndex(2)
-      };
-
-    const CSVData = (v) => {
-        setgotCSVData(v)
+    const updateJSON = (i) => {
+        setreturnedJSON(i)
       };
 
     const panes = [
@@ -39,7 +35,7 @@ export const TabRecords = () => {
         {
             render: () => 
                 <SUI.TabPane attached={false}>
-                    <MultipleRecords selectData={selectData} CSVData={CSVData} reCSVData={gotCSVData} />
+                    <MultipleRecords updateJSON={updateJSON} returnJSON={returnedJSON}/>
                 </SUI.TabPane>,
         },
         {
@@ -66,6 +62,7 @@ export const TabRecords = () => {
                     COMPUTATION
                 </a>
             </div>
+
             <SUI.Tab menu={{ text: true }} activeIndex={activeIndex} panes={panes} style={{marginTop:"-55px"}} />
 
         </>

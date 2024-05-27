@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const ExchangeRates = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -35,6 +36,7 @@ export const ExchangeRates = () => {
 }
 
 export const RecordExchangeRates = (onDate) => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {

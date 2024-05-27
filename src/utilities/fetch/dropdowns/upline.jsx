@@ -4,10 +4,10 @@ import * as SUI from 'semantic-ui-react'
 import * as Set from '../../constants';
 import useInterval from 'use-interval';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const Clubs = ({dropdown, downID, appID, clubID}) => {
-
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [data, setdata] = useState([])
     const [load, setLoad] = useState(false)
     const [selected, setSelected] = useState("")
@@ -75,7 +75,7 @@ export const Clubs = ({dropdown, downID, appID, clubID}) => {
   }
   
 export const Uplines = ({dropdown, downID, appID, clubID, uplineID}) => {
-    
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [data, setdata] = useState([])
     const [load, setLoad] = useState(false)
     const [selected, setSelected] = useState(0)

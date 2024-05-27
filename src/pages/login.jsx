@@ -20,9 +20,9 @@ export const LoginPage = () => {
 
   useLayoutEffect(() => {
       console.log("Logged out")
-      localStorage.setItem('Auth', 'false');
       sessionStorage.clear();
       localStorage.clear();
+      localStorage.setItem('Auth', 'false');
   }, []);
 
   useInterval(() => {

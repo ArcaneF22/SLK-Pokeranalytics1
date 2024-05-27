@@ -5,16 +5,16 @@ import * as Set from '../../constants';
 
 //NOTIFICATION
 var createNotification = 0;
-const Token =   JSON.parse( localStorage.getItem('Token') );
+
 
 export const RawNotification = ({ loadingNotification, itemNotification, countNotification }) => {
-
+    const Token =   JSON.parse( localStorage.getItem('Token') );
     const Auth = {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                STAT: "ALL",
+                FOR: "ALL",
             }; 
 
     async function fetchNotification() {
@@ -37,14 +37,13 @@ export const RawNotification = ({ loadingNotification, itemNotification, countNo
 
 //NOTIFICATION PENDING
 export const RawNotificationPending = ({ loadingNotification, itemNotification }) => {
-
-
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const Auth = {
                 A: Token['id'],
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                STAT: "PENDING",
+                FOR: "PENDING",
             }; 
 
     async function fetchNotification() {
@@ -65,6 +64,7 @@ export const RawNotificationPending = ({ loadingNotification, itemNotification }
 
 //NOTIFICATION COUNT
 export const RawNotificationCount = ({ countNotification }) => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [timer, setTimer] = useState(0);
 
     const Auth = {

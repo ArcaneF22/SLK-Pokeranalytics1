@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import * as Set from './constants';
+
+const hasDecimal = (number) => number % 1 !== 0;
 
 export function stringify(i) { 
   return JSON.stringify(i, null, 2);; 
@@ -52,6 +55,28 @@ export const toWholeNumber5 = (i,e) => {
   }
 }
 
+export const byNumber = (i) => {
+  const num = i.replace(/[^0-9]/g, ''); // Replace any character that is not a digit with an empty string
+  if (num.key == 'e' || num.key == 'E') {
+    num.preventDefault();
+  }
+  if (num.length > 1 && num.charAt(0) === '0') {
+      return num.slice(1);
+  } else {
+      return num
+  }
+}
+
+export const byDecimals = (i,e) => {
+    const regex = /([0-9]*[\.|\,]{0,1}[0-9]{0,10})/s
+    return i.match(regex)[0]
+}
+
+export const byNoSpecial = (i) => {
+  const num = i.replace(/[^a-zA-Z0-9!&. ]/g, '').replace(/\s{2,}/g, ' ').trimStart()
+  return num
+}
+
 export const toHundred = (i,e) => {
   const num = i.replace(/[^0-9]/g, ''); // Replace any character that is not a digit with an empty string
   if (num.key == 'e' || num.key == 'E' || num.key == '.') {
@@ -59,6 +84,22 @@ export const toHundred = (i,e) => {
   }
   if(i >=0 && i<=100 ){
       e(num);
+  }
+}
+
+export const byHundred = (i) => {
+  const num = i.replace(/[^0-9]/g, ''); // Replace any character that is not a digit with an empty string
+  if (num.key == 'e' || num.key == 'E' || num.key == '.') {
+    num.preventDefault();
+  }
+  if(i >=0 && i<=100 ){
+    if (num.length > 1 && num.charAt(0) === '0') {
+      return num.slice(1);
+    } else {
+      return num
+    }
+  } else {
+      return 0
   }
 }
 
@@ -138,4 +179,52 @@ export const toStatus = (i,e) => {
                 Inactive
             </div>;
   }
+}
+
+export const shortFileFormat = (header,rows) => {
+  const output = rows.map(
+              ii => Object.entries(ii).reduce((e, [ee, eee]) => ({
+                  ...e, 
+                  [header[ee]]: eee, 
+                  "EDITED"        : false,
+                  "DATEFROM"      :"",
+                  "UPLINEID"      :"",
+                  "UPLINEPERCENT" :"0",
+                  "CLUBID"        :"",
+                  "CLUBPERCENT"   :"0",
+                  "FXUSD"         :"",
+                  "FXDATE"        :"",
+                  "FXCURRENCY"    :"",
+                  "FXPROVIDER"    :"",
+                  "BONUSPERCENTAGE":"",
+                  "RESULT"        :"",
+                  "AGENCYACTION"  :"",
+                  "AGENCYBONUS"   :"",
+              }), {})
+  );
+  return output
+}
+
+export const longFileFormat = (header,rows) => {
+  const output = rows.map(
+              ii => Object.entries(ii).reduce((e, [ee, eee]) => ({
+                  ...e, 
+                  [header[ee]]: eee, 
+                  "EDITED"        : false,
+                  "DATEFROM"      :"",
+                  "UPLINEID"      :"",
+                  "UPLINEPERCENT" :"0",
+                  "CLUBID"        :"",
+                  "CLUBPERCENT"   :"0",
+                  "FXUSD"         :"",
+                  "FXDATE"        :"",
+                  "FXCURRENCY"    :"",
+                  "FXPROVIDER"    :"",
+                  "BONUSPERCENTAGE":"",
+                  "RESULT"        :"",
+                  "AGENCYACTION"  :"",
+                  "AGENCYBONUS"   :"",
+              }), {})
+  );
+  return output
 }

@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const Unions = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -12,7 +13,7 @@ export const Unions = () => {
               B: Token['token'],
               C: Token['gadget'],
               D: Set.TimeZoned,
-              STAT: 'ALL',
+              FOR: 'ALL',
           }; 
 
   async function fetching() {
@@ -36,6 +37,7 @@ export const Unions = () => {
 
 
 export const UnionsOn = () => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [load, setLoad] = useState(false)
     const [data, setdata] = useState([])
     const Auth = {
@@ -43,7 +45,7 @@ export const UnionsOn = () => {
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                STAT: 'ON',
+                FOR: 'ON',
             }; 
   
     async function fetching() {

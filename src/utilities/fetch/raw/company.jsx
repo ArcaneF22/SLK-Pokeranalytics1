@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const Company = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {

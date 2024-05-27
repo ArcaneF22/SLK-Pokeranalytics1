@@ -230,7 +230,7 @@ body {
             width: 40px !important;
           }
           .message.plusTop{
-            margin-top: 20px !important;
+            margin-top: 25px !important;
           }
           .mobileOnly{
             display: inline !important;
@@ -308,6 +308,9 @@ body {
           .fitted{
             padding-left: 75px !important;
             padding-right: 95px !important;
+          }
+          .message.plusTop{
+            margin-top: 15px !important;
           }
           .mobileOnly{
             display: none !important;

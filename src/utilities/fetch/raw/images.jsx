@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-const Token = JSON.parse( localStorage.getItem('Token') );
+
 
 export const Images = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -12,7 +13,7 @@ export const Images = () => {
               B: Token['token'],
               C: Token['gadget'],
               D: Set.TimeZoned,
-              TYPE: 'ALL',
+              FOR: 'ALL',
           }; 
 
   async function fetching() {
@@ -35,6 +36,7 @@ export const Images = () => {
 }
 
 export const ImagesApps = () => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [load, setLoad] = useState(false)
     const [data, setdata] = useState([])
     const Auth = {
@@ -42,7 +44,7 @@ export const ImagesApps = () => {
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                TYPE: 'apps',
+                FOR: 'apps',
             }; 
   
     async function fetching() {
@@ -66,6 +68,7 @@ export const ImagesApps = () => {
 
   
 export const ImagesClubs = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
     const [load, setLoad] = useState(false)
     const [data, setdata] = useState([])
     const Auth = {
@@ -73,7 +76,7 @@ export const ImagesClubs = () => {
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                TYPE: 'clubs',
+                FOR: 'clubs',
             }; 
   
     async function fetching() {
@@ -97,6 +100,7 @@ export const ImagesClubs = () => {
 
 
   export const ImagesAvatars = () => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [load, setLoad] = useState(false)
     const [data, setdata] = useState([])
     const Auth = {
@@ -104,7 +108,7 @@ export const ImagesClubs = () => {
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                TYPE: 'avatar',
+                FOR: 'avatar',
             }; 
   
     async function fetching() {
@@ -128,6 +132,7 @@ export const ImagesClubs = () => {
 
   
 export const ImagesLogo = () => {
+  const Token = JSON.parse( localStorage.getItem('Token') );
     const [load, setLoad] = useState(false)
     const [data, setdata] = useState([])
     const Auth = {
@@ -135,7 +140,7 @@ export const ImagesLogo = () => {
                 B: Token['token'],
                 C: Token['gadget'],
                 D: Set.TimeZoned,
-                TYPE: 'logo',
+                FOR: 'logo',
             }; 
   
     async function fetching() {

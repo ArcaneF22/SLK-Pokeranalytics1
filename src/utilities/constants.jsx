@@ -1,5 +1,3 @@
-
-
 export const TimeZoned = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export const Fetch = {
@@ -93,8 +91,7 @@ export const getDateTime = (i) => {
 }
 
 export const formSettings = (i) => {
-  const d = new Date(i);
-  const o = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-  const w = d.toLocaleDateString('en-US', o);
+  
   return w;
 }
+

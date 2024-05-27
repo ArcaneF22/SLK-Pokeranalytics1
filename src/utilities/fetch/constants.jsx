@@ -5,8 +5,8 @@ import axios from 'axios';
 import * as Set from '../constants';
 
 var OnTimerChange = 0
-var User = JSON.parse( localStorage.getItem('User') );
-var Token = JSON.parse( localStorage.getItem('Token') );
+
+
 
 
 // ==================================== FETCH DATA AFTER COUNTDOWN
@@ -21,7 +21,8 @@ export function FetchCountDown() {
 
 // ==================================== FETCH USER PROFILE DATA
 export const iProfile = () => {
-    const [data, setData] = useState(User)
+    const Token = JSON.parse( localStorage.getItem('Token') );
+    const [data, setData] = useState(localStorage.getItem('User'))
     var Auth = {
         A: Token['id'],
         B: Token['token'],
@@ -55,6 +56,7 @@ export const iProfile = () => {
 
 // ==================================== FETCH USER AUTHENTICATION DATA
 export const iAuthenticate = () => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const navigate = useNavigate();
     const [data, setData] = useState("AUTH")
     var Auth = {
@@ -81,6 +83,7 @@ export const iAuthenticate = () => {
 
 // ==================================== FETCH USER PROFILE DATA
 export const iApplicationDD = () => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
     const [dataApp, setdataApp] = useState([])
     const Auth = {
         A: Token['id'],
