@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect, useEffect } from 'react';
-import { Accounts } from '../raw/accounts'
+import { AccountsPlayers } from '../raw/accounts'
 import { Clubs } from '../raw/clubs'
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
@@ -17,20 +17,23 @@ export const FormRecords = ({formData, returnData}) => {
     const [clubName, setclubName]               = useState("")
     const [clubsubName, setclubsubName]         = useState("")
     const [clubPercent, setclubPercent]         = useState("")
+    const [clubsubPercent, setclubsubPercent]   = useState("")
     const [playerID, setplayerID]               = useState("")
+    const [playersubID, setplayersubID]         = useState("")
+    const [uplineEdit, setuplineEdit]           = useState(false)
     const [uplineID, setuplineID]               = useState("")
     const [uplinePercent, setuplinePercent]     = useState("")
 
-    const [notFoundPlayer, setnotFoundPlayer]    = useState(false)
-    const [notFoundUpline, setnotFoundUpline]    = useState(false)
-
+    //DROPDOWNS
+    const [recall, setRecall]                   = useState(true)
+    const [loadedClub, setloadedClub]           = useState(false)
     const DDropCLub                             = Clubs("ALL","")
 
     const [DDropPlayer, setDDropPlayer]         = useState([])
     const [loadDDPlayer, setloadDDPlayer]       = useState(false)
 
     const [DDropUpline, setDDropUpline]         = useState([])
-    const [loadDDUpline, setloadDDUpline]       = useState(false)
+    const [loadDDUpline, setloadDDUpline] = useState(false)
 
     const Auth = {
                         A:      Token['id'],
@@ -38,8 +41,6 @@ export const FormRecords = ({formData, returnData}) => {
                         C:      Token['gadget'],
                         D:      Set.TimeZoned,
                     }; 
-
-    const itemAccounts  = Accounts()
 
     const itemClubs = DDropCLub.data.map(i => 
         {
@@ -111,49 +112,38 @@ export const FormRecords = ({formData, returnData}) => {
     useLayoutEffect(() => {
         setEdited(formData.Edited)
         setclubName(formData.ClubName)
-        setclubsubName(formData.ClubName)
         setplayerID(formData.PlayerID)
+        setplayersubID(formData.PlayerID)
         if(formData.Edited == true){
             setclubPercent(formData.ClubPercent)
             setuplineID(formData.UplineID)
             setuplinePercent(formData.UplinePercent)
         }
-
     }, []);
 
     //ON CLUB LIST LOAD
     useLayoutEffect(() => {
-            const c     = itemClubs.find((i) => i.value == clubName);
+            const c  = itemClubs.find((i) => i.value == clubName);
             if(c){
                 setclubsubName("")
                 setappID(c.appid ? c.appid : 0)
                 setappName(c.appname ? c.appname : 0)
-                setclubIDD(c.clubidd ? c.clubidd : 0)
                 if(formData.Edited == false){
                     setclubPercent(c.percent ? c.percent : 0)
                 } else {
                     setclubPercent(formData.ClubPercent ? formData.ClubPercent : 0)
                 }
                 fetchDDPlayer(c.appid,c.clubidd)
-                if(playerID != "" || playerID != null){
-                    fetchDDUpline        (c.appid,c.clubidd,playerID)
-                }
+                fetchDDUpline(c.appid,c.clubidd,playerID)
+                onchangePlayer(playerID)
             }
+            setloadedClub(true)
     }, [DDropCLub.fill=="yes"]);
-
-    useLayoutEffect(() => {
-        const find  = itemAccounts.data.find((i) => i.accountID == formData.PlayerID);
-        if(itemAccounts.fill == true){
-            if(!find && (playerID != "" || playerID != 0 || playerID != null)){
-                setnotFoundPlayer(true)
-            }
-        }
-    }, [itemAccounts.fill == true]);
-
 
     //ON CHANGE OF CLUB DROPDOWN 
     const onchangeClub = (i) => {
         setclubName(i);
+        setEdited(true)
         setclubsubName("")
         const c = itemClubs.find((o) => o.value === i);
         if (c){
@@ -162,21 +152,8 @@ export const FormRecords = ({formData, returnData}) => {
             setclubPercent          (c.percent          ? c.percent         : 0);
             setclubIDD              (c.key              ? c.key             : 0);
             fetchDDPlayer           (c.appid,c.clubidd)
-            if(playerID != "" || playerID != null){
-                fetchDDUpline        (c.appid,c.clubidd,playerID)
-                const u  = itemUplines.find((o) => o.value == uplineID);
-                if(u){
-                    setnotFoundUpline(true)
-                    
-                }
-                setEdited(true)
-            } else {
-                setEdited(false)
-            } 
-        }
-        if(!c){
-            fetchDDPlayer           (0,0)
-            fetchDDUpline           (0,0,playerID)
+            fetchDDUpline           (c.appid,c.clubidd,playerID)
+            onchangePlayer(playerID)
         }
     };
 
@@ -184,21 +161,30 @@ export const FormRecords = ({formData, returnData}) => {
     const onchangePlayer = (i) => {
         setplayerID(i)
         const p  = itemPlayers.find((o) => o.value == i);
+        
         if(p){
+            setuplineID(p.uplineid ? p.uplineid : 0)
+            setuplinePercent(p.uplinepercent ? p.uplinepercent : 0)
             fetchDDUpline(p.appid,p.clubidd,p.value)
-            setEdited(false)
-            setnotFoundPlayer(false)
+
+            const u  = itemUplines.find((o) => o.value == p.uplineid);
+            if(u){
+                setuplineID(u.value ? u.value : 0)
+                setuplinePercent(u.uplinepercent ? u.uplinepercent : 0)
+            }
         }
+
     };
 
     //ON CHANGE OF PLAYER DROPDOWN 
     const onchangeUpline = (i) => {
         setuplineID(i)
+        console.log("Sent Upline: "+i)
         const u  = itemUplines.find((o) => o.value == i);
         if(u){
+            console.log("Upline: "+u.value)
             setuplineID(u.value ? u.value : 0)
             setuplinePercent(u.uplinepercent ? u.uplinepercent : 0)
-            setEdited(true)
         }
     };
 
@@ -206,13 +192,6 @@ export const FormRecords = ({formData, returnData}) => {
     const inputChange = (i,e) => {
         setEdited(true)
         e(i)
-        if(e == setplayerID){
-            const p  = itemPlayers.find((o) => o.value == i);
-            if(p){
-                console.log("Exist")
-                setnotFoundPlayer(false)
-            }
-        }
     }
 
     async function fetchDDPlayer(i,ii) {
@@ -221,14 +200,6 @@ export const FormRecords = ({formData, returnData}) => {
             const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"PLAYER", WHAT:i, WHAT2:ii,});
                 setDDropPlayer(response.data);
                 setloadDDPlayer(false)
-                const up = response.data.find(h => h.accountID === playerID);
-                if(up != null && edited == false){
-                    if(uplineID == null || uplineID == "" || uplineID == 0){
-                        setuplineID(up.uplineID ? up.uplineID : "")
-                        setuplinePercent(up.uplinePercent ? up.uplinePercent : 0)
-                    }
-                    setEdited(true)
-                }
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
@@ -240,6 +211,7 @@ export const FormRecords = ({formData, returnData}) => {
             const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"UPLINE",WHAT:i,WHAT2:ii,WHAT3:iii,});
                 setDDropUpline(response.data);
                 setloadDDUpline(false)
+                //console.log(JSON.stringify(response.data))
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
@@ -252,10 +224,15 @@ export const FormRecords = ({formData, returnData}) => {
             setappName("")
             setclubIDD("")
         }
+        if(uplineID == playerID){
+            setuplineID("")
+            setuplinePercent("")
+        }
     }, [clubName]);
 
     //SAVE DATA EVERYTIME A VALUE IS CHANGED
     useLayoutEffect(() => {
+        if(edited === true){
             returnData({
                 index:          formData.Index,
                 edited:         edited,
@@ -268,20 +245,14 @@ export const FormRecords = ({formData, returnData}) => {
                 uplineID:       uplineID,
                 uplinePercent:  uplinePercent,
             })
-    }, [appID,clubIDD,clubName,clubPercent,playerID,uplineID,uplinePercent]);
+        }
+    }, [appID,clubName,clubPercent,playerID,uplineID,uplinePercent]);
 
 
     return (<>
             <div className='field'>
                 <label>
-                    {clubsubName && DDropCLub.fill=="yes"? 
-                        <p className="ui mini red text">
-                            <i className="large attention icon red"></i>
-                            {clubsubName ? "Club: "+clubsubName : "Club"}?
-                        </p> 
-                        : 
-                        appName ? appName+"'s Club" : "Club"
-                        }
+                    {clubsubName ? <p className="ui mini red text"><i className="attention icon red"></i>Club: {clubsubName}?</p> : appName+"'s Club"}
                 </label>
                 <SUI.Dropdown
                         placeholder={clubsubName ?  "Not found!" : "Select a club"}
@@ -304,54 +275,33 @@ export const FormRecords = ({formData, returnData}) => {
                 <label>Club %</label>
                 <input type='text' value={clubPercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setclubPercent)} />
             </div>
-
-            <div className='field'>
-                    {notFoundPlayer ? 
-                        <>
-                            <label>
-                                <p className="ui mini red text">
-                                    <i className="large plus circle blue icon"></i>
-                                    New Player?
-                                </p> 
-                            </label>
-                            <input type='text' value={playerID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setplayerID)} />
-                        </>
-                        : 
-                        <>
-                            <label>
-                                Player
-                            </label>
-                            <SUI.Dropdown
-                                    placeholder={notFoundPlayer ?  "Not found!" : "Select a player"}
-                                    scrolling
-                                    clearable
-                                    floating
-                                    fluid
-                                    loading={loadDDPlayer ? true : false}
-                                    disabled={loadDDPlayer ? true : false}
-                                    selection
-                                    search={true}
-                                    multiple={false}
-                                    header="Select player"
-                                    onChange={(event, { value }) => { onchangePlayer(value); }}
-                                    value={playerID}
-                                    options={itemPlayers}
-                            />
-                        </>
-                    }
-
-
-            </div>
-
             <div className='field'>
                 <label>
-                    {notFoundUpline ?
-                    "Upline: "+uplineID 
-                    :
-                    "Upline" }
+                    Player: {playersubID}
                 </label>
                 <SUI.Dropdown
-                        placeholder={notFoundUpline ?  "Not found!" : "Select a upline"}
+                        placeholder={playersubID ?  "Not found!" : "Select a player"}
+                        scrolling
+                        clearable
+                        floating
+                        fluid
+                        loading={loadDDPlayer ? true : false}
+                        disabled={loadDDPlayer ? true : false}
+                        selection
+                        search={true}
+                        multiple={false}
+                        header="Select player"
+                        onChange={(event, { value }) => { onchangePlayer(value); }}
+                        value={playerID}
+                        options={itemPlayers}
+                    />
+
+                <input type='text' value={playerID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setplayerID)} />
+            </div>
+            <div className='field'>
+                <label>Upline {uplineID}</label>
+                <SUI.Dropdown
+                        placeholder={uplineID ?  "Not found!" : "Select a upline"}
                         scrolling
                         clearable
                         floating
@@ -366,9 +316,8 @@ export const FormRecords = ({formData, returnData}) => {
                         value={uplineID}
                         options={itemUplines}
                     />
-
+                <input type='text' value={uplineID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setuplineID)} />
             </div>
-            
             <div className='field'>
                 <label>Upline %</label>
                 <input type='text' value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)} />

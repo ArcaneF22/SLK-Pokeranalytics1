@@ -2,9 +2,10 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
+
+
 export const Accounts = () => {
   const Token = JSON.parse( localStorage.getItem('Token') );
-  const [fill, setFill] = useState(false)
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -21,7 +22,6 @@ export const Accounts = () => {
       const response = await axios.post(Set.Fetch['accounts'], Auth);
       setdata(response.data);
       setLoad(false)
-      setFill(true)
       //console.log("Accounts items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -32,7 +32,7 @@ export const Accounts = () => {
       fetching();
     }, []);
 
-  return ({load, data, fill})
+  return ({load, data})
 }
 
 export const MyAccounts = () => {
