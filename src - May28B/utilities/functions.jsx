@@ -77,11 +77,6 @@ export const byNoSpecial = (i) => {
   return num
 }
 
-export const byNoSpecialFull = (i) => {
-  const num = i.replace(/[^a-zA-Z0-9!&. ]/g, '').replace(/\s{2,}/g, ' ').trim()
-  return num
-}
-
 export const toHundred = (i,e) => {
   const num = i.replace(/[^0-9]/g, ''); // Replace any character that is not a digit with an empty string
   if (num.key == 'e' || num.key == 'E' || num.key == '.') {
@@ -186,24 +181,7 @@ export const toStatus = (i,e) => {
   }
 }
 
-function formatDate(date) {
-  const iDate   = new Date(date);
-  const year = iDate.getFullYear().toString().padStart(4, '0');
-  const month = (iDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
-  const day = iDate.getDate().toString().padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 export const shortFileFormat = (header,rows) => {
-
-  rows.map((i,index) =>{
-    i[0] = formatDate(i[0])
-    i[1] = byNoSpecialFull(i[1])
-    i[2] = byNumber(i[2])
-    i[3] = byDecimals(i[3])
-    i[4] = byDecimals(i[4])
-  })
-  console.log(rows)
   const output = rows.map(
               ii => Object.entries(ii).reduce((e, [ee, eee]) => ({
                   ...e, 
@@ -224,22 +202,14 @@ export const shortFileFormat = (header,rows) => {
                   "AGENCYBONUS"   :"",
               }), {})
   );
-
   return output
 }
 
 export const longFileFormat = (header,rows) => {
-
-  rows.map((i,index) =>{
-    i[0] = formatDate(i[0])
-    i[1] = byNoSpecialFull(i[1])
-    i[2] = byNumber(i[2])
-  })
-  console.log(rows)
   const output = rows.map(
-              ii => Object.entries(ii).reduce((e, [ee, eee]) =>  ({
+              ii => Object.entries(ii).reduce((e, [ee, eee]) => ({
                   ...e, 
-                  [header[ee]]    : eee, 
+                  [header[ee]]: eee, 
                   "EDITED"        : false,
                   "DATEFROM"      :"",
                   "UPLINEID"      :"",
@@ -256,6 +226,5 @@ export const longFileFormat = (header,rows) => {
                   "AGENCYBONUS"   :"",
               }), {})
   );
-
   return output
 }

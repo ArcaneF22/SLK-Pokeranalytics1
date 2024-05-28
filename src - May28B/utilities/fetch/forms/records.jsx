@@ -21,7 +21,6 @@ export const FormRecords = ({formData, returnData}) => {
     const [uplineID, setuplineID]               = useState("")
     const [uplinePercent, setuplinePercent]     = useState("")
 
-    const [labelPlayer, setlabelPlayer]          = useState("")
     const [notFoundPlayer, setnotFoundPlayer]    = useState(false)
     const [notFoundUpline, setnotFoundUpline]    = useState(false)
 
@@ -208,17 +207,10 @@ export const FormRecords = ({formData, returnData}) => {
         setEdited(true)
         e(i)
         if(e == setplayerID){
-            const a  = itemPlayers.find((o) => o.value == i);
-            const p  = itemAccounts.data.find((o) => o.accountID == i);
-            if(a){
+            const p  = itemPlayers.find((o) => o.value == i);
+            if(p){
+                console.log("Exist")
                 setnotFoundPlayer(false)
-            }
-            if(!a){
-                if(p){
-                    setlabelPlayer("Wrong app! ")
-                } else {
-                    setlabelPlayer("")
-                }
             }
         }
     }
@@ -279,16 +271,16 @@ export const FormRecords = ({formData, returnData}) => {
     }, [appID,clubIDD,clubName,clubPercent,playerID,uplineID,uplinePercent]);
 
 
-        return (<>
+    return (<>
             <div className='field'>
                 <label>
                     {clubsubName && DDropCLub.fill=="yes"? 
                         <p className="ui mini red text">
-                            <i className="large exclamation circle red icon"></i>
+                            <i className="large attention icon red"></i>
                             {clubsubName ? "Club: "+clubsubName : "Club"}?
                         </p> 
                         : 
-                        appName ? appName+"'s Club" : <><i className="large exclamation circle red icon"></i>Club</>
+                        appName ? appName+"'s Club" : "Club"
                         }
                 </label>
                 <SUI.Dropdown
@@ -314,11 +306,13 @@ export const FormRecords = ({formData, returnData}) => {
             </div>
 
             <div className='field'>
-                    {notFoundPlayer == true ? 
+                    {notFoundPlayer ? 
                         <>
                             <label>
-                                    <i className="large info circle orange icon"></i>
-                                    {labelPlayer ? labelPlayer : "New Player?"}
+                                <p className="ui mini red text">
+                                    <i className="large plus circle blue icon"></i>
+                                    New Player?
+                                </p> 
                             </label>
                             <input type='text' value={playerID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setplayerID)} />
                         </>
@@ -380,6 +374,5 @@ export const FormRecords = ({formData, returnData}) => {
                 <input type='text' value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)} />
             </div>
             </>)
-
 
 }

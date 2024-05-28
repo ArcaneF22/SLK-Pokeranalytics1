@@ -16,7 +16,6 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
 
     const [JSONData, setJSONData]           = useState([]);
     const [CSVType, setCSVType]             = useState("");
-    const [onDelete, setonDelete]           = useState(false);
     const [returnedData, setreturnedData]   = useState([]);
     const [message, setMessage]             = useState("");
 
@@ -42,11 +41,10 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
                 Papa.parse(file, {
                     complete: (i) => {
                         if(i.data[0][0] == "DATEUNTIL" || i.data[0][1] == "CLUB" || i.data[0][2] == "PLAYERID" || i.data[0][3] == "WINNINGTOTAL" || i.data[0][4] == "BONUSTOTAL"){
-                            console.log(i.data.slice(1).DATEUNTIL)
                             setJSONData( Func.shortFileFormat(i.data[0],i.data.slice(1)) );
                             setCSVType("Short")
                             setMessage("")
-                        } else if (i.data[1][0] == "DATEUNTIL" || i.data[1][1] == "CLUB" || i.data[1][2] == "PLAYERID" || i.data[1][3] == "NLH" || i.data[1][4] == "FLH" || i.data[1][5] == "6+" || i.data[1][6] == "PLO Hi" || i.data[1][7] == "FLO Hi" || i.data[1][8] == "MIXED" || i.data[1][9] == "OFC" || i.data[1][10] == "MTT" || i.data[1][11] == "SNG" || i.data[1][12] == "SPIN" || i.data[1][13] == "OTHERS" || i.data[1][14] == "NLH" || i.data[1][15] == "FLH" || i.data[1][16] == "6+" || i.data[1][17] == "PLO Hi" || i.data[1][18] == "FLO Hi" || i.data[1][19] == "MIXED" || i.data[1][20] == "OFC" || i.data[1][21] == "MTT" || i.data[1][22] == "SNG" || i.data[1][23] == "SPIN" || i.data[1][24] == "OTHERS"){                            
+                        } else if (i.data[1][0] == "DATEUNTIL" || i.data[1][1] == "CLUB" || i.data[1][2] == "PLAYERID" || i.data[1][3] == "NLH" || i.data[1][4] == "FLH" || i.data[1][5] == "6+" || i.data[1][6] == "PLO Hi" || i.data[1][7] == "FLO Hi" || i.data[1][8] == "MIXED" || i.data[1][9] == "OFC" || i.data[1][10] == "MTT" || i.data[1][11] == "SNG" || i.data[1][12] == "SPIN" || i.data[1][13] == "OTHERS" || i.data[1][14] == "NLH" || i.data[1][15] == "FLH" || i.data[1][16] == "6+" || i.data[1][17] == "PLO Hi" || i.data[1][18] == "FLO Hi" || i.data[1][19] == "MIXED" || i.data[1][20] == "OFC" || i.data[1][21] == "MTT" || i.data[1][22] == "SNG" || i.data[1][23] == "SPIN" || i.data[1][24] == "OTHERS"){
                             setJSONData( Func.longFileFormat(i.data[1],i.data.slice(2)) );
                             setCSVType("Long")
                             setMessage("")
@@ -70,6 +68,13 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
         }
     }, [JSONData]);
 
+
+
+    const returnData = (i) => {
+        setreturnedData(i)
+      };
+
+
     const onchangeRecord = (e) => {
         setreturnedData(e)
         if(e){
@@ -88,39 +93,6 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
         
     };
 
-    const incKeys = [];
-    const onIncomplete = (i) => {
-        JSONData.map((i,index) =>{
-            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINNINGTOTAL == "" || i.BONUSTOTAL == ""){
-                incKeys.push(index);
-            }
-        } )
-        const e = incKeys.includes(i);
-        if(e){
-            return "red"
-        } else {
-            return ""
-        }
-    }
-
-    const deleteRow = (i) => {
-        setonDelete(true)
-        const filteredArray = JSONData.filter((item, index) => index !== i);
-        setJSONData(filteredArray);
-        const countInput = parseInt(document.querySelectorAll("#countDiv").length)-1;
-        if(countInput == 0){
-            clearJSON()
-        }
-        setonDelete(false)
-    };
-
-    const onCalculate = () => {
-        if(incKeys == ""){
-            console.log("Not empty "+String(incKeys))
-        } else {
-            console.log("Not empty "+String(incKeys))
-        }
-    }
 
     return (
         <div>
@@ -144,31 +116,29 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
                         <i className="trash alternate outline icon"></i>
                         Reset CSV Form ({CSVType + " Template"}) 
                     </div>
+                    <p>{JSON.stringify(returnedData)}</p>
                     <br /><br />
                     <div className='ui form compact mini'>
                         {JSONData.map((i, index) => (
-                            <div key={index} id="countDiv" className={'seven fields ui message fluid plusTop '+onIncomplete(index)}>
-                                <div className="floating ui red circular icon label button centered" onClick={() => deleteRow(index)}>
-                                    <i className='times icon'></i>
-                                </div>
+
+                            <div key={index} className='seven fields ui message fluid plusTop'>
                                 <div className='field'>
-                                    <label>
-                                        {index} Date Until
-                                        
-                                    </label>
+                                    <label>Date Until</label>
                                     <input type='date' value={i.DATEUNTIL} onChange={(e) => inputChange(e.target.value, index, "DATEUNTIL")} />
                                 </div>
-                                    <FormRecords formData={{    Index:          index, 
-                                        Edited:         i.EDITED,
-                                        AppID:          i.APPID, 
-                                        ClubName:       i.CLUB, 
-                                        ClubIDD:        i.CLUBIDD, 
-                                        ClubPercent:    i.CLUBPERCENT, 
-                                        PlayerID:       i.PLAYERID, 
-                                        UplineID:       i.UPLINEID, 
-                                        UplinePercent:  i.UPLINEPERCENT, 
-                                    }} 
-                                        returnData={onchangeRecord}/>
+
+                                <FormRecords formData={{    Index:          index, 
+                                                            Edited:         i.EDITED,
+                                                            AppID:          i.APPID, 
+                                                            ClubName:       i.CLUB, 
+                                                            ClubIDD:        i.CLUBIDD, 
+                                                            ClubPercent:    i.CLUBPERCENT, 
+                                                            PlayerID:       i.PLAYERID, 
+                                                            UplineID:       i.UPLINEID, 
+                                                            UplinePercent:  i.UPLINEPERCENT, 
+                                                        }} 
+                                                            returnData={onchangeRecord}/>
+
 
                                 <div className='field'>
                                     <label>Win/Loss Total</label>
@@ -181,34 +151,6 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
                             </div>
                         ))}
                     </div>
-                    <div className='field'>
-                        <div className='ui segment basic noBorder right aligned'>
-                            <div className='ui button tiny basic purple' onClick={onCalculate} style={{minWidth:"150px"}}>
-                                <i className='plus icon'></i>
-                                Add Row
-                            </div>
-                        </div>
-                    </div>
-                    {incKeys == "" ? 
-                        <div className='field'>
-                            <div className='ui segment basic noBorder center aligned'>
-                                <div className='ui button purple' onClick={onCalculate} style={{minWidth:"150px"}}>
-                                    <i className='plus icon'></i>
-                                    Calculate
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <div className='field'>
-                            <div className='ui segment basic noBorder center aligned'>
-                                <div className='ui button red loading disabled' style={{minWidth:"150px"}}>
-                                    <i className='plus icon'></i>
-                                    Incomplete
-                                </div>
-                            </div>
-                        </div>
-                    }
-
                 </>
             )}
 
