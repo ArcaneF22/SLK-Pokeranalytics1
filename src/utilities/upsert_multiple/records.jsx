@@ -10,13 +10,11 @@ import * as Set from '../constants';
 import * as Func from '../functions';
 import { FormRecords } from '../fetch/forms/records'
 
-export const MultipleRecords = ({updateJSON,returnJSON}) => {
+export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
 
     const DataClubs                         = Clubs().data
-
     const [JSONData, setJSONData]           = useState([]);
     const [CSVType, setCSVType]             = useState("");
-    const [onDelete, setonDelete]           = useState(false);
     const [returnedData, setreturnedData]   = useState([]);
     const [message, setMessage]             = useState("");
 
@@ -73,9 +71,9 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
     const onchangeRecord = (e) => {
         setreturnedData(e)
         if(e){
-                //console.info(e)
                 const updatedData = [...JSONData]; // Create a copy of the state array
                 updatedData[e.index]["EDITED"]            = e.edited
+                updatedData[e.index]["INCOMPLETE"]        = e.incomplete
                 updatedData[e.index]["APPID"]             = e.appID
                 updatedData[e.index]["CLUB"]              = e.clubName
                 updatedData[e.index]["CLUBID"]            = e.clubIDD
@@ -83,15 +81,13 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
                 updatedData[e.index]["PLAYERID"]          = e.playerID
                 updatedData[e.index]["UPLINEID"]          = e.uplineID
                 updatedData[e.index]["UPLINEPERCENT"]     = e.uplinePercent
-                //console.log(updatedData[0]["CLUB"])
         }
-        
     };
 
     const incKeys = [];
     const onIncomplete = (i) => {
         JSONData.map((i,index) =>{
-            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINNINGTOTAL == "" || i.BONUSTOTAL == ""){
+            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINNINGTOTAL == "" || i.BONUSTOTAL == "" || i.INCOMPLETE != ""){
                 incKeys.push(index);
             }
         } )
@@ -104,14 +100,14 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
     }
 
     const deleteRow = (i) => {
-        setonDelete(true)
         const filteredArray = JSONData.filter((item, index) => index !== i);
         setJSONData(filteredArray);
+        updateJSON(filteredArray)
+        reRenders(false)
         const countInput = parseInt(document.querySelectorAll("#countDiv").length)-1;
         if(countInput == 0){
             clearJSON()
         }
-        setonDelete(false)
     };
 
     const onCalculate = () => {
@@ -122,103 +118,119 @@ export const MultipleRecords = ({updateJSON,returnJSON}) => {
         }
     }
 
-    return (
-        <div>
-            <p>{message ? message : null}</p>
-            {!JSONData.length > 0 ? (
-                <>
-                <input type="file" id='csvFile'
-                            style={{width:"100% !important"}}
-                            className="ui message violet basic center aligned fluid CSVFile"
-                            onChange={fileParse} />
-                <a className='ui button purple tiny' href='./csv/template_shortrecords.csv'>
-                    <i className='download icon'></i> Short CSV template
-                </a>
-                <a className='ui button purple tiny' href='./csv/template_longrecords.csv'>
-                    <i className='download icon'></i> Long CSV template
-                </a>
-                </>
-            ) : (
-                <>
-                    <div className='ui button red' onClick={()=>{ clearJSON() } }>
-                        <i className="trash alternate outline icon"></i>
-                        Reset CSV Form ({CSVType + " Template"}) 
-                    </div>
-                    <br /><br />
-                    <div className='ui form compact mini'>
-                        {JSONData.map((i, index) => (
-                            <div key={index} id="countDiv" className={'seven fields ui message fluid plusTop '+onIncomplete(index)}>
-                                <div className="floating ui red circular icon label button centered" onClick={() => deleteRow(index)}>
-                                    <i className='times icon'></i>
-                                </div>
+        return (
+            <div>
+                <p>{message ? message : null}</p>
+                {!JSONData.length > 0 ? (
+                    <>
+                    <input type="file" id='csvFile'
+                                style={{width:"100% !important"}}
+                                className="ui message violet basic center aligned fluid CSVFile"
+                                onChange={fileParse} />
+                    <a className='ui button purple tiny' href='./csv/template_shortrecords.csv'>
+                        <i className='download icon'></i> Short CSV template
+                    </a>
+                    <a className='ui button purple tiny' href='./csv/template_longrecords.csv'>
+                        <i className='download icon'></i> Long CSV template
+                    </a>
+                    </>
+                ) : (
+                    <>
+                        <div className='ui button red' onClick={()=>{ clearJSON() } }>
+                            <i className="trash alternate outline icon"></i>
+                            Reset CSV Form ({CSVType + " Template"}) 
+                        </div>
+    
+                        <br />
+                        <br />
+                        <div className='ui form compact mini'>
+                            <div className='fields'>
                                 <div className='field'>
-                                    <label>
-                                        {index} Date Until
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+    
+                        <div className='ui form compact mini'>
+                            {JSONData.map((i, index) => (
+                                <div key={index} id="countDiv" className={'seven fields ui message fluid plusTop '+onIncomplete(index)}>
+                                    <div className="floating ui red circular icon label button centered" onClick={() => deleteRow(index)}>
+                                        <i className='times icon'></i>
+                                    </div>
+                                    <div className='field'>
+                                        <label>
+                                            Date Until
+                                        </label>
+                                        <input type='date' value={i.DATEUNTIL} onChange={(e) => inputChange(e.target.value, index, "DATEUNTIL")} />
+                                    </div>
+                                    {
                                         
-                                    </label>
-                                    <input type='date' value={i.DATEUNTIL} onChange={(e) => inputChange(e.target.value, index, "DATEUNTIL")} />
-                                </div>
-                                    <FormRecords formData={{    Index:          index, 
-                                        Edited:         i.EDITED,
-                                        AppID:          i.APPID, 
-                                        ClubName:       i.CLUB, 
-                                        ClubIDD:        i.CLUBIDD, 
-                                        ClubPercent:    i.CLUBPERCENT, 
-                                        PlayerID:       i.PLAYERID, 
-                                        UplineID:       i.UPLINEID, 
-                                        UplinePercent:  i.UPLINEPERCENT, 
-                                    }} 
-                                        returnData={onchangeRecord}/>
+                                    }
+                                        <FormRecords formData={{    Index:          index, 
+                                                                    Edited:         i.EDITED,
+                                                                    AppID:          i.APPID, 
+                                                                    ClubName:       i.CLUB, 
+                                                                    ClubIDD:        i.CLUBIDD, 
+                                                                    ClubPercent:    i.CLUBPERCENT, 
+                                                                    PlayerID:       i.PLAYERID, 
+                                                                    UplineID:       i.UPLINEID, 
+                                                                    UplinePercent:  i.UPLINEPERCENT, 
+                                                                }} 
+                                            returnData={onchangeRecord}/>
 
-                                <div className='field'>
-                                    <label>Win/Loss Total</label>
-                                    <input type='text' value={i.WINNINGTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "WINNINGTOTAL")} />
+    
+                                    <div className='field'>
+                                        <label>Win/Loss Total</label>
+                                        <input type='text' value={i.WINNINGTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "WINNINGTOTAL")} />
+                                    </div>
+                                    <div className='field'>
+                                        <label>Bonus Total</label>
+                                        <input type='text' value={i.BONUSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "BONUSTOTAL")} />
+                                    </div>
                                 </div>
-                                <div className='field'>
-                                    <label>Bonus Total</label>
-                                    <input type='text' value={i.BONUSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "BONUSTOTAL")} />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className='field'>
-                        <div className='ui segment basic noBorder right aligned'>
-                            <div className='ui button tiny basic purple' onClick={onCalculate} style={{minWidth:"150px"}}>
-                                <i className='plus icon'></i>
-                                Add Row
-                            </div>
+                            ))}
                         </div>
-                    </div>
-                    {incKeys == "" ? 
                         <div className='field'>
-                            <div className='ui segment basic noBorder center aligned'>
-                                <div className='ui button purple' onClick={onCalculate} style={{minWidth:"150px"}}>
+                            <div className='ui segment basic noBorder right aligned'>
+                                <div className='ui button tiny basic purple' onClick={onCalculate} style={{minWidth:"150px"}}>
                                     <i className='plus icon'></i>
-                                    Calculate
+                                    Add Row
                                 </div>
                             </div>
                         </div>
-                        :
-                        <div className='field'>
-                            <div className='ui segment basic noBorder center aligned'>
-                                <div className='ui button red loading disabled' style={{minWidth:"150px"}}>
-                                    <i className='plus icon'></i>
-                                    Incomplete
+                        {incKeys == "" ? 
+                            <div className='field'>
+                                <div className='ui segment basic noBorder center aligned'>
+                                    <div className='ui button purple' onClick={onCalculate} style={{minWidth:"150px"}}>
+                                        <i className='plus icon'></i>
+                                        Calculate
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                            :
+                            <div className='field'>
+                                <div className='ui segment basic noBorder center aligned'>
+                                    <div className='ui button red loading disabled' style={{minWidth:"150px"}}>
+                                        <i className='plus icon'></i>
+                                        Incomplete
+                                    </div>
+                                </div>
+                            </div>
+                        }
+    
+                    </>
+                )}
+    
+                {JSONData.length > 0 && (
+                    <div className='ui message black mini'>
+                        <h4>Uploaded CSV to JSON</h4>
+                        <pre>{JSON.stringify(JSONData,0,2)}</pre>
+                    </div>
+                )}
+                
+        </div>
+          )
 
-                </>
-            )}
-
-            {JSONData.length > 0 && (
-                <div className='ui message black mini'>
-                    <h4>Uploaded CSV to JSON</h4>
-                    <pre>{JSON.stringify(JSONData,0,2)}</pre>
-                </div>
-            )}
-            
-    </div>
-      )
 }

@@ -17,12 +17,11 @@ export const FormRecords = ({formData, returnData}) => {
     const [clubName, setclubName]               = useState("")
     const [clubsubName, setclubsubName]         = useState("")
     const [clubPercent, setclubPercent]         = useState("")
-    const [playersubID, setplayersubID]         = useState("")
     const [playerID, setplayerID]               = useState("")
     const [uplineID, setuplineID]               = useState("")
     const [uplinePercent, setuplinePercent]     = useState("")
 
-    const [inComplete, setinComplete]          = useState("")
+    const [labelPlayer, setlabelPlayer]          = useState("")
     const [notFoundPlayer, setnotFoundPlayer]    = useState(false)
     const [notFoundUpline, setnotFoundUpline]    = useState(false)
 
@@ -40,7 +39,7 @@ export const FormRecords = ({formData, returnData}) => {
                         C:      Token['gadget'],
                         D:      Set.TimeZoned,
                     }; 
-                    
+
     const itemAccounts  = Accounts()
 
     const itemClubs = DDropCLub.data.map(i => 
@@ -120,11 +119,12 @@ export const FormRecords = ({formData, returnData}) => {
             setuplineID(formData.UplineID)
             setuplinePercent(formData.UplinePercent)
         }
+
     }, []);
 
     //ON CLUB LIST LOAD
     useLayoutEffect(() => {
-            const c = itemClubs.find((i) => i.value == clubName);
+            const c     = itemClubs.find((i) => i.value == clubName);
             if(c){
                 setclubsubName("")
                 setappID(c.appid ? c.appid : 0)
@@ -149,7 +149,8 @@ export const FormRecords = ({formData, returnData}) => {
                 setnotFoundPlayer(true)
             }
         }
-    }, [itemAccounts.fill == true ]);
+    }, [itemAccounts.fill == true]);
+
 
     //ON CHANGE OF CLUB DROPDOWN 
     const onchangeClub = (i) => {
@@ -164,10 +165,14 @@ export const FormRecords = ({formData, returnData}) => {
             fetchDDPlayer           (c.appid,c.clubidd)
             if(playerID != "" || playerID != null){
                 fetchDDUpline        (c.appid,c.clubidd,playerID)
+                const u  = itemUplines.find((o) => o.value == uplineID);
+                if(u){
+                    setnotFoundUpline(true)
+                    
+                }
                 setEdited(true)
             } else {
                 setEdited(false)
-                
             } 
         }
         if(!c){
@@ -182,13 +187,8 @@ export const FormRecords = ({formData, returnData}) => {
         const p  = itemPlayers.find((o) => o.value == i);
         if(p){
             fetchDDUpline(p.appid,p.clubidd,p.value)
+            setEdited(false)
             setnotFoundPlayer(false)
-            setuplineID(p.uplineid ? p.uplineid : "")
-            setuplinePercent(p.uplinepercent ? p.uplinepercent : 0)
-            setinComplete("")
-            if(i == uplineID){
-                setuplineID("")
-            }
         }
     };
 
@@ -214,11 +214,10 @@ export const FormRecords = ({formData, returnData}) => {
                 setnotFoundPlayer(false)
             }
             if(!a){
-                setnotFoundPlayer(true)
                 if(p){
-                    setinComplete("PLAYER")
+                    setlabelPlayer("Wrong app! ")
                 } else {
-                    setinComplete("")
+                    setlabelPlayer("")
                 }
             }
         }
@@ -231,17 +230,12 @@ export const FormRecords = ({formData, returnData}) => {
                 setDDropPlayer(response.data);
                 setloadDDPlayer(false)
                 const up = response.data.find(h => h.accountID === playerID);
-                if(up){
+                if(up != null && edited == false){
                     if(uplineID == null || uplineID == "" || uplineID == 0){
                         setuplineID(up.uplineID ? up.uplineID : "")
                         setuplinePercent(up.uplinePercent ? up.uplinePercent : 0)
                     }
-                }
-                if(!up){
-                    setinComplete("APP")
-                    setplayersubID(playerID)
-                } else {
-                    setinComplete("")
+                    setEdited(true)
                 }
         } catch (error) {
             console.error("Error fetching data: ", error);
@@ -249,15 +243,13 @@ export const FormRecords = ({formData, returnData}) => {
     }
 
     async function fetchDDUpline(i,ii,iii) {
-        if(iii){
-            setloadDDUpline(true)
-            try {
-                const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"UPLINE",WHAT:i,WHAT2:ii,WHAT3:iii,});
-                    setDDropUpline(response.data);
-                    setloadDDUpline(false)
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
+        setloadDDUpline(true)
+        try {
+            const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"UPLINE",WHAT:i,WHAT2:ii,WHAT3:iii,});
+                setDDropUpline(response.data);
+                setloadDDUpline(false)
+        } catch (error) {
+            console.error("Error fetching data: ", error);
         }
     }
 
@@ -274,7 +266,6 @@ export const FormRecords = ({formData, returnData}) => {
     useLayoutEffect(() => {
             returnData({
                 index:          formData.Index,
-                incomplete:     inComplete,
                 edited:         edited,
                 appID:          appID,
                 appName:        appName,
@@ -285,7 +276,7 @@ export const FormRecords = ({formData, returnData}) => {
                 uplineID:       uplineID,
                 uplinePercent:  uplinePercent,
             })
-    }, [appID,clubIDD,clubName,clubPercent,playerID,uplineID,uplinePercent,inComplete]);
+    }, [appID,clubIDD,clubName,clubPercent,playerID,uplineID,uplinePercent]);
 
 
         return (<>
@@ -327,17 +318,17 @@ export const FormRecords = ({formData, returnData}) => {
                         <>
                             <label>
                                     <i className="large info circle orange icon"></i>
-                                    {inComplete == "PLAYER" ? "Wrong app!"  : "New Player?"}
+                                    {labelPlayer ? labelPlayer : "New Player?"}
                             </label>
                             <input type='text' value={playerID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setplayerID)} />
                         </>
                         : 
                         <>
                             <label>
-                            {inComplete == "APP" ? <><i className="large info circle orange icon"></i>Wrong app!</>  : "Player"}
+                                Player
                             </label>
                             <SUI.Dropdown
-                                    placeholder={notFoundPlayer == true ?  "Not found!" : "Select a player"}
+                                    placeholder={notFoundPlayer ?  "Not found!" : "Select a player"}
                                     scrolling
                                     clearable
                                     floating
@@ -354,17 +345,19 @@ export const FormRecords = ({formData, returnData}) => {
                             />
                         </>
                     }
+
+
             </div>
 
             <div className='field'>
                 <label>
-                    {inComplete == "APP" ?
+                    {notFoundUpline ?
                     "Upline: "+uplineID 
                     :
                     "Upline" }
                 </label>
                 <SUI.Dropdown
-                        placeholder={inComplete == "APP" ?  "Not found!" : "Select a upline"}
+                        placeholder={notFoundUpline ?  "Not found!" : "Select a upline"}
                         scrolling
                         clearable
                         floating

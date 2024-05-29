@@ -12,35 +12,15 @@ export const TabRecords = () => {
 
     const [gotData, setgotData]             = useState([]);
     const [returnedJSON, setreturnedJSON]   = useState([]);
-    const [ireRenders, setireRenders]       = useState(true);
+
     const [recall, setRecall]               = useState(0);
     const [activeIndex, setActiveIndex]     = useState(0);
-    const [iShow, setiShow]                 = useState(true);
+    
 
     const updateJSON = (i) => {
         setreturnedJSON(i)
       };
 
-    const reRenders = (i) => {
-        setiShow(i)
-        console.log("Received: "+i)
-    };
-
-    useLayoutEffect(() => {
-        if(iShow == false){
-            setiShow(true)
-            console.log("Received: "+iShow)
-        }
-    }, [iShow]);
-
-        
-    function Alas(){
-        if(iShow == true){
-                return <MultipleRecords updateJSON={updateJSON} returnJSON={returnedJSON} reRenders={reRenders}/>
-        } else {
-                return  "Loading"+String(iShow)
-        }
-    }
     const panes = [
         {
             render: () => 
@@ -55,7 +35,7 @@ export const TabRecords = () => {
         {
             render: () => 
                 <SUI.TabPane attached={false}>
-                    {Alas()}
+                    <MultipleRecords updateJSON={updateJSON} returnJSON={returnedJSON}/>
                 </SUI.TabPane>,
         },
         {
@@ -71,7 +51,7 @@ export const TabRecords = () => {
             <div className="ui three item menu">
                 <a className={activeIndex == "0" ? "item active violet" : "item" } id='0' onClick={ ()=>setActiveIndex(0) }>
                 <i className="tasks icon"></i>
-                    LIST {String(iShow)}
+                    LIST
                 </a>
                 <a className={activeIndex == "1" ? "item active violet" : "item" } id='1'onClick={ ()=>setActiveIndex(1) }>
                     <i className="file excel outline icon"></i>
