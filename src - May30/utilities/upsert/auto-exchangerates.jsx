@@ -3,8 +3,10 @@ import axios from 'axios';
 import useInterval from 'use-interval'
 import * as Set from '../constants';
 
-export const UpsertExchangeRates = () => {
-    const Token = JSON.parse( localStorage.getItem('Token') );
+const Token = JSON.parse( localStorage.getItem('Token') );
+
+export const AutoExchangeRates = () => {
+
     const nowDate                         = new Date();
     const url1                            = "v6.exchangerate-api.com"
     const url2                            = "api.freecurrencyapi.com"
@@ -64,6 +66,7 @@ export const UpsertExchangeRates = () => {
                                                                           rates:          response1.data.conversion_rates,
                                                                           status:         0,
                                                                       });
+
         const upsert2 = await axios.post(Set.Upsert['exchangerate'], {
                                                                           A: Token['id'],
                                                                           B: Token['token'],
@@ -76,6 +79,7 @@ export const UpsertExchangeRates = () => {
                                                                           rates:          response2.data.data,
                                                                           status:         0,
                                                                       });
+
         const upsert3 = await axios.post(Set.Upsert['exchangerate'], {
                                                                           A: Token['id'],
                                                                           B: Token['token'],
@@ -89,9 +93,9 @@ export const UpsertExchangeRates = () => {
                                                                           status:         0,
                                                                       });
 
-        console.log("Currency upsert 1: "+ upsert1.data)
-        console.log("Currency upsert 2: "+ upsert2.data)
-        console.log("Currency upsert 3: "+ upsert3.data)
+        console.log(upsert1.data+"Currency today is up to date")
+        console.log(upsert2.data+"Currency today is up to date")
+        console.log(upsert3.data+"Currency today is up to date")
         console.info(formatDate(0))
 
         } catch (error) {
@@ -106,31 +110,5 @@ export const UpsertExchangeRates = () => {
   useInterval(() => {
       checkFXUSD()
   }, 2000000);
-
-
-  return (
-    <>
-      <div className="ui segment basic left aligned">
-        <h3 className="ui horizontal divider header">
-          Insert / Update Exchange Rates
-        </h3>
-        <br />
-
-        <div className="ui form fitted">
-
-          <div className='two fields'>
-
-              <div className="field">
-                  <label>Application</label>
-                  <input type="text" value={fxID} onChange={(e) => setfxID(e.currentTarget.value)}/>
-              </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </>
-  )
 
 }

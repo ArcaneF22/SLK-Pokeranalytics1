@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef, useEffect  } from 'react';
+import React, { useLayoutEffect, useState, useRef  } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
 
 import { Accounts } from '../fetch/raw/accounts'
@@ -9,7 +9,6 @@ import * as SUI from 'semantic-ui-react'
 import * as Set from '../constants';
 import * as Func from '../functions';
 import { FormRecords } from '../fetch/forms/records'
-import { FormFxRates } from '../fetch/forms/fxRates'
 
 export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
 
@@ -18,7 +17,6 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
     const [CSVType, setCSVType]             = useState("");
     const [returnedData, setreturnedData]   = useState([]);
     const [message, setMessage]             = useState("");
-    const [loaded, setloaded]               = useState(false); 
 
     function clearJSON(){
         setMessage("")
@@ -41,16 +39,15 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
             } else {
                 Papa.parse(file, {
                     complete: (i) => {
-                        if(i.data[0][0] == "DATEUNTIL" || i.data[0][1] == "CLUB" || i.data[0][2] == "PLAYERID" || i.data[0][3] == "WINLOSSTOTAL" || i.data[0][4] == "BONUSTOTAL"){
+                        if(i.data[0][0] == "DATEUNTIL" || i.data[0][1] == "CLUB" || i.data[0][2] == "PLAYERID" || i.data[0][3] == "WINNINGTOTAL" || i.data[0][4] == "BONUSTOTAL"){
+                            console.log(i.data.slice(1).DATEUNTIL)
                             setJSONData( Func.shortFileFormat(i.data[0],i.data.slice(1)) );
                             setCSVType("Short")
                             setMessage("")
-                            onLoading()
                         } else if (i.data[1][0] == "DATEUNTIL" || i.data[1][1] == "CLUB" || i.data[1][2] == "PLAYERID" || i.data[1][3] == "NLH" || i.data[1][4] == "FLH" || i.data[1][5] == "6+" || i.data[1][6] == "PLO Hi" || i.data[1][7] == "FLO Hi" || i.data[1][8] == "MIXED" || i.data[1][9] == "OFC" || i.data[1][10] == "MTT" || i.data[1][11] == "SNG" || i.data[1][12] == "SPIN" || i.data[1][13] == "OTHERS" || i.data[1][14] == "NLH" || i.data[1][15] == "FLH" || i.data[1][16] == "6+" || i.data[1][17] == "PLO Hi" || i.data[1][18] == "FLO Hi" || i.data[1][19] == "MIXED" || i.data[1][20] == "OFC" || i.data[1][21] == "MTT" || i.data[1][22] == "SNG" || i.data[1][23] == "SPIN" || i.data[1][24] == "OTHERS"){                            
                             setJSONData( Func.longFileFormat(i.data[1],i.data.slice(2)) );
                             setCSVType("Long")
                             setMessage("")
-                            onLoading()
                         } else {
                             setMessage("Wrong format! Please check downloadable templates.")
                         }
@@ -87,23 +84,10 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
         }
     };
 
-    const onchangeFXRate = (e) => {
-        if(e){
-            const updatedData = JSONData.map(i => ({ 
-                                                ...i, 
-                                                FXUSD             : e.fxUSD,
-                                                FXDATE            : e.fxDate,
-                                                FXCURRENCY        : e.fxCurrency,
-                                                FXPROVIDER        : e.fxProvider,
-                                                }));
-            setJSONData(updatedData)
-        }
-    };
-
     const incKeys = [];
     const onIncomplete = (i) => {
         JSONData.map((i,index) =>{
-            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINLOSSTOTAL == "" || i.BONUSTOTAL == "" || i.INCOMPLETE != ""){
+            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINNINGTOTAL == "" || i.BONUSTOTAL == "" || i.INCOMPLETE != ""){
                 incKeys.push(index);
             }
         } )
@@ -113,7 +97,6 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
         } else {
             return ""
         }
-       
     }
 
     const deleteRow = (i) => {
@@ -135,47 +118,41 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
         }
     }
 
-    function onLoading(){
-        setloaded(false)
-        const timeoutId = setTimeout(() => {
-            setloaded(true)
-        }, 200);
-        return () => clearTimeout(timeoutId);
-    }
-
-    useEffect(() => {
-        onLoading()
-      }, []);
-
         return (
             <div>
                 <p>{message ? message : null}</p>
                 {!JSONData.length > 0 ? (
                     <>
-                        <input type="file" id='csvFile'
-                                    style={{width:"100% !important"}}
-                                    className="ui message violet basic center aligned fluid CSVFile"
-                                    onChange={fileParse} />
-                        <a className='ui button purple tiny' href='./csv/template_shortrecords.csv'>
-                            <i className='download icon'></i> Short CSV template
-                        </a>
-                        <a className='ui button purple tiny' href='./csv/template_longrecords.csv'>
-                            <i className='download icon'></i> Long CSV template
-                        </a>
+                    <input type="file" id='csvFile'
+                                style={{width:"100% !important"}}
+                                className="ui message violet basic center aligned fluid CSVFile"
+                                onChange={fileParse} />
+                    <a className='ui button purple tiny' href='./csv/template_shortrecords.csv'>
+                        <i className='download icon'></i> Short CSV template
+                    </a>
+                    <a className='ui button purple tiny' href='./csv/template_longrecords.csv'>
+                        <i className='download icon'></i> Long CSV template
+                    </a>
                     </>
                 ) : (
-
                     <>
-
                         <div className='ui button red' onClick={()=>{ clearJSON() } }>
                             <i className="trash alternate outline icon"></i>
                             Reset CSV Form ({CSVType + " Template"}) 
                         </div>
     
-                        <FormFxRates returnFXData={onchangeFXRate}/>
-                        {loaded ? 
-                    (
-                    <>
+                        <br />
+                        <br />
+                        <div className='ui form compact mini'>
+                            <div className='fields'>
+                                <div className='field'>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+    
                         <div className='ui form compact mini'>
                             {JSONData.map((i, index) => (
                                 <div key={index} id="countDiv" className={'seven fields ui message fluid plusTop '+onIncomplete(index)}>
@@ -188,6 +165,9 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
                                         </label>
                                         <input type='date' value={i.DATEUNTIL} onChange={(e) => inputChange(e.target.value, index, "DATEUNTIL")} />
                                     </div>
+                                    {
+                                        
+                                    }
                                         <FormRecords formData={{    Index:          index, 
                                                                     Edited:         i.EDITED,
                                                                     AppID:          i.APPID, 
@@ -200,26 +180,15 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
                                                                 }} 
                                             returnData={onchangeRecord}/>
 
-                                    <div className='field'>
-                                        <label>FX {i.FXCURRENCY != "USD" ? i.FXCURRENCY+" to USD" : "USD"}</label>
-                                        <input type='text' value={i.FXUSD} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "FXUSD")} />
-                                    </div>
-
-                                    <div className='field'>
-                                        <label>Other Percent</label>
-                                        <input type='text' value={i.BONUSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "BONUSTOTAL")} />
-                                    </div>
-
+    
                                     <div className='field'>
                                         <label>Win/Loss Total</label>
-                                        <input type='text' value={i.WINLOSSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "WINLOSSTOTAL")} />
+                                        <input type='text' value={i.WINNINGTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "WINNINGTOTAL")} />
                                     </div>
-
                                     <div className='field'>
                                         <label>Bonus Total</label>
                                         <input type='text' value={i.BONUSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "BONUSTOTAL")} />
                                     </div>
-
                                 </div>
                             ))}
                         </div>
@@ -250,12 +219,6 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders}) => {
                                 </div>
                             </div>
                         }
-                    </>
-                    )
-                    :
-                    <Set.LoadingData />
-                    }
-                    
     
                     </>
                 )}

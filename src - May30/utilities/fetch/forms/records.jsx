@@ -301,7 +301,7 @@ export const FormRecords = ({formData, returnData}) => {
                         }
                 </label>
                 <SUI.Dropdown
-                        placeholder={clubsubName ?  "Not found!" : "Select..."}
+                        placeholder={clubsubName ?  "Not found!" : "Select a club"}
                         scrolling
                         clearable
                         floating
@@ -337,7 +337,7 @@ export const FormRecords = ({formData, returnData}) => {
                             {inComplete == "APP" ? <><i className="large info circle orange icon"></i>Wrong app!</>  : "Player"}
                             </label>
                             <SUI.Dropdown
-                                    placeholder={notFoundPlayer == true ?  "Not found!" : "Select..."}
+                                    placeholder={notFoundPlayer == true ?  "Not found!" : "Select a player"}
                                     scrolling
                                     clearable
                                     floating

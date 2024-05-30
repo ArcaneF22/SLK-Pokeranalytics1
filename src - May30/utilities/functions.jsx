@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import * as Set from './constants';
-import moment from 'moment';
 
 const hasDecimal = (number) => number % 1 !== 0;
 
@@ -78,18 +77,8 @@ export const byNoSpecial = (i) => {
   return num
 }
 
-export const byNoSpaceCapital = (i) => {
-  const num = i.replace(/[^a-zA-Z\s]/g, '').toUpperCase().slice(0, 5).trim()
-  return num
-}
-
 export const byNoSpecialFull = (i) => {
   const num = i.replace(/[^a-zA-Z0-9!&. ]/g, '').replace(/\s{2,}/g, ' ').trim()
-  return num
-}
-
-export const byWebAddress = (i) => {
-  const num = i.replace(/[^a-zA-Z./?_\s-]/g, '').trim()
   return num
 }
 
@@ -205,13 +194,6 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
-export function dateYMD(i) {
-  const today = new Date(i); // Get the current date
-  const formattedDate = moment(today).format('YYYY-MM-DD');
-  return formattedDate
-}
-
-
 export const shortFileFormat = (header,rows) => {
 
   rows.map((i,index) =>{
@@ -221,7 +203,7 @@ export const shortFileFormat = (header,rows) => {
     i[3] = byDecimals(i[3])
     i[4] = byDecimals(i[4])
   })
-  //console.log(rows)
+  console.log(rows)
   const output = rows.map(
               ii => Object.entries(ii).reduce((e, [ee, eee]) => ({
                   ...e, 
@@ -248,52 +230,16 @@ export const shortFileFormat = (header,rows) => {
 
 export const longFileFormat = (header,rows) => {
 
- const head = ['DATEUNTIL', 'CLUB', 'PLAYERID',  
-                'WL: NLH', 'WL: FLH', 'WL: 6+', 'WL: PLO Hi', 'WL: PLO Hi/Lo', 'WL: FLO Hi', 'WL: FLO Hi/Lo', 'WL: MIXED', 'WL: OFC', 'WL: MTT', 'WL: SNG', 'WL: SPIN', 'WL: OTHERS',
-                'B: NLH', 'B: FLH', 'B: 6+', 'B: PLO Hi', 'B: PLO Hi/Lo', 'B: FLO Hi', 'B: FLO Hi/Lo', 'B: MIXED', 'B: OFC', 'B: MTT', 'B: SNG', 'B: SPIN', 'B: OTHERS',
-                'WINLOSSTOTAL','BONUSTOTAL',]
-                
   rows.map((i,index) =>{
     i[0] = formatDate(i[0])
     i[1] = byNoSpecialFull(i[1])
-    i[2] = byDecimals(i[2])
-    i[3] = byDecimals(i[3])
-    i[4] = byDecimals(i[4])
-    i[5] = byDecimals(i[5])
-    i[6] = byDecimals(i[6])
-    i[7] = byDecimals(i[7])
-    i[8] = byDecimals(i[8])
-    i[9] = byDecimals(i[9])
-    i[10] = byDecimals(i[10])
-    i[11] = byDecimals(i[11])
-    i[12] = byDecimals(i[12])
-    i[13] = byDecimals(i[13])
-    i[14] = byDecimals(i[14])
-    i[15] = byDecimals(i[15])
-    i[16] = byDecimals(i[16])
-    i[17] = byDecimals(i[17])
-    i[18] = byDecimals(i[18])
-    i[19] = byDecimals(i[19])
-    i[20] = byDecimals(i[20])
-    i[21] = byDecimals(i[21])
-    i[22] = byDecimals(i[22])
-    i[23] = byDecimals(i[23])
-    i[24] = byDecimals(i[24])
-    i[25] = byDecimals(i[25])
-    i[26] = byDecimals(i[26])
-    i[27] = byDecimals(i[27])
-    i[28] = byDecimals(i[28])
-    i[29] = parseFloat(byDecimals(i[3])) + parseFloat(byDecimals(i[4])) + parseFloat(byDecimals(i[5])) + parseFloat(byDecimals(i[6])) + parseFloat(byDecimals(i[7])) + parseFloat(byDecimals(i[8])) + parseFloat(byDecimals(i[9])) + parseFloat(byDecimals(i[10])) + parseFloat(byDecimals(i[11])) + parseFloat(byDecimals(i[12])) + parseFloat(byDecimals(i[13])) + parseFloat(byDecimals(i[14])) + parseFloat(byDecimals(i[15]))
-    i[30] = parseFloat(byDecimals(i[16])) + parseFloat(byDecimals(i[17])) + parseFloat(byDecimals(i[18])) + parseFloat(byDecimals(i[19])) + parseFloat(byDecimals(i[20])) + parseFloat(byDecimals(i[21])) + parseFloat(byDecimals(i[22])) + parseFloat(byDecimals(i[23])) + parseFloat(byDecimals(i[24])) + parseFloat(byDecimals(i[25])) + parseFloat(byDecimals(i[26])) + parseFloat(byDecimals(i[27])) + parseFloat(byDecimals(i[28]))
+    i[2] = byNumber(i[2])
   })
-
-
-
- // console.log(rows)
+  console.log(rows)
   const output = rows.map(
               ii => Object.entries(ii).reduce((e, [ee, eee]) =>  ({
                   ...e, 
-                  [head[ee]]    : eee, 
+                  [header[ee]]    : eee, 
                   "EDITED"        : false,
                   "DATEFROM"      :"",
                   "UPLINEID"      :"",
