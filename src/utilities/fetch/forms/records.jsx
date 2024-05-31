@@ -140,6 +140,7 @@ export const FormRecords = ({formData, returnData}) => {
                     fetchDDUpline        (c.appid,c.clubidd,playerID)
                 }
             }
+            
     }, [DDropCLub.fill=="yes"]);
 
     useLayoutEffect(() => {
@@ -319,7 +320,10 @@ export const FormRecords = ({formData, returnData}) => {
             </div>
             <div className='field'>
                 <label>Club %</label>
-                <input type='text' value={clubPercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setclubPercent)} />
+                <div className="ui left labeled right icon input">
+                    <i className="percent icon"></i>
+                    <input type="text" className='blandCenter' value={clubPercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setclubPercent)}  />
+                </div>
             </div>
 
             <div className='field'>
@@ -355,7 +359,7 @@ export const FormRecords = ({formData, returnData}) => {
                         </>
                     }
             </div>
-
+            
             <div className='field'>
                 <label>
                     {inComplete == "APP" ?
@@ -384,7 +388,10 @@ export const FormRecords = ({formData, returnData}) => {
             
             <div className='field'>
                 <label>Upline %</label>
-                <input type='text' value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)} />
+                <div className="ui left labeled right icon input">
+                    <i className="percent icon"></i>
+                    <input type="text" className='blandCenter' value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)}  />
+                </div>
             </div>
             </>)
 

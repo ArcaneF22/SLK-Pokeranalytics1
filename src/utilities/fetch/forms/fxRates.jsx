@@ -9,7 +9,7 @@ import * as Set from '../../constants';
 import * as Func from '../../functions';
 import * as Calc from '../../calculations'
 
-export const FormFxRates = ({returnFXData}) => {
+export const FormFxRates = ({returnFXData, backFXData}) => {
 
     const fxDDrop                                   = ExchangeRates()
 
@@ -21,11 +21,15 @@ export const FormFxRates = ({returnFXData}) => {
     const [fxCurrency, setfxCurrency]               = useState("USD");
     const [fxProvider, setfxProvider]               = useState(0);
 
+    const [decimals, setDecimals]                   = useState(0);
+
     const [percentA, setpercentA]                   = useState(0);
+    const [percentB, setpercentB]                   = useState(0);
 
     const [fxRates, setfxRates]                     = useState(0);
     const [onManual, setonManual]                   = useState(0);
-    const [fxType, setfxType]                       = useState(0);
+    const [fxType, setfxType]                       = useState("A");
+
       const fxDatesDD = fxDDrop.data.map(i => {
         return {
             key: i.id,
@@ -57,11 +61,6 @@ export const FormFxRates = ({returnFXData}) => {
             }
         };
 
-        const onManualChange = (i) => {
-
-            setonManual(i.target.checked)
-
-        }
 
     //ON CHANGE OF INPUT 
     const inputChange = (i,e) => {
@@ -100,12 +99,17 @@ export const FormFxRates = ({returnFXData}) => {
         })
 
         const fxTypes = [
-                        {key: "A", value: "A", text: "Get from list for all" },
-                        {key: "B", value: "B", text: "Set another for all" },
-                        {key: "C", value: "C", text: "Manually set for each one" },
-                        {key: "D", value: "D", text: "Set each by their dates" },
+                        {key: "A", value: "A", ass: "1", text: "From system list" },
+                        {key: "B", value: "B", ass: "2", text: "From another site" },
+                        {key: "C", value: "C", ass: "2", text: "Set each by their dates" },
+                        {key: "D", value: "D", ass: "2", text: "AA" },
                         ]
-                        
+        const [showOptions, setShowOptions] = useState(fxTypes);
+
+        useEffect(() => {
+            setShowOptions(fxTypes.filter((option) => (option.value !== "D" || option.ass !== "2")));
+        }, []);
+
         const onFXTypes = (event, data) => {
             setfxType(data.value);
         };
@@ -118,31 +122,57 @@ export const FormFxRates = ({returnFXData}) => {
             }
         };
 
-        useEffect(() => {
+
+
+    useEffect(() => {
             if(fxDate == "" || fxDate == null){
                 setfxRates({});
                 setfxProvider("");
                 setfxUSD("1")
                 setfxCurrency("USD")
             }
-          }, [fxDate]);
+    }, [fxDate]);
 
-        useEffect(() => {
+    useEffect(() => {
             if(fxUSD == "" || fxUSD == null){
                 setfxUSD("1")
                 setfxCurrency("USD")
             }
-          }, [fxUSD]);
+    }, [fxUSD]);
 
     useEffect(() => {
             returnFXData({
+                fxType:         fxType,
                 fxDate:         fxDate,
                 fxUSD:          fxUSD,
                 fxCurrency:     fxCurrency,
                 fxProvider:     fxProvider,
                 percentA:       percentA,
+                percentB:       percentB,
+                decimals:       decimals,
             })
-    }, [fxDate,fxUSD,fxCurrency,fxProvider,percentA]);
+    }, [fxDate,fxUSD,fxCurrency,fxProvider,percentA,percentB,fxType]);
+
+    useEffect(() => {
+        if(backFXData[0].FXTYPE){
+            setfxType(backFXData[0].FXTYPE)
+            if(backFXData[0].FXTYPE == "A"){
+                setfxDate       (backFXData[0].FXDATE)
+                setfxUSD        (backFXData[0].FXUSD);
+                setfxCurrency   (backFXData[0].FXCURRENCY)
+                setfxProvider   (backFXData[0].FXPROVIDER)
+                const i = fxDatesDD.find(option => option.value === backFXData[0].FXDATE);
+                if(i){
+                    console.log(i)
+                    setfxsubDate(i.ratedate);
+                    setfxProvider(i.provider);
+                    setfxRates(JSON.parse([i.rates]));
+                }
+            }
+
+        }
+            
+    }, []);
 
     return (
           <>
@@ -165,23 +195,21 @@ export const FormFxRates = ({returnFXData}) => {
       <div className="ui segment basic left aligned">
 
         <div className='ui form message tiny attached fitted violet' style={{paddingBottom:"30px",paddingTop:"30px"}}>
-
             <h4 className="ui left floated header">
-                {onManual ? "Manual" : ""}
-                Exchange rates
+                Exchange Rates
             </h4>
             <div className="ui right floated header">
             <SUI.Dropdown       placeholder="Select exchange rate"
                                 header="Select exchange rate"
                                 onChange={onFXTypes}
                                 value={fxType}
-                                options={fxTypes}
+                                options={showOptions}
                             />
             </div>
             <div className="ui clearing divider"></div>
 
             <div className='five field violetText'>
-                {!onManual ? 
+                {fxType == "A" ? 
                 <div className='two fields stackable'>
                     <div className='field'>
                         <label>FX Date {fxProvider ? ("("+fxProvider+")") : null}</label>
@@ -221,6 +249,7 @@ export const FormFxRates = ({returnFXData}) => {
                     </div>
                 </div>
                 :
+                fxType == "B" ? 
                 <div className='four fields'>
                     <div className='field'>
                         <label>Date {Func.dateYMD(fxsubDate)}</label>
@@ -242,6 +271,8 @@ export const FormFxRates = ({returnFXData}) => {
                         <input type='text' value={fxProvider} onChange={(e) => inputChange(Func.byWebAddress(e.target.value),setfxProvider)} />
                     </div>
                 </div>
+                :
+                null
                 }
             <div className="ui hidden divider"></div>
             <h4 className="ui left floated header">Other settings</h4>
@@ -253,6 +284,12 @@ export const FormFxRates = ({returnFXData}) => {
                         <div className="ui left labeled right icon input">
                             <i className="percent icon violet"></i>
                             <input type="text" className='violetCenter' placeholder="0-100" value={percentA} onChange={(e) => Func.toHundred(e.currentTarget.value,setpercentA)}  />
+                        </div>
+                    </div>
+                    <div className='field'>
+                        <label>Decimal Number</label>
+                        <div className="ui left labeled right icon input">
+                            <input type="text" className='blandCenter' placeholder="0-100" value={decimals} onChange={(e) => Func.toHundred(e.currentTarget.value,setDecimals)}  />
                         </div>
                     </div>
                 </div>

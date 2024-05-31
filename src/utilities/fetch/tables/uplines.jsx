@@ -6,8 +6,8 @@ import * as Func from '../../functions'
 export const FetchUplines = ({ selectData }) => {
 
   const [clicked, setClicked] = useState(1)
-  const data = Uplines().data
-  const load = Uplines().load
+  const data = Uplines('ALL','').data
+  const load = Uplines('ALL','').load
   
   const editData = (id,appID,clubID,clubIDD,downlineID,uplineID,percentage,status) => {
     setClicked(clicked+1)
@@ -63,44 +63,42 @@ export const FetchUplines = ({ selectData }) => {
                       <div className="sub header">
                         ID: {i.clubIDD}
                         <br />
-                        Stated: {i.stated}
+                        Stated: {i.uplineStated}
                       </div>
                   </div>
                 </h5>
               </td>
               <td>
                 <h5 className="ui image header">
-                    <img src={i.downAvatar ? i.downAvatar : "./images/joker.png"} className="ui mini rounded image" />
+                    <img src={i.accountImage ? i.accountImage : "./images/joker.png"} className="ui mini rounded image" />
                     <div className="content">
-                      <span className='mobileOnly'>DOWNLINE </span>ID: {i.downacctID}
+                      <span className='mobileOnly'>DOWNLINE </span>ID: {i.accountID}
                       <div className="sub header">
-                        {i.downacctRole}: {i.downacctNickname}
+                        {i.accountRole}: {i.accountNickname}
                         <br />
-                        <i>(User: {i.downuserNickname}) </i>
+                        <i>(User: {i.accountuserID}) </i>
                         <br />
-                        Status: {i.downacctStatus}
+                        Status: {i.accountStatusLabel}
                       </div>
                   </div>
                 </h5>
               </td>
               <td>
               <h5 className="ui image header">
-                    <img src={i.upAvatar ? i.upAvatar : "./images/joker.png"} className="ui mini rounded image" />
+
                     <div className="content">
-                      <span className='mobileOnly'>UPLINE </span> ID: {i.upacctID}
+                      <span className='mobileOnly'>UPLINE </span> ID: {i.uplineID}
                       <div className="sub header">
-                      {i.upacctRole}: {i.upacctNickname}
+                      {i.uplineRole}: {i.uplineNickname}
                         <br />
-                        <i>(User: {i.upuserNickname}) </i>
-                        <br />
-                        Status: {i.upacctStatus}
+                        <i>(User: {i.uplineuserID}) </i>
                       </div>
                   </div>
                 </h5>
 
               </td>
-              <td>{i.percentage}% </td>
-              <td>{Func.toStatus(i.statusLabel)}</td>
+              <td>{i.uplinePercent}% </td>
+              <td>{Func.toStatus(i.uplineStatus)}</td>
 
               <td>
                 <button className='ui icon button violet' onClick={()=> editData(i.id,i.appID,i.clubID,i.clubIDD,i.downacctID,i.upacctID,i.percentage,i.status)}>

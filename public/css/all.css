@@ -20,6 +20,15 @@ body {
 .hides{
   opacity: 0;
 }
+
+.hide {
+  display: none !important;
+}
+
+.onHide {
+  display: none !important;
+}
+
 .shows{
   opacity: 1;
   transition: opacity 0.2s ease;
@@ -54,6 +63,10 @@ body {
   text-align: center !important;
   font-weight: 900 !important;
 }
+.blandCenter{
+  text-align: center !important;
+}
+
 .field.violetText label{
   color: #8A39E1 !important;
   font-weight: 900 !important;
@@ -308,6 +321,10 @@ body {
           .fitted{
             padding-left: 75px !important;
             padding-right: 95px !important;
+          }
+          .fittedmore{
+            padding-left: 115px !important;
+            padding-right: 145px !important;
           }
           .message.plusTop{
             margin-top: 15px !important;

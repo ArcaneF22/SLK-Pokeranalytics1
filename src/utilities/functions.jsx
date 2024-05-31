@@ -252,11 +252,11 @@ export const longFileFormat = (header,rows) => {
                 'WL: NLH', 'WL: FLH', 'WL: 6+', 'WL: PLO Hi', 'WL: PLO Hi/Lo', 'WL: FLO Hi', 'WL: FLO Hi/Lo', 'WL: MIXED', 'WL: OFC', 'WL: MTT', 'WL: SNG', 'WL: SPIN', 'WL: OTHERS',
                 'B: NLH', 'B: FLH', 'B: 6+', 'B: PLO Hi', 'B: PLO Hi/Lo', 'B: FLO Hi', 'B: FLO Hi/Lo', 'B: MIXED', 'B: OFC', 'B: MTT', 'B: SNG', 'B: SPIN', 'B: OTHERS',
                 'WINLOSSTOTAL','BONUSTOTAL',]
-                
+
   rows.map((i,index) =>{
     i[0] = formatDate(i[0])
     i[1] = byNoSpecialFull(i[1])
-    i[2] = byDecimals(i[2])
+    i[2] = byNumber(i[2])
     i[3] = byDecimals(i[3])
     i[4] = byDecimals(i[4])
     i[5] = byDecimals(i[5])

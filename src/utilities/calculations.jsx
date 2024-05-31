@@ -18,12 +18,19 @@ export const Result = (i) => {
 
 export const AgencyAction = (i) => {
 
-    const e = Func.toUSD((parseFloat(i.WinLoss) + parseFloat(i.BonusTotal)) * parseFloat(i.FxUSD))
+    const e = Func.toUSD(
+                            (parseFloat(i.WinLoss) + parseFloat(i.BonusTotal)) 
+                            * parseFloat(i.FxUSD)
+                        )
     return e;
 
 }
 
 export const AgencyBonus = (i) => {
-    const e = Func.toUSD((parseFloat(i.BonusTotal) + parseFloat(i.FxUSD)) * parseFloat(i.OtherPercent) * parseFloat(i.FxUSD))
+    const e = Func.toUSD(
+                            (parseFloat(i.BonusTotal) + parseFloat(i.FxUSD)) 
+                            * parseFloat(i.OtherPercent) 
+                            * parseFloat(i.FxUSD)
+                        )
     return e;
 }

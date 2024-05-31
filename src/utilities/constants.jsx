@@ -19,6 +19,7 @@ export const Fetch = {
                         company:            import.meta.env.VITE_GET_COMPANY,
                         roles:              import.meta.env.VITE_GET_ROLES,
                         uplines:            import.meta.env.VITE_GET_UPLINES,
+                        uplines2:           import.meta.env.VITE_GET_UPLINES2,
                         exchangerates:       import.meta.env.VITE_GET_EXCHANGERATE,
                     };
 
@@ -94,4 +95,20 @@ export const formSettings = (i) => {
   
   return w;
 }
+
+export const Token = (i) => {
+    const Token = JSON.parse( localStorage.getItem('Token') );
+    const id          = Token['id']
+    const token       = Token['token']
+    const gadget      = Token['gadget']
+    const timezone    = TimeZoned
+    const Auth = {
+      A:      Token['id'],
+      B:      Token['token'],
+      C:      Token['gadget'],
+      D:      Set.TimeZoned,
+    };
+  return {Auth,id,token,gadget,timezone};
+}
+
 
