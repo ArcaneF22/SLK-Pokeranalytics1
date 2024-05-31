@@ -215,7 +215,7 @@ export const FormFxRates = ({returnFXData, backFXData}) => {
                         <label>FX Date {fxProvider ? ("("+fxProvider+")") : null}</label>
                         <SUI.Dropdown
                                 placeholder="Select date"
-                                scrolling
+
                                 clearable
                                 fluid
                                 selection
@@ -232,7 +232,7 @@ export const FormFxRates = ({returnFXData, backFXData}) => {
                         <label>Currency to FX(USD)</label>
                         <SUI.Dropdown
                                 placeholder="Find a currency"
-                                scrolling
+
                                 clearable
                                 fluid
                                 selection
@@ -280,14 +280,14 @@ export const FormFxRates = ({returnFXData, backFXData}) => {
 
                 <div className='three fields unstackable'>
                     <div className='field'>
-                        <label>Extra Percent</label>
+                        <label>Extra-Percent</label>
                         <div className="ui left labeled right icon input">
                             <i className="percent icon violet"></i>
                             <input type="text" className='violetCenter' placeholder="0-100" value={percentA} onChange={(e) => Func.toHundred(e.currentTarget.value,setpercentA)}  />
                         </div>
                     </div>
                     <div className='field'>
-                        <label>Decimal Number</label>
+                        <label>Decimals</label>
                         <div className="ui left labeled right icon input">
                             <input type="text" className='blandCenter' placeholder="0-100" value={decimals} onChange={(e) => Func.toHundred(e.currentTarget.value,setDecimals)}  />
                         </div>
