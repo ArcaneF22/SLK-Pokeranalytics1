@@ -7,7 +7,7 @@ import * as Set from '../../constants';
 import * as Func from '../../functions';
 
 
-export const FormRecords = ({formData, returnData,itemClubs,fillClubs}) => {
+export const FormRecords = ({formData, returnData,dataClubs,fillClubs,dataAccounts,fillAccounts,dataUplines,fillUplines,onFXSetting}) => {
     const Token = JSON.parse( localStorage.getItem('Token') );
 
     const [edited, setEdited]                   = useState("")
@@ -17,257 +17,252 @@ export const FormRecords = ({formData, returnData,itemClubs,fillClubs}) => {
     const [clubName, setclubName]               = useState("")
     const [clubsubName, setclubsubName]         = useState("")
     const [clubPercent, setclubPercent]         = useState("")
-    const [playersubID, setplayersubID]         = useState("")
     const [playerID, setplayerID]               = useState("")
+    const [playerAppID, setplayerAppID]         = useState("")
+    const [playerName, setplayerName]           = useState("")
+    const [playerFind, setplayerFind]           = useState("")
+    const [uplineName, setuplineName]           = useState("")
+    const [uplineValue, setuplineValue]         = useState("")
     const [uplineID, setuplineID]               = useState("")
     const [uplinePercent, setuplinePercent]     = useState("")
 
-    const [inComplete, setinComplete]          = useState("")
-    const [notFoundPlayer, setnotFoundPlayer]    = useState(false)
-    const [notFoundUpline, setnotFoundUpline]    = useState(false)
-
-    const [DDropPlayer, setDDropPlayer]         = useState([])
-    const [loadDDPlayer, setloadDDPlayer]       = useState(false)
-
-    const [DDropUpline, setDDropUpline]         = useState([])
-    const [loadDDUpline, setloadDDUpline]       = useState(false)
-
-    const Auth = {
-                        A:      Token['id'],
-                        B:      Token['token'],
-                        C:      Token['gadget'],
-                        D:      Set.TimeZoned,
-                    }; 
-                    
-    const itemAccounts  = Accounts()
-
-    const itemPlayers  = DDropPlayer.map(i => 
-        { return {
-                    key:              i.id,
-                    text:             (i.accountID+": "+ i.accountNickname),
-                    value:            i.accountID,
-                    appid:            i.appID ? i.appID : 0,
-                    disabled:         i.accountID ? false : true,
-                    downlinename:     i.accountNickname ? i.accountNickname : 0,
-                    uplineid:         i.uplineID ? i.uplineID : 0,
-                    uplinename:       i.uplineNickname ? i.uplineNickname : 0,
-                    uplinepercent:    i.uplinePercent ? i.uplinePercent : 0,
-                    clubidd:          i.clubIDD ? i.clubIDD : 0,
-                    content: (
-                                <div className="ui list tiny">
-                                    <div className="item">
-                                            <div className="ui header violet">{i.accountID}</div>
-                                            <div className="description">{i.accountNickname}</div>
-                                            <div className="description">{i.uplineID ? "Upline: "+i.uplineID : "No upline"}</div>
-                                            {i.uplinePercent ? <div className="description">with {i.uplinePercent}% cut</div> : null}
-                                    </div>
-                                </div>
-                          ),
-              }})
-
-    const itemUplines  = DDropUpline.map(i => 
-        { return {
-                    key:              i.id,
-                    text:             (i.accountID+": "+ i.accountNickname),
-                    value:            i.accountID,
-                    disabled:         i.accountID ? false : true,
-                    clubidd:          i.clubIDD ? i.clubIDD : 0,
-                    uplinepercent:    i.uplinePercent ?  i.uplinePercent : 0,
-                    content: (
-                        <div className="ui list tiny">
-                            <div className="item">
-                                    <div className="ui header violet">{i.accountID}</div>
-                                    <div className="description">{i.accountNickname}</div>
-                                    {i.uplinePercent ? <div className="description">with {i.uplinePercent}% cut</div> : null}
-                            </div>
-                        </div>
-                  ),
-              }})
+    const [inComplete, setinComplete]           = useState("")
+    const [notEqualAppID, setnotEqualAppID]     = useState("")
 
     //ON PAGE LOAD
-    useLayoutEffect(() => {
+    useEffect(() => {
         setEdited(formData.Edited)
         setclubName(formData.ClubName)
-        setclubsubName(formData.ClubName)
         setplayerID(formData.PlayerID)
-        if(formData.Edited == true){
-            setclubPercent(formData.ClubPercent)
-            setuplineID(formData.UplineID)
-            setuplinePercent(formData.UplinePercent)
-        }
+        setplayerName(formData.PlayerName)
+        setclubPercent(formData.ClubPercent)
+        setuplineValue(formData.UplineValue)
+        setuplineID(formData.UplineID)
+        setuplineName(formData.UplineName)
+        setuplinePercent(formData.UplinePercent)
+        setplayerFind(formData.PlayerFind)
+        checkingClub(formData.ClubName)
     }, []);
 
-    //ON CLUB LIST LOAD
     useLayoutEffect(() => {
-            const c = itemClubs.find((i) => i.value == clubName);
-            if(c){
-                setclubsubName("")
-                setappID(c.appid ? c.appid : 0)
-                setappName(c.appname ? c.appname : 0)
-                setclubIDD(c.clubidd ? c.clubidd : 0)
-                if(formData.Edited == false){
-                    setclubPercent(c.percent ? c.percent : 0)
-                } else {
-                    setclubPercent(formData.ClubPercent ? formData.ClubPercent : 0)
-                }
-                fetchDDPlayer(c.appid,c.clubidd)
-                if(playerID != "" || playerID != null){
-                    fetchDDUpline        (c.appid,c.clubidd,playerID)
-                }
-            }
-            
-    }, [fillClubs=="yes"]);
+        checkingClub(clubName)
+    }, [fillClubs == "yes"]);
 
-    useLayoutEffect(() => {
-        const find  = itemAccounts.data.find((i) => i.accountID == formData.PlayerID);
-        if(itemAccounts.fill == true){
-            if(!find && (playerID != "" || playerID != 0 || playerID != null)){
-                setnotFoundPlayer(true)
+    const clearUpline = () => {
+        setuplineID("")
+        setuplineValue("")
+        setuplineName("")
+    }
+
+    const checkingClub = (A) => {
+        const x = dataClubs.find(i => i.value === A);
+        if(x){
+            setappID(x.appid ? x.appid : 0)
+            setappName(x.appname ? x.appname : "")
+            setclubIDD(x.clubidd ? x.clubidd : "")
+            setclubPercent(x.percent ? x.percent : 0)
+            lookoutAccounts(playerID ? playerID : formData.PlayerID,x.appid)
+            clearUpline
+        }
+        checkingAccounts(playerID)
+    }
+ 
+
+    const checkingAccounts = (A) => {
+        const x = dataAccounts.find((i) => i.value == A);
+        if(x){
+            setplayerName(x.downlinename ? x.downlinename : "")
+            setplayerAppID(x.appid)
+            if(onFXSetting.upline == "Auto"){
+                setuplineID(x.uplineid ? x.uplineid : "")
+                setuplineValue(x.uplineid+" with "+ x.uplinepercent+"%")
+                setuplinePercent(x.uplinepercent ? x.uplinepercent : 0)
+                checkingUplines(A,clubIDD)
             }
         }
-    }, [itemAccounts.fill == true ]);
+    }
+
+    
+    const checkingUplines = (A,B) => {
+        const x = dataUplines.find((i) => (i.downlineid === A & i.clubidd === B));
+        if(x){
+            setuplineName(x.downlinename ? x.downlinename : "")
+            setuplineID(x.accountid ? x.accountid : "")
+            setuplinePercent(x.uplinepercent ? x.uplinepercent : 0)
+            setuplineValue(x.accountid+" with "+ x.uplinepercent+"%")
+            setEdited(true)
+        }
+
+    }
+
+    const lookoutAccounts = (A,B) => {
+        if(fillAccounts == "yes" && fillClubs == "yes"){
+            const x = dataAccounts.find((h) => h.value === A);
+            if(x){
+                if(x.appid == B){
+                    setplayerFind("Found")
+                    setplayerName(x.downlinename ? x.downlinename : "")
+                    setplayerAppID(x.appid)
+
+                    if(onFXSetting.upline == "Auto"){
+                        setuplineID(x.uplineid ? x.uplineid : "")
+                        setuplineValue(x.uplineid+" with "+ x.uplinepercent+"%")
+                        setuplinePercent(x.uplinepercent ? x.uplinepercent : 0)
+                        checkingUplines(A,clubIDD)
+                    }
+                } else {
+                    setplayerFind("WrongApp")
+                }
+            }
+            if(!x){
+                setplayerFind("None")
+            }
+        }
+    }
 
     //ON CHANGE OF CLUB DROPDOWN 
     const onchangeClub = (i) => {
-        setclubName(i);
-        setclubsubName("")
-        const c = itemClubs.find((o) => o.value === i);
-        if (c){
-            setappID                (c.appid            ? c.appid           : 0);
-            setappName              (c.appname          ? c.appname         : 0);
-            setclubPercent          (c.percent          ? c.percent         : 0);
-            setclubIDD              (c.key              ? c.key             : 0);
-            fetchDDPlayer           (c.appid,c.clubidd)
-            if(playerID != "" || playerID != null){
-                fetchDDUpline        (c.appid,c.clubidd,playerID)
-                setEdited(true)
-            } else {
-                setEdited(false)
-                
-            } 
-        }
-        if(!c){
-            fetchDDPlayer           (0,0)
-            fetchDDUpline           (0,0,playerID)
-        }
+        checkingClub(i)
+        const T = setTimeout(() => {
+            setclubName(i)
+            setEdited(false)
+            setuplineID("")
+            setuplineValue("")
+            setuplineName("")
+            if(playerID != ""){
+                clearUpline
+                checkingAccounts(playerID)
+            }
+        }, 10);
+        return () => clearTimeout(T);
     };
 
     //ON CHANGE OF PLAYER DROPDOWN 
     const onchangePlayer = (i) => {
-        setplayerID(i)
-        const p  = itemPlayers.find((o) => o.value == i);
-        if(p){
-            fetchDDUpline(p.appid,p.clubidd,p.value)
-            setnotFoundPlayer(false)
-            setuplineID(p.uplineid ? p.uplineid : "")
-            setuplinePercent(p.uplinepercent ? p.uplinepercent : 0)
-            setinComplete("")
+        const T = setTimeout(() => {
+            setplayerID(i)
+            checkingAccounts(i)
+            if(onFXSetting.upline == "Auto"){
+                checkingUplines(i,clubIDD)
+            }
             if(i == uplineID){
                 setuplineID("")
+                setuplineValue("")
+                setuplineName("")
             }
-        }
+        }, 10);
+        return () => clearTimeout(T);
     };
 
     //ON CHANGE OF PLAYER DROPDOWN 
     const onchangeUpline = (i) => {
-        setuplineID(i)
-        const u  = itemUplines.find((o) => o.value == i);
-        if(u){
-            setuplineID(u.value ? u.value : 0)
-            setuplinePercent(u.uplinepercent ? u.uplinepercent : 0)
-            setEdited(true)
+        setuplineValue(i)
+        const x = dataUplines.find((o) => o.value == i);
+        if(x){
+            const T = setTimeout(() => {
+                    if(x.downlineid == playerID && x.clubidd == clubIDD){
+                        setuplineID(x.accountid)
+                        if(onFXSetting.upline == "Auto"){
+                            setuplinePercent(x.uplinepercent)
+                        }
+                        setEdited(true)
+                    } else if(x){
+                        setuplineName(x.downlinename)
+                        setuplineID(x.accountid)
+                        setuplineValue(x.accountid+" with "+ x.uplinepercent+"%")
+                        console.log(x.accountid+" with "+ x.uplinepercent+"%")
+                        setEdited(true)
+                    }
+                if(x.accountid == playerID){
+                    setplayerID("")
+                }
+            }, 10);
+            return () => clearTimeout(T);
         }
+
     };
 
     //ON CHANGE OF INPUT 
     const inputChange = (i,e) => {
         setEdited(true)
         e(i)
-        if(e == setplayerID){
-            const a  = itemPlayers.find((o) => o.value == i);
-            const p  = itemAccounts.data.find((o) => o.accountID == i);
-            if(a){
-                setnotFoundPlayer(false)
-            }
-            if(!a){
-                setnotFoundPlayer(true)
-                if(p){
-                    setinComplete("PLAYER")
-                } else {
-                    setinComplete("")
-                }
-            }
+        if(e==setplayerID){
+            lookoutAccounts(i,appID)
         }
     }
 
-    async function fetchDDPlayer(i,ii) {
-        setloadDDPlayer(true)
-        try {
-            const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"PLAYER", WHAT:i, WHAT2:ii,});
-                setDDropPlayer(response.data);
-                setloadDDPlayer(false)
-                const up = response.data.find(h => h.accountID === playerID);
-                if(up){
-                    if(uplineID == null || uplineID == "" || uplineID == 0){
-                        setuplineID(up.uplineID ? up.uplineID : "")
-                        setuplinePercent(up.uplinePercent ? up.uplinePercent : 0)
-                    }
-                }
-                if(!up){
-                    setinComplete("APP")
-                    setplayersubID(playerID)
-                } else {
-                    setinComplete("")
-                }
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-        }
+    const dataOfPlayers = () => {
+        return dataAccounts.filter((option) => (option.appid == appID))
     }
 
-    async function fetchDDUpline(i,ii,iii) {
-        if(iii){
-            setloadDDUpline(true)
-            try {
-                const response = await axios.post(Set.Fetch['accountsupline'], {...Auth,FOR:"UPLINE",WHAT:i,WHAT2:ii,WHAT3:iii,});
-                    setDDropUpline(response.data);
-                    setloadDDUpline(false)
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        }
+    const dataOfUplines = () => {
+        return dataUplines.filter((option) => (option.accountid !== playerID && option.appid === appID))
     }
 
-    //EVERYTIME CLUBNAME VALUE IS CHANGED
     useLayoutEffect(() => {
         if(clubName == ""){
-            setappID(0)
+            setappID("")
             setappName("")
             setclubIDD("")
         }
-    }, [clubName]);
+        if(uplineValue == ""){
+            setuplineValue("")
+            setuplineID("")
+        }
+    }, [clubName,uplineValue]);
 
-    //SAVE DATA EVERYTIME A VALUE IS CHANGED
     useLayoutEffect(() => {
-            returnData({
-                index:          formData.Index,
-                incomplete:     inComplete,
-                edited:         edited,
-                appID:          appID,
-                appName:        appName,
-                clubIDD:        clubIDD,
-                clubName:       clubName,
-                clubPercent:    clubPercent,
-                playerID:       playerID,
-                uplineID:       uplineID,
-                uplinePercent:  uplinePercent,
-            })
-    }, [appID,clubIDD,clubName,clubPercent,playerID,uplineID,uplinePercent,inComplete]);
+
+        if(onFXSetting.upline == "Auto"){
+            checkingUplines(playerID,clubIDD)
+        } else if(onFXSetting.upline == "Manual"){
+
+        }
+        if(onFXSetting.upline == "Auto"){
+            checkingUplines(playerID,clubIDD)
+        } else {
+
+        }
+
+    }, [onFXSetting]);
+
+    useLayoutEffect(() => {
+        if(appID != playerAppID){
+            //console.log(appID+" Not equal "+playerAppID)
+            setnotEqualAppID("Not")
+        } else {
+            //console.log(appID+" equal "+playerAppID)
+            setnotEqualAppID("Equal")
+        }
+    }, [playerID,clubIDD]);
+
+    useLayoutEffect(() => {
+        returnData({
+            index:          formData.Index,
+            incomplete:     inComplete,
+            edited:         edited,
+            appID:          appID,
+            appName:        appName,
+            clubIDD:        clubIDD,
+            clubName:       clubName,
+            clubPercent:    clubPercent,
+            playerID:       playerID,
+            playerName:     playerName,
+            uplineID:       uplineID,
+            uplineName:     uplineName,
+            uplinePercent:  uplinePercent,
+            uplineValue:    uplineValue,
+            playerFind:     playerFind,
+        })
+    }, [edited,appID,clubName,clubPercent,playerID,uplineID,uplinePercent,uplineValue,playerFind]);
 
 
         return (<>
+
             <div className='field'>
+
                 <label>
-                    {fillClubs}
+                    {appID}
                     {clubsubName && fillClubs=="yes"? 
                         <p className="ui mini red text">
                             <i className="large exclamation circle red icon"></i>
@@ -280,7 +275,6 @@ export const FormRecords = ({formData, returnData,itemClubs,fillClubs}) => {
                 <SUI.Dropdown
                         placeholder={clubsubName ?  "Not found!" : "Select..."}
                         scrolling
-                        clearable
                         floating
                         fluid
                         loading={false}
@@ -291,82 +285,79 @@ export const FormRecords = ({formData, returnData,itemClubs,fillClubs}) => {
                         header="Select club"
                         onChange={(event, { value }) => { onchangeClub(value); }}
                         value={clubName}
-                        options={itemClubs}
+                        options={dataClubs}
                     />
             </div>
             <div className='field'>
-                <label>Club %</label>
+                <label>{Func.onIncLabel(clubPercent,0)} Club rake back %</label>
                 <div className="ui left labeled right icon input">
                     <i className="percent icon"></i>
-                    <input type="text" className='blandCenter' value={clubPercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setclubPercent)}  />
+                    <input type="text" className='blandCenter' disabled={clubIDD ? false : true} value={clubPercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setclubPercent)}  />
                 </div>
             </div>
 
             <div className='field'>
-                    {notFoundPlayer == true ? 
-                        <>
                             <label>
-                                    <i className="large info circle orange icon"></i>
-                                    {inComplete == "PLAYER" ? "Wrong app!"  : "New Player?"}
+                                {Func.onIncLabel(playerID)}
+                                {playerFind == "WrongApp" ? 
+                                        <><i className="info circle red icon"></i>Wrong app!</>  
+                                : playerFind == "None" ? 
+                                        <><i className="info circle red icon"></i>New player?</>
+                                : "Player"}
                             </label>
-                            <input type='text' value={playerID} onChange={(e) => inputChange(Func.byNumber(e.target.value),setplayerID)} />
-                        </>
-                        : 
-                        <>
-                            <label>
-                            {inComplete == "APP" ? <><i className="large info circle orange icon"></i>Wrong app!</>  : "Player"}
-                            </label>
+
+                            {playerFind == "Found" ? 
                             <SUI.Dropdown
-                                    placeholder={notFoundPlayer == true ?  "Not found!" : "Select..."}
+                                    placeholder={playerFind == "None" ?  "Not found!" : "Select..."}
                                     scrolling
-                                    clearable
                                     floating
+                                    disabled={clubIDD ? false : true}
                                     fluid
-                                    loading={loadDDPlayer ? true : false}
-                                    disabled={loadDDPlayer ? true : false}
                                     selection
                                     search={true}
                                     multiple={false}
                                     header="Select player"
                                     onChange={(event, { value }) => { onchangePlayer(value); }}
                                     value={playerID}
-                                    options={itemPlayers}
+                                    options={dataOfPlayers()}
                             />
-                        </>
-                    }
+                            :
+                            <input type="text" value={playerID} disabled={clubIDD ? false : true} onChange={(e) => inputChange(e.target.value,setplayerID)}  />
+                            }
+
             </div>
             
             <div className='field'>
                 <label>
+                    {Func.onIncLabel(uplineID)} 
                     {inComplete == "APP" ?
                     "Upline: "+uplineID 
                     :
                     "Upline" }
                 </label>
                 <SUI.Dropdown
-                        placeholder={inComplete == "APP" ?  "Not found!" : "Select a upline"}
+                        placeholder={inComplete == "APP" ?  "Not found!" : "Select an upline"}
                         scrolling
                         clearable
+                        disabled={clubIDD ? false : true}
                         floating
                         fluid
-                        loading={loadDDUpline ? true : false}
-                        disabled={loadDDUpline ? true : false}
                         selection
                         search={true}
                         multiple={false}
                         header="Select upline"
                         onChange={(event, { value }) => { onchangeUpline(value); }}
-                        value={uplineID}
-                        options={itemUplines}
+                        value={uplineValue}
+                        options={dataOfUplines()}
                     />
 
             </div>
             
             <div className='field'>
-                <label>Upline %</label>
+                <label>{Func.onIncLabel(uplinePercent,0)} CX rake back %</label>
                 <div className="ui left labeled right icon input">
                     <i className="percent icon"></i>
-                    <input type="text" className='blandCenter' value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)}  />
+                    <input type="text" className='blandCenter' disabled={clubIDD ? false : true} value={uplinePercent} onChange={(e) => inputChange(Func.byHundred(e.target.value),setuplinePercent)}  />
                 </div>
             </div>
             </>)

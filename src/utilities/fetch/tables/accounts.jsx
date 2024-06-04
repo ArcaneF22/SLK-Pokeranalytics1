@@ -6,8 +6,8 @@ import * as Func from '../../functions'
 export const FetchAccounts = ({selectData}) => {
 
   const [clicked, setClicked] = useState(1)
-  const data = Accounts().data
-  const load = Accounts().load
+  const data = Accounts('ALL').data
+  const load = Accounts('ALL').load
 
   const editData = (id,idd,accountNickname,accountRole,userID,appID,status) => {
     setClicked(clicked+1)

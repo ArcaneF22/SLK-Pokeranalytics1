@@ -49,7 +49,7 @@ export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
                 <th>DOWNLINE</th>
                 <th>CLUB</th>
                 <th>UPLINE</th>
-                <th>FX(USD)</th>
+                <th>Per USD</th>
                 <th>WIN/LOSS</th>
                 <th>BONUS</th>
                 <th>BONUS%</th>
@@ -66,7 +66,11 @@ export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
                     to {i.DATEUNTIL}
                 </td>
                 <td>
-                    <a className="data">{i.PLAYERID}</a>
+                    <a className="data">
+                        ID: {i.PLAYERID}
+                        <br/> 
+                        {i.PLAYERNAME ? "("+i.PLAYERNAME+")" : null}
+                    </a>
                 </td>
                 <td>
                     <a className="data">{i.CLUB}</a>
@@ -75,13 +79,17 @@ export const UpsertRecords = ({selectedData,recallData,formSetting}) => {
                     </div>
                 </td>
                 <td>
-                    <a className="data">{i.UPLINEID}</a>
+                    <a className="data">
+                        ID: {i.UPLINEID}
+                        <br/> 
+                        {i.UPLINENAME ? "("+i.UPLINENAME+")" : null}
+                    </a>
                     <div className="metadata">
                         Cut# {i.UPLINEPERCENT}%
                     </div>
                 </td>
                 <td> 
-                    <a className="data">{i.FXDATE}</a>
+                    <a className="data">{Func.byNoParentheses(i.FXDATE)}</a>
                     <div className="metadata">
                         {i.FXCURRENCY}: ${i.FXUSD}
                     </div>

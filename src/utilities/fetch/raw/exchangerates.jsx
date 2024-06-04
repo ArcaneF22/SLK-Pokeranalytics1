@@ -2,10 +2,9 @@ import { useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import * as Set from '../../constants';
 
-
-
-export const ExchangeRates = () => {
+export const ExchangeRates = (i) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
+  const [fill, setFill] = useState(false)
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -13,15 +12,17 @@ export const ExchangeRates = () => {
               B: Token['token'],
               C: Token['gadget'],
               D: Set.TimeZoned,
-              FOR: 0,
+              FOR: i,
           }; 
 
   async function fetching() {
       setLoad(true)
+      setFill(false)
     try {
       const response = await axios.post(Set.Fetch['exchangerates'], Auth);
       setdata(response.data);
       setLoad(false)
+      setFill("yes")
       //console.log("Exchange rate items fetched...")
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -32,7 +33,7 @@ export const ExchangeRates = () => {
       fetching();
     }, []);
 
-  return ({load, data})
+  return ({load, data, fill})
 }
 
 export const RecordExchangeRates = (onDate) => {

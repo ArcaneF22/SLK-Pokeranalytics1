@@ -4,6 +4,7 @@ import * as Set from '../../constants';
 
 export const Uplines = (i,ii) => {
   const Token = JSON.parse( localStorage.getItem('Token') );
+  const [fill, setFill] = useState("")
   const [load, setLoad] = useState(false)
   const [data, setdata] = useState([])
   const Auth = {
@@ -21,8 +22,10 @@ export const Uplines = (i,ii) => {
       const response = await axios.post(Set.Fetch['uplines2'], Auth);
       setdata(response.data);
       setLoad(false)
-      console.log("Upline2 items fetched...")
+      setFill("yes")
+      //console.log("Upline2 items fetched..."+JSON.stringify(response.data,null,2))
     } catch (error) {
+      setFill("no")
       console.error("Error fetching data: ", error);
     }
   }
@@ -31,7 +34,7 @@ export const Uplines = (i,ii) => {
       fetching();
     }, []);
 
-  return ({load, data})
+    return ({fill, load, data})
 }
 
 

@@ -4,23 +4,31 @@ import Papa from 'papaparse'; //INSTALL { npm i papaparse }
 import { Accounts } from '../fetch/raw/accounts'
 import { Clubs } from '../fetch/raw/clubs'
 import { Uplines } from '../fetch/raw/uplines'
+
+
+
 import axios from 'axios';
 import * as SUI from 'semantic-ui-react'
 import * as Set from '../constants';
 import * as Func from '../functions';
-import { FormRecords } from '../fetch/forms/records'
+//import { FormRecords } from '../fetch/forms/records'
+import { FormRecords } from '../fetch/forms/recordings'
+
 import { FormFxRates } from '../fetch/forms/fxRates'
 import { FormComputed } from '../fetch/forms/computed'
 
-export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) => {
+export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated,fxChange,returnfxChange}) => {
 
-    const DataClubs                         = Clubs().data
+    const DDropCLub                             = Clubs("ALL","")
+    const DDropAccounts                         = Accounts("ALL","")
+    const DDropUplines                          = Uplines("ASUPLINE","")
+
     const [JSONData, setJSONData]           = useState([]);
     const [CSVType, setCSVType]             = useState("");
     const [returnedData, setreturnedData]   = useState([]);
     const [message, setMessage]             = useState("");
     const [loaded, setloaded]               = useState(false); 
-    const [onSubmit, setonSubmit]           = useState(false);
+    const [onFXSetting, setonFXSetting]     = useState("");
 
     function clearJSON(){
         setMessage("")
@@ -84,25 +92,29 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
                 updatedData[e.index]["CLUBID"]            = e.clubIDD
                 updatedData[e.index]["CLUBPERCENT"]       = e.clubPercent
                 updatedData[e.index]["PLAYERID"]          = e.playerID
+                updatedData[e.index]["PLAYERNAME"]        = e.playerName
                 updatedData[e.index]["UPLINEID"]          = e.uplineID
+                updatedData[e.index]["UPLINENAME"]        = e.uplineName
                 updatedData[e.index]["UPLINEPERCENT"]     = e.uplinePercent
+                updatedData[e.index]["UPLINEVALUE"]       = e.uplineValue
+                updatedData[e.index]["PLAYERFIND"]        = e.playerFind  
         }
     };
 
-    const onchangeFXRate = (e) => {
+    const onchangeFXSettings = (e) => {
         if(e){
             const updatedData = JSONData.map(i => ({ 
                                                 ...i, 
-                                                DECIMALS          : e.decimals,
                                                 OTHERPERCENTA     : e.percentA,
                                                 OTHERPERCENTB     : e.percentB,
-                                                FXTYPE            : e.fxType,
-                                                FXUSD             : e.fxUSD,
-                                                FXDATE            : e.fxDate,
-                                                FXCURRENCY        : e.fxCurrency,
-                                                FXPROVIDER        : e.fxProvider,
+                                                FXUSD             : e.usd,
+                                                FXDATE            : e.date,
+                                                FXCURRENCY        : e.currency,
+                                                FXPROVIDER        : e.provider,
                                                 }));
             setJSONData(updatedData)
+            setonFXSetting(e)
+            fxChange(e)
         }
     };
 
@@ -115,7 +127,7 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
             if(i.WINLOSSTOTAL == 0 || i.WINLOSSTOTAL == ""){
                 i.WINLOSSTOTAL = "0"
             }
-            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINLOSSTOTAL == "" || i.BONUSTOTAL == "" || i.BONUSTOTAL == "" || i.INCOMPLETE != ""){
+            if(i.DATEUNTIL == "" || i.CLUBID == "" || i.PLAYERID == "" || i.APPID == "" || i.WINLOSSTOTAL == "" || i.BONUSTOTAL == "" || (i.CLUBPERCENT == "" || i.CLUBPERCENT == 0) || (i.FXUSD == "" || i.FXUSD == 0)  || i.INCOMPLETE != ""){
                 incKeys.push(index);
             }
         } )
@@ -156,10 +168,95 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
         return () => clearTimeout(timeoutId);
     }
 
+    const optionsClubsFill  = DDropCLub.fill
+    const optionsClubs      = DDropCLub.data.map(i => 
+        {
+            return {
+                    key:              i.idd,
+                    text:             (i.idd+": "+ i.name),
+                    value:            i.name,
+                    clubidd:          i.idd ? i.idd : "",
+                    appid:            i.appID ? i.appID : "",
+                    appname:          i.appName ? i.appName : "",
+                    disabled:         i.idd ? false : true,
+                    percent:          i.percent ? i.percent : "0",
+                    content: (
+                                <div className="ui list mini">
+                                    <div className="item">
+                                        <div className="ui header violet">{i.idd}</div>
+                                        <div className="description">{i.name}</div>
+                                        {i.percent ? <div className="description">{i.percent}% cut</div> : null}
+                                        {i.status == 2 ? <div className="ui label red tiny">Disabled</div> : null}
+                                    </div>
+                                </div>
+                            ),
+    }})
+    
+    const optionsAccountsFill  = DDropAccounts.fill
+    const optionsAccounts      = DDropAccounts.data.map(i => 
+        { 
+            return {
+                key:              i.id,
+                text:             (i.accountID+": "+ i.accountNickname),
+                value:            i.accountID,
+                appid:            i.appID ? i.appID : "",
+                disabled:         i.accountID ? false : true,
+                downlineid:       i.downlineID ? i.downlineID : "",
+                downlinename:     i.accountNickname ? i.accountNickname : "",
+                uplineid:         i.uplineID ? i.uplineID : 0,
+                uplinename:       i.uplineNickname ? i.uplineNickname : "",
+                uplinepercent:    i.uplinePercent ? i.uplinePercent : "0",
+                clubidd:          i.clubIDD ? i.clubIDD : "",
+                content: (
+                    <div className="ui list mini">
+                        <div className="item">
+                            <div className="ui header violet">{i.accountID}</div>
+                            <div className="description">{i.accountNickname}</div>
+                            <div className="description">{i.uplineID} {i.uplinePercent}</div>
+                            {i.uplineID ? <div className="description">{i.uplineID}</div> : null}
+                            {i.uplinePercent ? <div className="description">{i.uplinePercent ? i.uplinePercent : "0"}% cut</div> : null}
+                        </div>
+                    </div>
+                ),
+
+      }})
+
+      const optionsUplineFill  = DDropUplines.fill
+      const optionsUpline      = DDropUplines.data.map(i => 
+          { 
+              return {
+                  key:              i.id,
+                  text:             (i.accountID+": "+ i.accountNickname),
+                  value:            i.accountID+" with "+ (i.uplinePercent ? i.uplinePercent : "0") +"%",
+                  disabled:         i.accountID ? false : true,
+                  appid:            i.appID ? i.appID : "",
+                  clubidd:          i.clubIDD ? i.clubIDD : "",
+                  clubname:         i.clubName ? i.clubName : "",
+                  accountid:        i.accountID,
+                  accountimage:     i.accountImage ? i.accountImage : "",
+                  downlineid:       i.downlineID ? i.downlineID : "",
+                  downlinename:     i.accountNickname ? i.accountNickname : "",
+                  uplineid:         i.uplineID ? i.uplineID : "",
+                  uplinename:       i.uplineNickname ? i.uplineNickname : "",
+                  uplinepercent:    i.uplinePercent ? i.uplinePercent : "0",
+                  content: (
+                      <div className="ui list mini">
+                          <div className="item">
+                              <div className="ui header violet">{i.accountID}</div>
+                              <div className="description">{i.accountNickname}</div>
+                              {i.clubName ? <div className="description">{i.clubName}</div> : null}
+                              {i.downlineID ? <div className="description">Player: {i.downlineID}</div> : null}
+                              {i.uplinePercent ? <div className="description">{i.uplinePercent ? i.uplinePercent : "0"}% cut</div> : null}
+                          </div>
+                      </div>
+                  ),
+  
+        }})
+
     useEffect(() => {
-        onCalculated(false)
         onLoading()
       }, []);
+
 
         return (
 
@@ -187,7 +284,8 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
                     Reset CSV Form ({CSVType + " Template"}) 
                 </div>
 
-                <FormFxRates returnFXData={onchangeFXRate} backFXData={JSONData}/>
+                <FormFxRates FXSettings={onchangeFXSettings}
+                            backFXSettings={returnfxChange}/>
 
                 <div className={'ui form compact mini '+(loaded ? '' : 'hide')}>
                     {JSONData.map((i, index) => (
@@ -200,7 +298,7 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
                             </div>
                             <div className='field'>
                                 <label>
-                                    Date Until
+                                    {Func.onIncLabel(i.DATEUNTIL)} Close date report
                                 </label>
                                 <input type='date' value={i.DATEUNTIL} onChange={(e) => inputChange(e.target.value, index, "DATEUNTIL")} />
                             </div>
@@ -211,13 +309,25 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
                                                             ClubIDD:        i.CLUBIDD, 
                                                             ClubPercent:    i.CLUBPERCENT, 
                                                             PlayerID:       i.PLAYERID, 
+                                                            PlayerName:     i.PLAYERNAME, 
                                                             UplineID:       i.UPLINEID, 
-                                                            UplinePercent:  i.UPLINEPERCENT, 
+                                                            UplineName:     i.UPLINENAME, 
+                                                            UplinePercent:  i.UPLINEPERCENT,
+                                                            UplineValue:    i.UPLINEVALUE,
+                                                            PlayerFind:     i.PLAYERFIND,
                                                         }} 
-                                    returnData={onchangeRecord}/>
+                                                returnData={onchangeRecord} 
+                                                dataClubs={optionsClubs}
+                                                fillClubs={optionsClubsFill}
+                                                dataAccounts={optionsAccounts}
+                                                fillAccounts={optionsAccountsFill}
+                                                dataUplines={optionsUpline}
+                                                fillUplines={optionsUplineFill}
+                                                onFXSetting={onFXSetting}
+                                                />
 
                             <div className='field'>
-                                <label>FX{i.FXCURRENCY != " USD" ? ": "+i.FXCURRENCY+" to USD" : "USD"}</label>
+                                <label> {Func.onIncLabel(i.FXUSD)} FX{i.FXCURRENCY != " USD" ? ": "+i.FXCURRENCY+" per USD" : "USD"}</label>
                                 <div className="ui left labeled left icon input">
                                     <i className="dollar icon"></i>
                                     <input type="text" className='blandCenter' value={i.FXUSD} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "FXUSD")}  />
@@ -225,12 +335,12 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
                             </div>
 
                             <div className='field'>
-                                <label>Win/Loss Total</label>
-                                <input type='text' value={i.WINLOSSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "WINLOSSTOTAL")} />
+                                <label>{Func.onIncLabel(i.WINLOSSTOTAL)} Win/Loss Total</label>
+                                <input type='text' value={i.WINLOSSTOTAL} onChange={(e) => inputChange(Func.byDNP(e.target.value), index, "WINLOSSTOTAL")} />
                             </div>
 
                             <div className='field'>
-                                <label>Bonus Total</label>
+                                <label>{Func.onIncLabel(i.BONUSTOTAL)} Bonus Total</label>
                                 <input type='text' value={i.BONUSTOTAL} onChange={(e) => inputChange(Func.byDecimals(e.target.value), index, "BONUSTOTAL")} />
                             </div>
 
@@ -270,11 +380,9 @@ export const MultipleRecords = ({updateJSON,returnJSON,reRenders,onCalculated}) 
 
         </>
 
- 
-
-
+            
             {JSONData.length > 0 && (
-                <div className='ui message black mini hide'>
+                <div className='ui message black mini '>
                     <h4>Uploaded CSV to JSON</h4>
                     <pre>{JSON.stringify(JSONData,0,2)}</pre>
                 </div>

@@ -73,6 +73,11 @@ export const byDecimals = (i,e) => {
     return i.match(regex)[0]
 }
 
+export const byDNP = (i,e) => {
+  const regex = /(^(-{1}?(?:([0-9]{0,10}))|([0-9]{1})?(?:([0-9]{0,9})))?(?:\.([0-9]{0,3}))?$)/s
+  return i.match(regex)[0]
+}
+
 export const byNoSpecial = (i) => {
   const num = i.replace(/[^a-zA-Z0-9!&. ]/g, '').replace(/\s{2,}/g, ' ').trimStart()
   return num
@@ -90,6 +95,11 @@ export const byNoSpecialFull = (i) => {
 
 export const byWebAddress = (i) => {
   const num = i.replace(/[^a-zA-Z./?_\s-]/g, '').trim()
+  return num
+}
+
+export const byNoParentheses = (i) => {
+  const num = i.replace(/ *\([^)]*\) */g, "").trim()
   return num
 }
 
@@ -205,12 +215,17 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
-export function dateYMD(i) {
+export function dateforInput(i) {
   const today = new Date(i); // Get the current date
   const formattedDate = moment(today).format('YYYY-MM-DD');
   return formattedDate
 }
 
+export function dateYMDSlash(i) {
+  const today = new Date(i); // Get the current date
+  const formattedDate = moment(today).format('YYYY/MM/DD');
+  return formattedDate
+}
 
 export const shortFileFormat = (header,rows) => {
 
@@ -312,4 +327,12 @@ export const longFileFormat = (header,rows) => {
   );
 
   return output
+}
+
+export const onIncLabel = (i,e) => {
+  if(i == "" || (e == 0 ? i == 0 : null)){
+      return <i className=" exclamation circle red icon"></i>
+  } else {
+      return ""
+  }
 }

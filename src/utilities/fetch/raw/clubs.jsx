@@ -24,7 +24,6 @@ export const Clubs = () => {
       setFill("yes")
       //console.log("Clubs items fetched...")
     } catch (error) {
-      setFill("no")
       console.error("Error fetching data: ", error);
     }
   }
